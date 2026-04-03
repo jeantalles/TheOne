@@ -1,0 +1,195 @@
+import { useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+const founders = [
+  {
+    number: '01',
+    badge: 'Fundador',
+    name: 'Jean Talles',
+    role: 'Estrategista de Marca e Comunicação',
+    bullets: [
+      'Especialista em branding, comunicação e marketing com 08 anos de mercado.',
+      'Liderou e estruturou o setor de comunicação para key accounts B2B e B2C na maior assessoria de marketing do país.',
+      'Fundador e idealizador da TheOne, consultoria que empodera empresários visionários no Brasil.',
+    ],
+    img: '/images/founders/jean.jpg',
+  },
+  {
+    number: '02',
+    badge: 'Co-Fundador',
+    name: 'Pedro Xavier',
+    role: 'Estrategista de Marketing e Funil',
+    bullets: [
+      '7 anos de experiência em marketing, com atuação em copy, estratégia, liderança e growth.',
+      'Copy Sênior, Especialista e Head de Marketing na maior assessoria de marketing e vendas do país.',
+      'Hoje conduz diagnósticos e direcionamentos estratégicos para o crescimento de empresas.',
+    ],
+    img: '/images/founders/pedro.jpg',
+  },
+];
+
+const clients = ['Jacuzzi', 'Sicredi', 'Arezzo', 'Cyrela', 'Stihl', 'O Boticário', 'MAX Titanium'];
+
+export default function Founders() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.founder-card', {
+        opacity: 0,
+        y: 60,
+        stagger: 0.18,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 65%',
+        },
+      });
+
+      gsap.from('.client-tag', {
+        opacity: 0,
+        y: 10,
+        stagger: 0.07,
+        duration: 0.6,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.founders-clients-strip',
+          start: 'top 88%',
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section
+      id="fundadores"
+      ref={sectionRef}
+      className="py-32 px-6 md:px-12 lg:px-16 bg-[#212121] border-b border-white/5 font-halyard overflow-hidden"
+    >
+      <div className="max-w-[1500px] mx-auto">
+
+        {/* Header */}
+        <div className="mb-20">
+          <span className="text-[#FE6942] text-[12px] tracking-widest uppercase block mb-5 font-halyard">
+            Liderança
+          </span>
+          <h2 className="font-editorial text-4xl md:text-5xl lg:text-[56px] text-white leading-[1.1]">
+            Quem está por trás{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224] italic">
+              da TheOne.
+            </span>
+          </h2>
+        </div>
+
+        {/* Founder Cards */}
+        <div className="space-y-6">
+          {founders.map((f, i) => {
+            const isReversed = i % 2 !== 0;
+            return (
+              <div
+                key={i}
+                className="founder-card group border border-[#5B5B5B] rounded-[32.7px] overflow-hidden hover:border-[#FE6942]/30 transition-colors duration-500"
+              >
+                <div className="flex flex-col md:flex-row">
+
+                  {/* Photo */}
+                  <div
+                    className={`relative overflow-hidden w-full md:w-[42%] aspect-[4/3] md:aspect-auto md:min-h-[520px] flex-shrink-0 ${
+                      isReversed ? 'md:order-2' : ''
+                    }`}
+                    style={{
+                      background: 'linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 50%, #1a1a1a 100%)',
+                    }}
+                  >
+                    {/* Subtle texture */}
+                    <div className="absolute inset-0 opacity-30"
+                      style={{ backgroundImage: 'radial-gradient(circle at 30% 40%, rgba(254,105,66,0.08) 0%, transparent 60%)' }}
+                    />
+                    <img
+                      src={f.img}
+                      alt=""
+                      onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                      className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.04]"
+                    />
+                    {/* Edge gradient to blend with content */}
+                    <div
+                      className={`absolute inset-0 ${
+                        isReversed
+                          ? 'bg-gradient-to-l from-[#212121]/60 via-transparent to-transparent'
+                          : 'bg-gradient-to-r from-transparent via-transparent to-[#212121]/60'
+                      }`}
+                    />
+                    {/* Large decorative number */}
+                    <span className="absolute bottom-5 right-7 font-editorial text-[100px] leading-none text-white/[0.06] select-none pointer-events-none">
+                      {f.number}
+                    </span>
+                  </div>
+
+                  {/* Content */}
+                  <div
+                    className={`flex flex-col justify-center px-10 md:px-14 lg:px-16 py-12 md:py-16 flex-1 ${
+                      isReversed ? 'md:order-1' : ''
+                    }`}
+                  >
+                    {/* Badge */}
+                    <span className="inline-flex items-center text-[#FE6942] text-[11px] tracking-[0.25em] uppercase border border-[#FE6942]/30 px-4 py-1.5 rounded-full w-fit mb-8">
+                      {f.badge}
+                    </span>
+
+                    {/* Name */}
+                    <h3 className="font-editorial text-white text-4xl md:text-[48px] leading-[1.05] mb-2">
+                      {f.name}
+                    </h3>
+
+                    {/* Role */}
+                    <p className="text-[#FE6942] text-[12px] uppercase tracking-[0.2em] mb-10">
+                      {f.role}
+                    </p>
+
+                    {/* Divider */}
+                    <div className="w-10 h-[1px] bg-white/10 mb-10" />
+
+                    {/* Bullets */}
+                    <ul className="space-y-5">
+                      {f.bullets.map((b, j) => (
+                        <li key={j} className="flex gap-4 items-start">
+                          <span className="text-[#FE6942] text-sm mt-0.5 shrink-0">→</span>
+                          <p className="text-[#C7C7C7] font-light text-[17px] leading-[1.55]">
+                            {b}
+                          </p>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Clients strip */}
+        <div className="founders-clients-strip mt-20 pt-12 border-t border-white/10">
+          <p className="text-white/20 text-[11px] tracking-[0.25em] uppercase mb-8">
+            Marcas que já passaram por nossas mãos
+          </p>
+          <div className="flex flex-wrap gap-x-10 gap-y-4 items-center">
+            {clients.map((c, i) => (
+              <span
+                key={i}
+                className="client-tag text-white/35 font-light text-lg hover:text-white/60 transition-colors duration-300 cursor-default"
+              >
+                {c}
+              </span>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
