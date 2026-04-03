@@ -13,7 +13,7 @@ const founders = [
       'Liderou e estruturou o setor de comunicação para key accounts B2B e B2C na maior assessoria de marketing do país.',
       'Fundador e idealizador da TheOne, consultoria que empodera empresários visionários no Brasil.',
     ],
-    img: '/images/founders/jean.jpg',
+    img: '/images/Jean.jpeg',
   },
   {
     number: '02',
@@ -25,7 +25,7 @@ const founders = [
       'Copy Sênior, Especialista e Head de Marketing na maior assessoria de marketing e vendas do país.',
       'Hoje conduz diagnósticos e direcionamentos estratégicos para o crescimento de empresas.',
     ],
-    img: '/images/founders/pedro.jpg',
+    img: '/images/Pedro.jpeg',
   },
 ];
 
@@ -98,30 +98,16 @@ export default function Founders() {
 
                   {/* Photo */}
                   <div
-                    className={`relative overflow-hidden w-full md:w-[42%] aspect-[4/3] md:aspect-auto md:min-h-[520px] flex-shrink-0 ${
+                    className={`relative overflow-hidden w-full md:w-[40%] aspect-[3/4] md:aspect-auto md:min-h-[750px] flex-shrink-0 ${
                       isReversed ? 'md:order-2' : ''
                     }`}
-                    style={{
-                      background: 'linear-gradient(135deg, #1e1e1e 0%, #2a2a2a 50%, #1a1a1a 100%)',
-                    }}
+                    style={{ background: '#1a1a1a' }}
                   >
-                    {/* Subtle texture */}
-                    <div className="absolute inset-0 opacity-30"
-                      style={{ backgroundImage: 'radial-gradient(circle at 30% 40%, rgba(254,105,66,0.08) 0%, transparent 60%)' }}
-                    />
                     <img
                       src={f.img}
                       alt=""
                       onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                      className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.04]"
-                    />
-                    {/* Edge gradient to blend with content */}
-                    <div
-                      className={`absolute inset-0 ${
-                        isReversed
-                          ? 'bg-gradient-to-l from-[#212121]/60 via-transparent to-transparent'
-                          : 'bg-gradient-to-r from-transparent via-transparent to-[#212121]/60'
-                      }`}
+                      className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.04]"
                     />
                     {/* Large decorative number */}
                     <span className="absolute bottom-5 right-7 font-editorial text-[100px] leading-none text-white/[0.06] select-none pointer-events-none">
@@ -131,7 +117,7 @@ export default function Founders() {
 
                   {/* Content */}
                   <div
-                    className={`flex flex-col justify-center px-10 md:px-14 lg:px-16 py-12 md:py-16 flex-1 ${
+                    className={`relative z-10 flex flex-col justify-center bg-[#212121] px-10 md:px-14 lg:px-16 py-12 md:py-16 flex-1 ${
                       isReversed ? 'md:order-1' : ''
                     }`}
                   >
@@ -141,12 +127,12 @@ export default function Founders() {
                     </span>
 
                     {/* Name */}
-                    <h3 className="font-editorial text-white text-4xl md:text-[48px] leading-[1.05] mb-2">
+                    <h3 className="font-editorial text-white text-5xl md:text-[56px] leading-[1.05] mb-3">
                       {f.name}
                     </h3>
 
                     {/* Role */}
-                    <p className="text-[#FE6942] text-[12px] uppercase tracking-[0.2em] mb-10">
+                    <p className="text-[#FE6942] text-[15px] uppercase tracking-[0.18em] mb-10">
                       {f.role}
                     </p>
 
@@ -154,11 +140,11 @@ export default function Founders() {
                     <div className="w-10 h-[1px] bg-white/10 mb-10" />
 
                     {/* Bullets */}
-                    <ul className="space-y-5">
+                    <ul className="space-y-6">
                       {f.bullets.map((b, j) => (
                         <li key={j} className="flex gap-4 items-start">
-                          <span className="text-[#FE6942] text-sm mt-0.5 shrink-0">→</span>
-                          <p className="text-[#C7C7C7] font-light text-[17px] leading-[1.55]">
+                          <span className="text-[#FE6942] text-base mt-0.5 shrink-0">→</span>
+                          <p className="text-[#C7C7C7] font-light text-[21px] leading-[1.55]">
                             {b}
                           </p>
                         </li>

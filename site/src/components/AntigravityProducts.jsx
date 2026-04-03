@@ -3,51 +3,77 @@ import { motion } from 'framer-motion';
 
 function ProductIcon({ name, size = 54 }) {
   const icons = {
+    // Mira: representa posicionamento — você mira em um lugar no mercado
     estrategia: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10" />
-        <path d="M12 8v8M8 12h8" />
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <circle cx="12" cy="12" r="4"/>
+        <line x1="12" y1="2" x2="12" y2="8"/>
+        <line x1="12" y1="16" x2="12" y2="22"/>
+        <line x1="2" y1="12" x2="8" y2="12"/>
+        <line x1="16" y1="12" x2="22" y2="12"/>
       </svg>
     ),
+    // Olho: identidade visual — como sua marca é vista e percebida
     identidade: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-        <rect width="18" height="18" x="3" y="3" rx="2" />
-        <path d="M3 9h18M9 21V9" />
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
+        <circle cx="12" cy="12" r="3"/>
       </svg>
     ),
+    // Monitor com linhas de conteúdo: site como experiência de marca
     site: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-        <rect width="20" height="14" x="2" y="3" rx="2" />
-        <path d="M8 21h8M12 17v4" />
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+        <path d="M6 8h4M6 11h7"/>
       </svg>
     ),
+    // Foguete (Lucide completo): entrada no mercado de forma impactante
     launch: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
-        <path d="m12 15 9 3-3-9-9-3 3 9z" />
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+        <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
       </svg>
     ),
+    // Bússola: inteligência estratégica, dá o norte
     consultoria: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 22v-5M9 7l3 3 3-3M9 12l3 3 3-3" />
-        <circle cx="12" cy="12" r="10" />
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
       </svg>
     ),
+    // Camadas: conteúdo sistematizado em layers
     conteudo: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-        <path d="M8 9h8M8 13h6" />
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/>
+        <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/>
+        <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>
       </svg>
     ),
+    // Trending up: branding + marketing + growth em crescimento contínuo
+    growth: (
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+        <polyline points="16 7 22 7 22 13"/>
+      </svg>
+    ),
+    // Gráfico de barras: arquitetura de receita — estrutura que gera faturamento
     receita: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-        <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 3v18h18"/>
+        <path d="M18 17V9"/>
+        <path d="M13 17V5"/>
+        <path d="M8 17v-3"/>
       </svg>
     ),
+    // Megafone: o fundador como canal de voz, broadcast e aquisição
     founder: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-        <circle cx="12" cy="7" r="4" />
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="m3 11 18-5v12L3 14v-3z"/>
+        <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
       </svg>
     ),
   };
@@ -99,7 +125,7 @@ export default function AntigravityProducts() {
     >
       <div className="max-w-[1700px] mx-auto">
         {/* 01 / PROJETO */}
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-12 items-start">
+        <div className="flex flex-col lg:flex-row gap-16 lg:gap-12 mb-24 lg:mb-48 items-start">
           <div className="lg:w-[20%] lg:sticky lg:top-32">
             <h2 className="text-white text-[42px] font-light leading-[1.2] mb-2 font-halyard">
               A Base para uma marca <br />
@@ -203,7 +229,7 @@ export default function AntigravityProducts() {
                   style={style}
                 />
                 <FeatureCard
-                  icon="receita"
+                  icon="growth"
                   title="Branding / Marketing / Growth"
                   text="A união dos três pilares para gerar receita. Fugimos das campanhas aleatórias para construir uma estrutura de marketing personalizada, onde o crescimento da empresa e o fortalecimento da sua marca caminham juntos."
                   style={{ ...style, titulosBox: "26px" }}

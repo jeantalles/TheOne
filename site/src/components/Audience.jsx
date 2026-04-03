@@ -48,24 +48,24 @@ export default function Audience() {
       <div className="max-w-[1500px] mx-auto grid md:grid-cols-2 gap-12 lg:gap-16">
         <div className="aud-card-left border border-[#5B5B5B] rounded-[32.7px] p-8 md:p-12 hover:bg-[#ffffff05] transition-colors duration-500 origin-center relative overflow-hidden group">
           <div className="absolute inset-0 bg-[#FF5224]/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-          <h3 className="font-editorial text-white text-3xl md:text-4xl tracking-tight mb-8 relative z-10">Empresários<br />Visionários</h3>
+          <h3 className="font-editorial text-white text-[36px] md:text-[44px] leading-tight tracking-tight mb-10 relative z-10">Empresários<br />Visionários</h3>
           <div className="space-y-6 relative z-10">
             {viList.map((item, i) => (
               <div key={i} className="flex gap-4 items-start aud-item">
-                <Check size={20} strokeWidth={2} className="shrink-0 mt-1 md:mt-1.5 text-[#FE6942]" />
-                <p className="font-light text-[#C7C7C7] text-lg leading-tight">{item}</p>
+                <Check size={24} strokeWidth={2} className="shrink-0 mt-0.5 md:mt-1 text-[#FE6942]" />
+                <p className="font-light text-[#C7C7C7] text-[19px] md:text-[21px] leading-[1.3]">{item}</p>
               </div>
             ))}
           </div>
         </div>
         <div className="aud-card-right border border-[#5B5B5B] rounded-[32.7px] bg-transparent p-8 md:p-12 hover:bg-[#ffffff05] transition-colors duration-500 origin-center relative overflow-hidden group">
           <div className="absolute inset-0 bg-[#FF5224]/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-          <h3 className="font-editorial text-white text-3xl md:text-4xl tracking-tight mb-8 relative z-10">Gestores de<br /><span className="text-[#FE6942] italic">Growth & Marketing</span></h3>
+          <h3 className="font-editorial text-white text-[36px] md:text-[44px] leading-tight tracking-tight mb-10 relative z-10">Gestores de<br /><span className="text-[#FE6942] italic">Growth & Marketing</span></h3>
           <div className="space-y-6 relative z-10">
             {gmList.map((item, i) => (
               <div key={i} className="flex gap-4 items-start aud-item">
-                <Check size={20} strokeWidth={2} className="shrink-0 mt-1 md:mt-1.5 text-[#FE6942]" />
-                <p className="font-light text-[#C7C7C7] text-lg leading-tight">{item}</p>
+                <Check size={24} strokeWidth={2} className="shrink-0 mt-0.5 md:mt-1 text-[#FE6942]" />
+                <p className="font-light text-[#C7C7C7] text-[19px] md:text-[21px] leading-[1.3]">{item}</p>
               </div>
             ))}
           </div>
