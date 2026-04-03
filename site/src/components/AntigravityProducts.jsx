@@ -5,85 +5,105 @@ function ProductIcon({ name, size = 54 }) {
   const icons = {
     // Mira: representa posicionamento — você mira em um lugar no mercado
     estrategia: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10"/>
-        <circle cx="12" cy="12" r="4"/>
-        <line x1="12" y1="2" x2="12" y2="8"/>
-        <line x1="12" y1="16" x2="12" y2="22"/>
-        <line x1="2" y1="12" x2="8" y2="12"/>
-        <line x1="16" y1="12" x2="22" y2="12"/>
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FE6942" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <circle cx="12" cy="12" r="4" />
+        <line x1="12" y1="2" x2="12" y2="8" />
+        <line x1="12" y1="16" x2="12" y2="22" />
+        <line x1="2" y1="12" x2="8" y2="12" />
+        <line x1="16" y1="12" x2="22" y2="12" />
       </svg>
     ),
     // Olho: identidade visual — como sua marca é vista e percebida
     identidade: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
-        <circle cx="12" cy="12" r="3"/>
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FE6942" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z" />
+        <circle cx="12" cy="12" r="3" />
       </svg>
     ),
     // Monitor com linhas de conteúdo: site como experiência de marca
     site: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="3" width="20" height="14" rx="2"/>
-        <path d="M8 21h8M12 17v4"/>
-        <path d="M6 8h4M6 11h7"/>
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FE6942" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2" />
+        <path d="M8 21h8M12 17v4" />
+        <path d="M6 8h4M6 11h7" />
       </svg>
     ),
     // Foguete (Lucide completo): entrada no mercado de forma impactante
     launch: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
-        <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
-        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
-        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FE6942" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
+        <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+        <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
+        <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
       </svg>
     ),
     // Bússola: inteligência estratégica, dá o norte
     consultoria: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="12" cy="12" r="10"/>
-        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/>
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FE6942" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
       </svg>
     ),
     // Camadas: conteúdo sistematizado em layers
     conteudo: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/>
-        <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/>
-        <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FE6942" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z" />
+        <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65" />
+        <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65" />
       </svg>
     ),
     // Trending up: branding + marketing + growth em crescimento contínuo
     growth: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-        <polyline points="16 7 22 7 22 13"/>
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FE6942" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+        <polyline points="16 7 22 7 22 13" />
       </svg>
     ),
     // Gráfico de barras: arquitetura de receita — estrutura que gera faturamento
     receita: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M3 3v18h18"/>
-        <path d="M18 17V9"/>
-        <path d="M13 17V5"/>
-        <path d="M8 17v-3"/>
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FE6942" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 3v18h18" />
+        <path d="M18 17V9" />
+        <path d="M13 17V5" />
+        <path d="M8 17v-3" />
       </svg>
     ),
     // Megafone: o fundador como canal de voz, broadcast e aquisição
     founder: (
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FF4D00" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-        <path d="m3 11 18-5v12L3 14v-3z"/>
-        <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>
+      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="#FE6942" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="m3 11 18-5v12L3 14v-3z" />
+        <path d="M11.6 16.8a3 3 0 1 1-5.8-1.6" />
       </svg>
     ),
   };
   return icons[name] || null;
 }
 
-const FeatureCard = React.memo(({ icon, title, text, style }) => {
+const cardVariants = {
+  hidden: { opacity: 0, y: 28 },
+  visible: (delay) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.23, 1, 0.32, 1], delay },
+  }),
+  hover: { opacity: 1, y: 0 },
+};
+
+const textVariants = {
+  hidden: { y: 0, opacity: 0.7 },
+  visible: { y: 0, opacity: 0.7 },
+  hover: { y: -3, opacity: 1 },
+};
+
+const FeatureCard = React.memo(({ icon, title, text, style, index = 0 }) => {
   return (
     <motion.div
-      initial="rest"
+      variants={cardVariants}
+      custom={index * 0.18}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-60px" }}
       whileHover="hover"
       className="flex gap-10 items-start group relative p-6 -mx-6 -my-6 rounded-3xl hover:bg-[#ffffff05] border border-transparent hover:border-[#ffffff10] transition-colors duration-500 ease-out will-change-transform cursor-default"
     >
@@ -94,10 +114,7 @@ const FeatureCard = React.memo(({ icon, title, text, style }) => {
       <div>
         <h4 className="text-white font-normal mb-3 font-halyard transition-colors duration-500 group-hover:text-accent drop-shadow-md" style={{ fontSize: style.titulosBox }}>{title}</h4>
         <motion.p
-          variants={{
-            rest: { y: 0, opacity: 0.7 },
-            hover: { y: -3, opacity: 1 }
-          }}
+          variants={textVariants}
           transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
           className="text-[#C7C7C7] font-light leading-[1.3] font-halyard"
           style={{ fontSize: style.textoBox }}
@@ -112,16 +129,16 @@ const FeatureCard = React.memo(({ icon, title, text, style }) => {
 export default function AntigravityProducts() {
   // MODIFIQUE OS TAMANHOS DE FONTE AQUI:
   const style = {
-    titulosGrandes: "48px",    // TheBrand, Consultoria, Assessoria
+    titulosGrandes: "55px",    // TheBrand, Consultoria, Assessoria
     titulosBox: "26px",       // Estratégia, Identidade, Sistema de Conteúdo, etc.
-    textoGrande: "19px",      // Parágrafos principais (Ex: "Para negócios visionários...")
+    textoGrande: "21px",      // Parágrafos principais (Ex: "Para negócios visionários...")
     textoBox: "19px",         // Descrições técnicas dentro dos boxes cinzas
   };
 
   return (
     <section
       id="solucoes"
-      className="bg-[#212121] py-32 px-6 md:px-12 lg:px-16 border-b border-white/5 relative overflow-hidden font-halyard"
+      className="bg-[#212121] py-32 px-6 md:px-12 lg:px-16 border-b border-white/5 relative font-halyard"
     >
       <div className="max-w-[1700px] mx-auto">
         {/* 01 / PROJETO */}
@@ -143,7 +160,7 @@ export default function AntigravityProducts() {
                 <div className="text-[#FE6942] text-[16.59px] font-normal tracking-normal mb-8 uppercase font-halyard">CONSTRUÇÃO DE MARCA</div>
                 <h3 className="text-white font-normal font-editorial mb-8 leading-tight" style={{ fontSize: style.titulosGrandes }}>TheBrand</h3>
                 <p className="text-[#C7C7C7] font-extralight leading-[1.4] font-halyard" style={{ fontSize: style.textoGrande }}>
-                  Para negócios visionários que estão nascendo, novas empresas, produtos ou marcas pessoais que <span className="text-white font-normal">precisam de um posicionamento inevitável desde o dia zero.</span> Construimos sua marca TheOne™ para nascer como referência e com impacto imediato no mercado.
+                  Para negócios visionários que estão nascendo, novas empresas, produtos ou marcas pessoais que <span className="text-white font-normal">precisam de um posicionamento inevitável desde o dia zero.</span> Construimos sua marca TheOne™ para nascer como referência e com impacto logo no começo no mercado.
                 </p>
               </div>
 
@@ -158,25 +175,25 @@ export default function AntigravityProducts() {
 
             <div className="bg-transparent border border-[#5B5B5B] rounded-[32.7px] py-16 px-12 md:px-16">
               <div className="grid md:grid-cols-2 gap-y-20 gap-x-16">
-                <FeatureCard
+                <FeatureCard index={0}
                   icon="estrategia"
                   title="Estratégia de marca"
                   text="Construção da fundação da sua marca. Através de pesquisas e workshops construimos seu posicionamento inevitável."
                   style={style}
                 />
-                <FeatureCard
+                <FeatureCard index={1}
                   icon="identidade"
                   title="Identidade"
                   text="Traduzimos a estratégia em identidade. Criação de nome, identidade visual e comunicação verbal, garantindo que sua marca tenha uma personalidade própria e diferenciadora."
                   style={style}
                 />
-                <FeatureCard
+                <FeatureCard index={2}
                   icon="site"
                   title="Site Brand Experience"
                   text="Um site que vai muito além do institucional. Desenvolvemos uma experiência imersiva que serve como extensão do seu posicionamento, focada em gerar engajamento, conexão com os clientes e conversão."
                   style={style}
                 />
-                <FeatureCard
+                <FeatureCard index={3}
                   icon="launch"
                   title="Launch"
                   text="Conduzimos estrategicamente todo o processo de entrada no mercado, garantindo que o nascimento da sua marca ou rebranding aconteça de forma impactante."
@@ -222,25 +239,25 @@ export default function AntigravityProducts() {
 
             <div className="bg-transparent border border-[#5B5B5B] rounded-[32.7px] py-16 px-12 md:px-16">
               <div className="grid md:grid-cols-2 gap-y-20 gap-x-16">
-                <FeatureCard
+                <FeatureCard index={0}
                   icon="conteudo"
                   title="Sistema de Conteúdo"
                   text="Seu posicionamento acontecendo no digital. Sistematizamos sua produção de conteúdo para fazer com que sua marca seja vista, lembrada e comprada."
                   style={style}
                 />
-                <FeatureCard
+                <FeatureCard index={1}
                   icon="growth"
                   title="Branding / Marketing / Growth"
                   text="A união dos três pilares para gerar receita. Fugimos das campanhas aleatórias para construir uma estrutura de marketing personalizada, onde o crescimento da empresa e o fortalecimento da sua marca caminham juntos."
                   style={{ ...style, titulosBox: "26px" }}
                 />
-                <FeatureCard
+                <FeatureCard index={2}
                   icon="founder"
                   title="Fundador Posicionado"
                   text="Transformamos o fundador em um poderoso canal de aquisição. Ao humanizar a marca e construir uma autoridade inabalável, ampliamos o potencial de conexão com o público e abrimos novas portas de crescimento através da influência do founder."
                   style={{ ...style, titulosBox: "29.3px", textoBox: "18.41px" }}
                 />
-                <FeatureCard
+                <FeatureCard index={3}
                   icon="receita"
                   title="Arquitetura de Receita"
                   text="Revelamos o dinheiro que sua marca está deixando na mesa. Analisamos seu portfólio e sua escada de valor de acordo com seu posicionamento, definindo novas ofertas e a precificação ideal para maximizar o faturamento e a lucratividade do negócio."
