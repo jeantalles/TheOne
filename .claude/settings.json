@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Read(//Users/jeantalles/.claude/**)"
+      "Read(//Users/jeantalles/.claude/**)",
+      "WebFetch(domain:www.abhijitrout.in)",
+      "Read(//Users/jeantalles/Abhijit Rout - Creative Designer_files/**)"
     ]
   }
 }

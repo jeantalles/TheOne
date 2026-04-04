@@ -5,6 +5,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import Navbar from './components/Navbar';
 import ScrollIntro from './components/ScrollIntro';
+import HeroLight from './components/HeroLight';
+import GradientTransition from './components/GradientTransition';
 import ScrollStorytelling from './components/ScrollStorytelling';
 import TheOneConclusion from './components/TheOneConclusion';
 import Methodology from './components/Methodology';
@@ -50,6 +52,8 @@ export default function App() {
       <Navbar />
       <main>
         <ScrollIntro />
+        <HeroLight />
+        <GradientTransition />
         <ScrollStorytelling />
         <TheOneConclusion />
         <Methodology />

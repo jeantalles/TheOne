@@ -360,7 +360,13 @@ export default function ScrollIntro() {
             <span
               ref={suffixRef}
               className="inline-block"
-              style={{ opacity: 0, willChange: 'opacity, transform, filter' }}
+              style={{
+                opacity: 0,
+                willChange: 'opacity, transform, filter',
+                fontSize: '0.72em',
+                transformOrigin: 'left top',
+                verticalAlign: 'top',
+              }}
             >
               &trade;
             </span>

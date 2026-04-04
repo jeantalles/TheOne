@@ -60,7 +60,11 @@ export default function Navbar() {
         className="fixed top-0 left-0 right-0 z-40 pointer-events-none"
         style={{
           height: '140px',
-          background: 'linear-gradient(to bottom, #212121 0%, rgba(33,33,33,0.7) 50%, transparent 100%)',
+          background: 'rgba(128,128,128,0.18)',
+          backdropFilter: 'blur(24px)',
+          WebkitBackdropFilter: 'blur(24px)',
+          maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 38%, rgba(0,0,0,0) 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 38%, rgba(0,0,0,0) 100%)',
         }}
       />
 
@@ -72,8 +76,12 @@ export default function Navbar() {
         style={{ height: '72px', paddingTop: '20px' }}
       >
         {/* Logo */}
-        <a href="#" className="flex items-center text-white font-serif italic font-medium tracking-tight" style={{ fontSize: '28px' }}>
-          The<span className="text-[#FE6942]">One</span>
+        <a href="#" className="flex items-center">
+          <img
+            src="/logo-navbar.svg"
+            alt="The One"
+            style={{ height: '46px', width: 'auto', display: 'block' }}
+          />
         </a>
 
         {/* Links desktop — pill container */}
@@ -81,10 +89,10 @@ export default function Navbar() {
           className="hidden md:flex items-center p-1 gap-1"
           style={{
             borderRadius: '100px',
-            border: '1px solid rgba(255,255,255,0.12)',
-            background: 'rgba(30,30,30,0.75)',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
+            border: '1px solid rgba(255,255,255,0.16)',
+            background: 'rgba(128,128,128,0.5)',
+            backdropFilter: 'blur(28px)',
+            WebkitBackdropFilter: 'blur(28px)',
           }}
         >
           {navLinks.map((l) => (

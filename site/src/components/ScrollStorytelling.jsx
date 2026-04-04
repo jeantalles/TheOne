@@ -141,9 +141,19 @@ export default function ScrollStorytelling() {
           key={i}
           className="story-panel min-h-[100svh] relative flex flex-col items-center justify-center px-6 overflow-hidden"
         >
-          <div className="absolute inset-0 bg-[#212121] -z-10" />
+          <div
+            className="absolute inset-0 -z-10"
+            style={{
+              background: i === 0
+                ? 'linear-gradient(to bottom, #030202 0%, #212121 100%)'
+                : '#212121',
+            }}
+          />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,82,36,0.06)_0%,transparent_60%)] pointer-events-none -z-10" />
-          <div className="relative z-10 max-w-5xl w-full text-center flex flex-col items-center gap-8 py-16">
+          <div
+            className="relative z-10 max-w-5xl w-full text-center flex flex-col items-center gap-8 py-16"
+            style={{ paddingTop: i === 0 ? '2.5rem' : undefined }}
+          >
             <span className="text-[#FE6942] font-halyard tracking-widest uppercase" style={{ fontSize: style.tag }}>
               {story.tag}
             </span>
