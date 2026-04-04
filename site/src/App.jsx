@@ -4,7 +4,6 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import Navbar from './components/Navbar';
-import ScrollIntro from './components/ScrollIntro';
 import HeroLight from './components/HeroLight';
 import GradientTransition from './components/GradientTransition';
 import ScrollStorytelling from './components/ScrollStorytelling';
@@ -51,7 +50,6 @@ export default function App() {
     <div className="bg-[#212121] min-h-screen font-sans selection:bg-accent selection:text-[#050505]">
       <Navbar />
       <main>
-        <ScrollIntro />
         <HeroLight />
         <GradientTransition />
         <ScrollStorytelling />

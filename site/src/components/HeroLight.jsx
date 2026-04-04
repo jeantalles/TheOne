@@ -40,6 +40,7 @@ function CTAButton() {
 export default function HeroLight() {
   return (
     <section
+      data-navbar-theme="light"
       className="relative min-h-screen flex items-center justify-center"
       style={{
         background: '#F5F0EB',
@@ -51,19 +52,27 @@ export default function HeroLight() {
           className="font-sans font-normal tracking-tight leading-[1] text-transparent bg-clip-text bg-gradient-to-r from-[#FF5224] to-[#CC2200]"
           style={{ fontSize: '64px' }}
         >
-          Construímos marcas TheOne™
+          Construímos marcas TheOne
+          <span
+            style={{
+              fontSize: '0.62em',
+              verticalAlign: 'top',
+            }}
+          >
+            &trade;
+          </span>
         </h1>
 
         <h2
-          className="font-editorial font-normal italic"
+          className="font-editorial font-normal"
           style={{ fontSize: '42px', paddingTop: '20px', color: '#1A1A1A' }}
         >
           A única escolha na mente do seu cliente.
         </h2>
 
         <p
-          className="mx-auto max-w-2xl mb-12 font-light leading-[1.4] font-halyard"
-          style={{ fontSize: '25px', marginTop: '32px', color: '#4A4140' }}
+          className="mx-auto max-w-2xl mb-12 leading-[1.4] font-halyard"
+          style={{ fontSize: '25px', marginTop: '32px', color: '#4A4140', fontWeight: 400 }}
         >
           Para negócios visionários que não querem ser mais uma opção e buscam se tornar Top 1 no seu mercado.
         </p>

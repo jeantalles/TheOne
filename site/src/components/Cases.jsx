@@ -30,16 +30,11 @@ export default function Cases() {
   return (
     <section id="cases" className="bg-[#212121] py-32 px-6 md:px-12 lg:px-16 border-b border-white/5 font-halyard relative">
       <div className="max-w-[1700px] mx-auto">
-        <div className="flex flex-col mb-24 lg:mb-32">
-          <div className="text-stone-500 text-[40px] font-light mb-8 tracking-[0.05em] font-halyard">03 / RESULTADOS</div>
-          <h2 className="text-white text-[42px] md:text-[55px] font-light leading-[1.1] mb-6 md:w-2/3">
-            A prova de que a nossa construção cria <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224] font-normal">Marcas Inevitáveis™</span>
+        <div className="flex flex-col items-center text-center mb-24 lg:mb-32">
+          <h2 className="text-white text-[46px] md:text-[60px] font-light leading-[1.1] mb-6">
+            Marcas construídas <br className="hidden md:block" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224] font-normal">para liderar</span>
           </h2>
-          <p className="text-[#C7C7C7] text-xl font-light w-full md:w-1/2">
-            Nós não fazemos apenas design bonito; nós projetamos líderes de mercado. 
-            Conheça as histórias das empresas que se tornaram a única escolha lógica em seus segmentos.
-          </p>
         </div>
 
         <div className="flex flex-col items-center gap-24 md:gap-32 w-full">

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, MessageCircle, X } from 'lucide-react';
 
 const navLinks = [
   { name: 'O Diagnóstico', id: 'o-problema'  },
@@ -49,9 +49,36 @@ function useActiveSection() {
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [hovered, setHovered] = useState(null);
+  const [useDarkLogo, setUseDarkLogo] = useState(false);
   const { active, navigateTo } = useActiveSection();
 
   const pillTarget = hovered ?? active;
+
+  useEffect(() => {
+    const detectTheme = () => {
+      const probeY = 48;
+      const lightSections = document.querySelectorAll('[data-navbar-theme="light"]');
+      let isLightBackground = false;
+
+      lightSections.forEach((section) => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= probeY && rect.bottom >= probeY) {
+          isLightBackground = true;
+        }
+      });
+
+      setUseDarkLogo(isLightBackground);
+    };
+
+    window.addEventListener('scroll', detectTheme, { passive: true });
+    window.addEventListener('resize', detectTheme);
+    detectTheme();
+
+    return () => {
+      window.removeEventListener('scroll', detectTheme);
+      window.removeEventListener('resize', detectTheme);
+    };
+  }, []);
 
   return (
     <>
@@ -59,8 +86,8 @@ export default function Navbar() {
       <div
         className="fixed top-0 left-0 right-0 z-40 pointer-events-none"
         style={{
-          height: '140px',
-          background: 'rgba(128,128,128,0.18)',
+          height: '110px',
+          background: 'rgba(112,112,112,0.2)',
           backdropFilter: 'blur(24px)',
           WebkitBackdropFilter: 'blur(24px)',
           maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 38%, rgba(0,0,0,0) 100%)',
@@ -78,7 +105,7 @@ export default function Navbar() {
         {/* Logo */}
         <a href="#" className="flex items-center">
           <img
-            src="/logo-navbar.svg"
+            src={useDarkLogo ? '/logo-navbar-black.svg' : '/logo-navbar.svg'}
             alt="The One"
             style={{ height: '46px', width: 'auto', display: 'block' }}
           />
@@ -126,7 +153,7 @@ export default function Navbar() {
                   fontSize: '18px',
                   padding: '10px 22px',
                   borderRadius: '100px',
-                  color: pillTarget === l.id ? '#ffffff' : 'rgba(255,255,255,0.50)',
+                  color: pillTarget === l.id ? '#ffffff' : 'rgba(255,255,255,0.72)',
                 }}
               >
                 {l.name}
@@ -136,13 +163,30 @@ export default function Navbar() {
         </ul>
 
         {/* CTA desktop */}
-        <a
-          href="#contact"
-          className="hidden md:inline-flex items-center gap-2 font-sans capitalize text-white/50 hover:text-white transition-colors duration-150"
-          style={{ fontSize: '18px' }}
-        >
-          Agendar Diagnóstico
-        </a>
+        <div className="hidden md:flex items-center gap-4">
+          <a
+            href="https://wa.me/5511999999999"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="WhatsApp"
+            className="inline-flex items-center justify-center transition-colors duration-150 hover:text-[#1f1f1f]"
+            style={{
+              color: useDarkLogo ? 'rgba(44,44,44,0.88)' : '#F5F0ED',
+            }}
+          >
+            <MessageCircle size={20} strokeWidth={1.9} />
+          </a>
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 font-sans capitalize hover:text-[#1f1f1f] transition-colors duration-150"
+            style={{
+              fontSize: '18px',
+              color: useDarkLogo ? 'rgba(44,44,44,0.88)' : '#F5F0ED',
+            }}
+          >
+            Agendar Diagnóstico
+          </a>
+        </div>
 
         {/* Hamburguer mobile */}
         <button
@@ -170,7 +214,7 @@ export default function Navbar() {
               className="font-sans capitalize transition-colors"
               style={{
                 fontSize: '32px',
-                color: active === l.id ? '#ffffff' : 'rgba(255,255,255,0.5)',
+                color: active === l.id ? '#ffffff' : 'rgba(255,255,255,0.74)',
               }}
             >
               {l.name}

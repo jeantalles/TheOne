@@ -38,6 +38,7 @@ export default function GradientTransition() {
     */
     <div
       ref={containerRef}
+      data-navbar-theme="light"
       style={{
         backgroundColor: '#F5F0EB',
         width: '100%',

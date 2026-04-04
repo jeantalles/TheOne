@@ -33,79 +33,77 @@ export default function Methodology() {
         opacity: 0, y: -40, filter: 'blur(14px)', duration: 0.3
       });
 
-      // ══ PILAR 1 — Nó + Linha + Bullet esquerda passa pela tela ══════════
+      // ── Abertura: primeiro texto centralizado ──────────────────────────
+      tl.fromTo('.meth-bullet-1',
+        { opacity: 0, y: 32, filter: 'blur(18px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.45, ease: 'power3.out' }
+      );
+      tl.to({}, { duration: 0.35 });
+
+      // ══ PILAR 1 — Pirâmide surge com o primeiro texto em cena ══════════
+      tl.fromTo('.meth-pyramid-shell',
+        { opacity: 0, scale: 0.84, filter: 'blur(22px)' },
+        { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.65, ease: 'power3.out' }
+      );
       tl.fromTo('.meth-node-1',
         { y: -20, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.3, ease: 'power3.out' }
-      );
+      , '-=0.3');
       tl.to('.meth-line-1',
         { strokeDashoffset: 0, duration: 0.5, ease: 'none' },
         '-=0.15'
       );
-      // Bullet 1 entra de baixo (começa fora da tela), vai ao centro, sai pelo topo
-      tl.fromTo('.meth-bullet-1',
-        { y: '110vh', opacity: 0 },
-        { y: '0vh', opacity: 1, duration: 0.5, ease: 'power2.out' },
-        '-=0.2'
-      );
-      tl.to({}, { duration: 0.8 }); // pausa de leitura no centro
-      tl.to('.meth-bullet-1',
-        { y: '-110vh', opacity: 0, duration: 0.5, ease: 'power2.in' }
-      );
+      tl.to({}, { duration: 0.7 });
 
-      // ══ PILAR 2 — Nó + Linha + Bullet direita ═══════════════════════════
+      // ══ PILAR 2 — Troca para o segundo texto ════════════════════════════
+      tl.to('.meth-bullet-1',
+        { opacity: 0, y: -24, filter: 'blur(12px)', duration: 0.35, ease: 'power2.inOut' }
+      );
       tl.fromTo('.meth-node-2',
         { x: 20, opacity: 0 },
         { x: 0, opacity: 1, duration: 0.3, ease: 'power3.out' }
-      );
+      , '-=0.15');
       tl.to('.meth-line-2',
         { strokeDashoffset: 0, duration: 0.5, ease: 'none' },
         '-=0.15'
       );
       tl.fromTo('.meth-bullet-2',
-        { y: '110vh', opacity: 0 },
-        { y: '0vh', opacity: 1, duration: 0.5, ease: 'power2.out' },
-        '-=0.2'
+        { opacity: 0, y: 24, filter: 'blur(16px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.4, ease: 'power3.out' },
+        '-=0.25'
       );
-      tl.to({}, { duration: 0.8 });
-      tl.to('.meth-bullet-2',
-        { y: '-110vh', opacity: 0, duration: 0.5, ease: 'power2.in' }
-      );
+      tl.to({}, { duration: 0.7 });
 
-      // ══ PILAR 3 — Nó + Linha + Bullet esquerda ══════════════════════════
+      // ══ PILAR 3 — Troca para o terceiro texto + centro ══════════════════
+      tl.to('.meth-bullet-2',
+        { opacity: 0, y: -24, filter: 'blur(12px)', duration: 0.35, ease: 'power2.inOut' }
+      );
       tl.fromTo('.meth-node-3',
         { x: -20, opacity: 0 },
         { x: 0, opacity: 1, duration: 0.3, ease: 'power3.out' }
-      );
+      , '-=0.15');
       tl.to('.meth-line-3',
         { strokeDashoffset: 0, duration: 0.5, ease: 'none' },
         '-=0.15'
       );
-      // Bullet 3 e centro aparecem juntos
       tl.fromTo('.meth-bullet-3',
-        { y: '110vh', opacity: 0 },
-        { y: '0vh', opacity: 1, duration: 0.5, ease: 'power2.out' },
+        { opacity: 0, y: 24, filter: 'blur(16px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.4, ease: 'power3.out' },
         '-=0.2'
       );
+      tl.to({}, { duration: 0.45 });
+      tl.to('.meth-bullet-3',
+        { opacity: 0, y: -24, filter: 'blur(12px)', duration: 0.35, ease: 'power2.inOut' }
+      );
+      tl.to({}, { duration: 0.22 });
       tl.fromTo('.meth-center',
         { scale: 1.12, opacity: 0, filter: 'blur(20px)' },
-        { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 0.5, ease: 'power4.out' },
-        '-=0.4'
+        { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 0.55, ease: 'power4.out' }
       );
-      tl.to({}, { duration: 0.8 });
-      tl.to('.meth-bullet-3',
-        { y: '-110vh', opacity: 0, duration: 0.5, ease: 'power2.in' }
-      );
+      tl.to({}, { duration: 0.9 });
 
       // Pausa de leitura do resultado final
-      tl.to({}, { duration: 0.5 });
-
-      // ── Saída geral ───────────────────────────────────────────────────────
-      tl.to(
-        ['.meth-node-1', '.meth-node-2', '.meth-node-3',
-         '.meth-line-1', '.meth-line-2', '.meth-line-3', '.meth-center'],
-        { opacity: 0, y: -60, stagger: 0.03, duration: 0.5 }
-      );
+      tl.to({}, { duration: 0.8 });
     }, containerRef);
 
     return () => ctx.revert();
@@ -115,60 +113,55 @@ export default function Methodology() {
     <section
       id="metodologia"
       ref={containerRef}
-      className="bg-[#212121] border-b border-white/5 relative font-halyard h-screen overflow-hidden"
+      className="bg-[#212121] relative font-halyard h-screen overflow-hidden"
     >
       {/* Headline */}
       <div className="meth-headline absolute inset-0 flex flex-col items-center justify-center z-50 px-6 pointer-events-none">
-        <span className="text-[#FE6942] text-[12px] md:text-sm font-halyard tracking-widest uppercase block mb-4">
+        <span className="text-[#FE6942] text-[19px] md:text-[21px] font-halyard tracking-widest uppercase block mb-8">
           Nossa Metodologia
         </span>
-        <h2 className="font-editorial text-4xl md:text-5xl lg:text-6xl text-white text-center leading-[1.1] max-w-5xl">
+        <h2 className="font-editorial text-[43px] md:text-[58px] lg:text-[74px] text-white text-center leading-[1.1] max-w-5xl">
           A ciência por trás de uma <br />
           marca <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224] italic">TheOne.</span>
         </h2>
       </div>
 
-      {/* ── Bullets que passam pela tela ─────────────────────────────────── */}
-
-      {/* Bullet 1 — esquerda */}
+      {/* Textos da sequência */}
       <div
-        className="meth-bullet-1 absolute z-40 pointer-events-none hidden lg:block"
-        style={{ left: '5%', top: '50%', transform: 'translateY(-50%)', width: '300px', opacity: 0 }}
+        className="meth-bullet-1 absolute inset-0 z-40 pointer-events-none hidden lg:flex items-center justify-center px-6 pt-24 md:pt-28"
+        style={{ opacity: 0 }}
       >
-        <p className="font-sans font-normal text-[20px] xl:text-[24px] leading-relaxed text-[#C7C7C7]">
+        <p className="font-sans font-normal text-[24px] xl:text-[30px] leading-[1.45] text-[#C7C7C7] text-center max-w-[680px]">
           Nossa metodologia de construção de marca é baseada em{' '}
           <span className="text-white">pesquisa aprofundada em 3 pilares:</span>{' '}
           Seu cliente, seu negócio, seu mercado.
         </p>
       </div>
 
-      {/* Bullet 2 — direita */}
       <div
-        className="meth-bullet-2 absolute z-40 pointer-events-none hidden lg:block"
-        style={{ right: '5%', top: '50%', transform: 'translateY(-50%)', width: '280px', opacity: 0 }}
+        className="meth-bullet-2 absolute inset-0 z-40 pointer-events-none hidden lg:flex items-center justify-center px-6 pt-24 md:pt-28"
+        style={{ opacity: 0 }}
       >
-        <p className="font-sans font-normal text-[20px] xl:text-[24px] leading-relaxed text-[#C7C7C7] text-right">
+        <p className="font-sans font-normal text-[24px] xl:text-[30px] leading-[1.45] text-[#C7C7C7] text-center max-w-[620px]">
           Nós construímos marca baseado em{' '}
-          <span className="text-[#FF5224]">DADOS.</span>
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224]">dados.</span>
         </p>
       </div>
 
-      {/* Bullet 3 — esquerda */}
       <div
-        className="meth-bullet-3 absolute z-40 pointer-events-none hidden lg:block"
-        style={{ left: '5%', top: '50%', transform: 'translateY(-50%)', width: '300px', opacity: 0 }}
+        className="meth-bullet-3 absolute inset-0 z-40 pointer-events-none hidden lg:flex items-center justify-center px-6 pt-24 md:pt-28"
+        style={{ opacity: 0 }}
       >
-        <p className="font-sans font-normal text-[20px] xl:text-[24px] leading-relaxed text-[#C7C7C7]">
-          O entendimento profundo desses contextos nos permite posicionar sua marca de forma{' '}
-          <span className="text-white">inevitável.</span>
+        <p className="font-sans font-normal text-[24px] xl:text-[30px] leading-[1.45] text-[#C7C7C7] text-center max-w-[700px]">
+          O entendimento profundo do seu contexto nos permite construir sua marca com um...
         </p>
       </div>
 
       {/* ── Pirâmide centrada ─────────────────────────────────────────────── */}
-      <div className="relative w-full h-full flex items-center justify-center">
+      <div className="relative w-full h-full flex items-center justify-center pt-24 md:pt-28">
         <div
-          className="relative flex-shrink-0"
-          style={{ width: 'min(82vh, 720px)', height: 'min(82vh, 720px)' }}
+          className="meth-pyramid-shell relative flex-shrink-0 opacity-0"
+          style={{ width: 'min(96vh, 960px)', height: 'min(96vh, 960px)' }}
         >
           <svg
             width="100%"
@@ -194,38 +187,77 @@ export default function Methodology() {
           </svg>
 
           {/* Nó 1 — Topo (Cliente) */}
-          <div className="meth-node-1 absolute top-[13%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-20 opacity-0">
-            <div className="w-[72px] h-[72px] bg-[#212121] border border-[#FF5224]/40 flex items-center justify-center mb-3 rounded-full shadow-[0_0_48px_rgba(255,82,36,0.25)]">
-              <Users size={26} className="text-[#FED1C5]" />
+          <div className="meth-node-1 absolute top-[11.6%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-20 opacity-0">
+            <div className="relative w-[92px] h-[92px] flex items-center justify-center mb-2">
+              <svg
+                width="92"
+                height="92"
+                viewBox="0 0 92 92"
+                fill="none"
+                className="absolute inset-0 drop-shadow-[0_0_34px_rgba(255,82,36,0.18)]"
+              >
+                <circle cx="46" cy="46" r="37" stroke="url(#methodNodeGradient)" strokeWidth="5" />
+              </svg>
+              <div className="absolute inset-[9px] rounded-full bg-[#212121]" />
+              <Users size={33} className="relative z-10 text-[#FED1C5]" />
             </div>
-            <span className="text-white font-sans font-normal uppercase tracking-widest text-[14px]">Cliente</span>
+            <span className="text-white font-sans font-normal text-[19px] tracking-[0.02em] px-3 py-1 rounded-full shadow-[0_0_34px_rgba(33,33,33,0.98)] bg-[radial-gradient(circle,rgba(33,33,33,0.98)_0%,rgba(33,33,33,0.78)_46%,rgba(33,33,33,0)_82%)]">Cliente</span>
           </div>
 
           {/* Nó 2 — Baixo Direita (Negócio) */}
           <div className="meth-node-2 absolute top-[83%] left-[89%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-20 opacity-0">
-            <div className="w-[72px] h-[72px] bg-[#212121] border border-[#FF5224]/40 flex items-center justify-center mb-3 rounded-full shadow-[0_0_48px_rgba(255,82,36,0.25)]">
-              <Briefcase size={26} className="text-[#FED1C5]" />
+            <div className="relative w-[92px] h-[92px] flex items-center justify-center mb-2">
+              <svg
+                width="92"
+                height="92"
+                viewBox="0 0 92 92"
+                fill="none"
+                className="absolute inset-0 drop-shadow-[0_0_34px_rgba(255,82,36,0.18)]"
+              >
+                <circle cx="46" cy="46" r="37" stroke="url(#methodNodeGradient)" strokeWidth="5" />
+              </svg>
+              <div className="absolute inset-[9px] rounded-full bg-[#212121]" />
+              <Briefcase size={33} className="relative z-10 text-[#FED1C5]" />
             </div>
-            <span className="text-white font-sans font-normal uppercase tracking-widest text-[14px]">Negócio</span>
+            <span className="text-white font-sans font-normal text-[19px] tracking-[0.02em]">Negócio</span>
           </div>
 
-          {/* Nó 3 — Baixo Esquerda (Concorrentes) */}
+          {/* Nó 3 — Baixo Esquerda (Mercado) */}
           <div className="meth-node-3 absolute top-[83%] left-[11%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-20 opacity-0">
-            <div className="w-[72px] h-[72px] bg-[#212121] border border-[#FF5224]/40 flex items-center justify-center mb-3 rounded-full shadow-[0_0_48px_rgba(255,82,36,0.25)]">
-              <Target size={26} className="text-[#FED1C5]" />
+            <div className="relative w-[92px] h-[92px] flex items-center justify-center mb-2">
+              <svg
+                width="92"
+                height="92"
+                viewBox="0 0 92 92"
+                fill="none"
+                className="absolute inset-0 drop-shadow-[0_0_34px_rgba(255,82,36,0.18)]"
+              >
+                <circle cx="46" cy="46" r="37" stroke="url(#methodNodeGradient)" strokeWidth="5" />
+              </svg>
+              <div className="absolute inset-[9px] rounded-full bg-[#212121]" />
+              <Target size={33} className="relative z-10 text-[#FED1C5]" />
             </div>
-            <span className="text-white font-sans font-normal uppercase tracking-widest text-[14px]">Concorrentes</span>
+            <span className="text-white font-sans font-normal text-[19px] tracking-[0.02em]">Mercado</span>
           </div>
 
           {/* Centro — Posicionamento Inevitável */}
-          <div className="meth-center absolute top-[57%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 text-center w-[280px] md:w-[360px] opacity-0">
-            <p className="text-white font-editorial tracking-tight text-2xl md:text-3xl leading-none">
+          <div className="meth-center absolute top-[54%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 text-center w-[300px] md:w-[390px] opacity-0">
+            <p className="text-white font-editorial tracking-tight text-[30px] md:text-[40px] leading-none">
               Posicionamento
             </p>
-            <span className="font-editorial text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224] italic text-4xl md:text-6xl block mt-2 drop-shadow-[0_0_24px_rgba(255,82,36,0.35)]">
+            <span className="font-editorial text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224] text-[56px] md:text-[82px] block mt-2 leading-none">
               Inevitável
             </span>
           </div>
+
+          <svg width="0" height="0" className="absolute">
+            <defs>
+              <linearGradient id="methodNodeGradient" x1="4" y1="4" x2="80" y2="62" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#FFD7CD" />
+                <stop offset="1" stopColor="#FF4B1C" />
+              </linearGradient>
+            </defs>
+          </svg>
         </div>
       </div>
     </section>
