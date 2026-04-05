@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "theone-site",
+      "runtimeExecutable": "/usr/local/bin/node",
+      "runtimeArgs": ["/Users/jeantalles/The One/site/node_modules/.bin/vite"],
+      "port": 5173
+    }
+  ]
+}

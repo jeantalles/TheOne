@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, MessageCircle, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const navLinks = [
   { name: 'O Diagnóstico', id: 'o-problema'  },
@@ -9,6 +9,14 @@ const navLinks = [
   { name: 'Produtos',      id: 'solucoes'    },
   { name: 'Cases',         id: 'cases'       },
 ];
+
+function WhatsAppIcon(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
+      <path d="M19.05 4.94A9.84 9.84 0 0 0 12.03 2C6.56 2 2.1 6.45 2.1 11.92c0 1.75.46 3.46 1.32 4.97L2 22l5.27-1.38a9.9 9.9 0 0 0 4.75 1.21h.01c5.47 0 9.92-4.45 9.92-9.92a9.86 9.86 0 0 0-2.9-6.97Zm-7.02 15.22h-.01a8.23 8.23 0 0 1-4.19-1.15l-.3-.18-3.13.82.84-3.05-.2-.31a8.21 8.21 0 0 1-1.27-4.38c0-4.54 3.7-8.24 8.25-8.24 2.2 0 4.27.86 5.83 2.42a8.18 8.18 0 0 1 2.41 5.82c0 4.55-3.7 8.25-8.23 8.25Zm4.52-6.17c-.25-.13-1.47-.72-1.7-.81-.23-.08-.4-.12-.57.13-.17.25-.65.81-.8.98-.15.17-.3.19-.56.06-.25-.13-1.06-.39-2.02-1.25-.74-.66-1.24-1.48-1.38-1.73-.14-.25-.01-.39.11-.51.11-.11.25-.3.38-.44.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.44-.06-.13-.57-1.38-.78-1.89-.21-.5-.42-.43-.57-.44h-.49c-.17 0-.44.06-.67.32-.23.25-.88.86-.88 2.11 0 1.25.9 2.45 1.03 2.62.13.17 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.54.61.19 1.16.16 1.6.1.49-.07 1.47-.6 1.67-1.18.21-.58.21-1.08.15-1.18-.06-.1-.23-.17-.48-.29Z" />
+    </svg>
+  );
+}
 
 function useActiveSection() {
   const [active, setActive] = useState(null);
@@ -171,10 +179,10 @@ export default function Navbar() {
             aria-label="WhatsApp"
             className="inline-flex items-center justify-center transition-colors duration-150 hover:text-[#1f1f1f]"
             style={{
-              color: useDarkLogo ? 'rgba(44,44,44,0.88)' : '#F5F0ED',
+              color: '#000000',
             }}
           >
-            <MessageCircle size={20} strokeWidth={1.9} />
+            <WhatsAppIcon style={{ width: '20px', height: '20px', display: 'block' }} />
           </a>
           <a
             href="#contact"

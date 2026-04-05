@@ -1,0 +1,15 @@
+{
+  "version": 3,
+  "skills": {
+    "scroll-experience": {
+      "source": "xfstudio/skills",
+      "sourceType": "github",
+      "sourceUrl": "https://github.com/xfstudio/skills.git",
+      "skillPath": "scroll-experience/SKILL.md",
+      "skillFolderHash": "ce4f4526b270d858846a2f330bd02755ba3878e4",
+      "installedAt": "2026-04-05T16:54:10.944Z",
+      "updatedAt": "2026-04-05T16:54:10.944Z"
+    }
+  },
+  "dismissed": {}
+}

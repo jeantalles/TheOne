@@ -214,7 +214,6 @@ export default function AntigravityProducts() {
               </h2>
               <div className="text-stone-500 text-[31px] font-light mt-10 tracking-[0.05em] font-halyard">01 / PROJETO</div>
             </div>
-            <div className="hidden lg:block h-[360px] pointer-events-none" aria-hidden="true" />
           </div>
 
           <div className="flex-1">
@@ -284,7 +283,6 @@ export default function AntigravityProducts() {
               </h2>
               <div className="text-stone-500 text-[31px] font-light mt-10 tracking-[0.05em] font-halyard">02 / OPERAÇÃO</div>
             </div>
-            <div className="hidden lg:block h-[360px] pointer-events-none" aria-hidden="true" />
           </div>
 
           <div className="flex-1">
