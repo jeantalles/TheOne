@@ -1,5 +1,4 @@
 import { useRef, useEffect } from 'react';
-import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const BOTTOM_TRIM_PX = 100;
@@ -70,7 +69,12 @@ export default function GradientTransition() {
       >
         <div style={{ position: 'absolute', inset: 0 }}>
           <img
-            decoding="auto"
+            width="1920"
+            height="2448"
+            loading="lazy"
+            decoding="async"
+            fetchPriority="low"
+            sizes="100vw"
             src="/wv64XhA0rLzc6HRCKNntFNBWT4.png"
             alt=""
             style={{

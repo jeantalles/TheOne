@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import PrimaryCTAButton from './PrimaryCTAButton';
+import { usePrefersReducedMotion } from '../hooks/useMediaQuery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -98,6 +99,7 @@ function buildParticles(width, height) {
 }
 
 export default function FooterCTA() {
+  const prefersReducedMotion = usePrefersReducedMotion();
   const sectionRef = useRef(null);
   const stickyRef = useRef(null);
   const glowRef = useRef(null);
@@ -110,222 +112,273 @@ export default function FooterCTA() {
   const finalBodyRef = useRef(null);
 
   useEffect(() => {
+    const section = sectionRef.current;
     const canvas = canvasRef.current;
-    const ctx = canvas?.getContext('2d');
 
-    if (!canvas || !ctx) {
+    if (!section) {
       return undefined;
     }
 
-    let rafId = 0;
-    let scrollProgress = 0;
-    let particles = [];
-    let centerParticle = null;
-    let viewportWidth = window.innerWidth;
-    let viewportHeight = window.innerHeight;
-
-    const resizeCanvas = () => {
-      viewportWidth = window.innerWidth;
-      viewportHeight = window.innerHeight;
-
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = viewportWidth * dpr;
-      canvas.height = viewportHeight * dpr;
-      canvas.style.width = `${viewportWidth}px`;
-      canvas.style.height = `${viewportHeight}px`;
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.scale(dpr, dpr);
-
-      particles = buildParticles(viewportWidth, viewportHeight);
-      centerParticle = particles.find((particle) => particle.isCenter) ?? null;
-    };
-
-    const setSceneStyles = (progress) => {
-      const bgShift = easeInOut3(norm(progress, 0, 0.16));
-      const introExit = easeInOut3(norm(progress, 0.24, 0.39));
-      const centerAccent = easeInOut3(norm(progress, 0.44, 0.56));
-      const centerExpand = easeInOut3(norm(progress, 0.60, 0.76));
-      const takeover = easeInOut3(norm(progress, 0.68, 0.88));
-      const finalTitle = easeOut3(norm(progress, 0.80, 0.90));
-      const finalBody = easeOut3(norm(progress, 0.84, 0.96));
-      const baseBg = blendRgb(DARK_BG, WARM_BG, bgShift);
-
-      stickyRef.current.style.backgroundColor = mixColor(baseBg, ORANGE_END, takeover);
-
-      // Sincroniza o tema da Navbar com a cor de fundo animada
-      if (bgShift > 0.5 || takeover > 0.08) {
-        stickyRef.current.setAttribute('data-navbar-theme', 'light');
-      } else {
-        stickyRef.current.removeAttribute('data-navbar-theme');
+    if (prefersReducedMotion) {
+      stickyRef.current?.setAttribute('data-navbar-theme', 'light');
+      if (stickyRef.current) stickyRef.current.style.backgroundColor = 'rgb(245, 240, 236)';
+      if (glowRef.current) glowRef.current.style.opacity = '0.18';
+      if (grainRef.current) grainRef.current.style.opacity = '0.05';
+      if (finalWrapRef.current) finalWrapRef.current.style.pointerEvents = 'auto';
+      if (finalTitleRef.current) {
+        finalTitleRef.current.style.opacity = '1';
+        finalTitleRef.current.style.filter = 'none';
+        finalTitleRef.current.style.transform = 'none';
       }
-
-      glowRef.current.style.opacity = `${lerp(0.08, 0.34, Math.max(centerAccent * 0.8, centerExpand, takeover))}`;
-      glowRef.current.style.background = `
-        radial-gradient(circle at 50% 50%, rgba(255, 84, 39, ${lerp(0, 0.22, Math.max(centerAccent, centerExpand, takeover))}) 0%, rgba(255, 84, 39, 0) 46%),
-        radial-gradient(circle at 50% 50%, rgba(255, 182, 163, ${lerp(0, 0.12, centerAccent * (1 - takeover * 0.35))}) 0%, rgba(255, 182, 163, 0) 20%),
-        radial-gradient(circle at 22% 18%, rgba(255, 255, 255, ${lerp(0.08, 0.02, bgShift)}) 0%, rgba(255, 255, 255, 0) 34%)
-      `;
-
-      grainRef.current.style.opacity = `${lerp(0.1, 0.05, Math.max(bgShift, takeover))}`;
-
-      introRef.current.style.opacity = `${1 - introExit}`;
-      introRef.current.style.transform = `translateY(${lerp(0, -44, introExit).toFixed(1)}px) scale(${lerp(1, 0.94, introExit).toFixed(4)})`;
-
-      introWordRefs.current.forEach((word, index) => {
-        if (!word) return;
-
-        const wordIn = easeOut3(norm(progress, 0.04 + index * 0.018, 0.13 + index * 0.018));
-        const wordOut = easeInOut3(norm(progress, 0.25 + index * 0.016, 0.35 + index * 0.016));
-        const opacity = wordIn * (1 - wordOut);
-        const blur = lerp(22, 0, wordIn) + lerp(0, 18, wordOut);
-        const translateY = lerp(40, 0, wordIn) + lerp(0, -26, wordOut);
-
-        word.style.opacity = opacity.toFixed(3);
-        word.style.filter = `blur(${blur.toFixed(2)}px)`;
-        word.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0)`;
-      });
-
-      const titleBlur = lerp(18, 0, finalTitle);
-      const titleY = lerp(32, 0, finalTitle);
-      finalTitleRef.current.style.opacity = finalTitle.toFixed(3);
-      finalTitleRef.current.style.filter = titleBlur > 0.05 ? `blur(${titleBlur.toFixed(2)}px)` : 'none';
-      finalTitleRef.current.style.transform = titleY > 0.1 ? `translate3d(0, ${titleY.toFixed(1)}px, 0)` : 'none';
-
-      const bodyBlur = lerp(14, 0, finalBody);
-      const bodyY = lerp(24, 0, finalBody);
-      finalBodyRef.current.style.opacity = finalBody.toFixed(3);
-      finalBodyRef.current.style.filter = bodyBlur > 0.05 ? `blur(${bodyBlur.toFixed(2)}px)` : 'none';
-      finalBodyRef.current.style.transform = bodyY > 0.1 ? `translate3d(0, ${bodyY.toFixed(1)}px, 0)` : 'none';
-
-      finalWrapRef.current.style.pointerEvents = progress > 0.9 ? 'auto' : 'none';
-    };
-
-    const draw = () => {
-      ctx.clearRect(0, 0, viewportWidth, viewportHeight);
-
-      const buildGrid = easeOut3(norm(scrollProgress, 0.15, 0.50));
-      const centerAccent = easeInOut3(norm(scrollProgress, 0.44, 0.56));
-      const centerExpand = easeInOut3(norm(scrollProgress, 0.60, 0.76));
-      const takeover = easeInOut3(norm(scrollProgress, 0.68, 0.88));
-      const clearScene = easeOut3(norm(scrollProgress, 0.88, 0.98));
-      const sceneOpacity = easeOut3(norm(scrollProgress, 0.15, 0.25)) * (1 - easeOut3(norm(scrollProgress, 0.94, 1)));
-
-      const centerX = viewportWidth / 2;
-      const centerY = viewportHeight / 2;
-      const hugeCenter = Math.hypot(centerX, centerY) * 1.06;
-
-      for (let i = 0; i < particles.length; i += 1) {
-        const particle = particles[i];
-        if (particle.isCenter) {
-          continue;
-        }
-
-        const appear = easeOut3(clamp((buildGrid - particle.delay) / 0.13));
-
-        if (appear <= 0.001) {
-          continue;
-        }
-
-        const centerDistance = Math.hypot(particle.x - centerX, particle.y - centerY);
-        const distanceFactor = 1 - centerDistance / Math.hypot(centerX, centerY);
-        const fadeByTakeover = 1 - takeover * lerp(0.8, 1.12, distanceFactor);
-        const fadeByClear = 1 - clearScene;
-        const alpha = particle.alpha * appear * fadeByTakeover * fadeByClear * sceneOpacity;
-
-        if (alpha > 0.01) {
-          const radius = particle.radius * appear * lerp(1, 0.82, takeover);
-
-          ctx.beginPath();
-          ctx.arc(particle.x, particle.y, radius, 0, Math.PI * 2);
-          ctx.fillStyle = rgba(PARTICLE_GRAY, alpha.toFixed(3));
-          ctx.fill();
-        }
+      if (finalBodyRef.current) {
+        finalBodyRef.current.style.opacity = '1';
+        finalBodyRef.current.style.filter = 'none';
+        finalBodyRef.current.style.transform = 'none';
       }
-
-      if (centerParticle) {
-        const appear = easeOut3(clamp((buildGrid - centerParticle.delay) / 0.13));
-
-        if (appear > 0.001) {
-          const baseRadius = centerParticle.radius * appear;
-          const expandedRadius = baseRadius * lerp(1, viewportWidth < 768 ? 4.8 : 5.8, centerExpand);
-          const orbRadius = lerp(expandedRadius, hugeCenter, takeover);
-          const orbAlpha = clamp(centerParticle.alpha * appear * sceneOpacity * (1 - clearScene), 0, 1);
-
-          const grayAlpha = orbAlpha * (1 - centerAccent);
-          if (grayAlpha > 0.005) {
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, orbRadius, 0, Math.PI * 2);
-            ctx.fillStyle = rgba(PARTICLE_GRAY, grayAlpha.toFixed(3));
-            ctx.fill();
-          }
-
-          if (centerAccent > 0.005) {
-            const orangeAlpha = clamp(centerAccent * sceneOpacity * (1 - clearScene));
-            const orbGradient = ctx.createLinearGradient(
-              centerX - orbRadius,
-              centerY,
-              centerX + orbRadius,
-              centerY
-            );
-            orbGradient.addColorStop(0, `rgba(${ORANGE_START[0]}, ${ORANGE_START[1]}, ${ORANGE_START[2]}, ${orangeAlpha.toFixed(3)})`);
-            orbGradient.addColorStop(1, `rgba(${ORANGE_END[0]}, ${ORANGE_END[1]}, ${ORANGE_END[2]}, ${orangeAlpha.toFixed(3)})`);
-
-            ctx.beginPath();
-            ctx.arc(centerX, centerY, orbRadius, 0, Math.PI * 2);
-            ctx.fillStyle = orbGradient;
-            ctx.fill();
-          }
-        }
-      }
-
-      rafId = requestAnimationFrame(draw);
-    };
-
-    const onResize = () => {
-      resizeCanvas();
-      ScrollTrigger.refresh();
-    };
-
-    resizeCanvas();
-    setSceneStyles(0);
-    draw();
-
-    const fontReady = document.fonts?.ready;
-    if (fontReady) {
-      fontReady.then(() => {
-        resizeCanvas();
-        ScrollTrigger.refresh();
-      });
+      return undefined;
     }
 
-    const trigger = ScrollTrigger.create({
-      trigger: sectionRef.current,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: 0.85,
-      onUpdate(self) {
-        scrollProgress = self.progress;
-        setSceneStyles(scrollProgress);
-      },
-    });
+    if (!canvas) {
+      return undefined;
+    }
 
-    window.addEventListener('resize', onResize);
+    let cleanupScene;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting || cleanupScene) {
+          return;
+        }
+
+        const ctx = canvas.getContext('2d');
+
+        if (!ctx) {
+          return;
+        }
+
+        let rafId = 0;
+        let scrollProgress = 0;
+        let particles = [];
+        let centerParticle = null;
+        let viewportWidth = window.innerWidth;
+        let viewportHeight = window.innerHeight;
+
+        const resizeCanvas = () => {
+          viewportWidth = window.innerWidth;
+          viewportHeight = window.innerHeight;
+
+          // Cap DPR to keep the canvas effect crisp without overpainting on retina displays.
+          const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+          canvas.width = viewportWidth * dpr;
+          canvas.height = viewportHeight * dpr;
+          canvas.style.width = `${viewportWidth}px`;
+          canvas.style.height = `${viewportHeight}px`;
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+          ctx.scale(dpr, dpr);
+
+          particles = buildParticles(viewportWidth, viewportHeight);
+          centerParticle = particles.find((particle) => particle.isCenter) ?? null;
+        };
+
+        const setSceneStyles = (progress) => {
+          const bgShift = easeInOut3(norm(progress, 0, 0.16));
+          const introExit = easeInOut3(norm(progress, 0.24, 0.39));
+          const centerAccent = easeInOut3(norm(progress, 0.44, 0.56));
+          const centerExpand = easeInOut3(norm(progress, 0.60, 0.76));
+          const takeover = easeInOut3(norm(progress, 0.68, 0.88));
+          const finalTitle = easeOut3(norm(progress, 0.80, 0.90));
+          const finalBody = easeOut3(norm(progress, 0.84, 0.96));
+          const baseBg = blendRgb(DARK_BG, WARM_BG, bgShift);
+
+          stickyRef.current.style.backgroundColor = mixColor(baseBg, ORANGE_END, takeover);
+
+          if (bgShift > 0.5 || takeover > 0.08) {
+            stickyRef.current.setAttribute('data-navbar-theme', 'light');
+          } else {
+            stickyRef.current.removeAttribute('data-navbar-theme');
+          }
+
+          glowRef.current.style.opacity = `${lerp(0.08, 0.34, Math.max(centerAccent * 0.8, centerExpand, takeover))}`;
+          glowRef.current.style.background = `
+            radial-gradient(circle at 50% 50%, rgba(255, 84, 39, ${lerp(0, 0.22, Math.max(centerAccent, centerExpand, takeover))}) 0%, rgba(255, 84, 39, 0) 46%),
+            radial-gradient(circle at 50% 50%, rgba(255, 182, 163, ${lerp(0, 0.12, centerAccent * (1 - takeover * 0.35))}) 0%, rgba(255, 182, 163, 0) 20%),
+            radial-gradient(circle at 22% 18%, rgba(255, 255, 255, ${lerp(0.08, 0.02, bgShift)}) 0%, rgba(255, 255, 255, 0) 34%)
+          `;
+
+          grainRef.current.style.opacity = `${lerp(0.1, 0.05, Math.max(bgShift, takeover))}`;
+
+          introRef.current.style.opacity = `${1 - introExit}`;
+          introRef.current.style.transform = `translateY(${lerp(0, -44, introExit).toFixed(1)}px) scale(${lerp(1, 0.94, introExit).toFixed(4)})`;
+
+          introWordRefs.current.forEach((word, index) => {
+            if (!word) return;
+
+            const wordIn = easeOut3(norm(progress, 0.04 + index * 0.018, 0.13 + index * 0.018));
+            const wordOut = easeInOut3(norm(progress, 0.25 + index * 0.016, 0.35 + index * 0.016));
+            const opacity = wordIn * (1 - wordOut);
+            const blur = lerp(22, 0, wordIn) + lerp(0, 18, wordOut);
+            const translateY = lerp(40, 0, wordIn) + lerp(0, -26, wordOut);
+
+            word.style.opacity = opacity.toFixed(3);
+            word.style.filter = `blur(${blur.toFixed(2)}px)`;
+            word.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0)`;
+          });
+
+          const titleBlur = lerp(18, 0, finalTitle);
+          const titleY = lerp(32, 0, finalTitle);
+          finalTitleRef.current.style.opacity = finalTitle.toFixed(3);
+          finalTitleRef.current.style.filter = titleBlur > 0.05 ? `blur(${titleBlur.toFixed(2)}px)` : 'none';
+          finalTitleRef.current.style.transform = titleY > 0.1 ? `translate3d(0, ${titleY.toFixed(1)}px, 0)` : 'none';
+
+          const bodyBlur = lerp(14, 0, finalBody);
+          const bodyY = lerp(24, 0, finalBody);
+          finalBodyRef.current.style.opacity = finalBody.toFixed(3);
+          finalBodyRef.current.style.filter = bodyBlur > 0.05 ? `blur(${bodyBlur.toFixed(2)}px)` : 'none';
+          finalBodyRef.current.style.transform = bodyY > 0.1 ? `translate3d(0, ${bodyY.toFixed(1)}px, 0)` : 'none';
+
+          finalWrapRef.current.style.pointerEvents = progress > 0.9 ? 'auto' : 'none';
+        };
+
+        const draw = () => {
+          ctx.clearRect(0, 0, viewportWidth, viewportHeight);
+
+          const buildGrid = easeOut3(norm(scrollProgress, 0.15, 0.50));
+          const centerAccent = easeInOut3(norm(scrollProgress, 0.44, 0.56));
+          const centerExpand = easeInOut3(norm(scrollProgress, 0.60, 0.76));
+          const takeover = easeInOut3(norm(scrollProgress, 0.68, 0.88));
+          const clearScene = easeOut3(norm(scrollProgress, 0.88, 0.98));
+          const sceneOpacity = easeOut3(norm(scrollProgress, 0.15, 0.25)) * (1 - easeOut3(norm(scrollProgress, 0.94, 1)));
+
+          const centerX = viewportWidth / 2;
+          const centerY = viewportHeight / 2;
+          const hugeCenter = Math.hypot(centerX, centerY) * 1.06;
+
+          for (let i = 0; i < particles.length; i += 1) {
+            const particle = particles[i];
+            if (particle.isCenter) {
+              continue;
+            }
+
+            const appear = easeOut3(clamp((buildGrid - particle.delay) / 0.13));
+
+            if (appear <= 0.001) {
+              continue;
+            }
+
+            const centerDistance = Math.hypot(particle.x - centerX, particle.y - centerY);
+            const distanceFactor = 1 - centerDistance / Math.hypot(centerX, centerY);
+            const fadeByTakeover = 1 - takeover * lerp(0.8, 1.12, distanceFactor);
+            const fadeByClear = 1 - clearScene;
+            const alpha = particle.alpha * appear * fadeByTakeover * fadeByClear * sceneOpacity;
+
+            if (alpha > 0.01) {
+              const radius = particle.radius * appear * lerp(1, 0.82, takeover);
+
+              ctx.beginPath();
+              ctx.arc(particle.x, particle.y, radius, 0, Math.PI * 2);
+              ctx.fillStyle = rgba(PARTICLE_GRAY, alpha.toFixed(3));
+              ctx.fill();
+            }
+          }
+
+          if (centerParticle) {
+            const appear = easeOut3(clamp((buildGrid - centerParticle.delay) / 0.13));
+
+            if (appear > 0.001) {
+              const baseRadius = centerParticle.radius * appear;
+              const expandedRadius = baseRadius * lerp(1, viewportWidth < 768 ? 4.8 : 5.8, centerExpand);
+              const orbRadius = lerp(expandedRadius, hugeCenter, takeover);
+              const orbAlpha = clamp(centerParticle.alpha * appear * sceneOpacity * (1 - clearScene), 0, 1);
+
+              const grayAlpha = orbAlpha * (1 - centerAccent);
+              if (grayAlpha > 0.005) {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, orbRadius, 0, Math.PI * 2);
+                ctx.fillStyle = rgba(PARTICLE_GRAY, grayAlpha.toFixed(3));
+                ctx.fill();
+              }
+
+              if (centerAccent > 0.005) {
+                const orangeAlpha = clamp(centerAccent * sceneOpacity * (1 - clearScene));
+                const orbGradient = ctx.createLinearGradient(
+                  centerX - orbRadius,
+                  centerY,
+                  centerX + orbRadius,
+                  centerY
+                );
+                orbGradient.addColorStop(0, `rgba(${ORANGE_START[0]}, ${ORANGE_START[1]}, ${ORANGE_START[2]}, ${orangeAlpha.toFixed(3)})`);
+                orbGradient.addColorStop(1, `rgba(${ORANGE_END[0]}, ${ORANGE_END[1]}, ${ORANGE_END[2]}, ${orangeAlpha.toFixed(3)})`);
+
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, orbRadius, 0, Math.PI * 2);
+                ctx.fillStyle = orbGradient;
+                ctx.fill();
+              }
+            }
+          }
+
+          rafId = requestAnimationFrame(draw);
+        };
+
+        const onResize = () => {
+          resizeCanvas();
+          ScrollTrigger.refresh();
+        };
+
+        resizeCanvas();
+        setSceneStyles(0);
+        draw();
+
+        const fontReady = document.fonts?.ready;
+        if (fontReady) {
+          fontReady.then(() => {
+            resizeCanvas();
+            ScrollTrigger.refresh();
+          });
+        }
+
+        const trigger = ScrollTrigger.create({
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 0.85,
+          onUpdate(self) {
+            scrollProgress = self.progress;
+            setSceneStyles(scrollProgress);
+          },
+        });
+
+        window.addEventListener('resize', onResize);
+        observer.disconnect();
+
+        cleanupScene = () => {
+          cancelAnimationFrame(rafId);
+          window.removeEventListener('resize', onResize);
+          trigger.kill();
+        };
+      },
+      { rootMargin: '1200px 0px' }
+    );
+
+    observer.observe(section);
 
     return () => {
-      cancelAnimationFrame(rafId);
-      window.removeEventListener('resize', onResize);
-      trigger.kill();
+      observer.disconnect();
+      cleanupScene?.();
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   return (
     <section
       id="contact"
       ref={sectionRef}
       className="relative border-t border-white/5"
-      style={{ height: '560vh', backgroundColor: '#212121' }}
+      style={{ height: prefersReducedMotion ? '100vh' : '560vh', backgroundColor: '#212121' }}
     >
-      <div ref={stickyRef} className="sticky top-0 h-screen overflow-hidden">
+      <div
+        ref={stickyRef}
+        className="sticky top-0 h-screen overflow-hidden"
+        style={prefersReducedMotion ? { backgroundColor: '#F5F0EC' } : undefined}
+      >
         <div ref={glowRef} className="pointer-events-none absolute inset-0 z-0 opacity-20" />
 
         <div
@@ -341,12 +394,14 @@ export default function FooterCTA() {
           }}
         />
 
-        <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 z-10" />
+        {!prefersReducedMotion ? (
+          <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 z-10" />
+        ) : null}
 
         <div
           ref={introRef}
           className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-6"
-          style={{ willChange: 'transform, opacity' }}
+          style={prefersReducedMotion ? { display: 'none' } : { willChange: 'transform, opacity' }}
         >
           <h2
             className="max-w-[900px] text-center font-sans font-normal leading-[1.1] text-[#151311]"
@@ -376,15 +431,15 @@ export default function FooterCTA() {
         <div
           ref={finalWrapRef}
           className="absolute inset-0 z-40 flex items-center justify-center px-6"
-          style={{ pointerEvents: 'none' }}
+          style={{ pointerEvents: prefersReducedMotion ? 'auto' : 'none' }}
         >
           <div className="mx-auto flex w-full max-w-5xl flex-col items-center text-center">
             <h2
               ref={finalTitleRef}
               style={{
-                opacity: 0,
-                filter: 'blur(18px)',
-                transform: 'translate3d(0, 32px, 0)',
+                opacity: prefersReducedMotion ? 1 : 0,
+                filter: prefersReducedMotion ? 'none' : 'blur(18px)',
+                transform: prefersReducedMotion ? 'none' : 'translate3d(0, 32px, 0)',
                 willChange: 'transform, filter, opacity',
               }}
             >
@@ -421,9 +476,9 @@ export default function FooterCTA() {
               ref={finalBodyRef}
               className="mt-10 flex flex-col items-center"
               style={{
-                opacity: 0,
-                filter: 'blur(14px)',
-                transform: 'translate3d(0, 24px, 0)',
+                opacity: prefersReducedMotion ? 1 : 0,
+                filter: prefersReducedMotion ? 'none' : 'blur(14px)',
+                transform: prefersReducedMotion ? 'none' : 'translate3d(0, 24px, 0)',
                 willChange: 'transform, filter, opacity',
               }}
             >

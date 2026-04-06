@@ -11,6 +11,7 @@ import TheOneConclusion from './components/TheOneConclusion';
 import Methodology from './components/Methodology';
 import Audience from './components/Audience';
 import Products from './components/Products';
+import { usePrefersReducedMotion } from './hooks/useMediaQuery';
 
 // Below-fold heavy components — loaded lazily to reduce initial bundle
 const Cases = lazy(() => import('./components/Cases'));
@@ -23,8 +24,13 @@ ScrollTrigger.config({ limitCallbacks: true });
 
 export default function App() {
   const isDesignSystem = window.location.pathname === '/design-system';
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      return undefined;
+    }
+
     const lenis = new Lenis({
       duration: 1.5,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -36,14 +42,19 @@ export default function App() {
 
     lenis.on('scroll', ScrollTrigger.update);
 
+    let rafId = 0;
+
     function raf(time) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
-    return () => { lenis.destroy(); };
-  }, []);
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+    };
+  }, [prefersReducedMotion]);
 
   if (isDesignSystem) {
     return <Suspense fallback={null}><DesignSystem /></Suspense>;

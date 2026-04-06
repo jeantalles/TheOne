@@ -1,7 +1,14 @@
+import { lazy, Suspense } from 'react';
 import PrimaryCTAButton from './PrimaryCTAButton';
-import { MeshGradient } from '@paper-design/shaders-react';
+import { useMediaQuery, usePrefersReducedMotion } from '../hooks/useMediaQuery';
+
+const HeroMeshGradient = lazy(() => import('./HeroMeshGradient'));
 
 export default function HeroLight() {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const isLargeViewport = useMediaQuery('(min-width: 1024px)');
+  const shouldRenderAnimatedMesh = isLargeViewport && !prefersReducedMotion;
+
   return (
     <section
       data-navbar-theme="light"
@@ -14,14 +21,22 @@ export default function HeroLight() {
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 opacity-[0.95]">
-          <MeshGradient
-            speed={0.65}
-            scale={0.8}
-            distortion={0.16}
-            swirl={0}
-            colors={['#FFB19E', '#F3EBE4', '#F5EDE8', '#F3ECE5']}
-            style={{ width: '100%', height: '100%' }}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: `
+                radial-gradient(circle at 20% 15%, rgba(255, 177, 158, 0.95) 0%, rgba(255, 177, 158, 0) 34%),
+                radial-gradient(circle at 82% 18%, rgba(255, 214, 200, 0.72) 0%, rgba(255, 214, 200, 0) 28%),
+                radial-gradient(circle at 50% 78%, rgba(255, 240, 231, 0.9) 0%, rgba(255, 240, 231, 0) 38%),
+                linear-gradient(180deg, #f5eee8 0%, #f2e9e2 100%)
+              `,
+            }}
           />
+          {shouldRenderAnimatedMesh ? (
+            <Suspense fallback={null}>
+              <HeroMeshGradient />
+            </Suspense>
+          ) : null}
         </div>
         <div
           className="absolute inset-0"

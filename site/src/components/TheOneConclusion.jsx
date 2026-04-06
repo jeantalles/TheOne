@@ -82,6 +82,12 @@ export default function TheOneConclusion() {
           <img
             src="/theone-hand.jpg"
             alt="The One #1 Hand"
+            width="1024"
+            height="681"
+            loading="lazy"
+            decoding="async"
+            fetchPriority="low"
+            sizes="(min-width: 768px) 45vw, 100vw"
             className="w-full h-full object-cover opacity-90 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
           />
 

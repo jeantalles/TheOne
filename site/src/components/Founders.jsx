@@ -14,6 +14,8 @@ const founders = [
       'Fundador e idealizador da TheOne, consultoria que empodera empresários visionários no Brasil.',
     ],
     img: '/images/Jean.jpeg',
+    width: 1530,
+    height: 2012,
   },
   {
     number: '02',
@@ -26,6 +28,8 @@ const founders = [
       'Hoje conduz diagnósticos e direcionamentos estratégicos para o crescimento de empresas.',
     ],
     img: '/images/Pedro.jpeg',
+    width: 1490,
+    height: 2042,
   },
 ];
 
@@ -102,9 +106,13 @@ export default function Founders() {
                   >
                     <img
                       src={f.img}
-                      alt=""
+                      alt={f.name}
+                      width={f.width}
+                      height={f.height}
                       loading="lazy"
                       decoding="async"
+                      fetchPriority="low"
+                      sizes="(min-width: 768px) 40vw, 100vw"
                       onError={(e) => { e.currentTarget.style.display = 'none'; }}
                       className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.04]"
                     />

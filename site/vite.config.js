@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import { readFileSync, writeFileSync } from 'fs'
+import process from 'node:process'
 
 // Inline critical CSS and load the rest async (eliminates render-blocking stylesheet)
 function viteCritters() {

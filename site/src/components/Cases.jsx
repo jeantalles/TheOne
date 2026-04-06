@@ -13,21 +13,21 @@ const CASES = [
     title: 'Zenic',
     subtitle: 'Construção de Marca',
     result: '+300% de percepção de valor',
-    image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1600&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=75&w=1200&auto=format&fit=crop&fm=webp',
   },
   {
     id: 2,
     title: 'Thunders Tecnologia',
     subtitle: 'Reposicionamento de Marca',
     result: 'Liderança regional garantida',
-    image: 'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?q=80&w=1600&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?q=75&w=1200&auto=format&fit=crop&fm=webp',
   },
   {
     id: 3,
     title: 'Camilla Toscano',
     subtitle: 'Construção de Marca Pessoal',
     result: 'Aquisição Série A de $10M',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1600&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=75&w=1200&auto=format&fit=crop&fm=webp',
   },
 ];
 
