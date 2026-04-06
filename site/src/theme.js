@@ -41,18 +41,15 @@ export const fontSizes = {
 };
 
 export const animation = {
-  // Easing curves
-  easeSharp: [0.77, 0, 0.175, 1],
-  easeSmooth: [0.23, 1, 0.32, 1],
+  // Easing curves (padrão GSAP ou compatíveis)
+  easeSharp: "power4.inOut",
+  easeSmooth: "power3.out",
 
-  // Durações comuns (ms → segundos para framer-motion)
-  fast: 0.16,
-  normal: 0.3,
+  // Durações comuns (segundos)
+  fast: 0.2,
+  normal: 0.4,
   slow: 0.8,
   verySlow: 1.2,
-
-  // Spring config do botão magnético
-  magneticSpring: { stiffness: 150, damping: 15 },
 
   // Scroll scrub padrão para GSAP
   scrub: 1.5,

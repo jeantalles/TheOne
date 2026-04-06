@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { gsap } from 'gsap';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
@@ -20,7 +20,6 @@ function WhatsAppIcon(props) {
 
 function useActiveSection() {
   const [active, setActive] = useState(null);
-  // Guarda o id clicado para ignorar o scroll durante a animação de smooth scroll
   const navigatingTo = useRef(null);
 
   const detect = () => {
@@ -32,7 +31,6 @@ function useActiveSection() {
       if (!el) continue;
       if (el.getBoundingClientRect().top <= threshold) current = id;
     }
-    // Só atualiza se não há navegação em curso, ou se já chegamos ao destino
     if (!navigatingTo.current || navigatingTo.current === current) {
       navigatingTo.current = null;
       setActive(current);
@@ -59,10 +57,21 @@ export default function Navbar() {
   const [hovered, setHovered] = useState(null);
   const [useDarkLogo, setUseDarkLogo] = useState(false);
   const { active, navigateTo } = useActiveSection();
+  
+  const navRef = useRef(null);
+  const menuRef = useRef(null);
+  const pillRef = useRef(null);
+  const linksRef = useRef({});
 
   const pillTarget = hovered ?? active;
 
   useEffect(() => {
+    // Entrance animation
+    gsap.fromTo(navRef.current, 
+      { y: -20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", delay: 0.2 }
+    );
+
     const detectTheme = () => {
       const probeY = 48;
       const lightSections = document.querySelectorAll('[data-navbar-theme="light"]');
@@ -88,9 +97,52 @@ export default function Navbar() {
     };
   }, []);
 
+  // Pill animation
+  useEffect(() => {
+    if (pillTarget && linksRef.current[pillTarget]) {
+      const linkEl = linksRef.current[pillTarget];
+      const liEl = linkEl.parentElement;
+      
+      if (!liEl) return;
+
+      const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = liEl;
+
+      gsap.to(pillRef.current, {
+        x: offsetLeft,
+        y: offsetTop,
+        width: offsetWidth,
+        height: offsetHeight,
+        opacity: 1,
+        duration: 0.4,
+        ease: "power3.out"
+      });
+    } else {
+      gsap.to(pillRef.current, {
+        opacity: 0,
+        duration: 0.3
+      });
+    }
+  }, [pillTarget]);
+
+  // Mobile menu animation
+  useEffect(() => {
+    if (menuOpen) {
+      gsap.to(menuRef.current, {
+        clipPath: 'inset(0 0 0 0)',
+        duration: 0.4,
+        ease: "power2.inOut"
+      });
+    } else {
+      gsap.to(menuRef.current, {
+        clipPath: 'inset(0 0 100% 0)',
+        duration: 0.4,
+        ease: "power2.inOut"
+      });
+    }
+  }, [menuOpen]);
+
   return (
     <>
-      {/* Gradiente fadeout fixo no topo */}
       <div
         className="fixed top-0 left-0 right-0 z-40 pointer-events-none"
         style={{
@@ -103,14 +155,11 @@ export default function Navbar() {
         }}
       />
 
-      <motion.nav
-        initial={{ y: -20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1], delay: 0.2 }}
+      <nav
+        ref={navRef}
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 md:px-16"
-        style={{ height: '72px', paddingTop: '20px' }}
+        style={{ height: '72px', paddingTop: '20px', opacity: 0 }}
       >
-        {/* Logo */}
         <a href="#" className="flex items-center">
           <img
             src={useDarkLogo ? '/logo-navbar-black.svg' : '/logo-navbar.svg'}
@@ -119,7 +168,6 @@ export default function Navbar() {
           />
         </a>
 
-        {/* Links desktop — pill container */}
         <ul
           className="absolute left-1/2 hidden -translate-x-1/2 md:flex items-center p-1 gap-1"
           style={{
@@ -130,33 +178,31 @@ export default function Navbar() {
             WebkitBackdropFilter: 'blur(28px)',
           }}
         >
+          {/* Animated Pill */}
+          <div
+            ref={pillRef}
+            className="absolute pointer-events-none"
+            style={{
+              top: 0,
+              left: 0,
+              borderRadius: '100px',
+              background: 'rgba(255,255,255,0.10)',
+              border: '1px solid rgba(255,255,255,0.14)',
+              opacity: 0,
+              zIndex: 0
+            }}
+          />
+
           {navLinks.map((l) => (
-            <li key={l.id} className="relative"
+            <li key={l.id} className="relative z-10"
               onMouseEnter={() => setHovered(l.id)}
               onMouseLeave={() => setHovered(null)}
             >
-              <AnimatePresence>
-                {pillTarget === l.id && (
-                  <motion.div
-                    key="pill"
-                    layoutId="nav-pill"
-                    className="absolute inset-0 pointer-events-none"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    style={{
-                      borderRadius: '100px',
-                      background: 'rgba(255,255,255,0.10)',
-                      border: '1px solid rgba(255,255,255,0.14)',
-                    }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 38 }}
-                  />
-                )}
-              </AnimatePresence>
               <a
+                ref={(el) => (linksRef.current[l.id] = el)}
                 href={`#${l.id}`}
                 onClick={(e) => { e.preventDefault(); navigateTo(l.id); }}
-                className="relative z-10 block font-sans capitalize transition-colors duration-150"
+                className="block font-sans capitalize transition-colors duration-150"
                 style={{
                   fontSize: '18px',
                   padding: '10px 22px',
@@ -170,7 +216,6 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* CTA desktop */}
         <div className="hidden md:flex items-center gap-4 ml-auto">
           <a
             href="#contact"
@@ -201,21 +246,18 @@ export default function Navbar() {
           </a>
         </div>
 
-        {/* Hamburguer mobile */}
         <button
           className="md:hidden text-white z-[60]"
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? <X size={26} /> : <Menu size={26} />}
         </button>
-      </motion.nav>
+      </nav>
 
-      {/* Menu mobile */}
-      <motion.div
-        initial={false}
-        animate={{ clipPath: menuOpen ? 'inset(0 0 0 0)' : 'inset(0 0 100% 0)' }}
-        transition={{ duration: 0.4, ease: [0.77, 0, 0.175, 1] }}
+      <div
+        ref={menuRef}
         className="fixed inset-0 z-40 bg-[#212121] pt-32 px-8 flex flex-col pointer-events-none data-[open=true]:pointer-events-auto"
+        style={{ clipPath: 'inset(0 0 100% 0)' }}
         data-open={menuOpen}
       >
         <div className="flex flex-col gap-8">
@@ -234,7 +276,7 @@ export default function Navbar() {
             </a>
           ))}
         </div>
-      </motion.div>
+      </div>
     </>
   );
 }

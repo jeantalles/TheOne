@@ -84,7 +84,6 @@ export default function ScrollStorytelling() {
           <span
             key={i}
             className="rev-word inline-block mr-[0.3em]"
-            style={{ willChange: 'filter, opacity, transform' }}
           >
             {word}
           </span>
@@ -124,7 +123,7 @@ export default function ScrollStorytelling() {
             <span
               key={`${partIdx}-${wordIdx}`}
               className="rev-word inline-block mr-[0.3em]"
-              style={{ willChange: 'filter, opacity, transform', ...part.style }}
+              style={{ ...part.style }}
             >
               {word}
             </span>

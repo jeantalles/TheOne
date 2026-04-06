@@ -10,7 +10,7 @@ import ScrollStorytelling from './components/ScrollStorytelling';
 import TheOneConclusion from './components/TheOneConclusion';
 import Methodology from './components/Methodology';
 import Audience from './components/Audience';
-import AntigravityProducts from './components/AntigravityProducts';
+import Products from './components/Products';
 import Cases from './components/Cases';
 import Founders from './components/Founders';
 import FooterCTA from './components/FooterCTA';
@@ -56,7 +56,7 @@ export default function App() {
         <TheOneConclusion />
         <Methodology />
         <Audience />
-        <AntigravityProducts />
+        <Products />
         <Cases />
         <Founders />
         <FooterCTA />

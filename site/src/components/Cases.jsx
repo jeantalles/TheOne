@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUp } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -424,14 +423,31 @@ export default function Cases() {
             style={{ gridColumn: '1', gridRow: '1', zIndex: 10, alignSelf: 'start', pointerEvents: 'none' }}
           >
             <div ref={folderWrapRef} className="will-change-transform" style={{ width: 'min(520px, 88vw)', pointerEvents: 'auto' }}>
-              <motion.button
+              <button
                 type="button"
                 onClick={handleOpen}
                 disabled={openState !== 'closed'}
                 aria-expanded={isOpen}
-                whileHover={openState === 'closed' ? { scale: 1.015, y: -3 } : undefined}
-                whileTap={openState === 'closed' ? { scale: 0.975 } : undefined}
-                transition={{ type: 'spring', stiffness: 320, damping: 20, mass: 0.85 }}
+                onMouseEnter={(e) => {
+                  if (openState === 'closed') {
+                    gsap.to(e.currentTarget, { scale: 1.015, y: -3, duration: 0.4, ease: 'power3.out', overwrite: 'auto' });
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (openState === 'closed') {
+                    gsap.to(e.currentTarget, { scale: 1, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)', overwrite: 'auto' });
+                  }
+                }}
+                onPointerDown={(e) => {
+                  if (openState === 'closed') {
+                    gsap.to(e.currentTarget, { scale: 0.975, duration: 0.2, ease: 'power2.out', overwrite: 'auto' });
+                  }
+                }}
+                onPointerUp={(e) => {
+                  if (openState === 'closed') {
+                    gsap.to(e.currentTarget, { scale: 1.015, y: -3, duration: 0.4, ease: 'elastic.out(1, 0.4)', overwrite: 'auto' });
+                  }
+                }}
                 className={`group relative block w-full focus:outline-none ${openState === 'closed' ? 'cursor-pointer' : 'cursor-default'}`}
                 style={{ aspectRatio: '1.18 / 1', perspective: '1600px' }}
               >
@@ -520,12 +536,12 @@ export default function Cases() {
                   {/* Edge highlight */}
                   <div className="pointer-events-none absolute inset-[1px] rounded-[42px] border border-white/10 opacity-70" />
                 </div>
-              </motion.button>
+              </button>
               <div
                 className={`mt-6 flex justify-center transition-all duration-500 ${openState === 'closed' ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'}`}
                 aria-hidden={openState !== 'closed'}
               >
-                <p className="text-center font-halyard text-[0.95rem] md:text-[1.05rem] tracking-[0.08em] text-white/58">
+                <p className="text-center font-halyard font-light text-[0.85rem] md:text-[0.95rem] tracking-[0.12em] text-white/40 uppercase">
                   ↑ Clique para abrir ↑
                 </p>
               </div>

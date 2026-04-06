@@ -80,7 +80,7 @@ export default function HeroLight() {
           className="mx-auto mb-12 max-w-[35rem] leading-[1.35] font-halyard"
           style={{
             fontSize: 'clamp(1.275rem, 1.7vw, 1.875rem)',
-            marginTop: '28px',
+            marginTop: '38px',
             color: 'rgba(74, 65, 64, 0.88)',
             fontWeight: 400,
           }}

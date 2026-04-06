@@ -1,44 +1,38 @@
-import { useRef, useState } from 'react';
-import { motion, useSpring } from 'framer-motion';
+import { useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
 
 export default function Magnetic({ children, strength = 0.2 }) {
   const ref = useRef(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const springX = useSpring(position.x, { stiffness: 150, damping: 15 });
-  const springY = useSpring(position.y, { stiffness: 150, damping: 15 });
-  const rectRef = useRef(null);
+  const xTo = useRef(null);
+  const yTo = useRef(null);
 
-  const handleMouseEnter = () => {
-    if (ref.current) rectRef.current = ref.current.getBoundingClientRect();
-  };
+  useEffect(() => {
+    xTo.current = gsap.quickTo(ref.current, "x", { duration: 1, ease: "elastic.out(1, 0.3)" });
+    yTo.current = gsap.quickTo(ref.current, "y", { duration: 1, ease: "elastic.out(1, 0.3)" });
+  }, []);
 
   const handleMouse = (e) => {
-    if (!rectRef.current) return;
     const { clientX, clientY } = e;
-    const { height, width, left, top } = rectRef.current;
-
-    // Utilize rAF for ultra-smooth rendering to prevent Layout Thrashing on high-hz displays
-    requestAnimationFrame(() => {
-      const middleX = clientX - (left + width / 2);
-      const middleY = clientY - (top + height / 2);
-      setPosition({ x: middleX * strength, y: middleY * strength });
-    });
+    const { height, width, left, top } = ref.current.getBoundingClientRect();
+    const x = clientX - (left + width / 2);
+    const y = clientY - (top + height / 2);
+    xTo.current(x * strength);
+    yTo.current(y * strength);
   };
 
   const reset = () => {
-    setPosition({ x: 0, y: 0 });
-    rectRef.current = null;
+    xTo.current(0);
+    yTo.current(0);
   };
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      onMouseEnter={handleMouseEnter}
       onMouseMove={handleMouse}
       onMouseLeave={reset}
-      style={{ x: springX, y: springY, display: 'inline-block' }}
+      style={{ display: 'inline-block' }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

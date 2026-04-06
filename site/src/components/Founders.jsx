@@ -74,13 +74,10 @@ export default function Founders() {
 
         {/* Header */}
         <div className="mb-20">
-          <span className="text-[#FE6942] text-[12px] tracking-widest uppercase block mb-5 font-halyard">
-            Liderança
-          </span>
           <h2 className="font-editorial text-4xl md:text-5xl lg:text-[56px] text-white leading-[1.1]">
-            Quem está por trás{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224] italic">
-              da TheOne.
+            Quem está por trás da{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224]">
+              TheOne.
             </span>
           </h2>
         </div>

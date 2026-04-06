@@ -153,15 +153,15 @@ export default function Methodology() {
         style={{ opacity: 0 }}
       >
         <p className="font-sans font-normal text-[22px] xl:text-[28px] leading-[1.55] text-[#C7C7C7] text-center max-w-[980px]">
-          Se entendemos profundamente:
+          <span className="font-light">Se entendemos profundamente:</span>
           <br />
-          1. O que o público precisa, deseja, tem medo
+          <span className="text-[#FE6942]">1.</span> O que o público precisa, deseja, tem medo
           <br />
-          2. Como os concorrentes se posicionam e se vendem
+          <span className="text-[#FE6942]">2.</span> Como os concorrentes se posicionam e se vendem
           <br />
-          3. Nossa solução, transformação e onde nos diferenciamos
+          <span className="text-[#FE6942]">3.</span> Nossa solução, transformação e onde nos diferenciamos
           <br />
-          Conseguimos construir um...
+          <span className="font-light">Conseguimos construir um...</span>
         </p>
       </div>
 

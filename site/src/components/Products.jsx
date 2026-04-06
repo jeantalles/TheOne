@@ -1,5 +1,8 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 function GradientStrokeDefs() {
   return (
@@ -93,100 +96,121 @@ function ProductIcon({ name, size = 54 }) {
   return icons[name] || null;
 }
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.985, filter: "blur(10px)" },
-  visible: (delay) => ({
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    filter: "blur(0px)",
-    transition: { duration: 0.85, ease: [0.23, 1, 0.32, 1], delay },
-  }),
-  hover: { opacity: 1, y: 0 },
-};
-
-const iconVariants = {
-  hidden: { opacity: 0, scale: 0.75, y: 10 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.23, 1, 0.32, 1], delay: 0.08 },
-  },
-};
-
-const contentVariants = {
-  hidden: { opacity: 0, y: 18 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: [0.23, 1, 0.32, 1], delay: 0.14 },
-  },
-};
-
-const textVariants = {
-  hidden: { y: 10, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 0.7,
-    transition: { duration: 0.55, ease: [0.23, 1, 0.32, 1], delay: 0.2 },
-  },
-  hover: { y: -3, opacity: 1 },
-};
-
 const FeatureCard = React.memo(({ icon, title, text, style, index = 0 }) => {
+  const cardRef = useRef(null);
+  const iconRef = useRef(null);
+  const contentRef = useRef(null);
+  const textRef = useRef(null);
+
+  useEffect(() => {
+    const card = cardRef.current;
+    
+    // Configuração Inicial (antes de animar)
+    gsap.set(card, { opacity: 0, y: 40, scale: 0.985, filter: "blur(10px)" });
+    gsap.set(iconRef.current, { opacity: 0, scale: 0.75, y: 10 });
+    gsap.set(contentRef.current, { opacity: 0, y: 18 });
+    gsap.set(textRef.current, { opacity: 0, y: 10 });
+
+    ScrollTrigger.create({
+      trigger: card,
+      start: "top 92%",
+      once: true,
+      onEnter: () => {
+        const tl = gsap.timeline({ delay: index * 0.18 });
+        tl.to(card, { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.85, ease: "power3.out" }, 0)
+          .to(iconRef.current, { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: "power3.out" }, 0.08)
+          .to(contentRef.current, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.14)
+          .to(textRef.current, { opacity: 0.7, y: 0, duration: 0.55, ease: "power3.out" }, 0.2);
+          
+        card.addEventListener('mouseenter', () => {
+          gsap.to(textRef.current, { y: -3, opacity: 1, duration: 0.3, ease: 'power2.out', overwrite: 'auto' });
+        });
+        card.addEventListener('mouseleave', () => {
+          gsap.to(textRef.current, { y: 0, opacity: 0.7, duration: 0.4, ease: 'power2.out', overwrite: 'auto' });
+        });
+      }
+    });
+  }, [index]);
+
   return (
-    <motion.div
-      variants={cardVariants}
-      custom={index * 0.18}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.35, margin: "-8% 0px -8% 0px" }}
-      whileHover="hover"
+    <div
+      ref={cardRef}
       className="flex gap-10 items-start group relative p-6 -mx-6 -my-6 rounded-3xl hover:bg-[#ffffff05] border border-transparent hover:border-[#ffffff10] transition-colors duration-500 ease-out will-change-transform cursor-default"
     >
-      <motion.div
-        variants={iconVariants}
+      <div
+        ref={iconRef}
         className="w-[60px] h-[60px] shrink-0 flex items-center justify-center relative"
       >
         <div className="absolute inset-0 bg-accent/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         <ProductIcon name={icon} />
-      </motion.div>
-      <motion.div variants={contentVariants}>
+      </div>
+      <div ref={contentRef}>
         <h4 className="text-white font-normal mb-3 font-halyard transition-colors duration-500 group-hover:text-accent drop-shadow-md" style={{ fontSize: style.titulosBox }}>{title}</h4>
-        <motion.p
-          variants={textVariants}
+        <p
+          ref={textRef}
           className="text-[#C7C7C7] font-light leading-[1.3] font-halyard"
           style={{ fontSize: style.textoBox }}
         >
           {text}
-        </motion.p>
-      </motion.div>
-    </motion.div>
+        </p>
+      </div>
+    </div>
   );
 });
 
-export default function AntigravityProducts() {
-  // MODIFIQUE OS TAMANHOS DE FONTE AQUI:
+export default function Products() {
   const style = {
-    titulosGrandes: "55px",    // TheBrand, Consultoria, Assessoria
-    titulosBox: "26px",       // Estratégia, Identidade, Sistema de Conteúdo, etc.
-    textoGrande: "21px",      // Parágrafos principais (Ex: "Para negócios visionários...")
-    textoBox: "19px",         // Descrições técnicas dentro dos boxes cinzas
+    titulosGrandes: "57px",
+    titulosBox: "28px",
+    textoGrande: "23px",
+    textoBox: "21px",
   };
+
+  const containerRef = useRef(null);
+  const headerRef = useRef(null);
+  const section1Ref = useRef(null);
+  const section2Ref = useRef(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      // Animação do Cabeçalho
+      gsap.fromTo(headerRef.current, 
+        { opacity: 0.2, y: 28, filter: "blur(14px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.95, ease: "power3.out", 
+          scrollTrigger: { trigger: headerRef.current, start: "top 90%", once: true } 
+        }
+      );
+      
+      // Animação Seção 01 / PROJETO
+      gsap.fromTo(section1Ref.current,
+        { opacity: 0, y: 64 },
+        { opacity: 1, y: 0, duration: 0.9, ease: "power3.out",
+          scrollTrigger: { trigger: section1Ref.current, start: "top 85%", once: true }
+        }
+      );
+
+      // Animação Seção 02 / OPERAÇÃO (antes não tinha, adicionei pra ficar fluido)
+      gsap.fromTo(section2Ref.current,
+        { opacity: 0, y: 64 },
+        { opacity: 1, y: 0, duration: 0.9, ease: "power3.out",
+          scrollTrigger: { trigger: section2Ref.current, start: "top 85%", once: true }
+        }
+      );
+
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
 
   return (
     <section
+      ref={containerRef}
       id="solucoes"
       className="bg-[#212121] py-32 px-6 md:px-12 lg:px-16 border-b border-white/5 relative font-halyard"
     >
       <GradientStrokeDefs />
       <div className="max-w-[1700px] mx-auto">
-        <motion.div
-          initial={{ opacity: 0.2, y: 28, filter: "blur(14px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          viewport={{ once: true, amount: 0.92, margin: "0px 0px -10% 0px" }}
-          transition={{ duration: 0.95, ease: [0.23, 1, 0.32, 1] }}
+        <div
+          ref={headerRef}
           className="flex flex-col items-center justify-center text-center pt-8 md:pt-10 pb-[100px] mb-24 lg:mb-32"
         >
           <h1 className="text-white text-[36px] md:text-[54px] lg:text-[62px] font-normal leading-[1.08] tracking-[-0.02em] font-editorial whitespace-nowrap">
@@ -195,14 +219,11 @@ export default function AntigravityProducts() {
           <p className="mt-6 text-[#C7C7C7] text-[29px] font-light font-halyard">
             Seu projeto será desenhado de forma personalizada.
           </p>
-        </motion.div>
+        </div>
 
         {/* 01 / PROJETO */}
-        <motion.div
-          initial={{ opacity: 0, y: 64 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.34, margin: "0px 0px -14% 0px" }}
-          transition={{ duration: 0.9, ease: [0.23, 1, 0.32, 1] }}
+        <div
+          ref={section1Ref}
           className="flex flex-col lg:flex-row gap-16 lg:gap-12 mb-24 lg:mb-48 items-start"
         >
           <div className="lg:w-[20%]">
@@ -240,7 +261,7 @@ export default function AntigravityProducts() {
             <div className="bg-transparent border border-[#5B5B5B] rounded-[32.7px] pt-12 pb-16 px-12 md:px-16">
               <div className="mb-12 flex justify-start">
                 <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[13px] tracking-[0.14em] uppercase text-[#C7C7C7] font-halyard">
-                  Solucoes modulares
+                  Soluções modulares
                 </span>
               </div>
               <div className="grid md:grid-cols-2 gap-y-20 gap-x-16">
@@ -271,10 +292,10 @@ export default function AntigravityProducts() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* 02 / OPERAÇÃO */}
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-12 items-start">
+        <div ref={section2Ref} className="flex flex-col lg:flex-row gap-16 lg:gap-12 items-start">
           <div className="lg:w-[20%]">
             <div className="lg:sticky lg:top-28">
               <h2 className="text-white text-[42px] font-light leading-[1.2] mb-2 font-halyard">
@@ -301,7 +322,7 @@ export default function AntigravityProducts() {
                 <div className="text-[#FE6942] text-[16.59px] font-normal tracking-normal mb-5 uppercase font-halyard">Aliado Operacional</div>
                 <h3 className="text-white font-normal font-editorial mb-6 leading-tight" style={{ fontSize: style.titulosGrandes }}>Assessoria <br /> TheOne</h3>
                 <p className="text-[#C7C7C7] font-extralight leading-[1.4] font-halyard" style={{ fontSize: style.textoGrande }}>
-                  Para negócios visionários que não possuem time interno de marketing. <span className="text-white font-normal">Além da inteligência estratégica, nós seremos os aliados na linha de frente.</span> Atuamos lado a lado assumindo a operação estratégica e a gestión do marketing, garantindo que cada ponto de contato esteja alinhado para sua marca se tornar inevitável.
+                  Para negócios visionários que não possuem time interno de marketing. <span className="text-white font-normal">Além da inteligência estratégica, nós seremos os aliados na linha de frente.</span> Atuamos lado a lado assumindo a operação estratégica e a gestão do marketing, garantindo que cada ponto de contato esteja alinhado para sua marca se tornar inevitável.
                 </p>
               </div>
             </div>
@@ -309,7 +330,7 @@ export default function AntigravityProducts() {
             <div className="bg-transparent border border-[#5B5B5B] rounded-[32.7px] py-16 px-12 md:px-16">
               <div className="mb-12 flex justify-start">
                 <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[13px] tracking-[0.14em] uppercase text-[#C7C7C7] font-halyard">
-                  Solucoes modulares
+                  Soluções modulares
                 </span>
               </div>
               <div className="grid md:grid-cols-2 gap-y-20 gap-x-16">
@@ -323,19 +344,19 @@ export default function AntigravityProducts() {
                   icon="growth"
                   title="Branding / Marketing / Growth"
                   text="A união dos três pilares para gerar receita. Fugimos das campanhas aleatórias para construir uma estrutura de marketing personalizada, onde o crescimento da empresa e o fortalecimento da sua marca caminham juntos."
-                  style={{ ...style, titulosBox: "26px" }}
+                  style={{ ...style, titulosBox: "28px" }}
                 />
                 <FeatureCard index={2}
                   icon="founder"
                   title="Fundador Posicionado"
                   text="Transformamos o fundador em um poderoso canal de aquisição. Ao humanizar a marca e construir uma autoridade inabalável, ampliamos o potencial de conexão com o público e abrimos novas portas de crescimento através da influência do founder."
-                  style={{ ...style, titulosBox: "29.3px", textoBox: "18.41px" }}
+                  style={{ ...style, titulosBox: "31.3px", textoBox: "20.41px" }}
                 />
                 <FeatureCard index={3}
                   icon="receita"
                   title="Arquitetura de Receita"
                   text="Revelamos o dinheiro que sua marca está deixando na mesa. Analisamos seu portfólio e sua escada de valor de acordo com seu posicionamento, definindo novas ofertas e a precificação ideal para maximizar o faturamento e a lucratividade do negócio."
-                  style={{ ...style, titulosBox: "29.3px", textoBox: "18.41px" }}
+                  style={{ ...style, titulosBox: "31.3px", textoBox: "20.41px" }}
                 />
               </div>
             </div>
