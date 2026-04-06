@@ -35,7 +35,7 @@ const STORIES = [
   {
     tag: '01 ⏤ 04',
     title: 'O mercado tá ficando cada vez mais competitivo... e parecido.',
-    content: 'Ter um bom produto, rodar anúncio e produzir conteúdo está cada vez mais acessível. Hoje qualquer empresa faz isso. O problema é que [WHITE]quando todo mundo faz a mesma coisa e se vende do mesmo jeito, ninguém se destaca.[/WHITE] \n Num ambiente assim, [WHITE]só se torna a escolha número um quem constrói um posicionamento inevitável.[/WHITE] Quem não constrói, compete de igual para igual com o resto do mercado.',
+    content: 'Ter um bom produto, rodar anúncio e produzir conteúdo está cada vez mais acessível. Hoje qualquer empresa faz isso. O problema é que [WHITE]quando todo mundo faz a mesma coisa e se vende do mesmo jeito, ninguém se destaca.[/WHITE] \n Num ambiente assim, [WHITE]só se torna a escolha número 1 quem constrói um posicionamento inevitável.[/WHITE] Quem não constrói, compete de igual para igual com o resto do mercado.',
   },
   {
     tag: '02 ⏤ 04',

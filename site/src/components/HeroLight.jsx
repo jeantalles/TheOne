@@ -103,7 +103,7 @@ export default function HeroLight() {
             fontWeight: 400,
           }}
         >
-          Para negócios visionários que não querem ser só mais uma opção e querem se tornar a opção inevitável em seu mercado.
+          Para negócios visionários que não querem ser só mais uma opção e querem se tornar a alternativa inevitável em seu mercado.
         </p>
 
         <div className="flex flex-row items-center justify-center gap-[18px]">
