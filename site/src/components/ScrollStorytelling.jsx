@@ -2,6 +2,8 @@ import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+gsap.registerPlugin(ScrollTrigger);
+
 // ============================================
 // CONFIGURAÇÃO DE FONTES - SEÇÃO STORYTELLING
 // ============================================
@@ -24,35 +26,6 @@ export default function ScrollStorytelling() {
   const containerRef = useRef(null);
   const style = STORYTELLING_CONFIG.fontSize;
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.utils.toArray('.story-panel').forEach((panel) => {
-        const words = panel.querySelectorAll('.rev-word');
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: panel,
-            pin: true,
-            pinSpacing: true,
-            start: 'center center',
-            end: '+=130%',
-            scrub: 1.5,
-          }
-        });
-        tl.fromTo(words,
-          { opacity: 0.05, filter: 'blur(10px)', y: 8 },
-          {
-            opacity: 1,
-            filter: 'blur(0px)',
-            y: 0,
-            ease: 'none',
-            stagger: { each: 0.05 },
-          }
-        );
-      });
-    }, containerRef);
-    return () => ctx.revert();
-  }, []);
-
   const stories = [
     {
       tag: '01 ⏤ 04',
@@ -63,7 +36,11 @@ export default function ScrollStorytelling() {
       tag: '02 ⏤ 04',
       title: 'Nós vimos o marketing ruir de dentro pra fora.',
       titleWidth: '750px',
-      content: 'Nossa história começou na linha de frente de uma das maiores assessorias de marketing do Brasil,[WHITE]milhares de clientes sendo atendidos de forma industrial com a mesma solução,[/WHITE]como se toda empresa tivesse os mesmos problemas. O que mais vimos foram negócios visionários despejando fortunas em tráfego pago sem ter o básico resolvido. Anunciando a mesma coisa que os concorrentes, com a mesma mensagem, para o mesmo público. \n Do outro lado, estúdios de branding entregando conceitos criativos, mas lavando as mãos na hora de fazer isso funcionar na prática. Um olhava só para o curto prazo. O outro, só para o longo. E no meio desse abismo, empresários com visão de gerar valor e transformação perdendo tempo e dinheiro em soluções que não foram pensadas para resolver os problemas deles.'
+      transitionMode: 'swapParagraphs',
+      paragraphs: [
+        'Nossa história começou na linha de frente de uma das maiores assessorias de marketing do Brasil,[WHITE]milhares de clientes sendo atendidos de forma industrial com a mesma solução,[/WHITE]como se toda empresa tivesse os mesmos problemas. O que mais vimos foram negócios visionários despejando fortunas em tráfego pago sem ter o básico resolvido. Anunciando a mesma coisa que os concorrentes, com a mesma mensagem, para o mesmo público.',
+        'Do outro lado, estúdios de branding entregando conceitos criativos, mas lavando as mãos na hora de fazer isso funcionar na prática. Um olhava só para o curto prazo. O outro, só para o longo. E no meio desse abismo, empresários com visão de gerar valor e transformação perdendo tempo e dinheiro em soluções que não foram pensadas para resolver os problemas deles.',
+      ],
     },
     {
       tag: '03 ⏤ 04',
@@ -73,17 +50,87 @@ export default function ScrollStorytelling() {
     {
       tag: '04 ⏤ 04',
       title: 'Sem se posicionar de forma estratégica, até o melhor negócio vira commodity.',
-      content: 'Quando o mercado não consegue enxergar o que te diferencia, ele faz o que sempre faz: te compara pelo preço. Não importa o quanto você entrega, o quanto você se dedicou, o quanto o seu produto ou serviço é superior. Se a percepção não acompanha o valor, você compete de igual pra igual com quem entrega muito menos. \n E aí fica a pergunta: [WHITE]você quer continuar sendo mais um no mercado?[/WHITE]'
+      content: 'Quando o mercado não consegue enxergar o que te diferencia, ele faz o que sempre faz: te compara pelo preço. Não importa o quanto você entrega, o quanto você se dedicou, o quanto o seu produto ou serviço é superior. Se a percepção não acompanha o valor, você compete de igual pra igual com quem entrega muito menos. \n E aí fica a pergunta:\n [QUESTION]você quer continuar sendo mais um no mercado?[/QUESTION]'
     }
   ];
 
-  const renderWords = (text) =>
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray('.story-panel').forEach((panel) => {
+        const titleWords = panel.querySelectorAll('.story-title-word');
+        const copyWords = panel.querySelectorAll('.story-copy-word');
+        const swapFirst = panel.querySelector('.story-swap-first');
+        const swapSecond = panel.querySelector('.story-swap-second');
+        const swapMode = panel.dataset.transition === 'swapParagraphs';
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: panel,
+            pin: true,
+            pinSpacing: true,
+            start: 'center center',
+            end: swapMode ? '+=165%' : '+=130%',
+            scrub: 1.5,
+          }
+        });
+
+        tl.fromTo(titleWords,
+          { opacity: 0.05, filter: 'blur(10px)', y: 8 },
+          {
+            opacity: 1,
+            filter: 'blur(0px)',
+            y: 0,
+            ease: 'none',
+            stagger: { each: 0.045 },
+          }
+        );
+
+        tl.fromTo(copyWords,
+          { opacity: 0.05, filter: 'blur(10px)', y: 8 },
+          {
+            opacity: 1,
+            filter: 'blur(0px)',
+            y: 0,
+            ease: 'none',
+            stagger: { each: 0.05 },
+          },
+          0.16
+        );
+
+        if (swapFirst && swapSecond) {
+          tl.to({}, { duration: 0.3 });
+          tl.to(swapFirst, {
+            xPercent: -18,
+            opacity: 0,
+            filter: 'blur(12px)',
+            ease: 'none',
+            duration: 0.35,
+          });
+          tl.fromTo(
+            swapSecond,
+            { xPercent: 18, opacity: 0, filter: 'blur(14px)' },
+            {
+              xPercent: 0,
+              opacity: 1,
+              filter: 'blur(0px)',
+              ease: 'none',
+              duration: 0.4,
+            },
+            '<'
+          );
+          tl.to({}, { duration: 0.28 });
+        }
+      });
+    }, containerRef);
+    return () => ctx.revert();
+  }, []);
+
+  const renderWords = (text, wordClass = 'rev-word') =>
     text.split('\n').map((line, lineIdx) => (
       <div key={lineIdx}>
         {line.split(' ').map((word, i) => (
           <span
             key={i}
-            className="rev-word inline-block mr-[0.3em]"
+            className={`${wordClass} inline-block mr-[0.3em]`}
           >
             {word}
           </span>
@@ -91,38 +138,58 @@ export default function ScrollStorytelling() {
       </div>
     ));
 
-  const renderWordsWithParagraphs = (text) => {
+  const renderWordsWithParagraphs = (text, wordClass = 'story-copy-word') => {
+    const tokenStyles = {
+      WHITE: { color: '#FFFFFF', fontWeight: '400' },
+      QUESTION: {
+        color: '#FFFFFF',
+        fontFamily: '"PP Editorial New", serif',
+        fontSize: 'clamp(2rem, 3vw, 3rem)',
+        lineHeight: '1.05',
+        letterSpacing: '-0.02em',
+      },
+    };
+
     const parseStyledText = (lineText) => {
       const parts = [];
       let currentText = '';
       let i = 0;
 
       while (i < lineText.length) {
-        if (lineText.substring(i, i + 7) === '[WHITE]') {
+        const token = Object.keys(tokenStyles).find((key) => lineText.substring(i, i + key.length + 2) === `[${key}]`);
+
+        if (token) {
           if (currentText) parts.push({ text: currentText, style: {} });
           currentText = '';
-          i += 7;
-          let endIdx = lineText.indexOf('[/WHITE]', i);
+          i += token.length + 2;
+          let endIdx = lineText.indexOf(`[/${token}]`, i);
           if (endIdx !== -1) {
-            parts.push({ text: lineText.substring(i, endIdx), style: { color: '#FFFFFF', fontWeight: '400' } });
-            i = endIdx + 8;
+            parts.push({ text: lineText.substring(i, endIdx), style: tokenStyles[token] });
+            i = endIdx + token.length + 3;
           }
         } else {
           currentText += lineText[i];
           i++;
         }
       }
+
       if (currentText) parts.push({ text: currentText, style: {} });
       return parts;
     };
 
     return text.split('\n').map((line, lineIdx) => (
-      <div key={lineIdx} style={{ marginBottom: lineIdx < text.split('\n').length - 1 ? STORYTELLING_CONFIG.spacing.paragrafos : 0 }}>
+      <div
+        key={lineIdx}
+        style={{
+          marginBottom: lineIdx < text.split('\n').length - 1 ? STORYTELLING_CONFIG.spacing.paragrafos : 0,
+          minHeight: line.includes('[QUESTION]') ? '1.4em' : undefined,
+        }}
+      >
         {parseStyledText(line).map((part, partIdx) => (
           part.text.split(' ').map((word, wordIdx) => (
             <span
               key={`${partIdx}-${wordIdx}`}
-              className="rev-word inline-block mr-[0.3em]"
+              className={`${wordClass} inline-block mr-[0.3em]`}
               style={{ ...part.style }}
             >
               {word}
@@ -133,12 +200,47 @@ export default function ScrollStorytelling() {
     ));
   };
 
+  const renderStoryBody = (story) => {
+    if (story.transitionMode === 'swapParagraphs') {
+      return (
+        <div className="relative mt-6 w-full max-w-4xl min-h-[22rem] md:min-h-[18rem]">
+          <div className="story-swap-first absolute inset-0 flex items-center justify-center">
+            <div
+              className="font-halyard font-light text-[#C7C7C7] text-center"
+              style={{ fontSize: style.texto, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
+            >
+              {renderWordsWithParagraphs(story.paragraphs[0])}
+            </div>
+          </div>
+          <div className="story-swap-second absolute inset-0 flex items-center justify-center opacity-0">
+            <div
+              className="font-halyard font-light text-[#C7C7C7] text-center"
+              style={{ fontSize: style.texto, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
+            >
+              {renderWordsWithParagraphs(story.paragraphs[1])}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <p
+        className="font-halyard font-light text-[#C7C7C7] max-w-4xl mt-6"
+        style={{ fontSize: style.texto, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
+      >
+        {renderWordsWithParagraphs(story.content)}
+      </p>
+    );
+  };
+
   return (
     <div id="o-problema" ref={containerRef} className="bg-[#212121] relative border-b border-white/5">
       {stories.map((story, i) => (
         <div
           key={i}
           className="story-panel min-h-[100svh] relative flex flex-col items-center justify-center px-6 overflow-hidden"
+          data-transition={story.transitionMode}
         >
           <div
             className="absolute inset-0 -z-10"
@@ -160,14 +262,9 @@ export default function ScrollStorytelling() {
               className="font-editorial font-normal leading-[1.1] text-white"
               style={{ fontSize: style.titulo, maxWidth: story.titleWidth }}
             >
-              {renderWords(story.title)}
+              {renderWords(story.title, 'story-title-word')}
             </h2>
-            <p
-              className="font-halyard font-light text-[#C7C7C7] max-w-4xl mt-6"
-              style={{ fontSize: style.texto, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
-            >
-              {renderWordsWithParagraphs(story.content)}
-            </p>
+            {renderStoryBody(story)}
           </div>
         </div>
       ))}

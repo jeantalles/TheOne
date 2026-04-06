@@ -29,8 +29,9 @@ export default function Methodology() {
       });
 
       // ── Headline some ────────────────────────────────────────────────────
+      tl.to({}, { duration: 0.42 });
       tl.to('.meth-headline', {
-        opacity: 0, y: -40, filter: 'blur(14px)', duration: 0.3
+        opacity: 0, y: -32, filter: 'blur(10px)', duration: 0.24, ease: 'power1.out'
       });
 
       // ── Abertura: primeiro texto centralizado ──────────────────────────

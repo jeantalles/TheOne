@@ -103,6 +103,8 @@ export default function Founders() {
                     <img
                       src={f.img}
                       alt=""
+                      loading="lazy"
+                      decoding="async"
                       onError={(e) => { e.currentTarget.style.display = 'none'; }}
                       className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.04]"
                     />

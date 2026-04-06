@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUp } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -13,21 +12,21 @@ const CASES = [
     title: 'Zenic',
     subtitle: 'Construção de Marca',
     result: '+300% de percepção de valor',
-    image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2940&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=1600&auto=format&fit=crop',
   },
   {
     id: 2,
     title: 'Thunders Tecnologia',
     subtitle: 'Reposicionamento de Marca',
     result: 'Liderança regional garantida',
-    image: 'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?q=80&w=2940&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?q=80&w=1600&auto=format&fit=crop',
   },
   {
     id: 3,
     title: 'Camilla Toscano',
     subtitle: 'Construção de Marca Pessoal',
     result: 'Aquisição Série A de $10M',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2940&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1600&auto=format&fit=crop',
   },
 ];
 
@@ -49,6 +48,17 @@ export default function Cases() {
 
   const [openState, setOpenState] = useState('closed');
   const isOpen = openState === 'open';
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  // Lazy-load background images only when section enters viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setImagesLoaded(true); observer.disconnect(); } },
+      { rootMargin: '200px' }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   // ── 1. Initial states + scroll entrance + idle breathing ─────────────────
   useEffect(() => {
@@ -382,7 +392,7 @@ export default function Cases() {
                     <div className="case-card relative h-full rounded-[32px] overflow-hidden group cursor-pointer bg-[#111111]" style={{ border: '1px solid rgba(255,255,255,0.37)' }}>
                       <div
                         className="case-image absolute inset-0 bg-cover bg-center transition-transform duration-[1.2s] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03]"
-                        style={{ backgroundImage: `url(${c.image})` }}
+                        style={{ backgroundImage: imagesLoaded ? `url(${c.image})` : undefined }}
                       />
                       <div className="case-card-overlay absolute inset-0 bg-black/[0.08] transition-colors duration-700" />
                       <div
@@ -498,7 +508,7 @@ export default function Cases() {
                         style={{
                           zIndex: CASES.length - i,
                           marginLeft: `${(i - 1) * 8}%`,
-                          backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.42) 100%), url(${c.image})`,
+                          backgroundImage: imagesLoaded ? `linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.42) 100%), url(${c.image})` : undefined,
                           backgroundSize: 'cover',
                           backgroundPosition: 'center',
                         }}
@@ -524,11 +534,13 @@ export default function Cases() {
                     }}
                   >
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.18),transparent_34%,rgba(0,0,0,0.12)_100%)]" />
-                    <div className="absolute left-6 right-6 top-10 flex items-center justify-between md:left-10 md:right-10 md:top-12">
+                    <div className="absolute left-6 right-6 top-10 md:left-10 md:right-10 md:top-12">
                       <p className="text-[clamp(1.4rem,3.2vw,2.4rem)] text-white font-halyard font-medium leading-none">Cases TheOne</p>
-                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#FFA790' }}>
-                        <ArrowUp size={18} strokeWidth={2} className="text-white" />
-                      </div>
+                    </div>
+                    <div className="absolute inset-x-6 bottom-7 flex justify-center md:inset-x-10 md:bottom-9">
+                      <p className="text-center font-halyard font-medium text-[0.98rem] md:text-[1.1rem] tracking-[0.16em] text-white/78 uppercase">
+                        Clique para abrir
+                      </p>
                     </div>
                     <div className="absolute inset-x-0 bottom-0 h-[38%] bg-[linear-gradient(180deg,rgba(40,14,7,0)_0%,rgba(40,14,7,0.16)_100%)]" />
                   </div>
@@ -537,14 +549,6 @@ export default function Cases() {
                   <div className="pointer-events-none absolute inset-[1px] rounded-[42px] border border-white/10 opacity-70" />
                 </div>
               </button>
-              <div
-                className={`mt-6 flex justify-center transition-all duration-500 ${openState === 'closed' ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'}`}
-                aria-hidden={openState !== 'closed'}
-              >
-                <p className="text-center font-halyard font-light text-[0.85rem] md:text-[0.95rem] tracking-[0.12em] text-white/40 uppercase">
-                  ↑ Clique para abrir ↑
-                </p>
-              </div>
             </div>
           </div>
 

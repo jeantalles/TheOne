@@ -39,14 +39,37 @@ export default function TheOneConclusion() {
 
           <div className="flex flex-col gap-6 font-halyard font-light text-[#C7C7C7] max-w-2xl" style={{ fontSize: style.texto, lineHeight: style.alturaLinhaTexto }}>
             <p>
-              Vimos de perto o que acontece quando marketing vira linha de produção, e nos recusamos a ser mais um desse modelo. A TheOne é uma assessoria de marca que nasceu para construir marcas TheOne, a escolha inevitável na mente de seus clientes.
+              Vimos de perto o que acontece quando marketing vira linha de produção, e nos recusamos a ser mais um desse modelo. A TheOne é a assessoria de marca que nasceu para construir marcas TheOne, a escolha inevitável na mente do seu público.
             </p>
             <p>
               Não entregamos um PDF e sumimos. Estruturamos a narrativa, o posicionamento e a presença da sua marca em todos os principais pontos de contato, e seremos seus aliados na efetivação do seu posicionamento.
             </p>
-            <p>
-              São mais de 8 anos construindo marcas que lideram, com profissionais formados nas maiores operações de marketing e comunicação do Brasil. E tudo isso aplicado de forma personalizada — porque nenhum negócio com ambição cabe numa solução industrializada. Não atendemos centenas de clientes, nós selecionamos empresas que têm visão de crescimento, ambição de escala e propósito de gerar transformação para nos tornarmos aliados.
-            </p>
+            <ul className="space-y-4 text-left">
+              <li className="flex items-start gap-3">
+                <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
+                <span>
+                  São mais de 8 anos construindo marcas que lideram, com profissionais formados nas maiores operações de marketing e comunicação do Brasil.
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
+                <span>
+                  Tudo isso aplicado de forma personalizada, porque nenhum negócio com ambição cabe numa solução industrializada.
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
+                <span>
+                  Não atendemos centenas de clientes.
+                </span>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
+                <span>
+                  Nós selecionamos empresas que têm visão de crescimento, ambição de escala e propósito de gerar transformação para nos tornarmos aliados.
+                </span>
+              </li>
+            </ul>
           </div>
         </div>
 
