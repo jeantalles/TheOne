@@ -35,7 +35,7 @@ const STORIES = [
   {
     tag: '01 ⏤ 04',
     title: 'O mercado tá ficando cada vez mais competitivo... e parecido.',
-    content: 'Ter um bom produto, rodar anúncio e produzir conteúdo está cada vez mais acessível. Hoje qualquer empresa faz isso.[WHITE]O problema é que quando todo mundo faz a mesma coisa e se vende do mesmo jeito, ninguém se destaca. [/WHITE] \n Num ambiente assim, só se torna [WHITE]a escolha número um quem constrói um posicionamento inevitável.[/WHITE] Quem não constrói, compete de igual para igual com o resto do mercado.',
+    content: 'Ter um bom produto, rodar anúncio e produzir conteúdo está cada vez mais acessível. Hoje qualquer empresa faz isso. O problema é que [WHITE]quando todo mundo faz a mesma coisa e se vende do mesmo jeito, ninguém se destaca.[/WHITE] \n Num ambiente assim, [WHITE]só se torna a escolha número um quem constrói um posicionamento inevitável.[/WHITE] Quem não constrói, compete de igual para igual com o resto do mercado.',
   },
   {
     tag: '02 ⏤ 04',
@@ -43,19 +43,19 @@ const STORIES = [
     titleWidth: '750px',
     transitionMode: 'swapParagraphs',
     paragraphs: [
-      'Nossa história começou na linha de frente de uma das maiores assessorias de marketing do Brasil,[WHITE]milhares de clientes sendo atendidos de forma industrial com a mesma solução,[/WHITE]como se toda empresa tivesse os mesmos problemas. O que mais vimos foram negócios visionários despejando fortunas em tráfego pago sem ter o básico resolvido. Anunciando a mesma coisa que os concorrentes, com a mesma mensagem, para o mesmo público.',
-      'Do outro lado, estúdios de branding entregando conceitos criativos, mas lavando as mãos na hora de fazer isso funcionar na prática. Um olha só para o curto prazo, o outro só para o longo. E no meio desse abismo, [WHITE]empresários com visão de gerar valor e transformação perdendo tempo e dinheiro[/WHITE] em soluções que não foram pensadas para resolver os problemas deles.',
+      'Nossa história começou na linha de frente de uma das maiores assessorias de marketing da América Latina. Vimos [WHITE]milhares de clientes sendo atendidos de forma industrial com soluções prontas, como se toda empresa tivesse os mesmos problemas[/WHITE]. Eram negócios visionários despejando fortunas em tráfego pago sem ter o básico resolvido: anunciando o que o concorrente anuncia, com a mesma mensagem, para o mesmo público.',
+      'Do outro lado, estúdios de branding entregando conceitos criativos, mas lavando as mãos na hora de fazer isso funcionar na prática. Um olhando só para o longo prazo e o outro, só para o curto prazo. \n\n E no meio desse abismo, [WHITE]empresários com visão de gerar valor e transformação perdendo tempo e dinheiro em soluções que não foram pensadas para resolver seus próprios problemas.[/WHITE]',
     ],
   },
   {
     tag: '03 ⏤ 04',
     title: 'Você pode pagar pra aparecer. \n Mas não pode pagar pra ser escolhido.',
-    content: 'Tráfego te coloca na frente do seu cliente, mas se o que você vende é igual ao que o concorrente vende, você pagou pra ser visto e ignorado. Se você gasta rios de dinheiro com mídia paga e se parar de anunciar a qualquer momento pode por sua empresa em risco, você não está escalando, está dependente. \n [WHITE]Não adianta só ser visto, você precisa ser visto, lembrado e desejado.[/WHITE]',
+    content: 'Tráfego te coloca na frente do seu cliente, mas se a sua oferta é igual à do concorrente, você pagou pra ser visto e ignorado. Se você gasta rios de dinheiro com mídia paga e se parar de anunciar a qualquer momento pode por sua empresa em risco, você não está escalando, está dependente.\n\n[WHITE]Não adianta só ser visto, você precisa ser visto, lembrado e desejado.[/WHITE]',
   },
   {
     tag: '04 ⏤ 04',
     title: 'Sem se posicionar de forma estratégica, até o melhor negócio vira commodity.',
-    content: 'Quando o mercado não consegue enxergar o que te diferencia, ele faz o que sempre faz: te compara pelo preço. Não importa o quanto você entrega, o quanto você se dedicou, o quanto o seu produto ou serviço é superior. Se a percepção não acompanha o valor, você compete de igual pra igual com quem entrega muito menos. \n E aí fica a pergunta:\n [QUESTION]você quer continuar sendo mais um no mercado?[/QUESTION]',
+    content: 'Quando o mercado não consegue enxergar o que te diferencia, ele faz o que sempre faz: te compara pelo preço.\n\nNão importa o quanto você entrega, o quanto você se dedicou ou se seu produto/serviço é superior. Se a percepção não acompanha o valor, você compete de igual pra igual com quem entrega muito menos.\n\nE aí fica a pergunta:\n[QUESTION]Você quer ser só mais um?[/QUESTION]',
   },
 ];
 
@@ -244,7 +244,7 @@ export default function ScrollStorytelling() {
   const renderWords = (text, wordClass = 'rev-word') =>
     text.split('\n').map((line, lineIndex) => (
       <div key={lineIndex}>
-        {line.split(' ').map((word, index) => (
+        {line.split(' ').filter(Boolean).map((word, index) => (
           <span key={index} className={`${wordClass} inline-block mr-[0.3em]`}>
             {word}
           </span>
@@ -262,7 +262,7 @@ export default function ScrollStorytelling() {
         }}
       >
         {parseStyledText(line).map((part, partIndex) =>
-          part.text.split(' ').map((word, wordIndex) => (
+          part.text.split(' ').filter(Boolean).map((word, wordIndex) => (
             <span
               key={`${partIndex}-${wordIndex}`}
               className={`${wordClass} inline-block mr-[0.3em]`}

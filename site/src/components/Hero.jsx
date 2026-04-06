@@ -96,7 +96,7 @@ export default function Hero() {
             }
           }}
         >
-          A única escolha na mente do seu cliente.
+          Torne-se a escolha número um.
         </h2>
 
         <p
@@ -108,7 +108,7 @@ export default function Hero() {
             }
           }}
         >
-          Para negócios visionários que não querem ser mais uma opção e buscam se tornar Top 1 no seu mercado.
+          Para negócios visionários que não querem ser só mais uma opção e querem se tornar inevitável no seu mercado.
         </p>
 
         <div

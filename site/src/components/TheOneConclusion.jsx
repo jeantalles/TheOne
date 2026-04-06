@@ -51,32 +51,32 @@ export default function TheOneConclusion() {
             nasceu a <span className="text-gradient">TheOne.</span>
           </h2>
 
-          <div className="flex flex-col gap-6 font-halyard font-light text-[#C7C7C7] max-w-[720px]" style={{ fontSize: style.texto, lineHeight: style.alturaLinhaTexto }}>
-            <p>
-              Vimos de perto o que acontece quando marketing vira linha de produção, e nos recusamos a ser mais um desse modelo.{" "}
-              {"A TheOne é a assessoria de marca que nasceu para construir marcas TheOne, a escolha inevitável na mente do seu público.".split(' ').map((word, i) => (
-                <span key={i} className="conclusion-highlight-word inline-block mr-[0.2em] whitespace-nowrap">
+          <div className="flex flex-col gap-6 font-halyard font-light text-[#C7C7C7] w-full" style={{ fontSize: style.texto, lineHeight: style.alturaLinhaTexto }}>
+            <p className="max-w-[620px] relative -top-px">
+              Vimos de perto o que acontece quando marketing vira linha de produção e nos recusamos a ser mais um desse modelo.{" "}
+              {"A TheOne é a assessoria de marca que nasceu para construir marcas TheOne™: a escolha número um na mente do seu público.".split(' ').map((word, i) => (
+                <span key={`second-${i}`} className="conclusion-highlight-word inline-block mr-[0.2em] whitespace-nowrap">
                   {word}
                 </span>
               ))}
             </p>
-            <p>
-              Não entregamos um PDF e sumimos. Estruturamos a narrativa, o posicionamento e a presença da sua marca em todos os principais pontos de contato, e seremos seus aliados na efetivação do seu posicionamento.
+            <p className="max-w-[620px] relative -top-px">
+              Não entregamos um PDF e sumimos. Estruturamos a narrativa, o posicionamento e a presença da sua marca em todos os principais pontos de contato. Seremos seus aliados na efetivação da estratégia para consolidar o seu negócio como o número um do seu mercado.
             </p>
-            <ul className="space-y-4 text-left text-white font-medium">
-              <li className="flex items-start gap-3">
+            <ul className="pt-4 md:pt-6 grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-y-5 md:gap-x-10 lg:gap-x-14 text-left text-white font-light w-full">
+              <li className="flex items-start gap-3 min-w-0">
                 <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
                 <span>
                   São +8 anos construindo marcas que lideram, com profissionais formados nas maiores operações de marketing e comunicação do Brasil.
                 </span>
               </li>
-              <li className="flex items-start gap-3">
+              <li className="flex items-start gap-3 min-w-0">
                 <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
                 <span>
                   Nossos projetos são personalizados. Nenhum negócio com ambição cabe numa solução industrializada.
                 </span>
               </li>
-              <li className="flex items-start gap-3">
+              <li className="flex items-start gap-3 min-w-0">
                 <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
                 <span>
                   Não atendemos centenas de clientes. Nós selecionamos empresas que têm visão de crescimento e propósito de gerar transformação para nos tornarmos aliados.
