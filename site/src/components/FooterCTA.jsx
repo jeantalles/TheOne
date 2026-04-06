@@ -174,11 +174,17 @@ export default function FooterCTA() {
 
           particles = buildParticles(viewportWidth, viewportHeight);
           centerParticle = particles.find((particle) => particle.isCenter) ?? null;
+
+          // Position final wrap to appear just below where the heading lands after its travel
+          if (finalWrapRef.current) {
+            const headingLandY = viewportHeight * 0.28; // 50vh - 22vh travel = 28vh from top
+            const headingHeightEst = Math.min(viewportHeight * 0.09, 88);
+            finalWrapRef.current.style.paddingTop = `${headingLandY + headingHeightEst - 8}px`;
+          }
         };
 
         const setSceneStyles = (progress) => {
           const bgShift = easeInOut3(norm(progress, 0, 0.16));
-          const introExit = easeInOut3(norm(progress, 0.24, 0.39));
           const centerAccent = easeInOut3(norm(progress, 0.44, 0.56));
           const centerExpand = easeInOut3(norm(progress, 0.60, 0.76));
           const takeover = easeInOut3(norm(progress, 0.68, 0.88));
@@ -206,21 +212,24 @@ export default function FooterCTA() {
 
           grainRef.current.style.opacity = `${lerp(0.1, 0.05, Math.max(bgShift, takeover))}`;
 
-          introRef.current.style.opacity = `${1 - introExit}`;
-          introRef.current.style.transform = `translateY(${lerp(0, -44, introExit).toFixed(1)}px) scale(${lerp(1, 0.94, introExit).toFixed(4)})`;
+          // Heading travels from 34vh to 30vh from top (above the circle throughout)
+          const headingTravel = easeInOut3(norm(progress, 0.32, 0.80));
+          const headingY = lerp(viewportHeight * -0.16, viewportHeight * -0.20, headingTravel);
+          introRef.current.style.transform = `translateY(${headingY.toFixed(1)}px)`;
 
           introWordRefs.current.forEach((word, index) => {
             if (!word) return;
 
             const wordIn = easeOut3(norm(progress, 0.04 + index * 0.018, 0.13 + index * 0.018));
-            const wordOut = easeInOut3(norm(progress, 0.25 + index * 0.016, 0.35 + index * 0.016));
-            const opacity = wordIn * (1 - wordOut);
-            const blur = lerp(22, 0, wordIn) + lerp(0, 18, wordOut);
-            const translateY = lerp(40, 0, wordIn) + lerp(0, -26, wordOut);
+            const blur = lerp(22, 0, wordIn);
+            const translateY = lerp(40, 0, wordIn);
+            // Color: dark on warm background → white as orange takes over
+            const wordColor = blendRgb([21, 19, 17], [255, 255, 255], Math.min(1, takeover * 2.2));
 
-            word.style.opacity = opacity.toFixed(3);
-            word.style.filter = `blur(${blur.toFixed(2)}px)`;
+            word.style.opacity = wordIn.toFixed(3);
+            word.style.filter = blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : 'none';
             word.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0)`;
+            word.style.color = `rgb(${wordColor[0]}, ${wordColor[1]}, ${wordColor[2]})`;
           });
 
           const titleBlur = lerp(18, 0, finalTitle);
@@ -445,7 +454,7 @@ export default function FooterCTA() {
 
         <div
           ref={finalWrapRef}
-          className="absolute inset-0 z-40 flex items-center justify-center px-6"
+          className="absolute inset-0 z-40 flex items-start justify-center px-6"
           style={{ pointerEvents: prefersReducedMotion ? 'auto' : 'none' }}
         >
           <div className="mx-auto flex w-full max-w-5xl flex-col items-center text-center">
@@ -459,13 +468,7 @@ export default function FooterCTA() {
               }}
             >
               <span
-                className="block font-sans font-medium leading-[0.92] text-white"
-                style={{ fontSize: 'clamp(2.9rem, 7.2vw, 6.6rem)', letterSpacing: '-0.035em' }}
-              >
-                Não seja só mais um.
-              </span>
-              <span
-                className="mt-2 block font-sans font-medium leading-[0.92] text-white"
+                className="block font-sans font-medium leading-[0.92] text-black/70"
                 style={{
                   fontSize: 'clamp(2.7rem, 6.8vw, 6.2rem)',
                   letterSpacing: '-0.03em',
@@ -473,7 +476,7 @@ export default function FooterCTA() {
               >
                 Seja TheOne
                 <span
-                  className="inline-block align-top font-halyard text-white/70"
+                  className="inline-block align-top font-halyard text-black/70"
                   style={{
                     fontSize: '0.288em',
                     letterSpacing: '0.04em',
@@ -497,19 +500,19 @@ export default function FooterCTA() {
                 willChange: 'transform, filter, opacity',
               }}
             >
-              <p className="mx-auto max-w-3xl text-[clamp(1.1rem,2vw,1.5rem)] font-halyard font-light leading-[1.5] text-white/80">
-                O topo do mercado não é sorte, é construção. Se você tem visão, ambição e busca transformar sua empresa na escolha inevitável do seu cliente — estamos prontos para construir isso com você.
+              <p className="mx-auto max-w-2xl text-[clamp(1.1rem,2vw,1.5rem)] font-halyard font-normal leading-[1.5] text-white/80">
+                Se tornar a escolha número 1 não é sorte, é construção. Se você tem visão, ambição e busca transformar sua empresa na escolha inevitável do seu público, estamos prontos para construir isso ao seu lado.
               </p>
 
               <PrimaryCTAButton
                 href="mailto:contato@theone.com?subject=Agendar%20Diagn%C3%B3stico%20TheOne"
                 className="mt-12"
-                background="#FFF3EC"
-                hoverBackground="linear-gradient(135deg, #FFF8F4 0%, #FFE2D7 100%)"
-                boxShadow="0 18px 42px rgba(121, 38, 11, 0.18)"
-                hoverBoxShadow="0 24px 56px rgba(121, 38, 11, 0.24)"
-                textColor="#5F2412"
-                border="1px solid rgba(122, 42, 17, 0.10)"
+                background="rgba(0, 0, 0, 0.7)"
+                hoverBackground="rgba(0, 0, 0, 0.78)"
+                boxShadow="0 18px 42px rgba(0, 0, 0, 0.18)"
+                hoverBoxShadow="0 24px 56px rgba(0, 0, 0, 0.26)"
+                textColor="rgba(255, 243, 236, 0.96)"
+                border="1px solid rgba(0, 0, 0, 0.08)"
                 style={{
                   minWidth: '320px',
                 }}

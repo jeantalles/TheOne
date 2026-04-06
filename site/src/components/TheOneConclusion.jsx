@@ -48,10 +48,10 @@ export default function TheOneConclusion() {
         <div className="sol-left w-full md:w-[55%] flex flex-col items-start text-left gap-8">
           <h2 className="font-editorial font-normal leading-[1.05] text-white" style={{ fontSize: style.titulo }}>
             Dessa inconformidade <br />
-            nasceu a <span className="italic text-[#FE6942]">TheOne</span>.
+            nasceu a <span className="text-gradient">TheOne.</span>
           </h2>
 
-          <div className="flex flex-col gap-6 font-halyard font-light text-[#C7C7C7] max-w-2xl" style={{ fontSize: style.texto, lineHeight: style.alturaLinhaTexto }}>
+          <div className="flex flex-col gap-6 font-halyard font-light text-[#C7C7C7] max-w-[720px]" style={{ fontSize: style.texto, lineHeight: style.alturaLinhaTexto }}>
             <p>
               Vimos de perto o que acontece quando marketing vira linha de produção, e nos recusamos a ser mais um desse modelo.{" "}
               {"A TheOne é a assessoria de marca que nasceu para construir marcas TheOne, a escolha inevitável na mente do seu público.".split(' ').map((word, i) => (
@@ -63,17 +63,17 @@ export default function TheOneConclusion() {
             <p>
               Não entregamos um PDF e sumimos. Estruturamos a narrativa, o posicionamento e a presença da sua marca em todos os principais pontos de contato, e seremos seus aliados na efetivação do seu posicionamento.
             </p>
-            <ul className="space-y-4 text-left">
+            <ul className="space-y-4 text-left text-white font-medium">
               <li className="flex items-start gap-3">
                 <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
                 <span>
-                  São mais de 8 anos construindo marcas que lideram, com profissionais formados nas maiores operações de marketing e comunicação do Brasil.
+                  São +8 anos construindo marcas que lideram, com profissionais formados nas maiores operações de marketing e comunicação do Brasil.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
                 <span>
-                  Nossos projetos são personalizados, porque nenhum negócio com ambição cabe numa solução industrializada.
+                  Nossos projetos são personalizados. Nenhum negócio com ambição cabe numa solução industrializada.
                 </span>
               </li>
               <li className="flex items-start gap-3">

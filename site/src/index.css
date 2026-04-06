@@ -146,7 +146,7 @@
 
 /* ===== TEXT GRADIENT ===== */
 .text-gradient {
-  background: linear-gradient(135deg, #FF4D00 0%, #FF9A5C 100%);
+  background: linear-gradient(135deg, #FED1C5 0%, #FF5224 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -158,6 +158,14 @@
 }
 .glow-text {
   text-shadow: 0 0 60px rgba(255, 77, 0, 0.4);
+}
+
+.glow-method-node {
+  filter: drop-shadow(0 0 25px rgba(255, 82, 36, 0.65));
+}
+
+.glow-method-text {
+  text-shadow: 0 0 15px rgba(255, 82, 36, 0.7);
 }
 
 /* ===== CARD SURFACES ===== */
