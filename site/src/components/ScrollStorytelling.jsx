@@ -25,6 +25,7 @@ const TOKEN_STYLES = {
     color: '#FFFFFF',
     fontFamily: '"PP Editorial New", serif',
     fontSize: 'clamp(2rem, 3vw, 3rem)',
+    fontWeight: 400,
     lineHeight: '1.05',
     letterSpacing: '-0.02em',
   },
@@ -34,7 +35,7 @@ const STORIES = [
   {
     tag: '01 ⏤ 04',
     title: 'O mercado tá ficando cada vez mais competitivo... e parecido.',
-    content: 'Ter um bom produto, rodar anúncio e produzir conteúdo está cada vez mais acessível. Hoje qualquer empresa faz isso.[WHITE]O problema é que quando todo mundo faz a mesma coisa e se vende do mesmo jeito, ninguém se destaca. [/WHITE] \n Num ambiente assim, só se torna a escolha do cliente quem constrói um posicionamento inevitável na mente do cliente. Quem não constrói, compete de igual para igual com diversas outras opções.',
+    content: 'Ter um bom produto, rodar anúncio e produzir conteúdo está cada vez mais acessível. Hoje qualquer empresa faz isso.[WHITE]O problema é que quando todo mundo faz a mesma coisa e se vende do mesmo jeito, ninguém se destaca. [/WHITE] \n Num ambiente assim, só se torna [WHITE]a escolha número um quem constrói um posicionamento inevitável.[/WHITE] Quem não constrói, compete de igual para igual com o resto do mercado.',
   },
   {
     tag: '02 ⏤ 04',
@@ -43,7 +44,7 @@ const STORIES = [
     transitionMode: 'swapParagraphs',
     paragraphs: [
       'Nossa história começou na linha de frente de uma das maiores assessorias de marketing do Brasil,[WHITE]milhares de clientes sendo atendidos de forma industrial com a mesma solução,[/WHITE]como se toda empresa tivesse os mesmos problemas. O que mais vimos foram negócios visionários despejando fortunas em tráfego pago sem ter o básico resolvido. Anunciando a mesma coisa que os concorrentes, com a mesma mensagem, para o mesmo público.',
-      'Do outro lado, estúdios de branding entregando conceitos criativos, mas lavando as mãos na hora de fazer isso funcionar na prática. Um olhava só para o curto prazo. O outro, só para o longo. E no meio desse abismo, empresários com visão de gerar valor e transformação perdendo tempo e dinheiro em soluções que não foram pensadas para resolver os problemas deles.',
+      'Do outro lado, estúdios de branding entregando conceitos criativos, mas lavando as mãos na hora de fazer isso funcionar na prática. Um olha só para o curto prazo, o outro só para o longo. E no meio desse abismo, [WHITE]empresários com visão de gerar valor e transformação perdendo tempo e dinheiro[/WHITE] em soluções que não foram pensadas para resolver os problemas deles.',
     ],
   },
   {

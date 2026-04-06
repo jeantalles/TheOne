@@ -6,7 +6,7 @@ import { usePrefersReducedMotion } from '../hooks/useMediaQuery';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const INTRO_WORDS = ['Não', 'seja', 'só', 'mais', 'uma', 'marca.'];
+const INTRO_WORDS = ['Não', 'seja', 'só', 'mais', 'um.'];
 
 const DARK_BG = [33, 33, 33];
 const WARM_BG = [245, 240, 236];
@@ -54,25 +54,24 @@ function rgba(rgb, alpha) {
 }
 
 function buildParticles(width, height) {
-  const spacing = width < 768 ? 52 : width < 1200 ? 62 : 72;
+  const gap = 20;
+  const size = width < 768 ? 48 : 72;
+  const spacing = size + gap;
   const cols = Math.ceil(width / spacing) + 2;
   const rows = Math.ceil(height / spacing) + 2;
   const offsetX = (width - (cols - 1) * spacing) / 2;
   const offsetY = (height - (rows - 1) * spacing) / 2;
-  const particles = [];
   const centerX = width / 2;
   const centerY = height / 2;
+  const particles = [];
 
   for (let row = 0; row < rows; row += 1) {
     for (let col = 0; col < cols; col += 1) {
-      const x = offsetX + col * spacing + (row % 2 ? spacing * 0.14 : 0) + (Math.random() - 0.5) * 3;
-      const y = offsetY + row * spacing + (Math.random() - 0.5) * 3;
-
       particles.push({
-        x,
-        y,
-        radius: (width < 768 ? 10 : 16) + Math.random() * (width < 768 ? 6 : 8),
-        alpha: 0.15 + Math.random() * 0.2,
+        x: offsetX + col * spacing,
+        y: offsetY + row * spacing,
+        size,
+        alpha: 0.12 + Math.random() * 0.12,
         delay: Math.random() * 0.6,
         isCenter: false,
       });
@@ -90,11 +89,9 @@ function buildParticles(width, height) {
     }
   }
 
+  // Keep the particle at its natural grid position — no forced centering
   particles[centerIndex].isCenter = true;
-  particles[centerIndex].x = centerX;
-  particles[centerIndex].y = centerY;
-  particles[centerIndex].radius = 16;
-  particles[centerIndex].alpha = 0.35;
+  particles[centerIndex].alpha = 0.38;
   return particles;
 }
 
@@ -189,7 +186,10 @@ export default function FooterCTA() {
           const finalBody = easeOut3(norm(progress, 0.84, 0.96));
           const baseBg = blendRgb(DARK_BG, WARM_BG, bgShift);
 
-          stickyRef.current.style.backgroundColor = mixColor(baseBg, ORANGE_END, takeover);
+          // Background transitions to a gradient (not solid) so canvas gradient stays visible
+          const gradStart = mixColor(baseBg, ORANGE_START, takeover);
+          const gradEnd = mixColor(baseBg, ORANGE_END, takeover);
+          stickyRef.current.style.background = `linear-gradient(to right, ${gradStart}, ${gradEnd})`;
 
           if (bgShift > 0.5 || takeover > 0.08) {
             stickyRef.current.setAttribute('data-navbar-theme', 'light');
@@ -238,19 +238,21 @@ export default function FooterCTA() {
           finalWrapRef.current.style.pointerEvents = progress > 0.9 ? 'auto' : 'none';
         };
 
+        const CORNER = 4;
+
         const draw = () => {
           ctx.clearRect(0, 0, viewportWidth, viewportHeight);
 
           const buildGrid = easeOut3(norm(scrollProgress, 0.15, 0.50));
+          const centerToCircle = easeInOut3(norm(scrollProgress, 0.36, 0.44));
           const centerAccent = easeInOut3(norm(scrollProgress, 0.44, 0.56));
           const centerExpand = easeInOut3(norm(scrollProgress, 0.60, 0.76));
           const takeover = easeInOut3(norm(scrollProgress, 0.68, 0.88));
           const clearScene = easeOut3(norm(scrollProgress, 0.88, 0.98));
           const sceneOpacity = easeOut3(norm(scrollProgress, 0.15, 0.25)) * (1 - easeOut3(norm(scrollProgress, 0.94, 1)));
 
-          const centerX = viewportWidth / 2;
-          const centerY = viewportHeight / 2;
-          const hugeCenter = Math.hypot(centerX, centerY) * 1.06;
+          const screenCenterX = viewportWidth / 2;
+          const screenCenterY = viewportHeight / 2;
 
           for (let i = 0; i < particles.length; i += 1) {
             const particle = particles[i];
@@ -264,17 +266,17 @@ export default function FooterCTA() {
               continue;
             }
 
-            const centerDistance = Math.hypot(particle.x - centerX, particle.y - centerY);
-            const distanceFactor = 1 - centerDistance / Math.hypot(centerX, centerY);
+            const centerDistance = Math.hypot(particle.x - screenCenterX, particle.y - screenCenterY);
+            const distanceFactor = 1 - centerDistance / Math.hypot(screenCenterX, screenCenterY);
             const fadeByTakeover = 1 - takeover * lerp(0.8, 1.12, distanceFactor);
             const fadeByClear = 1 - clearScene;
             const alpha = particle.alpha * appear * fadeByTakeover * fadeByClear * sceneOpacity;
 
             if (alpha > 0.01) {
-              const radius = particle.radius * appear * lerp(1, 0.82, takeover);
+              const half = (particle.size / 2) * appear * lerp(1, 0.82, takeover);
 
               ctx.beginPath();
-              ctx.arc(particle.x, particle.y, radius, 0, Math.PI * 2);
+              ctx.roundRect(particle.x - half, particle.y - half, half * 2, half * 2, CORNER * appear);
               ctx.fillStyle = rgba(PARTICLE_GRAY, alpha.toFixed(3));
               ctx.fill();
             }
@@ -284,15 +286,28 @@ export default function FooterCTA() {
             const appear = easeOut3(clamp((buildGrid - centerParticle.delay) / 0.13));
 
             if (appear > 0.001) {
-              const baseRadius = centerParticle.radius * appear;
-              const expandedRadius = baseRadius * lerp(1, viewportWidth < 768 ? 4.8 : 5.8, centerExpand);
-              const orbRadius = lerp(expandedRadius, hugeCenter, takeover);
+              const cpx = centerParticle.x;
+              const cpy = centerParticle.y;
+              // Diagonal from center particle to farthest corner of the viewport
+              const hugeCenter = Math.max(
+                Math.hypot(cpx, cpy),
+                Math.hypot(viewportWidth - cpx, cpy),
+                Math.hypot(cpx, viewportHeight - cpy),
+                Math.hypot(viewportWidth - cpx, viewportHeight - cpy)
+              ) * 1.06;
+
+              const baseHalf = (centerParticle.size / 2) * appear;
+              const expandedHalf = baseHalf * lerp(1, viewportWidth < 768 ? 4.8 : 5.8, centerExpand);
+              const orbHalf = lerp(expandedHalf, hugeCenter, takeover);
               const orbAlpha = clamp(centerParticle.alpha * appear * sceneOpacity * (1 - clearScene), 0, 1);
+
+              // Square → circle morph before becoming orange
+              const cornerRadius = lerp(CORNER * appear, orbHalf, centerToCircle);
 
               const grayAlpha = orbAlpha * (1 - centerAccent);
               if (grayAlpha > 0.005) {
                 ctx.beginPath();
-                ctx.arc(centerX, centerY, orbRadius, 0, Math.PI * 2);
+                ctx.roundRect(cpx - orbHalf, cpy - orbHalf, orbHalf * 2, orbHalf * 2, Math.min(cornerRadius, orbHalf));
                 ctx.fillStyle = rgba(PARTICLE_GRAY, grayAlpha.toFixed(3));
                 ctx.fill();
               }
@@ -300,16 +315,16 @@ export default function FooterCTA() {
               if (centerAccent > 0.005) {
                 const orangeAlpha = clamp(centerAccent * sceneOpacity * (1 - clearScene));
                 const orbGradient = ctx.createLinearGradient(
-                  centerX - orbRadius,
-                  centerY,
-                  centerX + orbRadius,
-                  centerY
+                  cpx - orbHalf,
+                  cpy,
+                  cpx + orbHalf,
+                  cpy
                 );
                 orbGradient.addColorStop(0, `rgba(${ORANGE_START[0]}, ${ORANGE_START[1]}, ${ORANGE_START[2]}, ${orangeAlpha.toFixed(3)})`);
                 orbGradient.addColorStop(1, `rgba(${ORANGE_END[0]}, ${ORANGE_END[1]}, ${ORANGE_END[2]}, ${orangeAlpha.toFixed(3)})`);
 
                 ctx.beginPath();
-                ctx.arc(centerX, centerY, orbRadius, 0, Math.PI * 2);
+                ctx.roundRect(cpx - orbHalf, cpy - orbHalf, orbHalf * 2, orbHalf * 2, Math.min(cornerRadius, orbHalf));
                 ctx.fillStyle = orbGradient;
                 ctx.fill();
               }
@@ -444,21 +459,21 @@ export default function FooterCTA() {
               }}
             >
               <span
-                className="block font-sans font-medium leading-[0.92] text-[#151311]"
+                className="block font-sans font-medium leading-[0.92] text-white"
                 style={{ fontSize: 'clamp(2.9rem, 7.2vw, 6.6rem)', letterSpacing: '-0.035em' }}
               >
                 Não seja só mais um.
               </span>
               <span
-                className="mt-2 block font-sans font-medium leading-[0.92] text-[#151311]"
-                style={{ 
-                  fontSize: 'clamp(2.7rem, 6.8vw, 6.2rem)', 
+                className="mt-2 block font-sans font-medium leading-[0.92] text-white"
+                style={{
+                  fontSize: 'clamp(2.7rem, 6.8vw, 6.2rem)',
                   letterSpacing: '-0.03em',
                 }}
               >
                 Seja TheOne
                 <span
-                  className="inline-block align-top font-halyard text-[#FFF2EC]"
+                  className="inline-block align-top font-halyard text-white/70"
                   style={{
                     fontSize: '0.288em',
                     letterSpacing: '0.04em',
@@ -482,7 +497,7 @@ export default function FooterCTA() {
                 willChange: 'transform, filter, opacity',
               }}
             >
-              <p className="mx-auto max-w-3xl text-[clamp(1.1rem,2vw,1.5rem)] font-halyard font-light leading-[1.5] text-[#2E1A14]">
+              <p className="mx-auto max-w-3xl text-[clamp(1.1rem,2vw,1.5rem)] font-halyard font-light leading-[1.5] text-white/80">
                 O topo do mercado não é sorte, é construção. Se você tem visão, ambição e busca transformar sua empresa na escolha inevitável do seu cliente — estamos prontos para construir isso com você.
               </p>
 

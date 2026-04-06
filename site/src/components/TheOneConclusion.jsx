@@ -7,7 +7,7 @@ export default function TheOneConclusion() {
 
   const style = {
     titulo: "clamp(2.5rem, 4vw, 3.5rem)",
-    texto: "24px",
+    texto: "20px",
     alturaLinhaTexto: "1.4",
   };
 
@@ -22,6 +22,20 @@ export default function TheOneConclusion() {
         { opacity: 0, x: 40, scale: 0.95 },
         { opacity: 1, x: 0, scale: 1, duration: 1.2, delay: 0.3, ease: "power4.out", scrollTrigger: { trigger: containerRef.current, start: 'top 75%' } }
       );
+
+      // Animação da frase destaque: fica laranja palavra por palavra
+      gsap.to('.conclusion-highlight-word', {
+        color: '#FE6942',
+        fontWeight: 500,
+        duration: 0.4,
+        stagger: 0.08,
+        delay: 0.7,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top 70%',
+        }
+      });
     }, containerRef);
     return () => ctx.revert();
   }, []);
@@ -39,7 +53,12 @@ export default function TheOneConclusion() {
 
           <div className="flex flex-col gap-6 font-halyard font-light text-[#C7C7C7] max-w-2xl" style={{ fontSize: style.texto, lineHeight: style.alturaLinhaTexto }}>
             <p>
-              Vimos de perto o que acontece quando marketing vira linha de produção, e nos recusamos a ser mais um desse modelo. A TheOne é a assessoria de marca que nasceu para construir marcas TheOne, a escolha inevitável na mente do seu público.
+              Vimos de perto o que acontece quando marketing vira linha de produção, e nos recusamos a ser mais um desse modelo.{" "}
+              {"A TheOne é a assessoria de marca que nasceu para construir marcas TheOne, a escolha inevitável na mente do seu público.".split(' ').map((word, i) => (
+                <span key={i} className="conclusion-highlight-word inline-block mr-[0.2em] whitespace-nowrap">
+                  {word}
+                </span>
+              ))}
             </p>
             <p>
               Não entregamos um PDF e sumimos. Estruturamos a narrativa, o posicionamento e a presença da sua marca em todos os principais pontos de contato, e seremos seus aliados na efetivação do seu posicionamento.
@@ -54,19 +73,13 @@ export default function TheOneConclusion() {
               <li className="flex items-start gap-3">
                 <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
                 <span>
-                  Tudo isso aplicado de forma personalizada, porque nenhum negócio com ambição cabe numa solução industrializada.
+                  Nossos projetos são personalizados, porque nenhum negócio com ambição cabe numa solução industrializada.
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
                 <span>
-                  Não atendemos centenas de clientes.
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
-                <span>
-                  Nós selecionamos empresas que têm visão de crescimento, ambição de escala e propósito de gerar transformação para nos tornarmos aliados.
+                  Não atendemos centenas de clientes. Nós selecionamos empresas que têm visão de crescimento e propósito de gerar transformação para nos tornarmos aliados.
                 </span>
               </li>
             </ul>
