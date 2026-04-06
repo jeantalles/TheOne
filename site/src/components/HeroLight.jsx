@@ -53,7 +53,7 @@ export default function HeroLight() {
         <h1
           className="font-sans tracking-[-0.035em] text-[#151312]"
           style={{
-            fontSize: 'clamp(3.96rem, 7.2vw, 6.3rem)',
+            fontSize: 'clamp(3.77rem, 7.2vw, 6.11rem)',
             lineHeight: 0.9,
             opacity: 0.73,
             fontWeight: 300,
@@ -69,10 +69,10 @@ export default function HeroLight() {
             <span
               className="inline-block align-top font-halyard text-[#FF8E6C]"
               style={{
-                fontSize: '0.288em',
+                fontSize: '0.36em',
                 letterSpacing: '0.04em',
                 marginLeft: '0.18em',
-                marginTop: '0.55em',
+                marginTop: '0.45em',
                 fontWeight: 600,
               }}
             >
@@ -91,11 +91,11 @@ export default function HeroLight() {
             opacity: 0.73,
           }}
         >
-          A única escolha na mente do seu cliente.
+          Torne-se a escolha número um.
         </h2>
 
         <p
-          className="mx-auto mb-12 max-w-[35rem] leading-[1.35] font-halyard"
+          className="mx-auto mb-12 max-w-[42rem] leading-[1.35] font-halyard"
           style={{
             fontSize: 'clamp(1.1475rem, 1.53vw, 1.6875rem)',
             marginTop: '38px',
@@ -103,7 +103,7 @@ export default function HeroLight() {
             fontWeight: 400,
           }}
         >
-          Para negócios visionários que não querem ser mais uma opção e buscam se tornar Top 1 no seu mercado.
+          Para negócios visionários que não querem ser só mais uma opção e querem se tornar a opção inevitável em seu mercado.
         </p>
 
         <div className="flex flex-row items-center justify-center gap-[18px]">
