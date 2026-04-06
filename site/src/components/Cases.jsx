@@ -25,8 +25,8 @@ const CASES = [
   },
   {
     id: 3,
-    title: 'Construção de Marca Pessoal',
-    subtitle: '',
+    title: 'Camilla Toscano',
+    subtitle: 'Construção de Marca Pessoal',
     result: 'Aquisição Série A de $10M',
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2940&auto=format&fit=crop',
   },
@@ -169,8 +169,8 @@ export default function Cases() {
 
         if (i > 0 && card) {
           gsap.fromTo(card,
-            { y: 80, scale: 0.97, rotate: i % 2 === 0 ? -0.8 : 0.8, filter: 'blur(6px)' },
-            { y: 0, scale: 1, rotate: 0, filter: 'blur(0px)', ease: 'none',
+            { y: 80, scale: 0.97, rotate: i % 2 === 0 ? -0.8 : 0.8 },
+            { y: 0, scale: 1, rotate: 0, ease: 'none',
               scrollTrigger: { trigger: item, start: 'top 92%', end: 'top 26%', scrub: 1.08 } }
           );
         }
@@ -206,6 +206,11 @@ export default function Cases() {
     if (isOpenRef.current) return;
     isOpenRef.current = true;
     setOpenState('opening');
+
+    if (stackRef.current) {
+      stackRef.current.style.maxHeight = 'none';
+      stackRef.current.style.overflow = 'visible';
+    }
 
     // Stop breathing immediately
     breatheRef.current?.kill();
@@ -332,12 +337,12 @@ export default function Cases() {
     <section
       ref={sectionRef}
       id="cases"
-      className="bg-[#212121] py-32 px-6 md:px-12 lg:px-16 border-b border-white/5 font-halyard relative overflow-hidden"
+      className="bg-[#212121] py-24 md:py-28 px-6 md:px-12 lg:px-16 border-b border-white/5 font-halyard relative"
     >
       <div className="max-w-[1920px] mx-auto">
 
         {/* Heading */}
-        <div className="flex flex-col items-center text-center mb-24 lg:mb-32 overflow-x-clip">
+        <div className="flex flex-col items-center text-center mb-16 lg:mb-20 overflow-x-clip">
           <h2 className="cases-heading text-white text-[clamp(2.8rem,5.2vw,5rem)] xl:text-[clamp(3.6rem,4.8vw,5.75rem)] font-editorial font-normal leading-[1.02] mb-6 will-change-transform whitespace-nowrap">
             Marcas construídas{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224] font-normal">
@@ -353,7 +358,14 @@ export default function Cases() {
           <div
             ref={stackRef}
             className="relative w-full pb-10 md:pb-20"
-            style={{ gridColumn: '1', gridRow: '1', zIndex: 1 }}
+            style={{
+              gridColumn: '1',
+              gridRow: '1',
+              zIndex: 1,
+              maxHeight: openState === 'closed' ? 'clamp(420px, 52vw, 620px)' : 'none',
+              overflow: openState === 'closed' ? 'hidden' : 'visible',
+              transition: 'max-height 0.7s cubic-bezier(0.23,1,0.32,1)',
+            }}
           >
             <div className="mx-auto w-full md:w-[96%] lg:w-[90%]">
               {CASES.map((c, i) => (
@@ -367,7 +379,7 @@ export default function Cases() {
                     paddingBottom: i === CASES.length - 1 ? '16vh' : '22vh',
                   }}
                 >
-                  <div className="relative mx-auto w-full h-[54vh] md:h-[68vh]" style={{ perspective: '1400px' }}>
+                  <div className="relative mx-auto w-full h-[calc(54vh+50px)] md:h-[calc(68vh+50px)]" style={{ perspective: '1400px' }}>
                     <div className="case-card relative h-full rounded-[32px] overflow-hidden group cursor-pointer bg-[#111111]" style={{ border: '1px solid rgba(255,255,255,0.37)' }}>
                       <div
                         className="case-image absolute inset-0 bg-cover bg-center transition-transform duration-[1.2s] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03]"
@@ -393,7 +405,7 @@ export default function Cases() {
                         </h3>
                         <p
                           className="font-halyard font-light tracking-[-0.01em] shrink-0 text-right"
-                          style={{ fontSize: 'clamp(0.75rem,1.2vw,1.1rem)', color: 'rgba(255,255,255,0.74)', opacity: 0.6 }}
+                          style={{ fontSize: 'clamp(0.9rem,1.5vw,1.3rem)', color: 'rgba(255,255,255,0.74)', opacity: 0.6 }}
                         >
                           {c.subtitle}
                         </p>
@@ -408,109 +420,117 @@ export default function Cases() {
           {/* Folder — mesma célula [1/1], z-index alto, cobre os cases até o clique */}
           <div
             ref={folderSceneRef}
-            className="relative flex justify-center"
+            className="relative flex flex-col items-center justify-start"
             style={{ gridColumn: '1', gridRow: '1', zIndex: 10, alignSelf: 'start', pointerEvents: 'none' }}
           >
-          <div ref={folderWrapRef} className="will-change-transform" style={{ width: 'min(520px, 88vw)', pointerEvents: 'auto' }}>
-            <motion.button
-              type="button"
-              onClick={handleOpen}
-              disabled={openState !== 'closed'}
-              aria-expanded={isOpen}
-              whileHover={openState === 'closed' ? { scale: 1.015, y: -3 } : undefined}
-              whileTap={openState === 'closed' ? { scale: 0.975 } : undefined}
-              transition={{ type: 'spring', stiffness: 320, damping: 20, mass: 0.85 }}
-              className={`group relative block w-full focus:outline-none ${openState === 'closed' ? 'cursor-pointer' : 'cursor-default'}`}
-              style={{ aspectRatio: '1.18 / 1', perspective: '1600px' }}
-            >
-              {/* Ambient glow */}
-              <div className="pointer-events-none absolute inset-[-9%_-6%_2%_-6%] rounded-[42px] bg-[radial-gradient(circle_at_center,rgba(254,105,66,0.22),rgba(254,105,66,0.08)_36%,transparent_72%)] blur-3xl" />
+            <div ref={folderWrapRef} className="will-change-transform" style={{ width: 'min(520px, 88vw)', pointerEvents: 'auto' }}>
+              <motion.button
+                type="button"
+                onClick={handleOpen}
+                disabled={openState !== 'closed'}
+                aria-expanded={isOpen}
+                whileHover={openState === 'closed' ? { scale: 1.015, y: -3 } : undefined}
+                whileTap={openState === 'closed' ? { scale: 0.975 } : undefined}
+                transition={{ type: 'spring', stiffness: 320, damping: 20, mass: 0.85 }}
+                className={`group relative block w-full focus:outline-none ${openState === 'closed' ? 'cursor-pointer' : 'cursor-default'}`}
+                style={{ aspectRatio: '1.18 / 1', perspective: '1600px' }}
+              >
+                {/* Ambient glow */}
+                <div className="pointer-events-none absolute inset-[-9%_-6%_2%_-6%] rounded-[42px] bg-[radial-gradient(circle_at_center,rgba(254,105,66,0.22),rgba(254,105,66,0.08)_36%,transparent_72%)] blur-3xl" />
 
-              <div ref={folderShellRef} className="relative h-full w-full will-change-transform" style={{ transformStyle: 'preserve-3d' }}>
+                <div ref={folderShellRef} className="relative h-full w-full will-change-transform" style={{ transformStyle: 'preserve-3d' }}>
 
-                {/* Folder back */}
-                <div
-                  ref={folderBackRef}
-                  className="absolute inset-0 overflow-hidden border border-white/10 shadow-[0_40px_110px_rgba(0,0,0,0.45)]"
-                  style={{
-                    clipPath: 'polygon(0% 18%, 21% 18%, 29% 10%, 100% 10%, 100% 100%, 0% 100%)',
-                    borderRadius: '42px',
-                    background: 'linear-gradient(135deg, #FFD7CD 0%, #FF845C 42%, #FF4B1C 100%)',
-                  }}
-                >
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.35),transparent_32%)]" />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),transparent_36%,rgba(0,0,0,0.12)_100%)]" />
-                </div>
+                  {/* Folder back */}
+                  <div
+                    ref={folderBackRef}
+                    className="absolute inset-0 overflow-hidden border border-white/10 shadow-[0_40px_110px_rgba(0,0,0,0.45)]"
+                    style={{
+                      clipPath: 'polygon(0% 18%, 21% 18%, 29% 10%, 100% 10%, 100% 100%, 0% 100%)',
+                      borderRadius: '42px',
+                      background: 'linear-gradient(135deg, #FFD7CD 0%, #FF845C 42%, #FF4B1C 100%)',
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.35),transparent_32%)]" />
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.12),transparent_36%,rgba(0,0,0,0.12)_100%)]" />
+                  </div>
 
-                {/* Folder tab */}
-                <div
-                  className="absolute left-[5.5%] top-[7.5%] h-[19%] w-[30%] border border-white/12 shadow-[0_18px_36px_rgba(0,0,0,0.18)]"
-                  style={{
-                    clipPath: 'polygon(0% 100%, 0% 28%, 63% 28%, 74% 0%, 100% 0%, 100% 100%)',
-                    borderRadius: '28px',
-                    background: 'linear-gradient(180deg, rgba(255,233,226,0.95) 0%, rgba(255,164,136,0.95) 100%)',
-                  }}
-                />
+                  {/* Folder tab */}
+                  <div
+                    className="absolute left-[5.5%] top-[7.5%] h-[19%] w-[30%] border border-white/12 shadow-[0_18px_36px_rgba(0,0,0,0.18)]"
+                    style={{
+                      clipPath: 'polygon(0% 100%, 0% 28%, 63% 28%, 74% 0%, 100% 0%, 100% 100%)',
+                      borderRadius: '28px',
+                      background: 'linear-gradient(180deg, rgba(255,233,226,0.95) 0%, rgba(255,164,136,0.95) 100%)',
+                    }}
+                  />
 
-                {/* Pocket — dark interior, card previews live here */}
-                <div
-                  ref={folderPocketRef}
-                  className="absolute left-[7%] right-[7%] top-[19%] bottom-[17%] overflow-hidden rounded-[30px] border border-black/10"
-                  style={{
-                    background: 'linear-gradient(180deg, rgba(32,18,12,0.34) 0%, rgba(17,11,9,0.72) 100%)',
-                    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -18px 60px rgba(0,0,0,0.24)',
-                  }}
-                >
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,219,208,0.18),transparent_45%)]" />
-                  {CASES.map((c, i) => (
-                    <div
-                      key={`preview-${c.id}`}
-                      ref={(el) => { folderPreviewRefs.current[i] = el; }}
-                      className="absolute left-1/2 top-[18%] h-[64%] w-[62%] -translate-x-1/2 overflow-hidden rounded-[24px] border border-white/12 shadow-[0_26px_50px_rgba(0,0,0,0.34)]"
-                      style={{
-                        zIndex: CASES.length - i,
-                        marginLeft: `${(i - 1) * 8}%`,
-                        backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.42) 100%), url(${c.image})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                      }}
-                    >
-                      <div className="absolute inset-x-0 bottom-0 h-[54%] bg-[linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0.7)_100%)]" />
-                      <div className="absolute left-4 right-4 bottom-4">
-                        <p className="text-[9px] font-bold tracking-[0.28em] text-[#FFD8CF] uppercase font-mono">{c.subtitle}</p>
-                        <p className="mt-1 text-lg font-editorial text-white leading-none">{c.title}</p>
+                  {/* Pocket — dark interior, card previews live here */}
+                  <div
+                    ref={folderPocketRef}
+                    className="absolute left-[7%] right-[7%] top-[19%] bottom-[17%] overflow-hidden rounded-[30px] border border-black/10"
+                    style={{
+                      background: 'linear-gradient(180deg, rgba(32,18,12,0.34) 0%, rgba(17,11,9,0.72) 100%)',
+                      boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -18px 60px rgba(0,0,0,0.24)',
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,219,208,0.18),transparent_45%)]" />
+                    {CASES.map((c, i) => (
+                      <div
+                        key={`preview-${c.id}`}
+                        ref={(el) => { folderPreviewRefs.current[i] = el; }}
+                        className="absolute left-1/2 top-[18%] h-[64%] w-[62%] -translate-x-1/2 overflow-hidden rounded-[24px] border border-white/12 shadow-[0_26px_50px_rgba(0,0,0,0.34)]"
+                        style={{
+                          zIndex: CASES.length - i,
+                          marginLeft: `${(i - 1) * 8}%`,
+                          backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.42) 100%), url(${c.image})`,
+                          backgroundSize: 'cover',
+                          backgroundPosition: 'center',
+                        }}
+                      >
+                        <div className="absolute inset-x-0 bottom-0 h-[54%] bg-[linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0.7)_100%)]" />
+                        <div className="absolute left-4 right-4 bottom-4">
+                          <p className="text-[9px] font-bold tracking-[0.28em] text-[#FFD8CF] uppercase font-mono">{c.subtitle}</p>
+                          <p className="mt-1 text-lg font-editorial text-white leading-none">{c.title}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Front flap */}
+                  <div
+                    ref={folderFrontRef}
+                    className="absolute inset-x-[4%] bottom-[4.5%] h-[46%] overflow-hidden border border-white/12 shadow-[0_26px_60px_rgba(0,0,0,0.25)]"
+                    style={{
+                      clipPath: 'polygon(0% 13%, 100% 0%, 100% 100%, 0% 100%)',
+                      borderRadius: '34px',
+                      background: 'linear-gradient(180deg, rgba(255,210,198,0.92) 0%, rgba(255,134,100,0.95) 24%, rgba(255,75,28,0.98) 100%)',
+                      transformStyle: 'preserve-3d',
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.18),transparent_34%,rgba(0,0,0,0.12)_100%)]" />
+                    <div className="absolute left-6 right-6 top-10 flex items-center justify-between md:left-10 md:right-10 md:top-12">
+                      <p className="text-[clamp(1.4rem,3.2vw,2.4rem)] text-white font-halyard font-medium leading-none">Cases TheOne</p>
+                      <div className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#FFA790' }}>
+                        <ArrowUp size={18} strokeWidth={2} className="text-white" />
                       </div>
                     </div>
-                  ))}
-                </div>
-
-                {/* Front flap */}
-                <div
-                  ref={folderFrontRef}
-                  className="absolute inset-x-[4%] bottom-[4.5%] h-[46%] overflow-hidden border border-white/12 shadow-[0_26px_60px_rgba(0,0,0,0.25)]"
-                  style={{
-                    clipPath: 'polygon(0% 13%, 100% 0%, 100% 100%, 0% 100%)',
-                    borderRadius: '34px',
-                    background: 'linear-gradient(180deg, rgba(255,210,198,0.92) 0%, rgba(255,134,100,0.95) 24%, rgba(255,75,28,0.98) 100%)',
-                    transformStyle: 'preserve-3d',
-                  }}
-                >
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.18),transparent_34%,rgba(0,0,0,0.12)_100%)]" />
-                  <div className="absolute left-6 right-6 top-10 flex items-center justify-between md:left-10 md:right-10 md:top-12">
-                    <p className="text-[clamp(1.4rem,3.2vw,2.4rem)] text-white font-halyard font-medium leading-none">Cases TheOne</p>
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#FFA790' }}>
-                      <ArrowUp size={18} strokeWidth={2} className="text-white" />
-                    </div>
+                    <div className="absolute inset-x-0 bottom-0 h-[38%] bg-[linear-gradient(180deg,rgba(40,14,7,0)_0%,rgba(40,14,7,0.16)_100%)]" />
                   </div>
-                  <div className="absolute inset-x-0 bottom-0 h-[38%] bg-[linear-gradient(180deg,rgba(40,14,7,0)_0%,rgba(40,14,7,0.16)_100%)]" />
-                </div>
 
-                {/* Edge highlight */}
-                <div className="pointer-events-none absolute inset-[1px] rounded-[42px] border border-white/10 opacity-70" />
+                  {/* Edge highlight */}
+                  <div className="pointer-events-none absolute inset-[1px] rounded-[42px] border border-white/10 opacity-70" />
+                </div>
+              </motion.button>
+              <div
+                className={`mt-6 flex justify-center transition-all duration-500 ${openState === 'closed' ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'}`}
+                aria-hidden={openState !== 'closed'}
+              >
+                <p className="text-center font-halyard text-[0.95rem] md:text-[1.05rem] tracking-[0.08em] text-white/58">
+                  ↑ Clique para abrir ↑
+                </p>
               </div>
-            </motion.button>
+            </div>
           </div>
-        </div>
 
         </div>{/* fecha grid */}
 

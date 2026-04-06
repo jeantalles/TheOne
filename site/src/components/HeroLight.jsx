@@ -1,43 +1,5 @@
-import { useRef, useState } from 'react';
+import PrimaryCTAButton from './PrimaryCTAButton';
 import { MeshGradient } from '@paper-design/shaders-react';
-
-function CTAButton() {
-  const btnRef = useRef(null);
-  const [pos, setPos] = useState({ x: '50%', y: '50%' });
-  const [hovered, setHovered] = useState(false);
-
-  const handleMouseMove = (e) => {
-    const rect = btnRef.current.getBoundingClientRect();
-    setPos({ x: `${e.clientX - rect.left}px`, y: `${e.clientY - rect.top}px` });
-  };
-
-  return (
-    <button
-      ref={btnRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      className="relative font-sans font-normal capitalize text-white cursor-pointer active:scale-[0.97] transition-transform"
-      style={{
-        fontSize: '18px',
-        height: '60px',
-        padding: '0 52px',
-        borderRadius: '100px',
-        letterSpacing: '0.01em',
-        background: hovered
-          ? `radial-gradient(80px circle at ${pos.x} ${pos.y}, rgba(255,120,80,0.35), #FF5224 70%)`
-          : '#FF5224',
-        border: 'none',
-        boxShadow: hovered
-          ? '0 8px 32px rgba(255,82,36,0.40)'
-          : '0 4px 16px rgba(255,82,36,0.22)',
-        transition: 'box-shadow 0.2s',
-      }}
-    >
-      Quero ser TheOne
-    </button>
-  );
-}
 
 export default function HeroLight() {
   return (
@@ -127,7 +89,7 @@ export default function HeroLight() {
         </p>
 
         <div className="flex flex-row items-center justify-center gap-[18px]">
-          <CTAButton />
+          <PrimaryCTAButton>Quero ser TheOne</PrimaryCTAButton>
           <a
             href="#o-problema"
             className="group inline-flex items-center justify-center font-sans font-normal transition-colors duration-200 active:scale-[0.98]"

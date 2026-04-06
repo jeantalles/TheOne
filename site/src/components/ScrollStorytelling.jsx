@@ -57,23 +57,23 @@ export default function ScrollStorytelling() {
     {
       tag: '01 ⏤ 04',
       title: 'O mercado tá ficando cada vez mais competitivo... e parecido.',
-      content: 'Ter um bom produto, rodar anúncio e produzir conteúdo está cada vez mais acessível. Hoje qualquer empresa faz isso.[WHITE]O problema é que quando todo mundo faz a mesma coisa e se vende do mesmo jeito, ninguém se destaca. [/WHITE] \n Num ambiente assim, só se torna a escolha do cliente quem constrói um posicionamento único, relevante e memorável. Quem não constrói, compete de igual para igual.',
+      content: 'Ter um bom produto, rodar anúncio e produzir conteúdo está cada vez mais acessível. Hoje qualquer empresa faz isso.[WHITE]O problema é que quando todo mundo faz a mesma coisa e se vende do mesmo jeito, ninguém se destaca. [/WHITE] \n Num ambiente assim, só se torna a escolha do cliente quem constrói um posicionamento inevitável na mente do cliente. Quem não constrói, compete de igual para igual com diversas outras opções.',
     },
     {
       tag: '02 ⏤ 04',
       title: 'Nós vimos o marketing ruir de dentro pra fora.',
       titleWidth: '750px',
-      content: 'Nossa história começou na linha de frente da maior operação de marketing do Brasil,[WHITE]milhares de clientes sendo atendidos de forma industrial com a mesma solução,[/WHITE]como se toda empresa tivesse os mesmos problemas. O que mais vimos foram negócios visionários despejando fortunas em tráfego pago sem ter o básico resolvido. Anunciando a mesma coisa que os concorrentes, com a mesma mensagem, para o mesmo público. \n Do outro lado, estúdios de branding entregando conceitos criativos, mas lavando as mãos na hora de fazer isso funcionar na prática. Um olhava só para o curto prazo. O outro, só para o longo. E no meio desse abismo, empresários com visão de gerar valor e transformação perdendo tempo e dinheiro numa solução que nunca foi feita pra eles.'
+      content: 'Nossa história começou na linha de frente de uma das maiores assessorias de marketing do Brasil,[WHITE]milhares de clientes sendo atendidos de forma industrial com a mesma solução,[/WHITE]como se toda empresa tivesse os mesmos problemas. O que mais vimos foram negócios visionários despejando fortunas em tráfego pago sem ter o básico resolvido. Anunciando a mesma coisa que os concorrentes, com a mesma mensagem, para o mesmo público. \n Do outro lado, estúdios de branding entregando conceitos criativos, mas lavando as mãos na hora de fazer isso funcionar na prática. Um olhava só para o curto prazo. O outro, só para o longo. E no meio desse abismo, empresários com visão de gerar valor e transformação perdendo tempo e dinheiro em soluções que não foram pensadas para resolver os problemas deles.'
     },
     {
       tag: '03 ⏤ 04',
       title: 'Você pode pagar pra aparecer. \n Mas não pode pagar pra ser escolhido.',
-      content: 'Tráfego te coloca na frente do seu cliente, mas se o que você comunica é igual ao que o concorrente comunica, você pagou para ser visto e ignorado. Se você parar de anunciar, sua marca some. Não há memória, não há preferência, não há escolha. A empresa existe enquanto anuncia — e precisa anunciar cada vez mais para continuar existindo. Isso não é escala, é dependência.'
+      content: 'Tráfego te coloca na frente do seu cliente, mas se o que você vende é igual ao que o concorrente vende, você pagou pra ser visto e ignorado. Se você gasta rios de dinheiro com mídia paga e se parar de anunciar a qualquer momento pode por sua empresa em risco, você não está escalando, está dependente. \n [WHITE]Não adianta só ser visto, você precisa ser visto, lembrado e desejado.[/WHITE]'
     },
     {
       tag: '04 ⏤ 04',
       title: 'Sem se posicionar de forma estratégica, até o melhor negócio vira commodity.',
-      content: 'Quando o mercado não consegue enxergar o que te diferencia, ele faz o que sempre faz: te compara pelo preço. Não importa o quanto você entrega, o quanto você se dedicou, o quanto o seu produto ou serviço é superior. Se a percepção não acompanha o valor, você compete de igual pra igual com quem entrega muito menos. E aí fica a pergunta:[WHITE]você quer continuar sendo mais um no mercado?[/WHITE]'
+      content: 'Quando o mercado não consegue enxergar o que te diferencia, ele faz o que sempre faz: te compara pelo preço. Não importa o quanto você entrega, o quanto você se dedicou, o quanto o seu produto ou serviço é superior. Se a percepção não acompanha o valor, você compete de igual pra igual com quem entrega muito menos. \n E aí fica a pergunta: [WHITE]você quer continuar sendo mais um no mercado?[/WHITE]'
     }
   ];
 
@@ -164,7 +164,7 @@ export default function ScrollStorytelling() {
               {renderWords(story.title)}
             </h2>
             <p
-              className="font-halyard font-light text-[#C7C7C7] max-w-3xl mt-6"
+              className="font-halyard font-light text-[#C7C7C7] max-w-4xl mt-6"
               style={{ fontSize: style.texto, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
             >
               {renderWordsWithParagraphs(story.content)}
