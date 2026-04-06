@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 const STORYTELLING_CONFIG = {
   fontSize: {
     tag: '23px',
-    titulo: 'clamp(3.8rem, 4vw, 4.3rem)',
+    titulo: 'clamp(2rem, 5.5vw, 4.3rem)',
     texto: '27px',
   },
   lineHeight: {
@@ -102,6 +102,20 @@ function parseStyledText(lineText) {
   return parts;
 }
 
+function renderStyledWords(line, keyPrefix, wordClass = '') {
+  return parseStyledText(line).flatMap((part, partIndex) =>
+    part.text.split(' ').filter(Boolean).map((word, wordIndex) => (
+      <span
+        key={`${keyPrefix}-${partIndex}-${wordIndex}`}
+        className={wordClass ? `${wordClass} inline-block mr-[0.3em]` : 'inline-block mr-[0.3em]'}
+        style={part.style}
+      >
+        {word}
+      </span>
+    ))
+  );
+}
+
 function renderCompactLine(line, keyPrefix) {
   return (
     <div
@@ -110,11 +124,7 @@ function renderCompactLine(line, keyPrefix) {
         minHeight: line.includes('[QUESTION]') ? '1.4em' : undefined,
       }}
     >
-      {parseStyledText(line).map((part, index) => (
-        <span key={`${keyPrefix}-${index}`} style={part.style}>
-          {part.text}
-        </span>
-      ))}
+      {renderStyledWords(line, keyPrefix, 'story-mobile-copy-word')}
     </div>
   );
 }
@@ -136,6 +146,14 @@ function renderCompactParagraphs(paragraphs) {
   });
 }
 
+function renderCompactTitle(title) {
+  return title.split('\n').map((line, lineIndex) => (
+    <div key={lineIndex}>
+      {renderStyledWords(line, `title-${lineIndex}`, 'story-mobile-title-word')}
+    </div>
+  ));
+}
+
 export default function ScrollStorytelling() {
   const containerRef = useRef(null);
   const style = STORYTELLING_CONFIG.fontSize;
@@ -143,7 +161,7 @@ export default function ScrollStorytelling() {
   const isCompactLayout = useMediaQuery('(max-width: 1023px)') || prefersReducedMotion;
 
   useEffect(() => {
-    if (isCompactLayout) {
+    if (isCompactLayout || prefersReducedMotion) {
       return undefined;
     }
 
@@ -239,7 +257,49 @@ export default function ScrollStorytelling() {
     }, containerRef);
 
     return () => ctx.revert();
-  }, [isCompactLayout]);
+  }, [isCompactLayout, prefersReducedMotion]);
+
+  useEffect(() => {
+    if (!isCompactLayout || prefersReducedMotion) {
+      return undefined;
+    }
+
+    const ctx = gsap.context(() => {
+      gsap.utils.toArray('.story-panel-mobile').forEach((panel) => {
+        const titleWords = panel.querySelectorAll('.story-mobile-title-word');
+        const copyWords = panel.querySelectorAll('.story-mobile-copy-word');
+
+        gsap.set([...titleWords, ...copyWords], { opacity: 0.06 });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: panel,
+            start: 'top 82%',
+            end: 'bottom 22%',
+            scrub: 1.4,
+          },
+        });
+
+        if (titleWords.length) {
+          tl.to(titleWords, {
+            opacity: 1,
+            ease: 'none',
+            stagger: { each: 0.045 },
+          }, 0);
+        }
+
+        if (copyWords.length) {
+          tl.to(copyWords, {
+            opacity: 0.78,
+            ease: 'none',
+            stagger: { each: 0.022 },
+          }, titleWords.length ? 0.28 : 0);
+        }
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [isCompactLayout, prefersReducedMotion]);
 
   const renderWords = (text, wordClass = 'rev-word') =>
     text.split('\n').map((line, lineIndex) => (
@@ -316,8 +376,8 @@ export default function ScrollStorytelling() {
 
     return (
       <div
-        className="mt-6 max-w-4xl font-halyard font-light text-[#C7C7C7]"
-        style={{ fontSize: 'clamp(1.1rem, 2vw, 1.45rem)', lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
+        className="story-mobile-body mt-6 max-w-4xl font-halyard font-light text-[#C7C7C7]"
+        style={{ fontSize: 'clamp(1.2rem, 4.8vw, 1.5rem)', lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
       >
         {renderCompactParagraphs(paragraphs)}
       </div>
@@ -329,18 +389,18 @@ export default function ScrollStorytelling() {
       {STORIES.map((story, index) => (
         <div
           key={story.tag}
-          className={`${isCompactLayout ? 'relative flex flex-col items-center justify-center px-6 py-24' : 'story-panel min-h-[100svh] relative flex flex-col items-center justify-center px-6 overflow-hidden'}`}
+          className={`${isCompactLayout ? 'story-panel-mobile relative flex flex-col items-center justify-center px-6 py-24' : 'story-panel min-h-[100svh] relative flex flex-col items-center justify-center px-6 overflow-hidden'}`}
           data-transition={isCompactLayout ? undefined : story.transitionMode}
         >
           <div
-            className="absolute inset-0 -z-10"
+            className="absolute inset-0 z-0"
             style={{
               background: index === 0
-                ? 'linear-gradient(to bottom, #030202 0%, #212121 100%)'
+                ? 'linear-gradient(to bottom, #010000 0%, #212121 50%)'
                 : '#212121',
             }}
           />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,82,36,0.06)_0%,transparent_60%)] pointer-events-none -z-10" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,82,36,0.06)_0%,transparent_60%)] pointer-events-none z-0" />
           <div
             className="relative z-10 max-w-5xl w-full text-center flex flex-col items-center gap-8 py-16"
             style={{ paddingTop: index === 0 ? '2.5rem' : undefined }}
@@ -349,12 +409,10 @@ export default function ScrollStorytelling() {
               {story.tag}
             </span>
             <h2
-              className="story-title-container font-editorial font-normal leading-[1.1] text-white"
+              className={`story-title-container font-editorial font-normal leading-[1.1] text-white ${isCompactLayout ? 'story-mobile-title' : ''}`}
               style={{ fontSize: style.titulo, maxWidth: story.titleWidth }}
             >
-              {isCompactLayout ? story.title.split('\n').map((line, lineIndex) => (
-                <div key={lineIndex}>{line}</div>
-              )) : renderWords(story.title, 'story-title-word')}
+              {isCompactLayout ? renderCompactTitle(story.title) : renderWords(story.title, 'story-title-word')}
             </h2>
             {isCompactLayout ? renderCompactBody(story) : renderDesktopBody(story)}
           </div>

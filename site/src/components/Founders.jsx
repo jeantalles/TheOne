@@ -72,12 +72,12 @@ export default function Founders() {
     <section
       id="fundadores"
       ref={sectionRef}
-      className="py-32 px-6 md:px-12 lg:px-16 bg-[#212121] border-b border-white/5 font-halyard overflow-hidden"
+      className="py-20 md:py-32 px-6 md:px-12 lg:px-16 bg-[#212121] border-b border-white/5 font-halyard overflow-hidden"
     >
       <div className="max-w-[1500px] mx-auto">
 
         {/* Header */}
-        <div className="mb-20">
+        <div className="mb-12 md:mb-20">
           <h2 className="font-editorial text-4xl md:text-5xl lg:text-[56px] text-white leading-[1.1]">
             Quem está por trás da{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224]">
@@ -124,7 +124,7 @@ export default function Founders() {
 
                   {/* Content */}
                   <div
-                    className={`relative z-10 flex flex-col justify-center bg-[#212121] px-10 md:px-14 lg:px-16 py-12 md:py-16 flex-1 ${
+                    className={`relative z-10 flex flex-col justify-center bg-[#212121] px-6 md:px-14 lg:px-16 py-10 md:py-16 flex-1 ${
                       isReversed ? 'md:order-1' : ''
                     }`}
                   >
@@ -134,7 +134,7 @@ export default function Founders() {
                     </span>
 
                     {/* Name */}
-                    <h3 className="font-editorial text-white text-5xl md:text-[56px] leading-[1.05] mb-3">
+                    <h3 className="font-editorial text-white text-[32px] md:text-[56px] leading-[1.05] mb-3">
                       {f.name}
                     </h3>
 
@@ -151,7 +151,7 @@ export default function Founders() {
                       {f.bullets.map((b, j) => (
                         <li key={j} className="flex gap-4 items-start">
                           <span className="text-[#FE6942] text-base mt-0.5 shrink-0">→</span>
-                          <p className="text-[#C7C7C7] font-light text-[21px] leading-[1.55]">
+                          <p className="text-[#C7C7C7] font-light text-[17px] md:text-[21px] leading-[1.55]">
                             {b}
                           </p>
                         </li>

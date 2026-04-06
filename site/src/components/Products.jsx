@@ -160,10 +160,10 @@ const FeatureCard = React.memo(({ icon, title, text, style, index = 0 }) => {
 
 export default function Products() {
   const style = {
-    titulosGrandes: "57px",
-    titulosBox: "28px",
-    textoGrande: "23px",
-    textoBox: "21px",
+    titulosGrandes: "clamp(2.2rem, 4.5vw, 3.56rem)",
+    titulosBox: "clamp(1.3rem, 2.2vw, 1.75rem)",
+    textoGrande: "clamp(1rem, 1.8vw, 1.44rem)",
+    textoBox: "clamp(1rem, 1.6vw, 1.31rem)",
   };
 
   const containerRef = useRef(null);
@@ -205,18 +205,18 @@ export default function Products() {
     <section
       ref={containerRef}
       id="solucoes"
-      className="bg-[#212121] py-32 px-6 md:px-12 lg:px-16 border-b border-white/5 relative font-halyard"
+      className="bg-[#212121] py-20 md:py-32 px-6 md:px-12 lg:px-16 border-b border-white/5 relative font-halyard"
     >
       <GradientStrokeDefs />
       <div className="max-w-[1700px] mx-auto">
         <div
           ref={headerRef}
-          className="flex flex-col items-center justify-center text-center pt-8 md:pt-10 pb-[100px] mb-24 lg:mb-32"
+          className="flex flex-col items-center justify-center text-center pt-8 md:pt-10 pb-14 md:pb-[100px] mb-16 md:mb-24 lg:mb-32"
         >
-          <h1 className="text-white text-[36px] md:text-[54px] lg:text-[62px] font-normal leading-[1.08] tracking-[-0.02em] font-editorial whitespace-nowrap">
+          <h1 className="text-white text-[36px] md:text-[54px] lg:text-[62px] font-normal leading-[1.08] tracking-[-0.02em] font-editorial md:whitespace-nowrap">
             Como sua marca se torna <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224] font-normal">TheOne</span><span className="font-halyard text-[0.5em] align-top text-[#FF9E84] ml-1 inline-block">™</span>
           </h1>
-          <p className="mt-6 text-[#C7C7C7] text-[29px] font-light font-halyard">
+          <p className="mt-6 text-[#C7C7C7] text-[18px] md:text-[29px] font-light font-halyard">
             Seu projeto será desenhado de forma personalizada.
           </p>
         </div>
@@ -224,11 +224,11 @@ export default function Products() {
         {/* 01 / PROJETO */}
         <div
           ref={section1Ref}
-          className="flex flex-col lg:flex-row gap-16 lg:gap-12 mb-24 lg:mb-48 items-start"
+          className="flex flex-col lg:flex-row gap-10 lg:gap-12 mb-24 lg:mb-48 items-start"
         >
           <div className="lg:w-[20%]">
             <div className="lg:sticky lg:top-28">
-              <h2 className="text-white text-[42px] font-light leading-[1.2] mb-2 font-halyard">
+              <h2 className="text-white text-[28px] md:text-[42px] font-light leading-[1.2] mb-2 font-halyard">
                 Construindo a fundação <br />
                 para se tornar <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224] font-normal">inevitável</span>
@@ -258,13 +258,13 @@ export default function Products() {
               </div>
             </div>
 
-            <div className="bg-transparent border border-[#5B5B5B] rounded-[32.7px] pt-12 pb-16 px-12 md:px-16">
+            <div className="bg-transparent border border-[#5B5B5B] rounded-[32.7px] pt-10 pb-12 px-6 md:pt-12 md:pb-16 md:px-16">
               <div className="mb-12 flex justify-start">
                 <span className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-[13px] tracking-[0.14em] uppercase text-[#C7C7C7] font-halyard">
                   Soluções modulares
                 </span>
               </div>
-              <div className="grid md:grid-cols-2 gap-y-20 gap-x-16">
+              <div className="grid md:grid-cols-2 gap-y-12 gap-x-10 md:gap-y-20 md:gap-x-16">
                 <FeatureCard index={0}
                   icon="estrategia"
                   title="Estratégia de marca"
@@ -295,10 +295,10 @@ export default function Products() {
         </div>
 
         {/* 02 / OPERAÇÃO */}
-        <div ref={section2Ref} className="flex flex-col lg:flex-row gap-16 lg:gap-12 items-start">
+        <div ref={section2Ref} className="flex flex-col lg:flex-row gap-10 lg:gap-12 items-start">
           <div className="lg:w-[20%]">
             <div className="lg:sticky lg:top-28">
-              <h2 className="text-white text-[42px] font-light leading-[1.2] mb-2 font-halyard">
+              <h2 className="text-white text-[28px] md:text-[42px] font-light leading-[1.2] mb-2 font-halyard">
                 Efetivando seu <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224] font-normal">posicionamento</span>
               </h2>
@@ -333,7 +333,7 @@ export default function Products() {
                   Soluções modulares
                 </span>
               </div>
-              <div className="grid md:grid-cols-2 gap-y-20 gap-x-16">
+              <div className="grid md:grid-cols-2 gap-y-12 gap-x-10 md:gap-y-20 md:gap-x-16">
                 <FeatureCard index={0}
                   icon="conteudo"
                   title="Sistema de Conteúdo"

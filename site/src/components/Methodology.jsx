@@ -153,7 +153,7 @@ export default function Methodology() {
 
       {/* Pirâmide */}
       <div className="relative w-full h-full flex items-center justify-center pt-24 md:pt-28">
-        <div className="meth-pyramid-shell relative flex-shrink-0 opacity-0" style={{ width: 'min(96vh, 960px)', height: 'min(96vh, 960px)' }}>
+        <div className="meth-pyramid-shell relative flex-shrink-0 opacity-0" style={{ width: 'min(90vw, 96vh, 960px)', height: 'min(90vw, 96vh, 960px)' }}>
           <svg width="100%" height="100%" viewBox="0 0 400 400" className="absolute inset-0 pointer-events-none">
             <line x1="200" y1="52" x2="356" y2="334" stroke="rgba(255,82,36,0.45)" strokeWidth="1.2" className="meth-line-1" />
             <line x1="356" y1="334" x2="44" y2="334" stroke="rgba(255,82,36,0.45)" strokeWidth="1.2" className="meth-line-2" />
@@ -162,43 +162,45 @@ export default function Methodology() {
 
           {/* Nó 1 — Topo (Público) (com Glow via classe + elemento de fundo) */}
           <div className="meth-node-1 absolute top-[11.6%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-20 opacity-0">
-            <div className="relative w-[92px] h-[92px] flex items-center justify-center mb-2">
+            <div className="relative w-[60px] h-[60px] lg:w-[92px] lg:h-[92px] flex items-center justify-center mb-2">
               {/* Círculo de glow de fundo para garantir visibilidade */}
               <div className="absolute inset-0 rounded-full bg-[#FF5224]/20 blur-[28px] pointer-events-none" />
-              
-              <svg width="92" height="92" viewBox="0 0 92 92" fill="none" className="absolute inset-0 glow-method-node">
+              <svg width="100%" height="100%" viewBox="0 0 92 92" fill="none" className="absolute inset-0 glow-method-node">
                 <circle cx="46" cy="46" r="37" stroke="url(#methodNodeGradient)" strokeWidth="5" />
               </svg>
               <div className="absolute inset-[9px] rounded-full bg-[#212121]" />
-              <Users size={33} className="relative z-10 text-[#FED1C5]" />
+              <Users size={22} className="relative z-10 text-[#FED1C5] lg:hidden" />
+              <Users size={33} className="relative z-10 text-[#FED1C5] hidden lg:block" />
             </div>
-            <span className="text-white font-sans font-normal text-[19px] tracking-[0.02em]">Público</span>
+            <span className="text-white font-sans font-normal text-[14px] lg:text-[19px] tracking-[0.02em]">Público</span>
           </div>
 
           {/* Nó 2 — Baixo Direita */}
           <div className="meth-node-2 absolute top-[83%] left-[89%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-20 opacity-0">
-            <div className="relative w-[92px] h-[92px] flex items-center justify-center mb-2">
+            <div className="relative w-[60px] h-[60px] lg:w-[92px] lg:h-[92px] flex items-center justify-center mb-2">
               <div className="absolute inset-0 rounded-full bg-[#FF5224]/20 blur-[28px] pointer-events-none" />
-              <svg width="92" height="92" viewBox="0 0 92 92" fill="none" className="absolute inset-0 glow-method-node">
+              <svg width="100%" height="100%" viewBox="0 0 92 92" fill="none" className="absolute inset-0 glow-method-node">
                 <circle cx="46" cy="46" r="37" stroke="url(#methodNodeGradient)" strokeWidth="5" />
               </svg>
               <div className="absolute inset-[9px] rounded-full bg-[#212121]" />
-              <Briefcase size={33} className="relative z-10 text-[#FED1C5]" />
+              <Briefcase size={22} className="relative z-10 text-[#FED1C5] lg:hidden" />
+              <Briefcase size={33} className="relative z-10 text-[#FED1C5] hidden lg:block" />
             </div>
-            <span className="text-white font-sans font-normal text-[19px] tracking-[0.02em]">Negócio</span>
+            <span className="text-white font-sans font-normal text-[14px] lg:text-[19px] tracking-[0.02em]">Negócio</span>
           </div>
 
           {/* Nó 3 — Baixo Esquerda */}
           <div className="meth-node-3 absolute top-[83%] left-[11%] -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-20 opacity-0">
-            <div className="relative w-[92px] h-[92px] flex items-center justify-center mb-2">
+            <div className="relative w-[60px] h-[60px] lg:w-[92px] lg:h-[92px] flex items-center justify-center mb-2">
               <div className="absolute inset-0 rounded-full bg-[#FF5224]/20 blur-[28px] pointer-events-none" />
-              <svg width="92" height="92" viewBox="0 0 92 92" fill="none" className="absolute inset-0 glow-method-node">
+              <svg width="100%" height="100%" viewBox="0 0 92 92" fill="none" className="absolute inset-0 glow-method-node">
                 <circle cx="46" cy="46" r="37" stroke="url(#methodNodeGradient)" strokeWidth="5" />
               </svg>
               <div className="absolute inset-[9px] rounded-full bg-[#212121]" />
-              <Target size={33} className="relative z-10 text-[#FED1C5]" />
+              <Target size={22} className="relative z-10 text-[#FED1C5] lg:hidden" />
+              <Target size={33} className="relative z-10 text-[#FED1C5] hidden lg:block" />
             </div>
-            <span className="text-white font-sans font-normal text-[19px] tracking-[0.02em]">Mercado</span>
+            <span className="text-white font-sans font-normal text-[14px] lg:text-[19px] tracking-[0.02em]">Mercado</span>
           </div>
 
           {/* Centro */}

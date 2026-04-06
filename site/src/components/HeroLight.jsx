@@ -47,7 +47,7 @@ export default function HeroLight() {
       </div>
 
       <div
-        className="container relative z-10 px-6 pb-[25px] text-center"
+        className="container relative z-10 px-6 pb-[25px] pt-[88px] md:pt-0 text-center"
         style={{ transform: 'translateY(15px)' }}
       >
         <h1
@@ -82,9 +82,9 @@ export default function HeroLight() {
         </h1>
 
         <h2
-          className="font-editorial font-normal"
+          className="font-editorial font-normal whitespace-nowrap md:whitespace-normal"
           style={{
-            fontSize: 'clamp(1.71rem, 2.52vw, 2.7rem)',
+            fontSize: 'clamp(1.45rem, 6vw, 2.7rem)',
             paddingTop: '25px',
             color: '#1A1A1A',
             lineHeight: 1.06,
@@ -106,7 +106,7 @@ export default function HeroLight() {
           Para negócios visionários que não querem ser só mais uma opção e querem se tornar a alternativa inevitável em seu mercado.
         </p>
 
-        <div className="flex flex-row items-center justify-center gap-[18px]">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-[14px] sm:gap-[18px]">
           <PrimaryCTAButton style={{ fontSize: '16.2px' }}>Quero ser TheOne</PrimaryCTAButton>
           <a
             href="#o-problema"

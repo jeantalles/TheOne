@@ -365,7 +365,7 @@ export default function Cases() {
 
         {/* Heading */}
         <div className="flex flex-col items-center text-center mb-16 lg:mb-20 overflow-x-clip">
-          <h2 className="cases-heading text-white text-[clamp(2.8rem,5.2vw,5rem)] xl:text-[clamp(3.6rem,4.8vw,5.75rem)] font-editorial font-normal leading-[1.02] mb-6 will-change-transform whitespace-nowrap">
+          <h2 className="cases-heading text-white text-[clamp(2.8rem,5.2vw,5rem)] xl:text-[clamp(3.6rem,4.8vw,5.75rem)] font-editorial font-normal leading-[1.02] mb-6 will-change-transform md:whitespace-nowrap">
             Marcas construídas{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224] font-normal">
               para liderar
