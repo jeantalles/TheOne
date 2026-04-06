@@ -9,6 +9,8 @@ const INTRO_WORDS = ['Não', 'seja', 'só', 'mais', 'uma', 'marca.'];
 
 const DARK_BG = [33, 33, 33];
 const WARM_BG = [245, 240, 236];
+const ORANGE_BG = [255, 104, 56];
+const SOFT_ORANGE = [254, 209, 197];
 const ACCENT = [255, 75, 28];
 
 function clamp(value, min = 0, max = 1) {
@@ -33,8 +35,17 @@ function easeInOut3(value) {
     : 1 - Math.pow(-2 * value + 2, 3) / 2;
 }
 
+function blendRgb(from, to, amount) {
+  return [
+    Math.round(lerp(from[0], to[0], amount)),
+    Math.round(lerp(from[1], to[1], amount)),
+    Math.round(lerp(from[2], to[2], amount)),
+  ];
+}
+
 function mixColor(from, to, amount) {
-  return `rgb(${Math.round(lerp(from[0], to[0], amount))}, ${Math.round(lerp(from[1], to[1], amount))}, ${Math.round(lerp(from[2], to[2], amount))})`;
+  const [r, g, b] = blendRgb(from, to, amount);
+  return `rgb(${r}, ${g}, ${b})`;
 }
 
 function rgba(rgb, alpha) {
@@ -84,65 +95,6 @@ function buildParticles(width, height) {
   return particles;
 }
 
-function TheOneMark({ className = '', bgRef, outlineRef, pathRefs }) {
-  return (
-    <svg
-      aria-hidden="true"
-      viewBox="449.102 42.796 340 340"
-      className={className}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle
-        ref={bgRef}
-        cx="619.102"
-        cy="212.796"
-        r="134.026"
-        fill="rgba(140, 140, 140, 0.35)"
-      />
-      <circle
-        ref={outlineRef}
-        cx="619.102"
-        cy="212.796"
-        r="134.026"
-        transform="rotate(0.0488355 619.102 212.796)"
-        stroke="url(#footerMarkRing)"
-        strokeWidth="20"
-        strokeDasharray="845"
-        strokeDashoffset="845"
-      />
-      <path
-        ref={(el) => { if (el && pathRefs) pathRefs.current[0] = el; }}
-        d="M574.527 273.95L575.787 287.458H662.663L663.553 273.724L628.936 266.186L610.253 266.186L574.527 273.95Z"
-        fill="#FF8464"
-        style={{ opacity: 0 }}
-      />
-      <path
-        ref={(el) => { if (el && pathRefs) pathRefs.current[1] = el; }}
-        d="M628.171 269.03L612.727 268.125L618.772 164.989L620.707 131.978L636.151 132.884L628.171 269.03Z"
-        fill="url(#footerMarkStem)"
-        style={{ opacity: 0 }}
-      />
-      <path
-        ref={(el) => { if (el && pathRefs) pathRefs.current[2] = el; }}
-        d="M616.291 138.235C611.014 155.185 590.388 161.451 579.433 162.098L577.68 195.544C593.895 194.651 608.085 187.972 613.899 183.863L616.291 138.235Z"
-        fill="#FF8B6D"
-        style={{ opacity: 0 }}
-      />
-      <defs>
-        <linearGradient id="footerMarkRing" x1="453.691" y1="46.7476" x2="769.555" y2="285.732" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#FFD7CD" />
-          <stop offset="1" stopColor="#FF4B1C" />
-        </linearGradient>
-        <linearGradient id="footerMarkStem" x1="467.947" y1="40.996" x2="783.123" y2="90.5032" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#FFD7CD" />
-          <stop offset="1" stopColor="#FF4B1C" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-}
-
 export default function FooterCTA() {
   const sectionRef = useRef(null);
   const stickyRef = useRef(null);
@@ -151,11 +103,6 @@ export default function FooterCTA() {
   const introRef = useRef(null);
   const introWordRefs = useRef([]);
   const canvasRef = useRef(null);
-  const logoRef = useRef(null);
-  const logoShellRef = useRef(null);
-  const logoBgRef = useRef(null);
-  const logoOutlineRef = useRef(null);
-  const logoPathRefs = useRef([]);
   const finalWrapRef = useRef(null);
   const finalTitleRef = useRef(null);
   const finalBodyRef = useRef(null);
@@ -171,7 +118,7 @@ export default function FooterCTA() {
     let rafId = 0;
     let scrollProgress = 0;
     let particles = [];
-    let frameTick = 0;
+    let centerParticle = null;
     let viewportWidth = window.innerWidth;
     let viewportHeight = window.innerHeight;
 
@@ -188,75 +135,53 @@ export default function FooterCTA() {
       ctx.scale(dpr, dpr);
 
       particles = buildParticles(viewportWidth, viewportHeight);
+      centerParticle = particles.find((particle) => particle.isCenter) ?? null;
     };
 
     const setSceneStyles = (progress) => {
-        const bgShift = easeInOut3(norm(progress, 0, 0.16));
-        const introExit = easeInOut3(norm(progress, 0.25, 0.40));
-        const gridBuild = easeOut3(norm(progress, 0.15, 0.50));
-        const logoReveal = easeOut3(norm(progress, 0.46, 0.58));
-        const takeover = easeInOut3(norm(progress, 0.58, 0.76));
-        const clearScene = easeOut3(norm(progress, 0.74, 0.82));
-        const finalTitle = easeOut3(norm(progress, 0.80, 0.88));
-        const finalBody = easeOut3(norm(progress, 0.84, 0.94));
+      const bgShift = easeInOut3(norm(progress, 0, 0.16));
+      const introExit = easeInOut3(norm(progress, 0.24, 0.39));
+      const centerAccent = easeOut3(norm(progress, 0.44, 0.54));
+      const centerExpand = easeInOut3(norm(progress, 0.58, 0.70));
+      const takeover = easeInOut3(norm(progress, 0.70, 0.86));
+      const finalTitle = easeOut3(norm(progress, 0.78, 0.88));
+      const finalBody = easeOut3(norm(progress, 0.82, 0.94));
+      const baseBg = blendRgb(DARK_BG, WARM_BG, bgShift);
 
-      stickyRef.current.style.backgroundColor = mixColor(DARK_BG, WARM_BG, bgShift);
+      stickyRef.current.style.backgroundColor = mixColor(baseBg, ORANGE_BG, takeover);
 
       // Sincroniza o tema da Navbar com a cor de fundo animada
-      if (bgShift > 0.5) {
+      if (bgShift > 0.5 || takeover > 0.08) {
         stickyRef.current.setAttribute('data-navbar-theme', 'light');
       } else {
         stickyRef.current.removeAttribute('data-navbar-theme');
       }
 
-      glowRef.current.style.opacity = `${lerp(0.15, 0.6, bgShift)}`;
+      glowRef.current.style.opacity = `${lerp(0.16, 0.78, Math.max(bgShift, centerExpand, takeover))}`;
       glowRef.current.style.background = `
-        radial-gradient(circle at 50% 50%, rgba(255, 109, 64, ${lerp(0.08, 0.16, logoReveal)}) 0%, rgba(255, 109, 64, 0) 38%),
+        radial-gradient(circle at 50% 50%, rgba(255, 109, 64, ${lerp(0.06, 0.36, Math.max(centerAccent, centerExpand, takeover))}) 0%, rgba(255, 109, 64, 0) 44%),
+        radial-gradient(circle at 50% 50%, rgba(255, 225, 215, ${lerp(0, 0.14, Math.max(centerAccent, centerExpand * 0.8) * (1 - takeover * 0.35))}) 0%, rgba(255, 225, 215, 0) 18%),
         radial-gradient(circle at 22% 18%, rgba(255, 255, 255, ${lerp(0.08, 0.02, bgShift)}) 0%, rgba(255, 255, 255, 0) 34%)
       `;
 
-      grainRef.current.style.opacity = `${lerp(0.12, 0.04, bgShift)}`;
+      grainRef.current.style.opacity = `${lerp(0.1, 0.05, Math.max(bgShift, takeover))}`;
 
-        introRef.current.style.opacity = `${1 - introExit}`;
-        introRef.current.style.transform = `translateY(${lerp(0, -44, introExit).toFixed(1)}px) scale(${lerp(1, 0.94, introExit).toFixed(4)})`;
+      introRef.current.style.opacity = `${1 - introExit}`;
+      introRef.current.style.transform = `translateY(${lerp(0, -44, introExit).toFixed(1)}px) scale(${lerp(1, 0.94, introExit).toFixed(4)})`;
 
       introWordRefs.current.forEach((word, index) => {
         if (!word) return;
 
-          const wordIn = easeOut3(norm(progress, 0.04 + index * 0.018, 0.13 + index * 0.018));
-          const wordOut = easeInOut3(norm(progress, 0.25 + index * 0.016, 0.35 + index * 0.016));
-          const opacity = wordIn * (1 - wordOut);
-          const blur = lerp(22, 0, wordIn) + lerp(0, 18, wordOut);
-          const translateY = lerp(40, 0, wordIn) + lerp(0, -26, wordOut);
+        const wordIn = easeOut3(norm(progress, 0.04 + index * 0.018, 0.13 + index * 0.018));
+        const wordOut = easeInOut3(norm(progress, 0.25 + index * 0.016, 0.35 + index * 0.016));
+        const opacity = wordIn * (1 - wordOut);
+        const blur = lerp(22, 0, wordIn) + lerp(0, 18, wordOut);
+        const translateY = lerp(40, 0, wordIn) + lerp(0, -26, wordOut);
 
         word.style.opacity = opacity.toFixed(3);
         word.style.filter = `blur(${blur.toFixed(2)}px)`;
         word.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0)`;
       });
-
-        const baseWidth = Math.max(140, Math.min(viewportWidth * 0.2, 240));
-        const svgCircleRatio = 268.052 / 340;
-        const initialScale = 32 / (baseWidth * svgCircleRatio);
-        const logoScale = lerp(initialScale, 1, logoReveal) * lerp(1, viewportWidth < 768 ? 4 : 5.4, takeover);
-        const logoY = -clearScene * 34;
-        const logoBlur = clearScene * 14;
-
-      logoRef.current.style.opacity = logoReveal > 0.001 ? (1 - clearScene).toFixed(3) : '0';
-      logoRef.current.style.filter = `blur(${logoBlur.toFixed(2)}px)`;
-      logoRef.current.style.transform = `translate3d(0, ${logoY.toFixed(1)}px, 0) scale(${logoScale.toFixed(4)})`;
-
-      if (logoBgRef.current) {
-        logoBgRef.current.style.fill = `rgba(${lerp(140, 245, logoReveal)}, ${lerp(140, 238, logoReveal)}, ${lerp(140, 235, logoReveal)}, ${lerp(0.35, 1, logoReveal)})`;
-      }
-      if (logoOutlineRef.current) {
-        logoOutlineRef.current.style.strokeDashoffset = `${lerp(845, 0, logoReveal)}`;
-      }
-      logoPathRefs.current.forEach((path) => {
-        if (path) path.style.opacity = logoReveal;
-      });
-
-      logoShellRef.current.style.boxShadow = 'none';
-      logoShellRef.current.style.opacity = '1';
 
       const titleBlur = lerp(18, 0, finalTitle);
       const titleY = lerp(32, 0, finalTitle);
@@ -270,26 +195,28 @@ export default function FooterCTA() {
       finalBodyRef.current.style.filter = bodyBlur > 0.05 ? `blur(${bodyBlur.toFixed(2)}px)` : 'none';
       finalBodyRef.current.style.transform = bodyY > 0.1 ? `translate3d(0, ${bodyY.toFixed(1)}px, 0)` : 'none';
 
-        finalWrapRef.current.style.pointerEvents = progress > 0.94 ? 'auto' : 'none';
-      };
+      finalWrapRef.current.style.pointerEvents = progress > 0.9 ? 'auto' : 'none';
+    };
 
-      const draw = () => {
-        frameTick += 1;
-        ctx.clearRect(0, 0, viewportWidth, viewportHeight);
+    const draw = () => {
+      ctx.clearRect(0, 0, viewportWidth, viewportHeight);
 
-        const buildGrid = easeOut3(norm(scrollProgress, 0.15, 0.50));
-        const logoReveal = easeOut3(norm(scrollProgress, 0.46, 0.58));
-        const takeover = easeInOut3(norm(scrollProgress, 0.58, 0.76));
-        const clearScene = easeOut3(norm(scrollProgress, 0.74, 0.82));
-        const sceneOpacity = easeOut3(norm(scrollProgress, 0.15, 0.25)) * (1 - easeOut3(norm(scrollProgress, 0.78, 0.86)));
+      const buildGrid = easeOut3(norm(scrollProgress, 0.15, 0.50));
+      const centerAccent = easeOut3(norm(scrollProgress, 0.44, 0.54));
+      const centerExpand = easeInOut3(norm(scrollProgress, 0.58, 0.70));
+      const takeover = easeInOut3(norm(scrollProgress, 0.70, 0.86));
+      const clearScene = easeOut3(norm(scrollProgress, 0.82, 0.92));
+      const sceneOpacity = easeOut3(norm(scrollProgress, 0.15, 0.25)) * (1 - easeOut3(norm(scrollProgress, 0.90, 0.98)));
 
-        const centerX = viewportWidth / 2;
-        const centerY = viewportHeight / 2;
-        const logoCenter = viewportWidth < 768 ? 128 : 170;
-        const hugeCenter = Math.max(viewportWidth, viewportHeight) * 0.9;
+      const centerX = viewportWidth / 2;
+      const centerY = viewportHeight / 2;
+      const hugeCenter = Math.hypot(centerX, centerY) * 1.06;
 
       for (let i = 0; i < particles.length; i += 1) {
         const particle = particles[i];
+        if (particle.isCenter) {
+          continue;
+        }
 
         const appear = easeOut3(clamp((buildGrid - particle.delay) / 0.13));
 
@@ -299,9 +226,7 @@ export default function FooterCTA() {
 
         const centerDistance = Math.hypot(particle.x - centerX, particle.y - centerY);
         const distanceFactor = 1 - centerDistance / Math.hypot(centerX, centerY);
-        const fadeByTakeover = particle.isCenter
-          ? (logoReveal > 0.001 ? 0 : 1)
-          : 1 - takeover * lerp(0.8, 1.12, distanceFactor);
+        const fadeByTakeover = 1 - takeover * lerp(0.8, 1.12, distanceFactor);
         const fadeByClear = 1 - clearScene;
         const alpha = particle.alpha * appear * fadeByTakeover * fadeByClear * sceneOpacity;
 
@@ -313,6 +238,52 @@ export default function FooterCTA() {
           ctx.arc(particle.x, particle.y, radius, 0, Math.PI * 2);
           ctx.fillStyle = rgba(color, alpha.toFixed(3));
           ctx.fill();
+        }
+      }
+
+      if (centerParticle) {
+        const appear = easeOut3(clamp((buildGrid - centerParticle.delay) / 0.13));
+
+        if (appear > 0.001) {
+          const focusScale = lerp(1, viewportWidth < 768 ? 1.45 : 1.35, centerAccent);
+          const expandedRadius = centerParticle.radius * appear * focusScale * lerp(1, viewportWidth < 768 ? 4.6 : 5.4, centerExpand);
+          const orbRadius = lerp(expandedRadius, hugeCenter, takeover);
+          const orbAlpha = clamp(0.42 + centerAccent * 0.24 + centerExpand * 0.12 + takeover * 0.08, 0, 1) * sceneOpacity;
+
+          const haloGradient = ctx.createRadialGradient(centerX, centerY, orbRadius * 0.2, centerX, centerY, orbRadius * 1.04);
+          haloGradient.addColorStop(0, `rgba(255, 171, 129, ${0.2 * orbAlpha})`);
+          haloGradient.addColorStop(0.6, `rgba(255, 109, 64, ${0.14 * orbAlpha})`);
+          haloGradient.addColorStop(1, 'rgba(255, 109, 64, 0)');
+
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, orbRadius * 1.04, 0, Math.PI * 2);
+          ctx.fillStyle = haloGradient;
+          ctx.fill();
+
+          const orbGradient = ctx.createRadialGradient(
+            centerX - orbRadius * 0.28,
+            centerY - orbRadius * 0.34,
+            Math.max(6, orbRadius * 0.08),
+            centerX,
+            centerY,
+            orbRadius
+          );
+          orbGradient.addColorStop(0, `rgba(${SOFT_ORANGE[0]}, ${SOFT_ORANGE[1]}, ${SOFT_ORANGE[2]}, ${Math.min(1, 0.98 * orbAlpha)})`);
+          orbGradient.addColorStop(0.3, `rgba(255, 198, 177, ${Math.min(1, 0.92 * orbAlpha)})`);
+          orbGradient.addColorStop(0.72, `rgba(${ORANGE_BG[0]}, ${ORANGE_BG[1]}, ${ORANGE_BG[2]}, ${Math.min(1, 0.98 * orbAlpha)})`);
+          orbGradient.addColorStop(1, `rgba(${ACCENT[0]}, ${ACCENT[1]}, ${ACCENT[2]}, ${Math.min(1, orbAlpha)})`);
+
+          ctx.beginPath();
+          ctx.arc(centerX, centerY, orbRadius, 0, Math.PI * 2);
+          ctx.fillStyle = orbGradient;
+          ctx.fill();
+
+          if (takeover < 0.98) {
+            ctx.beginPath();
+            ctx.arc(centerX - orbRadius * 0.16, centerY - orbRadius * 0.2, orbRadius * 0.12, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 241, 235, ${0.18 * orbAlpha * (1 - takeover * 0.45)})`;
+            ctx.fill();
+          }
         }
       }
 
@@ -412,28 +383,6 @@ export default function FooterCTA() {
         </div>
 
         <div
-          ref={logoRef}
-          className="pointer-events-none absolute inset-0 z-30 flex items-center justify-center"
-          style={{ opacity: 0, willChange: 'transform, opacity, filter' }}
-        >
-          <div
-            ref={logoShellRef}
-            className="relative flex aspect-square items-center justify-center"
-            style={{
-              width: 'min(20vw, 240px)',
-              minWidth: '140px',
-            }}
-          >
-            <TheOneMark 
-              className="relative z-10 h-full w-full"
-              bgRef={logoBgRef}
-              outlineRef={logoOutlineRef}
-              pathRefs={logoPathRefs}
-            />
-          </div>
-        </div>
-
-        <div
           ref={finalWrapRef}
           className="absolute inset-0 z-40 flex items-center justify-center px-6"
           style={{ pointerEvents: 'none' }}
@@ -455,20 +404,15 @@ export default function FooterCTA() {
                 Não seja só mais um.
               </span>
               <span
-                className="mt-2 block font-sans font-medium leading-[0.92]"
+                className="mt-2 block font-sans font-medium leading-[0.92] text-[#151311]"
                 style={{ 
                   fontSize: 'clamp(2.7rem, 6.8vw, 6.2rem)', 
                   letterSpacing: '-0.03em',
-                  background: 'linear-gradient(to right, #FED1C5, #FF5224)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                  color: 'transparent',
                 }}
               >
                 Seja TheOne
                 <span
-                  className="inline-block align-top font-halyard text-[#FF8E6C]"
+                  className="inline-block align-top font-halyard text-[#FFF2EC]"
                   style={{
                     fontSize: '0.288em',
                     letterSpacing: '0.04em',
@@ -492,16 +436,21 @@ export default function FooterCTA() {
                 willChange: 'transform, filter, opacity',
               }}
             >
-              <p className="mx-auto max-w-3xl text-[clamp(1.1rem,2vw,1.5rem)] font-halyard font-light leading-[1.5] text-[#4D4642]">
+              <p className="mx-auto max-w-3xl text-[clamp(1.1rem,2vw,1.5rem)] font-halyard font-light leading-[1.5] text-[#2E1A14]">
                 O topo do mercado não é sorte, é construção. Se você tem visão, ambição e busca transformar sua empresa na escolha inevitável do seu cliente — estamos prontos para construir isso com você.
               </p>
 
               <PrimaryCTAButton
                 href="mailto:contato@theone.com?subject=Agendar%20Diagn%C3%B3stico%20TheOne"
                 className="mt-12"
+                background="#FFF3EC"
+                hoverBackground="linear-gradient(135deg, #FFF8F4 0%, #FFE2D7 100%)"
+                boxShadow="0 18px 42px rgba(121, 38, 11, 0.18)"
+                hoverBoxShadow="0 24px 56px rgba(121, 38, 11, 0.24)"
+                textColor="#5F2412"
+                border="1px solid rgba(122, 42, 17, 0.10)"
                 style={{
                   minWidth: '320px',
-                  color: '#F5F0EC',
                 }}
               >
                 Agendar Diagnóstico

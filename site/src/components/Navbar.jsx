@@ -21,26 +21,34 @@ function WhatsAppIcon(props) {
 function useActiveSection() {
   const [active, setActive] = useState(null);
   const navigatingTo = useRef(null);
+  const rafId = useRef(null);
 
   const detect = () => {
-    if (window.scrollY < 80) { setActive(null); return; }
-    const threshold = window.innerHeight * 0.5;
-    let current = null;
-    for (const { id } of navLinks) {
-      const el = document.getElementById(id);
-      if (!el) continue;
-      if (el.getBoundingClientRect().top <= threshold) current = id;
-    }
-    if (!navigatingTo.current || navigatingTo.current === current) {
-      navigatingTo.current = null;
-      setActive(current);
-    }
+    if (rafId.current) return; // already scheduled this frame
+    rafId.current = requestAnimationFrame(() => {
+      rafId.current = null;
+      if (window.scrollY < 80) { setActive(null); return; }
+      const threshold = window.innerHeight * 0.5;
+      let current = null;
+      for (const { id } of navLinks) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= threshold) current = id;
+      }
+      if (!navigatingTo.current || navigatingTo.current === current) {
+        navigatingTo.current = null;
+        setActive(current);
+      }
+    });
   };
 
   useEffect(() => {
     window.addEventListener('scroll', detect, { passive: true });
     detect();
-    return () => window.removeEventListener('scroll', detect);
+    return () => {
+      window.removeEventListener('scroll', detect);
+      if (rafId.current) cancelAnimationFrame(rafId.current);
+    };
   }, []);
 
   const navigateTo = (id) => {
@@ -67,24 +75,25 @@ export default function Navbar() {
 
   useEffect(() => {
     // Entrance animation
-    gsap.fromTo(navRef.current, 
+    gsap.fromTo(navRef.current,
       { y: -20, opacity: 0 },
       { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", delay: 0.2 }
     );
 
+    let themeRafId = null;
     const detectTheme = () => {
-      const probeY = 48;
-      const lightSections = document.querySelectorAll('[data-navbar-theme="light"]');
-      let isLightBackground = false;
-
-      lightSections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= probeY && rect.bottom >= probeY) {
-          isLightBackground = true;
-        }
+      if (themeRafId) return;
+      themeRafId = requestAnimationFrame(() => {
+        themeRafId = null;
+        const probeY = 48;
+        const lightSections = document.querySelectorAll('[data-navbar-theme="light"]');
+        let isLightBackground = false;
+        lightSections.forEach((section) => {
+          const rect = section.getBoundingClientRect();
+          if (rect.top <= probeY && rect.bottom >= probeY) isLightBackground = true;
+        });
+        setUseDarkLogo(isLightBackground);
       });
-
-      setUseDarkLogo(isLightBackground);
     };
 
     window.addEventListener('scroll', detectTheme, { passive: true });
@@ -94,6 +103,7 @@ export default function Navbar() {
     return () => {
       window.removeEventListener('scroll', detectTheme);
       window.removeEventListener('resize', detectTheme);
+      if (themeRafId) cancelAnimationFrame(themeRafId);
     };
   }, []);
 

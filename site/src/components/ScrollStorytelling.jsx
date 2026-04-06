@@ -73,30 +73,45 @@ export default function ScrollStorytelling() {
           }
         });
 
+        // Container blur: 1 element per block — GPU-cheap, gives the blurry-haze feel.
+        // Per-word: opacity + translateY only (fully GPU-composited, zero paint).
+        const titleContainer = panel.querySelector('.story-title-container');
+        if (titleContainer) {
+          tl.fromTo(titleContainer,
+            { filter: 'blur(8px)' },
+            { filter: 'blur(0px)', ease: 'none', duration: 0.65 }
+          );
+        }
         tl.fromTo(titleWords,
-          { opacity: 0.05, filter: 'blur(10px)', y: 8 },
-          {
-            opacity: 1,
-            filter: 'blur(0px)',
-            y: 0,
-            ease: 'none',
-            stagger: { each: 0.045 },
-          }
+          { opacity: 0.05, y: 8 },
+          { opacity: 1, y: 0, ease: 'none', stagger: { each: 0.045 } },
+          '<'
         );
 
-        tl.fromTo(copyWords,
-          { opacity: 0.05, filter: 'blur(10px)', y: 8 },
-          {
-            opacity: 1,
-            filter: 'blur(0px)',
-            y: 0,
-            ease: 'none',
-            stagger: { each: 0.05 },
-          },
+        // In swapParagraphs mode, only reveal the first paragraph's words here.
+        const firstCopyWords = swapMode && swapFirst
+          ? swapFirst.querySelectorAll('.story-copy-word')
+          : copyWords;
+
+        const copyContainer = swapMode ? swapFirst : panel.querySelector('.story-copy-container');
+        if (copyContainer) {
+          tl.fromTo(copyContainer,
+            { filter: 'blur(8px)' },
+            { filter: 'blur(0px)', ease: 'none', duration: 0.65 },
+            0.16
+          );
+        }
+        tl.fromTo(firstCopyWords,
+          { opacity: 0.05, y: 8 },
+          { opacity: 1, y: 0, ease: 'none', stagger: { each: 0.05 } },
           0.16
         );
 
         if (swapFirst && swapSecond) {
+          const secondWords = swapSecond.querySelectorAll('.story-copy-word');
+          // Reset second paragraph words (opacity + y only — no per-word blur)
+          gsap.set(secondWords, { opacity: 0.05, y: 8 });
+
           tl.to({}, { duration: 0.3 });
           tl.to(swapFirst, {
             xPercent: -18,
@@ -105,6 +120,7 @@ export default function ScrollStorytelling() {
             ease: 'none',
             duration: 0.35,
           });
+          // swapSecond container handles its own blur on entry
           tl.fromTo(
             swapSecond,
             { xPercent: 18, opacity: 0, filter: 'blur(14px)' },
@@ -116,6 +132,13 @@ export default function ScrollStorytelling() {
               duration: 0.4,
             },
             '<'
+          );
+          // Words stagger in with opacity + y only as the container clears
+          tl.fromTo(
+            secondWords,
+            { opacity: 0.05, y: 8 },
+            { opacity: 1, y: 0, ease: 'none', stagger: { each: 0.05 } },
+            '<0.08'
           );
           tl.to({}, { duration: 0.28 });
         }
@@ -226,7 +249,7 @@ export default function ScrollStorytelling() {
 
     return (
       <p
-        className="font-halyard font-light text-[#C7C7C7] max-w-4xl mt-6"
+        className="story-copy-container font-halyard font-light text-[#C7C7C7] max-w-4xl mt-6"
         style={{ fontSize: style.texto, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
       >
         {renderWordsWithParagraphs(story.content)}
@@ -259,7 +282,7 @@ export default function ScrollStorytelling() {
               {story.tag}
             </span>
             <h2
-              className="font-editorial font-normal leading-[1.1] text-white"
+              className="story-title-container font-editorial font-normal leading-[1.1] text-white"
               style={{ fontSize: style.titulo, maxWidth: story.titleWidth }}
             >
               {renderWords(story.title, 'story-title-word')}

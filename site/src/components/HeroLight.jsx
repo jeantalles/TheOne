@@ -31,11 +31,14 @@ export default function HeroLight() {
         />
       </div>
 
-      <div className="container relative z-10 px-6 pb-[25px] text-center">
+      <div
+        className="container relative z-10 px-6 pb-[25px] text-center"
+        style={{ transform: 'translateY(15px)' }}
+      >
         <h1
           className="font-sans tracking-[-0.035em] text-[#151312]"
           style={{
-            fontSize: 'clamp(4.4rem, 8vw, 7rem)',
+            fontSize: 'clamp(3.96rem, 7.2vw, 6.3rem)',
             lineHeight: 0.9,
             opacity: 0.73,
             fontWeight: 300,
@@ -66,7 +69,7 @@ export default function HeroLight() {
         <h2
           className="font-editorial font-normal"
           style={{
-            fontSize: 'clamp(1.9rem, 2.8vw, 3rem)',
+            fontSize: 'clamp(1.71rem, 2.52vw, 2.7rem)',
             paddingTop: '25px',
             color: '#1A1A1A',
             lineHeight: 1.06,
@@ -79,7 +82,7 @@ export default function HeroLight() {
         <p
           className="mx-auto mb-12 max-w-[35rem] leading-[1.35] font-halyard"
           style={{
-            fontSize: 'clamp(1.275rem, 1.7vw, 1.875rem)',
+            fontSize: 'clamp(1.1475rem, 1.53vw, 1.6875rem)',
             marginTop: '38px',
             color: 'rgba(74, 65, 64, 0.88)',
             fontWeight: 400,
@@ -89,12 +92,12 @@ export default function HeroLight() {
         </p>
 
         <div className="flex flex-row items-center justify-center gap-[18px]">
-          <PrimaryCTAButton>Quero ser TheOne</PrimaryCTAButton>
+          <PrimaryCTAButton style={{ fontSize: '16.2px' }}>Quero ser TheOne</PrimaryCTAButton>
           <a
             href="#o-problema"
             className="group inline-flex items-center justify-center font-sans font-normal transition-colors duration-200 active:scale-[0.98]"
             style={{
-              fontSize: '18px',
+              fontSize: '16.2px',
               height: '60px',
               padding: '0 26px',
               borderRadius: '999px',

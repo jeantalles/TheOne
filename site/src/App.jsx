@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -11,12 +11,15 @@ import TheOneConclusion from './components/TheOneConclusion';
 import Methodology from './components/Methodology';
 import Audience from './components/Audience';
 import Products from './components/Products';
-import Cases from './components/Cases';
-import Founders from './components/Founders';
-import FooterCTA from './components/FooterCTA';
-import DesignSystem from './components/DesignSystem';
+
+// Below-fold heavy components — loaded lazily to reduce initial bundle
+const Cases = lazy(() => import('./components/Cases'));
+const Founders = lazy(() => import('./components/Founders'));
+const FooterCTA = lazy(() => import('./components/FooterCTA'));
+const DesignSystem = lazy(() => import('./components/DesignSystem'));
 
 gsap.registerPlugin(ScrollTrigger);
+ScrollTrigger.config({ limitCallbacks: true });
 
 export default function App() {
   const isDesignSystem = window.location.pathname === '/design-system';
@@ -43,7 +46,7 @@ export default function App() {
   }, []);
 
   if (isDesignSystem) {
-    return <DesignSystem />;
+    return <Suspense fallback={null}><DesignSystem /></Suspense>;
   }
 
   return (
@@ -57,9 +60,11 @@ export default function App() {
         <Methodology />
         <Audience />
         <Products />
-        <Cases />
-        <Founders />
-        <FooterCTA />
+        <Suspense fallback={null}>
+          <Cases />
+          <Founders />
+          <FooterCTA />
+        </Suspense>
       </main>
       <footer className="border-t border-black/5 bg-[#F5F0EC] py-8 text-center">
         <p className="text-[#151311]/38 text-xs font-mono font-bold tracking-[0.3em] uppercase">© 2026 THE ONE ASSESSORIA DE MARCA.</p>

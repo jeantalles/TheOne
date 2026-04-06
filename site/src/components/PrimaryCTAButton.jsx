@@ -1,6 +1,17 @@
 import { useRef, useState } from 'react';
 
-export default function PrimaryCTAButton({ children, href, className = '', style = {} }) {
+export default function PrimaryCTAButton({
+  children,
+  href,
+  className = '',
+  style = {},
+  background = '#FF5224',
+  hoverBackground,
+  boxShadow = '0 4px 16px rgba(255,82,36,0.22)',
+  hoverBoxShadow = '0 8px 32px rgba(255,82,36,0.40)',
+  textColor = '#F5F5F5',
+  border = 'none',
+}) {
   const btnRef = useRef(null);
   const [pos, setPos] = useState({ x: '50%', y: '50%' });
   const [hovered, setHovered] = useState(false);
@@ -27,12 +38,13 @@ export default function PrimaryCTAButton({ children, href, className = '', style
         borderRadius: '100px',
         letterSpacing: '0.01em',
         background: hovered
-          ? `radial-gradient(80px circle at ${pos.x} ${pos.y}, rgba(255,120,80,0.35), #FF5224 70%)`
-          : '#FF5224',
-        border: 'none',
+          ? (hoverBackground ?? `radial-gradient(80px circle at ${pos.x} ${pos.y}, rgba(255,120,80,0.35), ${background} 70%)`)
+          : background,
+        color: textColor,
+        border,
         boxShadow: hovered
-          ? '0 8px 32px rgba(255,82,36,0.40)'
-          : '0 4px 16px rgba(255,82,36,0.22)',
+          ? hoverBoxShadow
+          : boxShadow,
         transition: 'box-shadow 0.2s',
         textDecoration: 'none',
         ...style,

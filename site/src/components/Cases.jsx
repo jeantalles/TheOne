@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { ArrowUp } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -538,9 +539,14 @@ export default function Cases() {
                       <p className="text-[clamp(1.4rem,3.2vw,2.4rem)] text-white font-halyard font-medium leading-none">Cases TheOne</p>
                     </div>
                     <div className="absolute inset-x-6 bottom-7 flex justify-center md:inset-x-10 md:bottom-9">
-                      <p className="text-center font-halyard font-medium text-[0.98rem] md:text-[1.1rem] tracking-[0.16em] text-white/78 uppercase">
-                        Clique para abrir
-                      </p>
+                      <div className="flex items-center gap-3 text-white/78">
+                        <p className="text-center font-halyard font-medium text-[0.98rem] md:text-[1.1rem] tracking-[0.16em] uppercase">
+                          Clique para abrir
+                        </p>
+                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[rgba(255,167,144,0.55)] text-white md:h-9 md:w-9">
+                          <ArrowUp size={16} strokeWidth={2.1} className="shrink-0" />
+                        </div>
+                      </div>
                     </div>
                     <div className="absolute inset-x-0 bottom-0 h-[38%] bg-[linear-gradient(180deg,rgba(40,14,7,0)_0%,rgba(40,14,7,0.16)_100%)]" />
                   </div>
