@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useConstrainedMotion } from '../hooks/useMediaQuery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -32,6 +33,7 @@ const CASES = [
 ];
 
 export default function Cases() {
+  const prefersConstrainedMotion = useConstrainedMotion();
   const sectionRef         = useRef(null);
   const folderWrapRef      = useRef(null);
   const folderShellRef     = useRef(null);
@@ -77,7 +79,6 @@ export default function Cases() {
         scale: 0.84 - i * 0.04,
         rotate: (i - 1) * -6,
         opacity: 0.86 - i * 0.14,
-        filter: 'blur(6px)',
         transformOrigin: 'center bottom',
       });
     });
@@ -95,16 +96,15 @@ export default function Cases() {
 
       // Heading scrub
       gsap.fromTo('.cases-heading',
-        { opacity: 0, y: 64, filter: 'blur(18px)' },
-        { opacity: 1, y: 0, filter: 'blur(0px)', ease: 'none',
+        { opacity: 0, y: 64 },
+        { opacity: 1, y: 0, ease: 'none',
           scrollTrigger: { trigger: '.cases-heading', start: 'top 88%', end: 'top 44%', scrub: 1.2 } }
       );
 
       // Folder entrance scrub
-      // end: 'top 52%' → animação termina antes da pasta chegar ao centro, garantindo blur zerado
       const st = reg(gsap.fromTo(folderWrapRef.current,
-        { opacity: 0.3, y: 120, scale: 0.76, filter: 'blur(6px)' },
-        { opacity: 1, y: 0, scale: 1.06, filter: 'blur(0px)', ease: 'none',
+        { opacity: 0.3, y: 120, scale: 0.76 },
+        { opacity: 1, y: 0, scale: 1.06, ease: 'none',
           scrollTrigger: {
             trigger: folderWrapRef.current, start: 'top 94%', end: 'top 52%', scrub: 0.9,
             onUpdate: (self) => {
@@ -120,8 +120,8 @@ export default function Cases() {
       folderSTRef.current = st.scrollTrigger;
 
       reg(gsap.fromTo(folderShellRef.current,
-        { y: 24, scale: 0.93, rotateX: 7, filter: 'brightness(0.94)' },
-        { y: -8, scale: 1.02, rotateX: 0, filter: 'brightness(1.06)', ease: 'none',
+        { y: 24, scale: 0.93, rotateX: 7 },
+        { y: -8, scale: 1.02, rotateX: 0, ease: 'none',
           scrollTrigger: { trigger: folderWrapRef.current, start: 'top 92%', end: 'top 50%', scrub: 0.9 } }
       ));
 
@@ -138,31 +138,33 @@ export default function Cases() {
       ));
 
       reg(gsap.fromTo(folderPocketRef.current,
-        { y: 16, scale: 0.94, filter: 'brightness(0.9)' },
-        { y: 0, scale: 1, filter: 'brightness(1)', ease: 'none',
+        { y: 16, scale: 0.94 },
+        { y: 0, scale: 1, ease: 'none',
           scrollTrigger: { trigger: folderWrapRef.current, start: 'top 92%', end: 'top 50%', scrub: 0.9 } }
       ));
 
       folderPreviewRefs.current.forEach((card, i) => {
         if (!card) return;
         reg(gsap.fromTo(card,
-          { y: 56 + i * 16, scale: 0.84 - i * 0.04, rotate: (i - 1) * -6, filter: 'blur(4px)' },
-          { y: 8 + i * 8, scale: 0.96 - i * 0.03, rotate: (i - 1) * -2.5, filter: 'blur(0px)', ease: 'none',
+          { y: 56 + i * 16, scale: 0.84 - i * 0.04, rotate: (i - 1) * -6 },
+          { y: 8 + i * 8, scale: 0.96 - i * 0.03, rotate: (i - 1) * -2.5, ease: 'none',
             scrollTrigger: { trigger: folderWrapRef.current, start: 'top 92%', end: 'top 50%', scrub: 0.9 } }
         ));
       });
     }, sectionRef);
 
     // Idle breathing — subtle y + scale pulse
-    breatheRef.current = gsap.timeline({ repeat: -1, yoyo: true, paused: true })
-      .to(folderShellRef.current, { y: -9, scale: 1.016, duration: 2.4, ease: 'sine.inOut' })
-      .to(folderShellRef.current, { rotateX: 1.5, duration: 2.4, ease: 'sine.inOut' }, '<');
+    if (!prefersConstrainedMotion) {
+      breatheRef.current = gsap.timeline({ repeat: -1, yoyo: true, paused: true })
+        .to(folderShellRef.current, { y: -9, scale: 1.016, duration: 2.4, ease: 'sine.inOut' })
+        .to(folderShellRef.current, { rotateX: 1.5, duration: 2.4, ease: 'sine.inOut' }, '<');
+    }
 
     return () => {
       ctx.revert();
       breatheRef.current?.kill();
     };
-  }, []);
+  }, [prefersConstrainedMotion]);
 
   // ── 2. Scroll stack animations — only after folder opens ─────────────────
   useEffect(() => {
@@ -320,27 +322,37 @@ export default function Cases() {
         gsap.set(card, {
           x: deltaX, y: deltaY, scale: scaleStart,
           rotate: (i - 1) * -6, rotateX: 16,
-          filter: `blur(${12 + i * 3}px)`,
           transformOrigin: 'center center',
-          willChange: 'transform, opacity, filter',
+          willChange: 'transform, opacity',
         });
       }
 
       tl.to(item, { opacity: 1, pointerEvents: 'auto', duration: 0.22 }, startTime);
       if (card) {
         tl.to(card, { y: 0, duration: 1.6, ease: 'back.out(1.15)' }, startTime);
-        tl.to(card, { x: 0, scale: 1, rotate: 0, rotateX: 0, filter: 'blur(0px)', duration: 1.4, ease: 'power4.out' }, startTime);
+        tl.to(card, { x: 0, scale: 1, rotate: 0, rotateX: 0, duration: 1.4, ease: 'power4.out' }, startTime);
       }
     });
 
     const lastCardEnd = CARD_START + (CASES.length - 1) * CARD_STAGGER + 1.0;
 
-    // — Pasta encolhe e some com blur só na hora de desaparecer
     tl.to(folderWrapRef.current, {
-      scale: 0, opacity: 0, filter: 'blur(16px)', duration: 0.42, ease: 'power2.in',
+      scale: 0, opacity: 0, duration: 0.42, ease: 'power2.in',
     }, lastCardEnd - 0.1);
 
-    tl.call(() => { setOpenState('open'); }, null, lastCardEnd - 0.4);
+    tl.call(() => {
+      folderSceneRef.current.style.display = 'none';
+      folderWrapRef.current.style.willChange = 'auto';
+      caseItemsRef.current.forEach((item) => {
+        if (!item) return;
+        item.style.willChange = 'auto';
+        const card = item.querySelector('.case-card');
+        if (card) {
+          card.style.willChange = 'auto';
+        }
+      });
+      setOpenState('open');
+    }, null, lastCardEnd - 0.4);
   };
 
   return (
@@ -400,8 +412,8 @@ export default function Cases() {
                         className="case-meta absolute bottom-0 left-0 right-0 flex items-center justify-between px-8 md:px-12"
                         style={{
                           height: '17%',
-                          backdropFilter: 'blur(24px) contrast(70%) brightness(78%) saturate(79%)',
-                          backgroundColor: 'rgba(0,0,0,0.20)',
+                          backdropFilter: 'blur(12px)',
+                          backgroundColor: 'rgba(10,10,10,0.42)',
                           borderBottomLeftRadius: '32px',
                           borderBottomRightRadius: '32px',
                           borderTop: '1px solid rgba(255,255,255,0.37)',
@@ -440,12 +452,12 @@ export default function Cases() {
                 disabled={openState !== 'closed'}
                 aria-expanded={isOpen}
                 onMouseEnter={(e) => {
-                  if (openState === 'closed') {
+                  if (openState === 'closed' && !prefersConstrainedMotion) {
                     gsap.to(e.currentTarget, { scale: 1.015, y: -3, duration: 0.4, ease: 'power3.out', overwrite: 'auto' });
                   }
                 }}
                 onMouseLeave={(e) => {
-                  if (openState === 'closed') {
+                  if (openState === 'closed' && !prefersConstrainedMotion) {
                     gsap.to(e.currentTarget, { scale: 1, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)', overwrite: 'auto' });
                   }
                 }}

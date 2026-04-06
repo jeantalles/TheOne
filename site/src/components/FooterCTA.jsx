@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import PrimaryCTAButton from './PrimaryCTAButton';
-import { usePrefersReducedMotion } from '../hooks/useMediaQuery';
+import { useConstrainedMotion, usePrefersReducedMotion } from '../hooks/useMediaQuery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -97,6 +97,8 @@ function buildParticles(width, height) {
 
 export default function FooterCTA() {
   const prefersReducedMotion = usePrefersReducedMotion();
+  const prefersConstrainedMotion = useConstrainedMotion();
+  const shouldUseStaticScene = prefersReducedMotion || prefersConstrainedMotion;
   const sectionRef = useRef(null);
   const stickyRef = useRef(null);
   const glowRef = useRef(null);
@@ -116,7 +118,7 @@ export default function FooterCTA() {
       return undefined;
     }
 
-    if (prefersReducedMotion) {
+    if (shouldUseStaticScene) {
       stickyRef.current?.setAttribute('data-navbar-theme', 'light');
       if (stickyRef.current) stickyRef.current.style.backgroundColor = 'rgb(245, 240, 236)';
       if (glowRef.current) glowRef.current.style.opacity = '0.18';
@@ -339,23 +341,37 @@ export default function FooterCTA() {
               }
             }
           }
+        };
 
-          rafId = requestAnimationFrame(draw);
+        const scheduleDraw = () => {
+          if (rafId) {
+            return;
+          }
+
+          rafId = requestAnimationFrame(() => {
+            rafId = 0;
+            draw();
+          });
         };
 
         const onResize = () => {
           resizeCanvas();
+          setSceneStyles(scrollProgress);
+          scheduleDraw();
           ScrollTrigger.refresh();
         };
 
         resizeCanvas();
         setSceneStyles(0);
-        draw();
+        canvas.style.visibility = 'hidden';
+        scheduleDraw();
 
         const fontReady = document.fonts?.ready;
         if (fontReady) {
           fontReady.then(() => {
             resizeCanvas();
+            setSceneStyles(scrollProgress);
+            scheduleDraw();
             ScrollTrigger.refresh();
           });
         }
@@ -365,9 +381,16 @@ export default function FooterCTA() {
           start: 'top top',
           end: 'bottom bottom',
           scrub: 0.85,
+          onToggle(self) {
+            canvas.style.visibility = self.isActive ? 'visible' : 'hidden';
+            if (self.isActive) {
+              scheduleDraw();
+            }
+          },
           onUpdate(self) {
             scrollProgress = self.progress;
             setSceneStyles(scrollProgress);
+            scheduleDraw();
           },
         });
 
@@ -380,7 +403,7 @@ export default function FooterCTA() {
           trigger.kill();
         };
       },
-      { rootMargin: '1200px 0px' }
+      { rootMargin: '300px 0px' }
     );
 
     observer.observe(section);
@@ -389,19 +412,19 @@ export default function FooterCTA() {
       observer.disconnect();
       cleanupScene?.();
     };
-  }, [prefersReducedMotion]);
+  }, [shouldUseStaticScene]);
 
   return (
     <section
       id="contact"
       ref={sectionRef}
       className="relative border-t border-white/5"
-      style={{ height: prefersReducedMotion ? '100vh' : '560vh', backgroundColor: '#212121' }}
+      style={{ height: shouldUseStaticScene ? '100vh' : '560vh', backgroundColor: '#212121' }}
     >
       <div
         ref={stickyRef}
         className="sticky top-0 h-screen overflow-hidden"
-        style={prefersReducedMotion ? { backgroundColor: '#F5F0EC' } : undefined}
+        style={shouldUseStaticScene ? { backgroundColor: '#F5F0EC' } : undefined}
       >
         <div ref={glowRef} className="pointer-events-none absolute inset-0 z-0 opacity-20" />
 
@@ -418,14 +441,14 @@ export default function FooterCTA() {
           }}
         />
 
-        {!prefersReducedMotion ? (
+        {!shouldUseStaticScene ? (
           <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 z-10" />
         ) : null}
 
         <div
           ref={introRef}
           className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-6"
-          style={prefersReducedMotion ? { display: 'none' } : { willChange: 'transform, opacity' }}
+          style={shouldUseStaticScene ? { display: 'none' } : { willChange: 'transform, opacity' }}
         >
           <h2
             className="max-w-[900px] text-center font-sans font-normal leading-[1.1] text-[#151311]"
@@ -455,15 +478,15 @@ export default function FooterCTA() {
         <div
           ref={finalWrapRef}
           className="absolute inset-0 z-40 flex items-start justify-center px-6"
-          style={{ pointerEvents: prefersReducedMotion ? 'auto' : 'none' }}
+          style={{ pointerEvents: shouldUseStaticScene ? 'auto' : 'none' }}
         >
           <div className="mx-auto flex w-full max-w-5xl flex-col items-center text-center">
             <h2
               ref={finalTitleRef}
               style={{
-                opacity: prefersReducedMotion ? 1 : 0,
-                filter: prefersReducedMotion ? 'none' : 'blur(18px)',
-                transform: prefersReducedMotion ? 'none' : 'translate3d(0, 32px, 0)',
+                opacity: shouldUseStaticScene ? 1 : 0,
+                filter: shouldUseStaticScene ? 'none' : 'blur(18px)',
+                transform: shouldUseStaticScene ? 'none' : 'translate3d(0, 32px, 0)',
                 willChange: 'transform, filter, opacity',
               }}
             >
@@ -494,9 +517,9 @@ export default function FooterCTA() {
               ref={finalBodyRef}
               className="mt-10 flex flex-col items-center"
               style={{
-                opacity: prefersReducedMotion ? 1 : 0,
-                filter: prefersReducedMotion ? 'none' : 'blur(14px)',
-                transform: prefersReducedMotion ? 'none' : 'translate3d(0, 24px, 0)',
+                opacity: shouldUseStaticScene ? 1 : 0,
+                filter: shouldUseStaticScene ? 'none' : 'blur(14px)',
+                transform: shouldUseStaticScene ? 'none' : 'translate3d(0, 24px, 0)',
                 willChange: 'transform, filter, opacity',
               }}
             >

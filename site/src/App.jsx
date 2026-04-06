@@ -11,7 +11,7 @@ import TheOneConclusion from './components/TheOneConclusion';
 import Methodology from './components/Methodology';
 import Audience from './components/Audience';
 import Products from './components/Products';
-import { usePrefersReducedMotion } from './hooks/useMediaQuery';
+import { useConstrainedMotion, usePrefersReducedMotion } from './hooks/useMediaQuery';
 
 // Below-fold heavy components — loaded lazily to reduce initial bundle
 const Cases = lazy(() => import('./components/Cases'));
@@ -25,9 +25,11 @@ ScrollTrigger.config({ limitCallbacks: true });
 export default function App() {
   const isDesignSystem = window.location.pathname === '/design-system';
   const prefersReducedMotion = usePrefersReducedMotion();
+  const prefersConstrainedMotion = useConstrainedMotion();
+  const shouldUseLightScroll = prefersReducedMotion || prefersConstrainedMotion;
 
   useEffect(() => {
-    if (prefersReducedMotion) {
+    if (shouldUseLightScroll) {
       return undefined;
     }
 
@@ -54,7 +56,7 @@ export default function App() {
       cancelAnimationFrame(rafId);
       lenis.destroy();
     };
-  }, [prefersReducedMotion]);
+  }, [shouldUseLightScroll]);
 
   if (isDesignSystem) {
     return <Suspense fallback={null}><DesignSystem /></Suspense>;
