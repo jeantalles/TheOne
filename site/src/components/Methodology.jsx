@@ -152,8 +152,16 @@ export default function Methodology() {
         className="meth-bullet-3 absolute inset-0 z-40 pointer-events-none hidden lg:flex items-center justify-center px-6 pt-24 md:pt-28"
         style={{ opacity: 0 }}
       >
-        <p className="font-sans font-normal text-[24px] xl:text-[30px] leading-[1.45] text-[#C7C7C7] text-center max-w-[700px]">
-          O entendimento profundo do seu contexto nos permite construir sua marca com um...
+        <p className="font-sans font-normal text-[22px] xl:text-[28px] leading-[1.55] text-[#C7C7C7] text-center max-w-[980px]">
+          Se entendemos profundamente:
+          <br />
+          1. O que o público precisa, deseja, tem medo
+          <br />
+          2. Como os concorrentes se posicionam e se vendem
+          <br />
+          3. Nossa solução, transformação e onde nos diferenciamos
+          <br />
+          Conseguimos construir um...
         </p>
       </div>
 

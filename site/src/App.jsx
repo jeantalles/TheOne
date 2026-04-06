@@ -61,8 +61,8 @@ export default function App() {
         <Founders />
         <FooterCTA />
       </main>
-      <footer className="py-8 bg-[#212121] text-center">
-        <p className="text-white/20 text-xs font-mono font-bold tracking-[0.3em] uppercase">© 2026 THE ONE ASSESSORIA DE MARCA.</p>
+      <footer className="border-t border-black/5 bg-[#F5F0EC] py-8 text-center">
+        <p className="text-[#151311]/38 text-xs font-mono font-bold tracking-[0.3em] uppercase">© 2026 THE ONE ASSESSORIA DE MARCA.</p>
       </footer>
     </div>
   );

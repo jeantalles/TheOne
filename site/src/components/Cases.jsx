@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -11,22 +11,22 @@ const EASE_EXPO = 'expo.out';
 const CASES = [
   {
     id: 1,
-    title: 'TechNova',
-    subtitle: 'Reposicionamento e Escala',
+    title: 'Zenic',
+    subtitle: 'Construção de Marca',
     result: '+300% de percepção de valor',
     image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=80&w=2940&auto=format&fit=crop',
   },
   {
     id: 2,
-    title: 'Studio Alpha',
-    subtitle: 'Construção de Marca Zero',
+    title: 'Thunders Tecnologia',
+    subtitle: 'Reposicionamento de Marca',
     result: 'Liderança regional garantida',
     image: 'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?q=80&w=2940&auto=format&fit=crop',
   },
   {
     id: 3,
-    title: 'Nexus Data',
-    subtitle: 'Rebranding Internacional',
+    title: 'Construção de Marca Pessoal',
+    subtitle: '',
     result: 'Aquisição Série A de $10M',
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2940&auto=format&fit=crop',
   },
@@ -46,6 +46,7 @@ export default function Cases() {
   const folderTriggerRefs  = useRef([]);
   const isOpenRef          = useRef(false);
   const breatheRef         = useRef(null);
+  const folderSceneRef     = useRef(null);
 
   const [openState, setOpenState] = useState('closed');
   const isOpen = openState === 'open';
@@ -215,122 +216,116 @@ export default function Cases() {
     folderTriggerRefs.current.forEach((t) => t?.kill());
     folderTriggerRefs.current = [];
 
-    // Snapshot folder pocket bounds (this is the "mouth" the cards emerge from)
-    const pocketBounds    = folderPocketRef.current?.getBoundingClientRect();
+    // Snapshot bounds antes de qualquer mudança
+    const pocketBounds  = folderPocketRef.current?.getBoundingClientRect();
+    const wrapBounds    = folderWrapRef.current.getBoundingClientRect();
+
     const pocketCenterX = pocketBounds ? pocketBounds.left + pocketBounds.width  * 0.5 : window.innerWidth  * 0.5;
     const pocketCenterY = pocketBounds ? pocketBounds.top  + pocketBounds.height * 0.52 : window.innerHeight * 0.45;
     const pocketW       = pocketBounds ? pocketBounds.width  : 320;
     const pocketH       = pocketBounds ? pocketBounds.height : 260;
 
+    // — Oculta o folder scene para o grid dar espaço aos cases
+    folderSceneRef.current.style.pointerEvents = 'none';
+
+    // — Remove transforms do GSAP para obter posição natural (sem scale do scroll)
+    gsap.set(folderWrapRef.current, { clearProps: 'transform' });
+    const naturalBounds = folderWrapRef.current.getBoundingClientRect();
+
+    // — Fixa a pasta no mesmo ponto visual, fora do fluxo
+    Object.assign(folderWrapRef.current.style, {
+      position: 'fixed',
+      top:    `${naturalBounds.top}px`,
+      left:   `${naturalBounds.left}px`,
+      width:  `${naturalBounds.width}px`,
+      margin: '0',
+      zIndex: '9999',
+    });
+
+    // Restaura o scale visual que o scroll trigger havia aplicado
+    const visualScale = naturalBounds.width > 0 ? wrapBounds.width / naturalBounds.width : 1;
+    gsap.set(folderWrapRef.current, { scale: visualScale, opacity: 1 });
+
+    // — Alvo do movimento: centro-baixo do viewport, pasta pequena
+    const natCX  = naturalBounds.left + naturalBounds.width  / 2;
+    const natCY  = naturalBounds.top  + naturalBounds.height / 2;
+    const targetX = (window.innerWidth  / 2) - natCX;
+    const targetY = (window.innerHeight * 0.82) - natCY;
+
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    // — Press micro-impact: lento e deliberado
+    // — Press micro-impact
     tl.to(folderShellRef.current, { scale: 0.958, y: 9, duration: 0.18, ease: 'power2.in' }, 0);
     tl.to(folderShellRef.current, { scale: 1.008, y: 0, duration: 0.38, ease: EASE_EXPO  }, 0.18);
 
-    // — Preview cards sobem devagar antes da tampa abrir
+    // — Pasta desliza para centro-baixo e encolhe (fica sobre os cases com z-index alto)
+    tl.to(folderWrapRef.current, {
+      x: targetX,
+      y: targetY,
+      scale: 0.28,
+      duration: 1.1,
+      ease: 'power3.out',
+    }, 0.22);
+
+    // — Preview cards sobem antes da tampa abrir (sem blur — pasta não deve ficar borrada durante o voo)
     tl.to(folderPreviewRefs.current, {
-      y: -140,
-      scale: 0.78,
-      opacity: 0,
-      filter: 'blur(18px)',
+      y: -140, scale: 0.78, opacity: 0,
       rotate: (i) => (i - 1) * 10,
-      duration: 0.62,
-      stagger: 0.07,
-      ease: 'power3.in',
+      duration: 0.62, stagger: 0.07, ease: 'power3.in',
     }, 0.14);
 
-    // — Tampa dobra pra fora devagar (rotação 3D na borda inferior)
+    // — Tampa dobra pra fora (sem blur durante o movimento)
     tl.to(folderFrontRef.current, {
-      rotateX: 32,
-      y: 82,
-      scaleY: 0.68,
-      opacity: 0,
-      filter: 'blur(12px)',
-      transformOrigin: 'center bottom',
-      duration: 0.82,
-      ease: 'expo.out',
+      rotateX: 32, y: 82, scaleY: 0.68, opacity: 0,
+      transformOrigin: 'center bottom', duration: 0.82, ease: 'expo.out',
     }, 0.18);
 
-    // — Fundo da pasta implode enquanto os cards escapam
+    // — Fundo some limpo (sem blur)
     tl.to(folderBackRef.current, {
-      scale: 0.7,
-      y: 64,
-      opacity: 0,
-      filter: 'blur(18px)',
-      duration: 0.9,
-      ease: 'power3.out',
+      scale: 0.82, opacity: 0, duration: 0.9, ease: 'power3.out',
     }, 0.24);
 
-    tl.to(folderWrapRef.current, {
-      y: 22,
-      scale: 0.9,
-      opacity: 0,
-      duration: 0.88,
-      ease: 'power3.out',
-    }, 0.26);
-
-    // — Cards saltam suavemente pra cima a partir do tamanho/posição da pasta
-    const CARD_START = 0.36; // quando o primeiro card começa a surgir
-    const CARD_STAGGER = 0.22; // intervalo entre cada card
+    // — Cards saltam suavemente a partir do tamanho/posição da pasta
+    const CARD_START   = 0.38;
+    const CARD_STAGGER = 0.22;
 
     caseItemsRef.current.forEach((item, i) => {
       if (!item) return;
-      const card       = item.querySelector('.case-card');
-      const itemBounds = item.getBoundingClientRect();
+      const card        = item.querySelector('.case-card');
+      const itemBounds  = item.getBoundingClientRect();
       const cardCenterX = itemBounds.left + itemBounds.width  * 0.5;
       const cardCenterY = itemBounds.top  + itemBounds.height * 0.5;
-
-      const deltaX    = pocketCenterX - cardCenterX;
-      const deltaY    = pocketCenterY - cardCenterY;
-      const scaleStart = Math.min(pocketW / itemBounds.width, pocketH / itemBounds.height) * (0.82 + i * 0.05);
-      const startTime  = CARD_START + i * CARD_STAGGER;
+      const deltaX      = pocketCenterX - cardCenterX;
+      const deltaY      = pocketCenterY - cardCenterY;
+      const scaleStart  = Math.min(pocketW / itemBounds.width, pocketH / itemBounds.height) * (0.82 + i * 0.05);
+      const startTime   = CARD_START + i * CARD_STAGGER;
 
       gsap.set(item, { opacity: 0, pointerEvents: 'none', willChange: 'transform, opacity' });
-
       if (card) {
         gsap.set(card, {
-          x: deltaX,
-          y: deltaY,
-          scale: scaleStart,
-          rotate: (i - 1) * -6,
-          rotateX: 16,
+          x: deltaX, y: deltaY, scale: scaleStart,
+          rotate: (i - 1) * -6, rotateX: 16,
           filter: `blur(${12 + i * 3}px)`,
           transformOrigin: 'center center',
           willChange: 'transform, opacity, filter',
         });
       }
 
-      // Item aparece
       tl.to(item, { opacity: 1, pointerEvents: 'auto', duration: 0.22 }, startTime);
-
       if (card) {
-        // Y com overshoot leve — sensação de salto que pousa
-        tl.to(card, {
-          y: 0,
-          duration: 1.6,
-          ease: 'back.out(1.15)',
-        }, startTime);
-
-        // Resto resolve suave sem bounce
-        tl.to(card, {
-          x: 0,
-          scale: 1,
-          rotate: 0,
-          rotateX: 0,
-          filter: 'blur(0px)',
-          duration: 1.4,
-          ease: 'power4.out',
-        }, startTime);
+        tl.to(card, { y: 0, duration: 1.6, ease: 'back.out(1.15)' }, startTime);
+        tl.to(card, { x: 0, scale: 1, rotate: 0, rotateX: 0, filter: 'blur(0px)', duration: 1.4, ease: 'power4.out' }, startTime);
       }
     });
 
     const lastCardEnd = CARD_START + (CASES.length - 1) * CARD_STAGGER + 1.0;
 
-    tl.call(() => { setOpenState('open'); },   null, lastCardEnd - 0.4);
-    tl.call(() => {
-      stackRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, null, lastCardEnd - 0.2);
+    // — Pasta encolhe e some com blur só na hora de desaparecer
+    tl.to(folderWrapRef.current, {
+      scale: 0, opacity: 0, filter: 'blur(16px)', duration: 0.42, ease: 'power2.in',
+    }, lastCardEnd - 0.1);
+
+    tl.call(() => { setOpenState('open'); }, null, lastCardEnd - 0.4);
   };
 
   return (
@@ -351,9 +346,72 @@ export default function Cases() {
           </h2>
         </div>
 
-        {/* Folder scene */}
-        <div className="relative mb-20 md:mb-28 flex justify-center">
-          <div ref={folderWrapRef} className="will-change-transform" style={{ width: 'min(520px, 88vw)' }}>
+        {/* Grid: folder e cases ocupam o mesmo espaço — folder fica na frente, cases ocultos atrás */}
+        <div style={{ display: 'grid' }}>
+
+          {/* Cases stack — célula [1/1], fornece a altura do grid */}
+          <div
+            ref={stackRef}
+            className="relative w-full pb-10 md:pb-20"
+            style={{ gridColumn: '1', gridRow: '1', zIndex: 1 }}
+          >
+            <div className="mx-auto w-full md:w-[96%] lg:w-[90%]">
+              {CASES.map((c, i) => (
+                <div
+                  key={c.id}
+                  ref={(el) => { caseItemsRef.current[i] = el; }}
+                  className="case-stack-item sticky top-[108px] md:top-[124px]"
+                  style={{
+                    zIndex: 20 + i,
+                    marginTop: i === 0 ? 0 : '-22vh',
+                    paddingBottom: i === CASES.length - 1 ? '16vh' : '22vh',
+                  }}
+                >
+                  <div className="relative mx-auto w-full h-[54vh] md:h-[68vh]" style={{ perspective: '1400px' }}>
+                    <div className="case-card relative h-full rounded-[32px] overflow-hidden group cursor-pointer bg-[#111111]" style={{ border: '1px solid rgba(255,255,255,0.37)' }}>
+                      <div
+                        className="case-image absolute inset-0 bg-cover bg-center transition-transform duration-[1.2s] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03]"
+                        style={{ backgroundImage: `url(${c.image})` }}
+                      />
+                      <div className="case-card-overlay absolute inset-0 bg-black/[0.08] transition-colors duration-700" />
+                      <div
+                        className="case-meta absolute bottom-0 left-0 right-0 flex items-center justify-between px-8 md:px-12"
+                        style={{
+                          height: '17%',
+                          backdropFilter: 'blur(24px) contrast(70%) brightness(78%) saturate(79%)',
+                          backgroundColor: 'rgba(0,0,0,0.20)',
+                          borderBottomLeftRadius: '32px',
+                          borderBottomRightRadius: '32px',
+                          borderTop: '1px solid rgba(255,255,255,0.37)',
+                        }}
+                      >
+                        <h3
+                          className="font-halyard font-normal leading-none tracking-[-0.01em] truncate pr-6"
+                          style={{ fontSize: 'clamp(1.1rem,2.2vw,1.8rem)', color: 'rgba(255,255,255,0.68)' }}
+                        >
+                          {c.title}
+                        </h3>
+                        <p
+                          className="font-halyard font-light tracking-[-0.01em] shrink-0 text-right"
+                          style={{ fontSize: 'clamp(0.75rem,1.2vw,1.1rem)', color: 'rgba(255,255,255,0.74)', opacity: 0.6 }}
+                        >
+                          {c.subtitle}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Folder — mesma célula [1/1], z-index alto, cobre os cases até o clique */}
+          <div
+            ref={folderSceneRef}
+            className="relative flex justify-center"
+            style={{ gridColumn: '1', gridRow: '1', zIndex: 10, alignSelf: 'start', pointerEvents: 'none' }}
+          >
+          <div ref={folderWrapRef} className="will-change-transform" style={{ width: 'min(520px, 88vw)', pointerEvents: 'auto' }}>
             <motion.button
               type="button"
               onClick={handleOpen}
@@ -438,13 +496,10 @@ export default function Cases() {
                   }}
                 >
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.18),transparent_34%,rgba(0,0,0,0.12)_100%)]" />
-                  <div className="absolute left-6 right-6 top-6 flex items-center justify-between md:left-10 md:right-10 md:top-8">
-                    <div>
-                      <p className="text-[10px] md:text-[11px] uppercase tracking-[0.28em] text-[#3E1308]/70 font-mono">Cases Vault</p>
-                      <p className="mt-2 text-[clamp(1.5rem,3.4vw,2.6rem)] text-[#180C09] font-editorial leading-none">The One</p>
-                    </div>
-                    <div className="rounded-full border border-[#3E1308]/15 bg-white/20 px-4 py-2 text-[10px] md:text-[11px] uppercase tracking-[0.22em] text-[#2D1009]/70">
-                      Click to open
+                  <div className="absolute left-6 right-6 top-10 flex items-center justify-between md:left-10 md:right-10 md:top-12">
+                    <p className="text-[clamp(1.4rem,3.2vw,2.4rem)] text-white font-halyard font-medium leading-none">Cases TheOne</p>
+                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center flex-shrink-0" style={{ backgroundColor: '#FFA790' }}>
+                      <ArrowUp size={18} strokeWidth={2} className="text-white" />
                     </div>
                   </div>
                   <div className="absolute inset-x-0 bottom-0 h-[38%] bg-[linear-gradient(180deg,rgba(40,14,7,0)_0%,rgba(40,14,7,0.16)_100%)]" />
@@ -457,50 +512,7 @@ export default function Cases() {
           </div>
         </div>
 
-        {/* Cases stack */}
-        <div ref={stackRef} className="relative w-full pb-10 md:pb-20 scroll-mt-28">
-          <div className="mx-auto w-full md:w-[96%] lg:w-[90%]">
-            {CASES.map((c, i) => (
-              <div
-                key={c.id}
-                ref={(el) => { caseItemsRef.current[i] = el; }}
-                className="case-stack-item sticky top-[108px] md:top-[124px]"
-                style={{
-                  zIndex: 20 + i,
-                  marginTop: i === 0 ? 0 : '-22vh',
-                  paddingBottom: i === CASES.length - 1 ? '16vh' : '22vh',
-                }}
-              >
-                <div className="relative mx-auto w-full h-[54vh] md:h-[68vh]" style={{ perspective: '1400px' }}>
-                  <div className="case-card relative h-full rounded-[32px] overflow-hidden group cursor-pointer border border-white/10 bg-[#111111]">
-                    <div
-                      className="case-image absolute inset-0 bg-cover bg-center transition-transform duration-[1.2s] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03]"
-                      style={{ backgroundImage: `url(${c.image})` }}
-                    />
-                    <div className="case-card-overlay absolute inset-0 bg-black/25 group-hover:bg-black/10 transition-colors duration-700" />
-                    <div className="absolute inset-0" style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.08) 36%, rgba(0,0,0,0.48) 100%)' }} />
-
-                    <div className="case-meta absolute bottom-6 left-6 right-6 md:bottom-10 md:left-10 md:right-10">
-                      <div className="backdrop-blur-xl bg-black/40 border border-white/10 rounded-[20px] p-6 md:p-8 flex flex-col md:flex-row md:items-end justify-between transition-colors duration-500 group-hover:bg-black/50 group-hover:border-white/20">
-                        <div className="mb-4 md:mb-0">
-                          <p className="text-accent text-[11px] md:text-sm font-bold tracking-[0.2em] uppercase font-mono mb-2 md:mb-3">{c.subtitle}</p>
-                          <h3 className="text-white text-3xl md:text-5xl font-editorial font-normal leading-none mb-2 md:mb-3">{c.title}</h3>
-                          <p className="text-[#C7C7C7] text-lg md:text-xl font-light leading-snug">{c.result}</p>
-                        </div>
-                        <div className="flex items-center gap-4">
-                          <span className="text-white text-[13px] tracking-[0.1em] uppercase font-bold opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]">Explorar</span>
-                          <div className="w-[50px] h-[50px] rounded-full flex items-center justify-center bg-white/10 border border-white/20 backdrop-blur-md group-hover:bg-white group-hover:text-[#212121] transition-all duration-500 text-white">
-                            <ArrowUpRight size={22} className="transition-transform duration-500 group-hover:scale-110" strokeWidth={1.5} />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        </div>{/* fecha grid */}
 
       </div>
     </section>

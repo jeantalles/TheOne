@@ -121,7 +121,7 @@ export default function Navbar() {
 
         {/* Links desktop — pill container */}
         <ul
-          className="hidden md:flex items-center p-1 gap-1"
+          className="absolute left-1/2 hidden -translate-x-1/2 md:flex items-center p-1 gap-1"
           style={{
             borderRadius: '100px',
             border: '1px solid rgba(255,255,255,0.16)',
@@ -171,27 +171,32 @@ export default function Navbar() {
         </ul>
 
         {/* CTA desktop */}
-        <div className="hidden md:flex items-center gap-4">
-          <a
-            href="https://wa.me/5511999999999"
-            target="_blank"
-            rel="noreferrer"
-            aria-label="WhatsApp"
-            className="inline-flex items-center justify-center transition-colors duration-150 hover:text-[#1f1f1f]"
-            style={{
-              color: '#000000',
-            }}
-          >
-            <WhatsAppIcon style={{ width: '20px', height: '20px', display: 'block' }} />
-          </a>
+        <div className="hidden md:flex items-center gap-4 ml-auto">
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 font-sans capitalize hover:text-[#1f1f1f] transition-colors duration-150"
+            className="inline-flex items-center gap-3 font-sans capitalize transition-transform duration-150 active:scale-[0.98]"
             style={{
               fontSize: '18px',
-              color: useDarkLogo ? 'rgba(44,44,44,0.88)' : '#F5F0ED',
+              color: '#6B2F1D',
+              padding: '6px 22px 6px 8px',
+              borderRadius: '999px',
+              background: 'linear-gradient(135deg, rgba(255,215,205,0.95) 0%, rgba(255,127,86,0.88) 100%)',
+              border: '1px solid rgba(255,120,82,0.18)',
+              boxShadow: '0 10px 24px rgba(255,120,82,0.12)',
             }}
           >
+            <span
+              className="inline-flex items-center justify-center"
+              style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '999px',
+                background: 'rgba(255,248,244,0.42)',
+                color: '#A84B31',
+              }}
+            >
+              <WhatsAppIcon style={{ width: '16px', height: '16px', display: 'block' }} />
+            </span>
             Agendar Diagnóstico
           </a>
         </div>
