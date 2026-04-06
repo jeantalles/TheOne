@@ -9,9 +9,9 @@ const INTRO_WORDS = ['Não', 'seja', 'só', 'mais', 'uma', 'marca.'];
 
 const DARK_BG = [33, 33, 33];
 const WARM_BG = [245, 240, 236];
-const ORANGE_BG = [255, 104, 56];
-const SOFT_ORANGE = [254, 209, 197];
-const ACCENT = [255, 75, 28];
+const ORANGE_START = [255, 182, 163];
+const ORANGE_END = [255, 84, 39];
+const PARTICLE_GRAY = [140, 140, 140];
 
 function clamp(value, min = 0, max = 1) {
   return Math.min(max, Math.max(min, value));
@@ -90,6 +90,8 @@ function buildParticles(width, height) {
   }
 
   particles[centerIndex].isCenter = true;
+  particles[centerIndex].x = centerX;
+  particles[centerIndex].y = centerY;
   particles[centerIndex].radius = 16;
   particles[centerIndex].alpha = 0.35;
   return particles;
@@ -141,14 +143,14 @@ export default function FooterCTA() {
     const setSceneStyles = (progress) => {
       const bgShift = easeInOut3(norm(progress, 0, 0.16));
       const introExit = easeInOut3(norm(progress, 0.24, 0.39));
-      const centerAccent = easeOut3(norm(progress, 0.44, 0.54));
-      const centerExpand = easeInOut3(norm(progress, 0.58, 0.70));
-      const takeover = easeInOut3(norm(progress, 0.70, 0.86));
-      const finalTitle = easeOut3(norm(progress, 0.78, 0.88));
-      const finalBody = easeOut3(norm(progress, 0.82, 0.94));
+      const centerAccent = easeInOut3(norm(progress, 0.44, 0.56));
+      const centerExpand = easeInOut3(norm(progress, 0.60, 0.76));
+      const takeover = easeInOut3(norm(progress, 0.68, 0.88));
+      const finalTitle = easeOut3(norm(progress, 0.80, 0.90));
+      const finalBody = easeOut3(norm(progress, 0.84, 0.96));
       const baseBg = blendRgb(DARK_BG, WARM_BG, bgShift);
 
-      stickyRef.current.style.backgroundColor = mixColor(baseBg, ORANGE_BG, takeover);
+      stickyRef.current.style.backgroundColor = mixColor(baseBg, ORANGE_END, takeover);
 
       // Sincroniza o tema da Navbar com a cor de fundo animada
       if (bgShift > 0.5 || takeover > 0.08) {
@@ -157,10 +159,10 @@ export default function FooterCTA() {
         stickyRef.current.removeAttribute('data-navbar-theme');
       }
 
-      glowRef.current.style.opacity = `${lerp(0.16, 0.78, Math.max(bgShift, centerExpand, takeover))}`;
+      glowRef.current.style.opacity = `${lerp(0.08, 0.34, Math.max(centerAccent * 0.8, centerExpand, takeover))}`;
       glowRef.current.style.background = `
-        radial-gradient(circle at 50% 50%, rgba(255, 109, 64, ${lerp(0.06, 0.36, Math.max(centerAccent, centerExpand, takeover))}) 0%, rgba(255, 109, 64, 0) 44%),
-        radial-gradient(circle at 50% 50%, rgba(255, 225, 215, ${lerp(0, 0.14, Math.max(centerAccent, centerExpand * 0.8) * (1 - takeover * 0.35))}) 0%, rgba(255, 225, 215, 0) 18%),
+        radial-gradient(circle at 50% 50%, rgba(255, 84, 39, ${lerp(0, 0.22, Math.max(centerAccent, centerExpand, takeover))}) 0%, rgba(255, 84, 39, 0) 46%),
+        radial-gradient(circle at 50% 50%, rgba(255, 182, 163, ${lerp(0, 0.12, centerAccent * (1 - takeover * 0.35))}) 0%, rgba(255, 182, 163, 0) 20%),
         radial-gradient(circle at 22% 18%, rgba(255, 255, 255, ${lerp(0.08, 0.02, bgShift)}) 0%, rgba(255, 255, 255, 0) 34%)
       `;
 
@@ -202,11 +204,11 @@ export default function FooterCTA() {
       ctx.clearRect(0, 0, viewportWidth, viewportHeight);
 
       const buildGrid = easeOut3(norm(scrollProgress, 0.15, 0.50));
-      const centerAccent = easeOut3(norm(scrollProgress, 0.44, 0.54));
-      const centerExpand = easeInOut3(norm(scrollProgress, 0.58, 0.70));
-      const takeover = easeInOut3(norm(scrollProgress, 0.70, 0.86));
-      const clearScene = easeOut3(norm(scrollProgress, 0.82, 0.92));
-      const sceneOpacity = easeOut3(norm(scrollProgress, 0.15, 0.25)) * (1 - easeOut3(norm(scrollProgress, 0.90, 0.98)));
+      const centerAccent = easeInOut3(norm(scrollProgress, 0.44, 0.56));
+      const centerExpand = easeInOut3(norm(scrollProgress, 0.60, 0.76));
+      const takeover = easeInOut3(norm(scrollProgress, 0.68, 0.88));
+      const clearScene = easeOut3(norm(scrollProgress, 0.88, 0.98));
+      const sceneOpacity = easeOut3(norm(scrollProgress, 0.15, 0.25)) * (1 - easeOut3(norm(scrollProgress, 0.94, 1)));
 
       const centerX = viewportWidth / 2;
       const centerY = viewportHeight / 2;
@@ -232,11 +234,10 @@ export default function FooterCTA() {
 
         if (alpha > 0.01) {
           const radius = particle.radius * appear * lerp(1, 0.82, takeover);
-          const color = [140, 140, 140];
 
           ctx.beginPath();
           ctx.arc(particle.x, particle.y, radius, 0, Math.PI * 2);
-          ctx.fillStyle = rgba(color, alpha.toFixed(3));
+          ctx.fillStyle = rgba(PARTICLE_GRAY, alpha.toFixed(3));
           ctx.fill();
         }
       }
@@ -245,43 +246,33 @@ export default function FooterCTA() {
         const appear = easeOut3(clamp((buildGrid - centerParticle.delay) / 0.13));
 
         if (appear > 0.001) {
-          const focusScale = lerp(1, viewportWidth < 768 ? 1.45 : 1.35, centerAccent);
-          const expandedRadius = centerParticle.radius * appear * focusScale * lerp(1, viewportWidth < 768 ? 4.6 : 5.4, centerExpand);
+          const baseRadius = centerParticle.radius * appear;
+          const expandedRadius = baseRadius * lerp(1, viewportWidth < 768 ? 4.8 : 5.8, centerExpand);
           const orbRadius = lerp(expandedRadius, hugeCenter, takeover);
-          const orbAlpha = clamp(0.42 + centerAccent * 0.24 + centerExpand * 0.12 + takeover * 0.08, 0, 1) * sceneOpacity;
+          const orbAlpha = clamp(centerParticle.alpha * appear * sceneOpacity * (1 - clearScene), 0, 1);
 
-          const haloGradient = ctx.createRadialGradient(centerX, centerY, orbRadius * 0.2, centerX, centerY, orbRadius * 1.04);
-          haloGradient.addColorStop(0, `rgba(255, 171, 129, ${0.2 * orbAlpha})`);
-          haloGradient.addColorStop(0.6, `rgba(255, 109, 64, ${0.14 * orbAlpha})`);
-          haloGradient.addColorStop(1, 'rgba(255, 109, 64, 0)');
-
-          ctx.beginPath();
-          ctx.arc(centerX, centerY, orbRadius * 1.04, 0, Math.PI * 2);
-          ctx.fillStyle = haloGradient;
-          ctx.fill();
-
-          const orbGradient = ctx.createRadialGradient(
-            centerX - orbRadius * 0.28,
-            centerY - orbRadius * 0.34,
-            Math.max(6, orbRadius * 0.08),
-            centerX,
-            centerY,
-            orbRadius
-          );
-          orbGradient.addColorStop(0, `rgba(${SOFT_ORANGE[0]}, ${SOFT_ORANGE[1]}, ${SOFT_ORANGE[2]}, ${Math.min(1, 0.98 * orbAlpha)})`);
-          orbGradient.addColorStop(0.3, `rgba(255, 198, 177, ${Math.min(1, 0.92 * orbAlpha)})`);
-          orbGradient.addColorStop(0.72, `rgba(${ORANGE_BG[0]}, ${ORANGE_BG[1]}, ${ORANGE_BG[2]}, ${Math.min(1, 0.98 * orbAlpha)})`);
-          orbGradient.addColorStop(1, `rgba(${ACCENT[0]}, ${ACCENT[1]}, ${ACCENT[2]}, ${Math.min(1, orbAlpha)})`);
-
-          ctx.beginPath();
-          ctx.arc(centerX, centerY, orbRadius, 0, Math.PI * 2);
-          ctx.fillStyle = orbGradient;
-          ctx.fill();
-
-          if (takeover < 0.98) {
+          const grayAlpha = orbAlpha * (1 - centerAccent);
+          if (grayAlpha > 0.005) {
             ctx.beginPath();
-            ctx.arc(centerX - orbRadius * 0.16, centerY - orbRadius * 0.2, orbRadius * 0.12, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 241, 235, ${0.18 * orbAlpha * (1 - takeover * 0.45)})`;
+            ctx.arc(centerX, centerY, orbRadius, 0, Math.PI * 2);
+            ctx.fillStyle = rgba(PARTICLE_GRAY, grayAlpha.toFixed(3));
+            ctx.fill();
+          }
+
+          if (centerAccent > 0.005) {
+            const orangeAlpha = clamp(centerAccent * sceneOpacity * (1 - clearScene));
+            const orbGradient = ctx.createLinearGradient(
+              centerX - orbRadius,
+              centerY,
+              centerX + orbRadius,
+              centerY
+            );
+            orbGradient.addColorStop(0, `rgba(${ORANGE_START[0]}, ${ORANGE_START[1]}, ${ORANGE_START[2]}, ${orangeAlpha.toFixed(3)})`);
+            orbGradient.addColorStop(1, `rgba(${ORANGE_END[0]}, ${ORANGE_END[1]}, ${ORANGE_END[2]}, ${orangeAlpha.toFixed(3)})`);
+
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, orbRadius, 0, Math.PI * 2);
+            ctx.fillStyle = orbGradient;
             ctx.fill();
           }
         }
