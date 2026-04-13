@@ -33,11 +33,6 @@ const TOKEN_STYLES = {
 
 const STORIES = [
   {
-    tag: '01 ⏤ 04',
-    title: 'O mercado tá ficando cada vez mais competitivo... e parecido.',
-    content: 'Ter um bom produto, rodar anúncio e produzir conteúdo está cada vez mais acessível. Hoje qualquer empresa faz isso. O problema é que [WHITE]quando todo mundo faz a mesma coisa e se vende do mesmo jeito, ninguém se destaca.[/WHITE] \n Num ambiente assim, [WHITE]só se torna a escolha número 1 quem constrói um posicionamento inevitável.[/WHITE] Quem não constrói, compete de igual para igual com o resto do mercado.',
-  },
-  {
     tag: '02 ⏤ 04',
     title: 'Nós vimos o marketing ruir de dentro pra fora.',
     titleWidth: '750px',
@@ -154,7 +149,7 @@ function renderCompactTitle(title) {
   ));
 }
 
-export default function ScrollStorytelling() {
+export default function Storytelling() {
   const containerRef = useRef(null);
   const style = STORYTELLING_CONFIG.fontSize;
   const prefersReducedMotion = usePrefersReducedMotion();
@@ -166,7 +161,7 @@ export default function ScrollStorytelling() {
     }
 
     const ctx = gsap.context(() => {
-      gsap.utils.toArray('.story-panel').forEach((panel) => {
+      gsap.utils.toArray('.story-panel').forEach((panel, panelIndex) => {
         const titleWords = panel.querySelectorAll('.story-title-word');
         const copyWords = panel.querySelectorAll('.story-copy-word');
         const swapFirst = panel.querySelector('.story-swap-first');
@@ -178,7 +173,7 @@ export default function ScrollStorytelling() {
             trigger: panel,
             pin: true,
             pinSpacing: true,
-            start: 'center center',
+            start: panelIndex === 0 ? 'top top' : 'center center',
             end: swapMode ? '+=165%' : '+=130%',
             scrub: 1.5,
           },
@@ -274,8 +269,8 @@ export default function ScrollStorytelling() {
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: panel,
-            start: 'top 82%',
-            end: 'bottom 22%',
+            start: 'top 85%',
+            end: 'bottom 80%',
             scrub: 1.4,
           },
         });
@@ -377,7 +372,7 @@ export default function ScrollStorytelling() {
     return (
       <div
         className="story-mobile-body mt-6 max-w-4xl font-halyard font-light text-[#C7C7C7]"
-        style={{ fontSize: 'clamp(1.2rem, 4.8vw, 1.5rem)', lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
+        style={{ fontSize: 'clamp(1.35rem, 5.2vw, 1.65rem)', lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
       >
         {renderCompactParagraphs(paragraphs)}
       </div>
@@ -385,25 +380,16 @@ export default function ScrollStorytelling() {
   };
 
   return (
-    <div id="o-problema" ref={containerRef} className="bg-[#212121] relative border-b border-white/5">
+    <div ref={containerRef} className="relative border-b border-white/5" style={{ background: 'linear-gradient(to bottom, #010000 0%, #212121 8%)' }}>
       {STORIES.map((story, index) => (
         <div
           key={story.tag}
-          className={`${isCompactLayout ? 'story-panel-mobile relative flex flex-col items-center justify-center px-6 py-24' : 'story-panel min-h-[100svh] relative flex flex-col items-center justify-center px-6 overflow-hidden'}`}
+          className={`${isCompactLayout ? 'story-panel-mobile relative flex flex-col items-center justify-center px-6 py-24' : `story-panel min-h-[100svh] relative flex flex-col items-center px-6 overflow-hidden ${index === 0 ? 'justify-start' : 'justify-center'}`}`}
           data-transition={isCompactLayout ? undefined : story.transitionMode}
         >
-          <div
-            className="absolute inset-0 z-0"
-            style={{
-              background: index === 0
-                ? 'linear-gradient(to bottom, #010000 0%, #212121 50%)'
-                : '#212121',
-            }}
-          />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,82,36,0.06)_0%,transparent_60%)] pointer-events-none z-0" />
           <div
-            className="relative z-10 max-w-5xl w-full text-center flex flex-col items-center gap-8 py-16"
-            style={{ paddingTop: index === 0 ? '2.5rem' : undefined }}
+            className={`relative z-10 max-w-5xl w-full text-center flex flex-col items-center gap-8 ${index === 0 ? 'pt-14 pb-16' : 'py-16'}`}
           >
             <span className="text-[#FE6942] font-halyard tracking-widest uppercase" style={{ fontSize: style.tag }}>
               {story.tag}

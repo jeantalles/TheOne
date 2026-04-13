@@ -116,7 +116,7 @@ export default function Methodology() {
         </span>
         <h2 className="font-editorial text-[43px] md:text-[58px] lg:text-[74px] text-white text-center leading-[1.1] max-w-5xl">
           A ciência por trás de uma <br />
-          marca <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224] italic">TheOne.</span>
+          marca <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224]">TheOne.</span>
         </h2>
       </div>
 

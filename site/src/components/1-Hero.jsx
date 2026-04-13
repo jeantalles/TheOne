@@ -6,9 +6,11 @@ import { useConstrainedMotion, usePrefersReducedMotion } from '../hooks/useMedia
 
 gsap.registerPlugin(ScrollTrigger);
 
-const INTRO_WORDS = ['Não', 'seja', 'só', 'mais', 'um.'];
+const INTRO_WORDS = ['Não', 'seja', 'só', 'mais', 'um'];
+const NAVBAR_REVEAL_PROGRESS = 0.78;
+const HERO_SCROLL_HEIGHT = '560vh';
+const HERO_MAIN_PROGRESS_END = 0.82;
 
-const DARK_BG = [33, 33, 33];
 const WARM_BG = [245, 240, 236];
 const ORANGE_START = [255, 182, 163];
 const ORANGE_END = [255, 84, 39];
@@ -53,16 +55,30 @@ function rgba(rgb, alpha) {
   return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
 }
 
+function maxCircleRadius(x, y, width, height) {
+  return Math.max(
+    Math.hypot(x, y),
+    Math.hypot(width - x, y),
+    Math.hypot(x, height - y),
+    Math.hypot(width - x, height - y)
+  ) * 1.12;
+}
+
+function circleClipPath(radius, x, y) {
+  return `circle(${Math.max(0, radius).toFixed(1)}px at ${x.toFixed(1)}px ${y.toFixed(1)}px)`;
+}
+
 function buildParticles(width, height) {
   const gap = 20;
   const size = width < 768 ? 48 : 72;
   const spacing = size + gap;
-  const cols = Math.ceil(width / spacing) + 2;
-  const rows = Math.ceil(height / spacing) + 2;
-  const offsetX = (width - (cols - 1) * spacing) / 2;
-  const offsetY = (height - (rows - 1) * spacing) / 2;
   const centerX = width / 2;
   const centerY = height / 2;
+  // Anchor the grid so that one cell always lands exactly on the viewport center.
+  const offsetX = centerX - Math.round(centerX / spacing) * spacing;
+  const offsetY = centerY - Math.round(centerY / spacing) * spacing;
+  const cols = Math.ceil((width - offsetX) / spacing) + 2;
+  const rows = Math.ceil((height - offsetY) / spacing) + 2;
   const particles = [];
 
   for (let row = 0; row < rows; row += 1) {
@@ -95,7 +111,7 @@ function buildParticles(width, height) {
   return particles;
 }
 
-export default function FooterCTA() {
+export default function Hero() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const prefersConstrainedMotion = useConstrainedMotion();
   const shouldUseStaticScene = prefersReducedMotion || prefersConstrainedMotion;
@@ -109,21 +125,38 @@ export default function FooterCTA() {
   const finalWrapRef = useRef(null);
   const finalTitleRef = useRef(null);
   const finalBodyRef = useRef(null);
+  const scrollHintRef = useRef(null);
+  const navbarVisibleRef = useRef(null);
 
   useEffect(() => {
     const section = sectionRef.current;
     const canvas = canvasRef.current;
+    const updateNavbarVisibility = (isVisible) => {
+      if (navbarVisibleRef.current === isVisible) {
+        return;
+      }
+
+      navbarVisibleRef.current = isVisible;
+      window.dispatchEvent(new CustomEvent('hero-navbar-visibility', {
+        detail: { visible: isVisible },
+      }));
+    };
 
     if (!section) {
       return undefined;
     }
 
     if (shouldUseStaticScene) {
+      updateNavbarVisibility(true);
       stickyRef.current?.setAttribute('data-navbar-theme', 'light');
       if (stickyRef.current) stickyRef.current.style.backgroundColor = 'rgb(245, 240, 236)';
+      if (stickyRef.current) stickyRef.current.style.clipPath = 'none';
       if (glowRef.current) glowRef.current.style.opacity = '0.18';
       if (grainRef.current) grainRef.current.style.opacity = '0.05';
-      if (finalWrapRef.current) finalWrapRef.current.style.pointerEvents = 'auto';
+      if (finalWrapRef.current) {
+        finalWrapRef.current.style.pointerEvents = 'auto';
+        finalWrapRef.current.style.opacity = '1';
+      }
       if (finalTitleRef.current) {
         finalTitleRef.current.style.opacity = '1';
         finalTitleRef.current.style.filter = 'none';
@@ -137,6 +170,8 @@ export default function FooterCTA() {
       return undefined;
     }
 
+    updateNavbarVisibility(false);
+
     if (!canvas) {
       return undefined;
     }
@@ -149,6 +184,8 @@ export default function FooterCTA() {
 
     let rafId = 0;
     let scrollProgress = 0;
+    let mainScrollProgress = 0;
+    let exitScrollProgress = 0;
     let particles = [];
     let centerParticle = null;
     let viewportWidth = window.innerWidth;
@@ -179,33 +216,32 @@ export default function FooterCTA() {
     };
 
     const setSceneStyles = (progress) => {
-      const bgShift = easeInOut3(norm(progress, 0, 0.16));
       const centerAccent = easeInOut3(norm(progress, 0.44, 0.56));
       const centerExpand = easeInOut3(norm(progress, 0.60, 0.76));
       const takeover = easeInOut3(norm(progress, 0.68, 0.88));
       const finalTitle = easeOut3(norm(progress, 0.80, 0.90));
       const finalBody = easeOut3(norm(progress, 0.84, 0.96));
-      const baseBg = blendRgb(DARK_BG, WARM_BG, bgShift);
 
-      // Background transitions to a gradient (not solid) so canvas gradient stays visible
-      const gradStart = mixColor(baseBg, ORANGE_START, takeover);
-      const gradEnd = mixColor(baseBg, ORANGE_END, takeover);
+      // Background starts warm white and transitions to orange gradient
+      const gradStart = mixColor(WARM_BG, ORANGE_START, takeover);
+      const gradEnd = mixColor(WARM_BG, ORANGE_END, takeover);
       stickyRef.current.style.background = `linear-gradient(to right, ${gradStart}, ${gradEnd})`;
 
-      if (bgShift > 0.5 || takeover > 0.08) {
-        stickyRef.current.setAttribute('data-navbar-theme', 'light');
-      } else {
-        stickyRef.current.removeAttribute('data-navbar-theme');
-      }
+      stickyRef.current.setAttribute('data-navbar-theme', 'light');
 
       glowRef.current.style.opacity = `${lerp(0.08, 0.34, Math.max(centerAccent * 0.8, centerExpand, takeover))}`;
       glowRef.current.style.background = `
         radial-gradient(circle at 50% 50%, rgba(255, 84, 39, ${lerp(0, 0.22, Math.max(centerAccent, centerExpand, takeover))}) 0%, rgba(255, 84, 39, 0) 46%),
         radial-gradient(circle at 50% 50%, rgba(255, 182, 163, ${lerp(0, 0.12, centerAccent * (1 - takeover * 0.35))}) 0%, rgba(255, 182, 163, 0) 20%),
-        radial-gradient(circle at 22% 18%, rgba(255, 255, 255, ${lerp(0.08, 0.02, bgShift)}) 0%, rgba(255, 255, 255, 0) 34%)
+        radial-gradient(circle at 22% 18%, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0) 34%)
       `;
 
-      grainRef.current.style.opacity = `${lerp(0.1, 0.05, Math.max(bgShift, takeover))}`;
+      grainRef.current.style.opacity = `${lerp(0.08, 0.05, takeover)}`;
+
+      if (scrollHintRef.current) {
+        const scrollHintFade = 1 - easeOut3(norm(progress, 0, 0.06));
+        scrollHintRef.current.style.opacity = scrollHintFade.toFixed(3);
+      }
 
       // Heading travels from 34vh to 30vh from top (above the circle throughout)
       const headingTravel = easeInOut3(norm(progress, 0.32, 0.80));
@@ -242,18 +278,37 @@ export default function FooterCTA() {
       finalWrapRef.current.style.pointerEvents = progress > 0.9 ? 'auto' : 'none';
     };
 
+    const setExitStyles = (exitP) => {
+      const close = easeInOut3(clamp(exitP));
+      const circleCenterX = centerParticle?.x ?? viewportWidth / 2;
+      const circleCenterY = centerParticle?.y ?? viewportHeight / 2;
+      const fullRadius = maxCircleRadius(circleCenterX, circleCenterY, viewportWidth, viewportHeight);
+      const radius = lerp(fullRadius, 0, close);
+      const contentFade = 1 - easeOut3(norm(close, 0, 0.38));
+
+      stickyRef.current.style.opacity = '1';
+      stickyRef.current.style.clipPath = close <= 0.001
+        ? circleClipPath(fullRadius, circleCenterX, circleCenterY)
+        : circleClipPath(radius, circleCenterX, circleCenterY);
+
+      if (finalWrapRef.current) {
+        finalWrapRef.current.style.opacity = contentFade.toFixed(3);
+        finalWrapRef.current.style.pointerEvents = close > 0.02 ? 'none' : (mainScrollProgress > 0.9 ? 'auto' : 'none');
+      }
+    };
+
     const CORNER = 4;
 
     const draw = () => {
       ctx.clearRect(0, 0, viewportWidth, viewportHeight);
 
-      const buildGrid = easeOut3(norm(scrollProgress, 0.15, 0.50));
-      const centerToCircle = easeInOut3(norm(scrollProgress, 0.36, 0.44));
-      const centerAccent = easeInOut3(norm(scrollProgress, 0.44, 0.56));
-      const centerExpand = easeInOut3(norm(scrollProgress, 0.60, 0.76));
-      const takeover = easeInOut3(norm(scrollProgress, 0.68, 0.88));
-      const clearScene = easeOut3(norm(scrollProgress, 0.88, 0.98));
-      const sceneOpacity = easeOut3(norm(scrollProgress, 0.15, 0.25)) * (1 - easeOut3(norm(scrollProgress, 0.94, 1)));
+      const buildGrid = easeOut3(norm(mainScrollProgress, 0.15, 0.50));
+      const centerToCircle = easeInOut3(norm(mainScrollProgress, 0.36, 0.44));
+      const centerAccent = easeInOut3(norm(mainScrollProgress, 0.44, 0.56));
+      const centerExpand = easeInOut3(norm(mainScrollProgress, 0.60, 0.76));
+      const takeover = easeInOut3(norm(mainScrollProgress, 0.68, 0.88));
+      const clearScene = easeOut3(norm(mainScrollProgress, 0.88, 0.98));
+      const sceneOpacity = easeOut3(norm(mainScrollProgress, 0.15, 0.25)) * (1 - easeOut3(norm(mainScrollProgress, 0.94, 1)));
 
       const screenCenterX = viewportWidth / 2;
       const screenCenterY = viewportHeight / 2;
@@ -349,7 +404,11 @@ export default function FooterCTA() {
 
     const onResize = () => {
       resizeCanvas();
-      setSceneStyles(scrollProgress);
+      mainScrollProgress = Math.min(1, scrollProgress / HERO_MAIN_PROGRESS_END);
+      exitScrollProgress = Math.max(0, (scrollProgress - HERO_MAIN_PROGRESS_END) / (1 - HERO_MAIN_PROGRESS_END));
+      updateNavbarVisibility(mainScrollProgress >= NAVBAR_REVEAL_PROGRESS);
+      setSceneStyles(mainScrollProgress);
+      setExitStyles(exitScrollProgress);
       scheduleDraw();
       ScrollTrigger.refresh();
     };
@@ -363,7 +422,8 @@ export default function FooterCTA() {
     if (fontReady) {
       fontReady.then(() => {
         resizeCanvas();
-        setSceneStyles(scrollProgress);
+        setSceneStyles(mainScrollProgress);
+        setExitStyles(exitScrollProgress);
         scheduleDraw();
       });
     }
@@ -381,7 +441,11 @@ export default function FooterCTA() {
       },
       onUpdate(self) {
         scrollProgress = self.progress;
-        setSceneStyles(scrollProgress);
+        mainScrollProgress = Math.min(1, scrollProgress / HERO_MAIN_PROGRESS_END);
+        exitScrollProgress = Math.max(0, (scrollProgress - HERO_MAIN_PROGRESS_END) / (1 - HERO_MAIN_PROGRESS_END));
+        updateNavbarVisibility(mainScrollProgress >= NAVBAR_REVEAL_PROGRESS);
+        setSceneStyles(mainScrollProgress);
+        setExitStyles(exitScrollProgress);
         scheduleDraw();
       },
     });
@@ -389,6 +453,7 @@ export default function FooterCTA() {
     window.addEventListener('resize', onResize);
 
     return () => {
+      updateNavbarVisibility(true);
       cancelAnimationFrame(rafId);
       window.removeEventListener('resize', onResize);
       trigger.kill();
@@ -399,13 +464,21 @@ export default function FooterCTA() {
     <section
       id="contact"
       ref={sectionRef}
-      className="relative border-t border-white/5"
-      style={{ height: shouldUseStaticScene ? '100vh' : '560vh', backgroundColor: '#212121' }}
+      className="relative"
+      style={{
+        height: shouldUseStaticScene ? '100vh' : HERO_SCROLL_HEIGHT,
+        backgroundColor: 'transparent',
+        zIndex: 2,
+      }}
     >
       <div
         ref={stickyRef}
         className="sticky top-0 h-screen overflow-hidden"
-        style={shouldUseStaticScene ? { backgroundColor: '#F5F0EC' } : undefined}
+        style={{
+          backgroundColor: 'rgb(245, 240, 236)',
+          zIndex: 2,
+          willChange: shouldUseStaticScene ? undefined : 'clip-path',
+        }}
       >
         <div ref={glowRef} className="pointer-events-none absolute inset-0 z-0 opacity-20" />
 
@@ -433,7 +506,7 @@ export default function FooterCTA() {
         >
           <h2
             className="max-w-[900px] text-center font-sans font-normal leading-[1.1] text-[#151311]"
-            style={{ fontSize: 'clamp(1.8rem, 4.5vw, 4rem)', letterSpacing: '-0.02em' }}
+            style={{ fontSize: 'clamp(1.5rem, 4.2vw, 3.8rem)', letterSpacing: '-0.02em' }}
           >
             {INTRO_WORDS.map((word, index) => (
               <span
@@ -474,8 +547,9 @@ export default function FooterCTA() {
               <span
                 className="block font-sans font-medium leading-[0.92] text-black/70"
                 style={{
-                  fontSize: 'clamp(2.7rem, 6.8vw, 6.2rem)',
+                  fontSize: 'clamp(3.2rem, 8vw, 7.5rem)',
                   letterSpacing: '-0.03em',
+                  paddingBottom: '40px',
                 }}
               >
                 Seja TheOne
@@ -492,6 +566,18 @@ export default function FooterCTA() {
                   &trade;
                 </span>
               </span>
+              <span
+                className="block font-editorial font-normal"
+                style={{
+                  fontSize: 'clamp(0.95rem, 4.5vw, 2.2rem)',
+                  paddingTop: '2px',
+                  color: '#1A1A1A',
+                  lineHeight: 1.06,
+                  opacity: 0.73,
+                }}
+              >
+                Torne-se a escolha número um.
+              </span>
             </h2>
 
             <div
@@ -505,7 +591,7 @@ export default function FooterCTA() {
               }}
             >
               <p className="mx-auto max-w-2xl text-[clamp(1.1rem,2vw,1.5rem)] font-halyard font-normal leading-[1.5] text-white/80">
-                Se tornar a escolha número 1 não é sorte, é construção. Se você tem visão, ambição e busca transformar sua empresa na escolha inevitável do seu público, estamos prontos para construir isso ao seu lado.
+                Para negócios visionários que não querem ser só mais uma opção e querem se tornar a alternativa inevitável em seu mercado.
               </p>
 
               <PrimaryCTAButton
@@ -526,6 +612,36 @@ export default function FooterCTA() {
             </div>
           </div>
         </div>
+        {!shouldUseStaticScene && (
+          <div
+            ref={scrollHintRef}
+            className="pointer-events-none absolute inset-0 z-50 flex flex-col items-center justify-center gap-2"
+            style={{ willChange: 'opacity' }}
+          >
+            <span
+              className="font-editorial font-normal text-[#151311]/50"
+              style={{ fontSize: '1.325rem', letterSpacing: '0.1em' }}
+            >
+              Role para ver
+            </span>
+            <svg
+              width="12"
+              height="18"
+              viewBox="0 0 12 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{ animation: 'scrollArrowBounce 1.8s ease-in-out infinite', color: 'rgba(21,19,17,0.4)' }}
+            >
+              <path d="M6 1L6 17M6 17L1.5 11.5M6 17L10.5 11.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <style>{`
+              @keyframes scrollArrowBounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(5px); }
+              }
+            `}</style>
+          </div>
+        )}
       </div>
     </section>
   );

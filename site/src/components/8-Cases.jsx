@@ -407,13 +407,12 @@ export default function Cases() {
                         className="case-image absolute inset-0 bg-cover bg-center transition-transform duration-[1.2s] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03]"
                         style={{ backgroundImage: imagesLoaded ? `url(${c.image})` : undefined }}
                       />
-                      <div className="case-card-overlay absolute inset-0 bg-black/[0.08] transition-colors duration-700" />
+                      <div className="case-card-overlay absolute inset-0 bg-black/[0.28] transition-colors duration-700" />
                       <div
                         className="case-meta absolute bottom-0 left-0 right-0 flex items-center justify-between px-8 md:px-12"
                         style={{
                           height: '17%',
-                          backdropFilter: 'blur(12px)',
-                          backgroundColor: 'rgba(10,10,10,0.42)',
+                          backgroundColor: 'rgba(10,10,10,0.8)',
                           borderBottomLeftRadius: '32px',
                           borderBottomRightRadius: '32px',
                           borderTop: '1px solid rgba(255,255,255,0.37)',

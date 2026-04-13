@@ -28,12 +28,12 @@ export const fontSizes = {
   storyTitle: 'clamp(2.5rem, 4vw, 3.5rem)',
   storyText: '19px',
 
-  // Seção Solução (TheOneConclusion)
+  // TheOne
   conclusionTag: '14px',
   conclusionTitle: 'clamp(2rem, 4vw, 3.5rem)',
   conclusionText: '18px',
 
-  // Soluções / Produtos (AntigravityProducts)
+  // Products
   productTitleLarge: '48px',   // TheBrand, Consultoria, Assessoria
   productTitleBox: '26px',     // Estratégia, Identidade, etc.
   productTextLarge: '19px',    // Parágrafos principais

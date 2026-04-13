@@ -4,7 +4,7 @@ import { useMediaQuery, usePrefersReducedMotion } from '../hooks/useMediaQuery';
 
 const HeroMeshGradient = lazy(() => import('./HeroMeshGradient'));
 
-export default function HeroLight() {
+export default function FinalCTA() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const isLargeViewport = useMediaQuery('(min-width: 1024px)');
   const shouldRenderAnimatedMesh = isLargeViewport && !prefersReducedMotion;
@@ -80,19 +80,6 @@ export default function HeroLight() {
             </span>
           </span>
         </h1>
-
-        <h2
-          className="font-editorial font-normal whitespace-nowrap md:whitespace-normal"
-          style={{
-            fontSize: 'clamp(1.45rem, 6vw, 2.7rem)',
-            paddingTop: '25px',
-            color: '#1A1A1A',
-            lineHeight: 1.06,
-            opacity: 0.73,
-          }}
-        >
-          Torne-se a escolha número um.
-        </h2>
 
         <p
           className="mx-auto mb-12 max-w-[42rem] leading-[1.35] font-halyard"

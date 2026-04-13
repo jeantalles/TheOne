@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import { Menu, X } from 'lucide-react';
 
 const navLinks = [
-  { name: 'O Diagnóstico', id: 'o-problema'  },
+  { name: 'O Contexto',    id: 'o-problema'  },
   { name: 'A TheOne',      id: 'a-theone'    },
   { name: 'Metodologia',   id: 'metodologia' },
   { name: 'Produtos',      id: 'solucoes'    },
@@ -64,6 +64,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [hovered, setHovered] = useState(null);
   const [useDarkLogo, setUseDarkLogo] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const { active, navigateTo } = useActiveSection();
   
   const navRef = useRef(null);
@@ -74,12 +75,6 @@ export default function Navbar() {
   const pillTarget = hovered ?? active;
 
   useEffect(() => {
-    // Entrance animation
-    gsap.fromTo(navRef.current,
-      { y: -20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: "power3.out", delay: 0.2 }
-    );
-
     let themeRafId = null;
     const detectTheme = () => {
       if (themeRafId) return;
@@ -106,6 +101,30 @@ export default function Navbar() {
       if (themeRafId) cancelAnimationFrame(themeRafId);
     };
   }, []);
+
+  useEffect(() => {
+    const onVisibilityChange = (event) => {
+      setIsVisible(Boolean(event.detail?.visible));
+    };
+
+    window.addEventListener('hero-navbar-visibility', onVisibilityChange);
+    return () => {
+      window.removeEventListener('hero-navbar-visibility', onVisibilityChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!navRef.current) return;
+
+    gsap.to(navRef.current, {
+      y: isVisible ? 0 : -20,
+      opacity: isVisible ? 1 : 0,
+      duration: isVisible ? 0.8 : 0.35,
+      ease: isVisible ? 'power3.out' : 'power2.inOut',
+      overwrite: 'auto',
+      pointerEvents: isVisible ? 'auto' : 'none',
+    });
+  }, [isVisible]);
 
   // Pill animation
   useEffect(() => {
@@ -162,13 +181,15 @@ export default function Navbar() {
           WebkitBackdropFilter: 'blur(24px)',
           maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 38%, rgba(0,0,0,0) 100%)',
           WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0.7) 38%, rgba(0,0,0,0) 100%)',
+          opacity: isVisible ? 1 : 0,
+          transition: 'opacity 0.35s ease',
         }}
       />
 
       <nav
         ref={navRef}
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 md:px-16"
-        style={{ height: '72px', paddingTop: '20px', opacity: 0 }}
+        style={{ height: '72px', paddingTop: '20px', opacity: 0, pointerEvents: 'none' }}
       >
         <a href="#" className="flex items-center">
           <img
