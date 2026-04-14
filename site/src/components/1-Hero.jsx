@@ -247,19 +247,23 @@ export default function Hero() {
       const headingTravel = easeInOut3(norm(progress, 0.32, 0.80));
       const headingY = lerp(viewportHeight * -0.16, viewportHeight * -0.20, headingTravel);
       introRef.current.style.transform = `translateY(${headingY.toFixed(1)}px)`;
+      introRef.current.style.opacity = '1';
 
       introWordRefs.current.forEach((word, index) => {
         if (!word) return;
 
-        const wordIn = easeOut3(norm(progress, 0.04 + index * 0.018, 0.13 + index * 0.018));
-        const blur = lerp(22, 0, wordIn);
-        const translateY = lerp(40, 0, wordIn);
+        // Unblur as user starts scrolling (staggered per word)
+        const unblurIn = easeOut3(norm(progress, 0.0 + index * 0.014, 0.10 + index * 0.014));
+        // Opacity: starts at 0.85 (visible but blurred), reaches 1 when unblurred — fades only on exit
+        const opacity = lerp(0.85, 1.0, unblurIn);
+        const blur = lerp(12, 0, unblurIn);
+        const translateY = lerp(6, 0, unblurIn);
         // Color: dark on warm background → white as orange takes over
         const wordColor = blendRgb([21, 19, 17], [255, 255, 255], Math.min(1, takeover * 2.2));
 
-        word.style.opacity = wordIn.toFixed(3);
+        word.style.opacity = opacity.toFixed(3);
         word.style.filter = blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : 'none';
-        word.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0)`;
+        word.style.transform = translateY > 0.1 ? `translate3d(0, ${translateY.toFixed(1)}px, 0)` : 'none';
         word.style.color = `rgb(${wordColor[0]}, ${wordColor[1]}, ${wordColor[2]})`;
       });
 
@@ -294,6 +298,10 @@ export default function Hero() {
       if (finalWrapRef.current) {
         finalWrapRef.current.style.opacity = contentFade.toFixed(3);
         finalWrapRef.current.style.pointerEvents = close > 0.02 ? 'none' : (mainScrollProgress > 0.9 ? 'auto' : 'none');
+      }
+
+      if (introRef.current) {
+        introRef.current.style.opacity = contentFade.toFixed(3);
       }
     };
 
@@ -516,9 +524,9 @@ export default function Hero() {
                 }}
                 className="inline-block"
                 style={{
-                  opacity: 0,
-                  filter: 'blur(22px)',
-                  transform: 'translate3d(0, 40px, 0)',
+                  opacity: 0.85,
+                  filter: 'blur(12px)',
+                  transform: 'none',
                   willChange: 'transform, filter, opacity',
                   marginRight: index === INTRO_WORDS.length - 1 ? 0 : '0.16em',
                 }}
@@ -615,8 +623,8 @@ export default function Hero() {
         {!shouldUseStaticScene && (
           <div
             ref={scrollHintRef}
-            className="pointer-events-none absolute inset-0 z-50 flex flex-col items-center justify-center gap-2"
-            style={{ willChange: 'opacity' }}
+            className="pointer-events-none absolute inset-0 z-50 flex flex-col items-center justify-end gap-2"
+            style={{ willChange: 'opacity', paddingBottom: 'clamp(2.5rem, 7vh, 4.5rem)' }}
           >
             <span
               className="font-editorial font-normal text-[#151311]/50"
