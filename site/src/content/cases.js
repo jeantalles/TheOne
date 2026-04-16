@@ -159,9 +159,10 @@ export const caseStudies = [
     ],
     solutions: [
       'Reposicionamento de Marca',
-      'Identidade Visual',
-      'Posicionamento de Marca',
-      'Narrativa e Tom de Voz',
+      'Redesign Identidade Visual',
+      'Arquitetura de marca de produtos',
+      'Arquitetura de Comunicação Vendável',
+      'Site Brand Experience',
     ],
     clientFeedbacks: [
       {

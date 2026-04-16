@@ -19,6 +19,7 @@ import estrategiaLancamentoImage from '../assets/products-step-04/estrategia-de-
 import arquiteturaReceitaImage from '../assets/products-step-04/arquitetura-de-receita.jpg';
 import siteBrandExperienceImage from '../assets/products-step-04/site-brand-experience.jpg';
 import playbookImage from '../assets/products-step-05/playbook.jpg';
+import sistemaDeConteudoImage from '../assets/products-step-05/sistema-de-conteudo.jpeg';
 
 
 
@@ -78,7 +79,7 @@ const STEPS = [
       { label: 'Playbook de execução',       src: playbookImage },
       { label: 'Treinamento do time',        src: null },
       { label: 'Acompanhamento operacional', src: null },
-      { label: 'Sistema de Conteúdo',        src: null },
+      { label: 'Sistema de Conteúdo',        src: sistemaDeConteudoImage },
     ],
   },
 ];
