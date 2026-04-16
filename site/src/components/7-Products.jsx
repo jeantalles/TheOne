@@ -18,6 +18,7 @@ import cobrandingImage from '../assets/products-step-04/co-branding.jpg';
 import estrategiaLancamentoImage from '../assets/products-step-04/estrategia-de-lancamento.jpg';
 import arquiteturaReceitaImage from '../assets/products-step-04/arquitetura-de-receita.jpg';
 import siteBrandExperienceImage from '../assets/products-step-04/site-brand-experience.jpg';
+import playbookImage from '../assets/products-step-05/playbook.jpg';
 
 
 
@@ -74,7 +75,7 @@ const STEPS = [
     label: 'Assessoria ou Consultoria TheOne',
     description: 'Ficamos ao seu lado para garantir que o seu posicionamento seja efetivado rumo a se tornar a marca número um.',
     cards: [
-      { label: 'Playbook de execução',       src: null },
+      { label: 'Playbook de execução',       src: playbookImage },
       { label: 'Treinamento do time',        src: null },
       { label: 'Acompanhamento operacional', src: null },
       { label: 'Sistema de Conteúdo',        src: null },

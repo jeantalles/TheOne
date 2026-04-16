@@ -604,16 +604,13 @@ export default function Cases() {
                     }}
                   >
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.18),transparent_34%,rgba(0,0,0,0.12)_100%)]" />
-                    <div className="absolute left-6 right-6 top-10 md:left-10 md:right-10 md:top-12">
-                      <p className="text-[clamp(1.4rem,3.2vw,2.4rem)] text-white font-halyard font-medium leading-none">Cases TheOne</p>
-                    </div>
-                    <div className="absolute inset-x-6 bottom-7 flex justify-center md:inset-x-10 md:bottom-9">
-                      <div className="flex items-center gap-3 text-white/78">
-                        <p className="text-center font-halyard font-medium text-[0.98rem] md:text-[1.1rem] tracking-[0.16em] uppercase">
+                    <div className="absolute inset-0 flex items-center justify-center pt-8 md:pt-10 z-10">
+                      <div className="flex items-center gap-4 text-white/95">
+                        <p className="text-center font-halyard font-medium text-[1.2rem] md:text-[1.4rem] tracking-[0.18em] uppercase">
                           Clique para abrir
                         </p>
-                        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[rgba(255,167,144,0.55)] text-white md:h-9 md:w-9">
-                          <ArrowUp size={16} strokeWidth={2.1} className="shrink-0" />
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[rgba(255,167,144,0.55)] text-white md:h-12 md:w-12">
+                          <ArrowUp size={22} strokeWidth={2.1} className="shrink-0" />
                         </div>
                       </div>
                     </div>

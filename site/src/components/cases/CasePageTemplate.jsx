@@ -71,8 +71,11 @@ function CaseMediaBlock({ block }) {
 
 export default function CasePageTemplate({ caseStudy, isFallback = false }) {
   const hasDescriptionSections = caseStudy.descriptionSections.length > 0;
-  const hasFeedback = Boolean(caseStudy.clientFeedback?.quote);
   const hasSolutions = caseStudy.solutions.length > 0;
+  const feedbackEntries = Array.isArray(caseStudy.clientFeedbacks) && caseStudy.clientFeedbacks.length > 0
+    ? caseStudy.clientFeedbacks
+    : (caseStudy.clientFeedback?.quote ? [caseStudy.clientFeedback] : []);
+  const hasFeedback = feedbackEntries.length > 0;
 
   const handleBackNavigation = () => {
     const returnTo = getHistoryState().returnTo;
@@ -183,29 +186,35 @@ export default function CasePageTemplate({ caseStudy, isFallback = false }) {
               {hasFeedback ? (
                 <section>
                   <h2 className="mb-6 font-sans text-[clamp(1.35rem,1.6vw,1.8rem)] font-normal tracking-normal text-white">
-                    Feedback do cliente
+                    {feedbackEntries.length > 1 ? 'Feedback dos clientes' : 'Feedback do cliente'}
                   </h2>
-                  {caseStudy.clientFeedback.name ? (
-                    <div className="flex items-center gap-4">
-                      <FeedbackAvatar
-                        name={caseStudy.clientFeedback.name}
-                        avatar={caseStudy.clientFeedback.avatar}
-                      />
-                      <div>
-                        <p className="font-sans text-[clamp(1.25rem,1.7vw,1.72rem)] font-medium leading-none text-white">
-                          {caseStudy.clientFeedback.name}
-                        </p>
-                        {caseStudy.clientFeedback.role ? (
-                          <p className="mt-2 text-[clamp(1rem,1.25vw,1.18rem)] font-normal text-white/58">
-                            {caseStudy.clientFeedback.role}
-                          </p>
+                  <div className="space-y-12">
+                    {feedbackEntries.map((feedback) => (
+                      <article key={`${feedback.name}-${feedback.role}-${feedback.quote}`}>
+                        {feedback.name ? (
+                          <div className="flex items-center gap-4">
+                            <FeedbackAvatar
+                              name={feedback.name}
+                              avatar={feedback.avatar}
+                            />
+                            <div>
+                              <p className="font-sans text-[clamp(1.25rem,1.7vw,1.72rem)] font-medium leading-none text-white">
+                                {feedback.name}
+                              </p>
+                              {feedback.role ? (
+                                <p className="mt-2 text-[clamp(1rem,1.25vw,1.18rem)] font-normal text-white/58">
+                                  {feedback.role}
+                                </p>
+                              ) : null}
+                            </div>
+                          </div>
                         ) : null}
-                      </div>
-                    </div>
-                  ) : null}
-                  <p className="mt-8 max-w-[24rem] font-sans text-[clamp(1.12rem,1.62vw,1.38rem)] font-light leading-[1.58] text-white/88">
-                    "{caseStudy.clientFeedback.quote}"
-                  </p>
+                        <p className="mt-8 max-w-[24rem] font-sans text-[clamp(1.12rem,1.62vw,1.38rem)] font-light leading-[1.58] text-white/88">
+                          "{feedback.quote}"
+                        </p>
+                      </article>
+                    ))}
+                  </div>
                 </section>
               ) : null}
             </aside>

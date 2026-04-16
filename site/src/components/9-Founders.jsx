@@ -33,8 +33,6 @@ const founders = [
   },
 ];
 
-const clients = ['Jacuzzi', 'Sicredi', 'Arezzo', 'Cyrela', 'Stihl', 'O Boticário', 'MAX Titanium'];
-
 export default function Founders() {
   const sectionRef = useRef(null);
 
@@ -51,18 +49,6 @@ export default function Founders() {
           start: 'top 65%',
         },
       });
-
-      gsap.from('.client-tag', {
-        opacity: 0,
-        y: 10,
-        stagger: 0.07,
-        duration: 0.6,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.founders-clients-strip',
-          start: 'top 88%',
-        },
-      });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -72,7 +58,7 @@ export default function Founders() {
     <section
       id="fundadores"
       ref={sectionRef}
-      className="py-20 md:py-32 px-6 md:px-12 lg:px-16 bg-[#212121] border-b border-white/5 font-halyard overflow-hidden"
+      className="py-20 md:py-32 px-6 md:px-12 lg:px-16 bg-[#212121] font-halyard overflow-hidden"
     >
       <div className="max-w-[1500px] mx-auto">
 
@@ -163,23 +149,6 @@ export default function Founders() {
               </div>
             );
           })}
-        </div>
-
-        {/* Clients strip */}
-        <div className="founders-clients-strip mt-20 pt-12 border-t border-white/10">
-          <p className="text-white/20 text-[11px] tracking-[0.25em] uppercase mb-8">
-            Marcas que já passaram por nossas mãos
-          </p>
-          <div className="flex flex-wrap gap-x-10 gap-y-4 items-center">
-            {clients.map((c, i) => (
-              <span
-                key={i}
-                className="client-tag text-white/35 font-light text-lg hover:text-white/60 transition-colors duration-300 cursor-default"
-              >
-                {c}
-              </span>
-            ))}
-          </div>
         </div>
 
       </div>

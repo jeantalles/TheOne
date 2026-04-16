@@ -1,99 +1,73 @@
-import { lazy, Suspense } from 'react';
+import { MeshGradient } from '@paper-design/shaders-react';
 import PrimaryCTAButton from './PrimaryCTAButton';
-import { useMediaQuery, usePrefersReducedMotion } from '../hooks/useMediaQuery';
-
-const HeroMeshGradient = lazy(() => import('./HeroMeshGradient'));
 
 export default function FinalCTA() {
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const isLargeViewport = useMediaQuery('(min-width: 1024px)');
-  const shouldRenderAnimatedMesh = isLargeViewport && !prefersReducedMotion;
-
   return (
     <section
-      data-navbar-theme="light"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden px-5 py-8 md:px-8 md:py-10"
       style={{
-        background: '#f2e9e2',
+        background: '#212121',
         minHeight: '100dvh',
-        height: '100dvh',
       }}
     >
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 opacity-[0.95]">
+      <div
+        className="relative z-10 flex w-[90%] max-w-[1720px] items-center justify-center overflow-hidden rounded-[36px] px-6 py-12 text-center md:px-12"
+        style={{
+          minHeight: 'clamp(560px, 72vh, 700px)',
+          background: '#F85324',
+          boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.16), 0 28px 80px rgba(0,0,0,0.24)',
+        }}
+      >
+        <div className="pointer-events-none absolute inset-0">
+          <MeshGradient
+            speed={0.65}
+            scale={0.78}
+            distortion={0.16}
+            swirl={0.72}
+            frame={555678.3200000016}
+            colors={['#F85324', '#FF6A39', '#C43500', '#F85324']}
+            style={{ width: '100%', height: '100%' }}
+          />
           <div
             className="absolute inset-0"
             style={{
-              background: `
-                radial-gradient(circle at 20% 15%, rgba(255, 177, 158, 0.95) 0%, rgba(255, 177, 158, 0) 34%),
-                radial-gradient(circle at 82% 18%, rgba(255, 214, 200, 0.72) 0%, rgba(255, 214, 200, 0) 28%),
-                radial-gradient(circle at 50% 78%, rgba(255, 240, 231, 0.9) 0%, rgba(255, 240, 231, 0) 38%),
-                linear-gradient(180deg, #f5eee8 0%, #f2e9e2 100%)
-              `,
+              background: 'linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 34%, rgba(0,0,0,0.05) 100%)',
             }}
           />
-          {shouldRenderAnimatedMesh ? (
-            <Suspense fallback={null}>
-              <HeroMeshGradient />
-            </Suspense>
-          ) : null}
         </div>
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(180deg, rgba(245,240,236,0) 0%, rgba(245,240,236,0) 50%, #F5F0EC 100%)',
-          }}
-        />
-      </div>
 
-      <div
-        className="container relative z-10 px-6 pb-[25px] pt-[88px] md:pt-0 text-center"
-        style={{ transform: 'translateY(15px)' }}
-      >
-        <h1
-          className="font-sans tracking-[-0.035em] text-[#151312]"
-          style={{
-            fontSize: 'clamp(3.77rem, 7.2vw, 6.11rem)',
-            lineHeight: 0.9,
-            opacity: 0.73,
-            fontWeight: 300,
-            marginBottom: '6px',
-          }}
-        >
-          <span className="block">Torne-se a escolha</span>
-          <span className="block">número um.</span>
-        </h1>
-
-
-
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-[14px] sm:gap-[18px]">
-          <PrimaryCTAButton style={{ fontSize: '16.2px' }}>Quero ser TheOne</PrimaryCTAButton>
-          <a
-            href="#o-problema"
-            className="group inline-flex items-center justify-center font-sans font-normal transition-colors duration-200 active:scale-[0.98]"
+        <div className="flex max-w-[980px] flex-col items-center justify-center">
+          <h1
+            className="font-editorial tracking-[-0.03em] text-[#181412]"
             style={{
-              fontSize: '16.2px',
-              height: '60px',
-              padding: '0 26px',
-              borderRadius: '999px',
-              letterSpacing: '0.01em',
-              color: 'rgba(26,26,26,0.73)',
-              background: 'rgba(255,255,255,0.38)',
-              border: '1px solid rgba(26,26,26,0.16)',
-              backdropFilter: 'blur(18px)',
-              WebkitBackdropFilter: 'blur(18px)',
-            }}
-            onMouseEnter={e => {
-              e.currentTarget.style.color = 'rgba(26,26,26,0.88)';
-              e.currentTarget.style.background = 'rgba(255,255,255,0.5)';
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.color = 'rgba(26,26,26,0.73)';
-              e.currentTarget.style.background = 'rgba(255,255,255,0.38)';
+              fontSize: 'clamp(3.9rem, 7.8vw, 6.9rem)',
+              lineHeight: 0.92,
+              opacity: 0.94,
+              fontWeight: 400,
+              marginBottom: '42px',
             }}
           >
-            Ver como funciona
-          </a>
+            <span className="block">Torne-se a escolha</span>
+            <span className="block">número um.</span>
+          </h1>
+
+          <div className="flex items-center justify-center">
+            <PrimaryCTAButton
+              href="https://wa.me/5551997513675?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20TheOne%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es"
+              background="#181412"
+              boxShadow="0 12px 30px rgba(24,20,18,0.18)"
+              hoverBoxShadow="0 18px 40px rgba(24,20,18,0.28)"
+              textColor="#f5eee8"
+              style={{
+                fontSize: '19px',
+                height: '72px',
+                padding: '0 68px',
+                borderRadius: '999px',
+              }}
+            >
+              Quero ser TheOne
+            </PrimaryCTAButton>
+          </div>
         </div>
       </div>
     </section>

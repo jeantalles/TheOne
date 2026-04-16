@@ -591,7 +591,7 @@ export default function Hero() {
               </p>
 
               <PrimaryCTAButton
-                href="mailto:contato@theone.com?subject=Agendar%20Diagn%C3%B3stico%20TheOne"
+                href="https://wa.me/5551997513675?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20TheOne%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es"
                 className="mt-12"
                 background="rgba(0, 0, 0, 0.7)"
                 hoverBackground="rgba(0, 0, 0, 0.78)"
