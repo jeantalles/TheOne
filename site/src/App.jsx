@@ -1,4 +1,4 @@
-import { useEffect, lazy, Suspense } from 'react';
+import { useEffect, useRef, lazy, Suspense } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -24,6 +24,7 @@ gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ limitCallbacks: true });
 
 export default function App() {
+  const lenisRef = useRef(null);
   const isDesignSystem = window.location.pathname === '/design-system';
   const prefersReducedMotion = usePrefersReducedMotion();
   const prefersConstrainedMotion = useConstrainedMotion();
@@ -43,6 +44,9 @@ export default function App() {
       wheelMultiplier: 0.8,
     });
 
+    lenisRef.current = lenis;
+    window.__theOneLenis = lenis;
+
     lenis.on('scroll', ScrollTrigger.update);
 
     let rafId = 0;
@@ -55,6 +59,10 @@ export default function App() {
 
     return () => {
       cancelAnimationFrame(rafId);
+      lenisRef.current = null;
+      if (window.__theOneLenis === lenis) {
+        delete window.__theOneLenis;
+      }
       lenis.destroy();
     };
   }, [shouldUseLightScroll]);

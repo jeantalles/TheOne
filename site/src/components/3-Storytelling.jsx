@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 const STORYTELLING_CONFIG = {
   fontSize: {
     tag: '23px',
-    titulo: 'clamp(2rem, 5.5vw, 4.3rem)',
+    titulo: 'clamp(1.8rem, 5vw, 3.8rem)',
     texto: '27px',
   },
   lineHeight: {
@@ -24,35 +24,57 @@ const TOKEN_STYLES = {
   QUESTION: {
     color: '#FFFFFF',
     fontFamily: '"PP Editorial New", serif',
-    fontSize: 'clamp(2rem, 3vw, 3rem)',
+    fontSize: 'clamp(1.7rem, 2.5vw, 2.6rem)',
     fontWeight: 400,
     lineHeight: '1.05',
     letterSpacing: '-0.02em',
   },
 };
 
-const STORIES = [
-  {
-    tag: '02 ⏤ 04',
-    title: 'Nós vimos o marketing ruir de dentro pra fora.',
-    titleWidth: '750px',
-    transitionMode: 'swapParagraphs',
-    paragraphs: [
-      'Nossa história começou na linha de frente de uma das maiores assessorias de marketing da América Latina. Vimos [WHITE]milhares de clientes sendo atendidos de forma industrial com soluções prontas, como se toda empresa tivesse os mesmos problemas[/WHITE]. Eram negócios visionários despejando fortunas em tráfego pago sem ter o básico resolvido: anunciando o que o concorrente anuncia, com a mesma mensagem, para o mesmo público.',
-      'Do outro lado, estúdios de branding entregando conceitos criativos, mas lavando as mãos na hora de fazer isso funcionar na prática. Um olhando só para o longo prazo e o outro, só para o curto prazo. \n\n E no meio desse abismo, [WHITE]empresários com visão de gerar valor e transformação perdendo tempo e dinheiro em soluções que não foram pensadas para resolver seus próprios problemas.[/WHITE]',
-    ],
-  },
-  {
-    tag: '03 ⏤ 04',
-    title: 'Você pode pagar pra aparecer. \n Mas não pode pagar pra ser escolhido.',
-    content: 'Tráfego te coloca na frente do seu cliente, mas se a sua oferta é igual à do concorrente, você pagou pra ser visto e ignorado. Se você gasta rios de dinheiro com mídia paga e se parar de anunciar a qualquer momento pode por sua empresa em risco, você não está escalando, está dependente.\n\n[WHITE]Não adianta só ser visto, você precisa ser visto, lembrado e desejado.[/WHITE]',
-  },
-  {
-    tag: '04 ⏤ 04',
-    title: 'Sem se posicionar de forma estratégica, até o melhor negócio vira commodity.',
-    content: 'Quando o mercado não consegue enxergar o que te diferencia, ele faz o que sempre faz: te compara pelo preço.\n\nNão importa o quanto você entrega, o quanto você se dedicou ou se seu produto/serviço é superior. Se a percepção não acompanha o valor, você compete de igual pra igual com quem entrega muito menos.\n\nE aí fica a pergunta:\n[QUESTION]Você quer ser só mais um?[/QUESTION]',
-  },
-];
+const PANEL_03 = {
+  tag: '03 ⏤ 04',
+  title: 'O problema é que o marketing tradicional não foi feito para negócios visionários.',
+  titleWidth: '820px',
+  content: 'Nossa história começou na linha de frente de uma das maiores assessorias de marketing da América Latina. Vimos empresas despejando rios de dinheiro em uma solução industrializada que prometia resultado, mas não resolviam os problemas de cada negócio. [WHITE]Nós vimos o marketing ruir de dentro pra fora.[/WHITE]\n\nDo outro lado, vemos agências de branding entregando conceitos poéticos, mas abandonando o cliente na execução. Um focando só na performance, e o outro só no branding.\n\nE no meio desse abismo ficam empresas como a sua, com potencial e produto valioso, investindo e sem atingir a visão que buscam.',
+};
+
+const PANEL_04 = {
+  tag: '04 ⏤ 04',
+  title: 'Você pode pagar para aparecer. Mas não pode pagar para ser escolhido.',
+  titleWidth: '920px',
+  titleSizeDesktop: 'clamp(1.4rem, 3.5vw, 2.5rem)',
+  titleSizeMobile: 'clamp(1.2rem, 4.5vw, 2.2rem)',
+  textSizeDesktop: '23px',
+  textSizeMobile: 'clamp(1.25rem, 4.8vw, 1.5rem)',
+  content: 'O tráfego te coloca na frente do cliente, mas se a sua oferta parece igual à do concorrente, você pagou pra ser visto e ignorado. E se parar de anunciar a qualquer momento pode pôr sua empresa em risco, você não está escalando, está dependente.\n\n[WHITE]Ser visto não é suficiente. Você precisa ser lembrado. E desejado.[/WHITE]\n\nE quando o mercado não enxerga o que te diferencia, ele faz o de sempre, te compara pelo preço. Não importa o quanto seu produto é superior. Sem um posicionamento inevitável, você compete de igual para igual com quem entrega menos.\n\n[QUESTION]E aí fica a pergunta: Você quer ser só mais um?[/QUESTION]',
+};
+
+const STORIES = {
+  empresario: [
+    {
+      tag: '02 ⏤ 04',
+      title: 'Sabemos que você quer construir um legado.',
+      titleWidth: '700px',
+      content: 'Você é ambicioso, tem visão, mas sente que seu negócio vale mais do que o mercado valoriza. As pessoas ao redor não entendem por que você não se acomoda, não aceita entregar o básico e [WHITE]sempre está buscando elevar o nível do seu negócio.[/WHITE]\n\nVocê não quer apenas bater metas no fim do mês, você quer gerar riqueza, transformação, ditar as regras do seu mercado e ser a referência número um. [WHITE]Afinal, você é um visionário.[/WHITE]',
+    },
+    PANEL_03,
+    PANEL_04,
+  ],
+  gestor: [
+    {
+      tag: '02 ⏤ 04',
+      title: 'Você sabe o que precisa mudar pra atingir a visão da empresa que atua.',
+      titleWidth: '820px',
+      content: 'Você está à frente de uma empresa com produto bom e visão de crescimento, [WHITE]mas sem uma marca bem estruturada.[/WHITE] Quando olha pra comunicação, sente que o mercado não enxerga o valor que a empresa entrega e que cada área tem uma visão diferente da marca, porque o posicionamento não está claro pra ninguém.\n\nO tráfego pago está ficando cada vez mais caro e não podem depender disso. Você não pode só entregar resultado no fim do mês. Você quer construir uma marca que seja a escolha número um e que faça a empresa ser a referência no mercado em que atua.',
+    },
+    PANEL_03,
+    PANEL_04,
+  ],
+};
+
+// 350vh per panel — all panels share ONE pin, so total = N × 350
+// More vh = slower, more deliberate scroll pace per panel.
+const VH_PER_PANEL = 350;
 
 function parseStyledText(lineText) {
   const parts = [];
@@ -142,11 +164,7 @@ function renderCompactParagraphs(paragraphs) {
 }
 
 function renderCompactTitle(title) {
-  return title.split('\n').map((line, lineIndex) => (
-    <div key={lineIndex}>
-      {renderStyledWords(line, `title-${lineIndex}`, 'story-mobile-title-word')}
-    </div>
-  ));
+  return renderStyledWords(title.replace(/\n/g, ' '), 'title', 'story-mobile-title-word');
 }
 
 export default function Storytelling() {
@@ -154,115 +172,168 @@ export default function Storytelling() {
   const style = STORYTELLING_CONFIG.fontSize;
   const prefersReducedMotion = usePrefersReducedMotion();
   const isCompactLayout = useMediaQuery('(max-width: 1023px)') || prefersReducedMotion;
+  const stories = STORIES['empresario'];
 
+  // ─── Desktop: SINGLE PIN wrapping all panels ──────────────────────────────
+  // The canonical GSAP pattern for multi-panel scroll storytelling.
+  // One ScrollTrigger creates one pin spacer for the whole section,
+  // avoiding the cascade-of-pin-spacers bug caused by per-panel pins.
+  // Panels are stacked absolutely inside the pinned container;
+  // the master timeline fades them in/out sequentially.
   useEffect(() => {
     if (isCompactLayout || prefersReducedMotion) {
       return undefined;
     }
 
     const ctx = gsap.context(() => {
-      gsap.utils.toArray('.story-panel').forEach((panel, panelIndex) => {
+      const panels = gsap.utils.toArray('.story-panel', containerRef.current);
+      if (!panels.length) return;
+
+      // Start with all panels hidden except the first
+      gsap.set(panels, { autoAlpha: 0 });
+      gsap.set(panels[0], { autoAlpha: 1 });
+
+      // Master timeline – linked to ONE ScrollTrigger on the whole container
+      const masterTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          pin: true,
+          pinSpacing: true,
+          start: 'top top',
+          end: `+=${stories.length * VH_PER_PANEL}vh`,
+          scrub: 1.5,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      panels.forEach((panel, panelIndex) => {
+        const story = stories[panelIndex];
         const titleWords = panel.querySelectorAll('.story-title-word');
-        const copyWords = panel.querySelectorAll('.story-copy-word');
-        const swapFirst = panel.querySelector('.story-swap-first');
+        const copyWords  = panel.querySelectorAll('.story-copy-word');
+        const swapFirst  = panel.querySelector('.story-swap-first');
         const swapSecond = panel.querySelector('.story-swap-second');
-        const swapMode = panel.dataset.transition === 'swapParagraphs';
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: panel,
-            pin: true,
-            pinSpacing: true,
-            start: panelIndex === 0 ? 'top top' : 'center center',
-            end: swapMode ? '+=165%' : '+=130%',
-            scrub: 1.5,
-          },
-        });
-
+        const swapMode   = panel.dataset.transition === 'swapParagraphs';
         const titleContainer = panel.querySelector('.story-title-container');
+        const copyContainer  = panel.querySelector('.story-copy-container');
+
+        // Add a label at the start of this panel's section in the timeline
+        const label = `panel${panelIndex}`;
+        masterTl.addLabel(label);
+
+        // Blur-clear the title block
         if (titleContainer) {
-          tl.fromTo(
+          masterTl.fromTo(
             titleContainer,
             { filter: 'blur(8px)' },
-            { filter: 'blur(0px)', ease: 'none', duration: 0.65 }
+            { filter: 'blur(0px)', ease: 'none', duration: 0.65 },
+            label
           );
         }
 
-        tl.fromTo(
+        // Fade / lift title words in
+        masterTl.fromTo(
           titleWords,
           { opacity: 0.05, y: 8 },
           { opacity: 1, y: 0, ease: 'none', stagger: { each: 0.045 } },
-          '<'
+          `${label}` // same time as title container
         );
 
+        // Blur-clear the copy block, slightly after title starts
         const firstCopyWords = swapMode && swapFirst
           ? swapFirst.querySelectorAll('.story-copy-word')
           : copyWords;
 
-        const copyContainer = swapMode ? swapFirst : panel.querySelector('.story-copy-container');
-        if (copyContainer) {
-          tl.fromTo(
-            copyContainer,
+        const copyEl = swapMode ? swapFirst : copyContainer;
+        if (copyEl) {
+          masterTl.fromTo(
+            copyEl,
             { filter: 'blur(8px)' },
             { filter: 'blur(0px)', ease: 'none', duration: 0.65 },
-            0.16
+            `${label}+=0.16`
           );
         }
 
-        tl.fromTo(
+        // Fade / lift copy words in
+        masterTl.fromTo(
           firstCopyWords,
           { opacity: 0.05, y: 8 },
           { opacity: 1, y: 0, ease: 'none', stagger: { each: 0.05 } },
-          0.16
+          `${label}+=0.16`
         );
 
+        // Swap-paragraph mode: cross-fade two copies within this panel
         if (swapFirst && swapSecond) {
           const secondWords = swapSecond.querySelectorAll('.story-copy-word');
           gsap.set(secondWords, { opacity: 0.05, y: 8 });
 
-          tl.to({}, { duration: 0.3 });
-          tl.to(swapFirst, {
+          masterTl.to({}, { duration: 0.3 });
+          masterTl.to(swapFirst, {
             xPercent: -18,
             opacity: 0,
             filter: 'blur(12px)',
             ease: 'none',
             duration: 0.35,
           });
-          tl.fromTo(
+          masterTl.fromTo(
             swapSecond,
             { xPercent: 18, opacity: 0, filter: 'blur(14px)' },
-            {
-              xPercent: 0,
-              opacity: 1,
-              filter: 'blur(0px)',
-              ease: 'none',
-              duration: 0.4,
-            },
+            { xPercent: 0, opacity: 1, filter: 'blur(0px)', ease: 'none', duration: 0.4 },
             '<'
           );
-          tl.fromTo(
+          masterTl.fromTo(
             secondWords,
             { opacity: 0.05, y: 8 },
             { opacity: 1, y: 0, ease: 'none', stagger: { each: 0.05 } },
             '<0.08'
           );
-          tl.to({}, { duration: 0.28 });
+          masterTl.to({}, { duration: 0.28 });
+        }
+
+        // Hold so the reader has time with fully-revealed content
+        masterTl.to({}, { duration: 0.4 });
+
+        // Cross-fade to the next panel (skip for the last one)
+        if (panelIndex < panels.length - 1) {
+          masterTl.to(panel, {
+            autoAlpha: 0,
+            filter: 'blur(10px)',
+            ease: 'none',
+            duration: 0.25,
+          });
+          // Instantly make the next panel visible
+          masterTl.set(panels[panelIndex + 1], { autoAlpha: 1, filter: 'blur(0px)' }, '<0.1');
         }
       });
     }, containerRef);
 
-    return () => ctx.revert();
+    // Two rAF frames guarantee the browser has fully laid out the new
+    // content (including any pin spacer from StorytellingIntro) before
+    // we ask ScrollTrigger to recalculate all positions.
+    let raf1;
+    let raf2;
+    raf1 = requestAnimationFrame(() => {
+      raf2 = requestAnimationFrame(() => {
+        ScrollTrigger.refresh();
+      });
+    });
+
+    return () => {
+      cancelAnimationFrame(raf1);
+      cancelAnimationFrame(raf2);
+      ctx.revert();
+    };
   }, [isCompactLayout, prefersReducedMotion]);
 
+  // ─── Mobile: simple per-panel scroll reveal (no pin) ──────────────────────
   useEffect(() => {
     if (!isCompactLayout || prefersReducedMotion) {
       return undefined;
     }
 
     const ctx = gsap.context(() => {
-      gsap.utils.toArray('.story-panel-mobile').forEach((panel) => {
+      gsap.utils.toArray('.story-panel-mobile', containerRef.current).forEach((panel) => {
         const titleWords = panel.querySelectorAll('.story-mobile-title-word');
-        const copyWords = panel.querySelectorAll('.story-mobile-copy-word');
+        const copyWords  = panel.querySelectorAll('.story-mobile-copy-word');
 
         gsap.set([...titleWords, ...copyWords], { opacity: 0.06 });
 
@@ -295,6 +366,10 @@ export default function Storytelling() {
 
     return () => ctx.revert();
   }, [isCompactLayout, prefersReducedMotion]);
+
+
+
+  // ─── Render helpers ────────────────────────────────────────────────────────
 
   const renderWords = (text, wordClass = 'rev-word') =>
     text.split('\n').map((line, lineIndex) => (
@@ -331,13 +406,15 @@ export default function Storytelling() {
     ));
 
   const renderDesktopBody = (story) => {
+    const fontSize = story.textSizeDesktop || style.texto;
+
     if (story.transitionMode === 'swapParagraphs') {
       return (
         <div className="relative mt-6 w-full max-w-4xl min-h-[22rem] md:min-h-[18rem]">
           <div className="story-swap-first absolute inset-0 flex items-center justify-center">
             <div
               className="font-halyard font-light text-[#C7C7C7] text-center"
-              style={{ fontSize: style.texto, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
+              style={{ fontSize, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
             >
               {renderWordsWithParagraphs(story.paragraphs[0])}
             </div>
@@ -345,7 +422,7 @@ export default function Storytelling() {
           <div className="story-swap-second absolute inset-0 flex items-center justify-center opacity-0">
             <div
               className="font-halyard font-light text-[#C7C7C7] text-center"
-              style={{ fontSize: style.texto, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
+              style={{ fontSize, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
             >
               {renderWordsWithParagraphs(story.paragraphs[1])}
             </div>
@@ -357,7 +434,7 @@ export default function Storytelling() {
     return (
       <p
         className="story-copy-container font-halyard font-light text-[#C7C7C7] max-w-4xl mt-6"
-        style={{ fontSize: style.texto, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
+        style={{ fontSize, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
       >
         {renderWordsWithParagraphs(story.content)}
       </p>
@@ -365,6 +442,7 @@ export default function Storytelling() {
   };
 
   const renderCompactBody = (story) => {
+    const fontSize = story.textSizeMobile || 'clamp(1.35rem, 5.2vw, 1.65rem)';
     const paragraphs = story.transitionMode === 'swapParagraphs'
       ? story.paragraphs
       : story.content.split('\n').filter(Boolean);
@@ -372,35 +450,86 @@ export default function Storytelling() {
     return (
       <div
         className="story-mobile-body mt-6 max-w-4xl font-halyard font-light text-[#C7C7C7]"
-        style={{ fontSize: 'clamp(1.35rem, 5.2vw, 1.65rem)', lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
+        style={{ fontSize, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
       >
         {renderCompactParagraphs(paragraphs)}
       </div>
     );
   };
 
+  // ─── JSX ──────────────────────────────────────────────────────────────────
+  //
+  // DESKTOP: The containerRef is the single pinned element.
+  //   - height="100svh" so it exactly fills the viewport when pinned.
+  //   - Panels are stacked via "position:absolute; inset:0".
+  //   - GSAP handles visibility; only one panel is autoAlpha:1 at a time.
+  //
+  // MOBILE: Panels flow vertically; no pinning; simple scroll reveal.
+
+  if (isCompactLayout) {
+    return (
+      <div
+        ref={containerRef}
+        className="relative"
+        style={{ background: 'linear-gradient(to bottom, #010000 0%, #212121 100%)' }}
+      >
+        {stories.map((story) => (
+          <div
+            key={story.tag}
+            className="story-panel-mobile relative flex flex-col items-center justify-center px-6 py-24"
+          >
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,82,36,0.06)_0%,transparent_60%)] pointer-events-none z-0" />
+            <div className="relative z-10 max-w-5xl w-full text-center flex flex-col items-center gap-8 py-16">
+              <span className="text-[#FE6942] font-halyard tracking-widest uppercase" style={{ fontSize: style.tag }}>
+                {story.tag}
+              </span>
+              <h2
+                className="story-title-container font-editorial font-normal leading-[1.1] text-white story-mobile-title"
+                style={{ fontSize: story.titleSizeMobile || 'clamp(1.4rem, 5vw, 3.8rem)', maxWidth: story.titleWidth }}
+              >
+                {renderCompactTitle(story.title)}
+              </h2>
+              {renderCompactBody(story)}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
   return (
-    <div ref={containerRef} className="relative border-b border-white/5" style={{ background: 'linear-gradient(to bottom, #010000 0%, #212121 8%)' }}>
-      {STORIES.map((story, index) => (
+    <div
+      ref={containerRef}
+      className="relative overflow-hidden"
+      style={{
+        height: '100svh',
+        background: 'linear-gradient(to bottom, #010000 0%, #212121 100%)',
+      }}
+    >
+      {/* Shared radial glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,82,36,0.06)_0%,transparent_60%)] pointer-events-none z-0" />
+
+      {/* Story panels – stacked absolutely, one visible at a time */}
+      {stories.map((story) => (
         <div
           key={story.tag}
-          className={`${isCompactLayout ? 'story-panel-mobile relative flex flex-col items-center justify-center px-6 py-24' : `story-panel min-h-[100svh] relative flex flex-col items-center px-6 overflow-hidden ${index === 0 ? 'justify-start' : 'justify-center'}`}`}
-          data-transition={isCompactLayout ? undefined : story.transitionMode}
+          className="story-panel absolute inset-0 flex flex-col items-center justify-center px-6 overflow-hidden"
+          data-transition={story.transitionMode}
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,82,36,0.06)_0%,transparent_60%)] pointer-events-none z-0" />
-          <div
-            className={`relative z-10 max-w-5xl w-full text-center flex flex-col items-center gap-8 ${index === 0 ? 'pt-14 pb-16' : 'py-16'}`}
-          >
+          <div className="relative z-10 max-w-5xl w-full text-center flex flex-col items-center gap-8 py-16">
             <span className="text-[#FE6942] font-halyard tracking-widest uppercase" style={{ fontSize: style.tag }}>
               {story.tag}
             </span>
             <h2
-              className={`story-title-container font-editorial font-normal leading-[1.1] text-white ${isCompactLayout ? 'story-mobile-title' : ''}`}
-              style={{ fontSize: style.titulo, maxWidth: story.titleWidth }}
+              className="story-title-container font-editorial font-normal leading-[1.1] text-white"
+              style={{
+                fontSize: story.titleSizeDesktop || style.titulo,
+                maxWidth: story.titleWidth,
+              }}
             >
-              {isCompactLayout ? renderCompactTitle(story.title) : renderWords(story.title, 'story-title-word')}
+              {renderWords(story.title, 'story-title-word')}
             </h2>
-            {isCompactLayout ? renderCompactBody(story) : renderDesktopBody(story)}
+            {renderDesktopBody(story)}
           </div>
         </div>
       ))}

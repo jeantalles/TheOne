@@ -11,17 +11,17 @@ const STORYTELLING_INTRO_OVERLAP = '102svh';
 
 const STORY = {
   tag: '01 ⏤ 04',
-  title: 'O mercado tá ficando cada vez mais competitivo... e parecido.',
-  content: 'Ter um bom produto, rodar anúncio e produzir conteúdo está cada vez mais acessível. Hoje qualquer empresa faz isso. O problema é que [EMPHASIS]quando todo mundo faz a mesma coisa e se vende do mesmo jeito, ninguém se destaca.[/EMPHASIS] \n Num ambiente assim, [EMPHASIS]só se torna a escolha número 1 quem constrói um posicionamento inevitável.[/EMPHASIS] Quem não constrói, compete de igual para igual com o resto do mercado.',
+  title: 'Você não pode se vender da mesma forma que o restante do seu mercado',
+  content: 'Ter um bom produto, rodar anúncio, e produzir conteúdo não é mais um diferencial. O mercado tá ficando cada vez mais competitivo e parecido.\nNum ambiente assim, só se torna a escolha número um quem constrói um posicionamento impossível de ser ignorado.',
 };
 
 const TOKEN_STYLES = {
-  EMPHASIS: { color: 'rgba(21, 19, 17, 0.92)', fontWeight: 500 },
+  EMPHASIS: { color: '#000000', fontWeight: 500 },
 };
 
 const FONT_CONFIG = {
   tag: '23px',
-  titulo: 'clamp(2rem, 5.5vw, 4.3rem)',
+  titulo: 'clamp(1.8rem, 5vw, 3.8rem)',
   texto: '27px',
   textLineHeight: '1.4',
   paragraphSpacing: '1em',
@@ -173,7 +173,7 @@ export default function StorytellingIntro() {
       }
 
       if (copyWords.length) {
-        tl.to(copyWords, { opacity: 0.80, ease: 'none', stagger: { each: 0.022 } }, 0.28);
+        tl.to(copyWords, { opacity: 1, ease: 'none', stagger: { each: 0.022 } }, 0.28);
       }
     }, containerRef);
 
@@ -228,7 +228,7 @@ export default function StorytellingIntro() {
         style={{
           fontSize: 'clamp(1.35rem, 5.2vw, 1.65rem)',
           lineHeight: FONT_CONFIG.textLineHeight,
-          color: 'rgba(21, 19, 17, 0.62)',
+          color: '#000000',
         }}
       >
         {lines.map((line, lineIndex) => (
@@ -261,7 +261,7 @@ export default function StorytellingIntro() {
           </span>
           <h2
             className="font-editorial font-normal leading-[1.1]"
-            style={{ fontSize: FONT_CONFIG.titulo, color: '#151311' }}
+            style={{ fontSize: FONT_CONFIG.titulo, color: '#000000' }}
           >
             {renderMobileTitle()}
           </h2>
@@ -311,7 +311,7 @@ export default function StorytellingIntro() {
         </span>
         <h2
           className="si-title-container font-editorial font-normal leading-[1.1]"
-          style={{ fontSize: FONT_CONFIG.titulo, color: '#151311' }}
+          style={{ fontSize: FONT_CONFIG.titulo, color: '#000000' }}
         >
           {renderWords(STORY.title, 'si-title-word')}
         </h2>
@@ -320,7 +320,7 @@ export default function StorytellingIntro() {
           style={{
             fontSize: FONT_CONFIG.texto,
             lineHeight: FONT_CONFIG.textLineHeight,
-            color: 'rgba(21, 19, 17, 0.62)',
+            color: '#000000',
           }}
         >
           {renderWordsWithParagraphs(STORY.content, 'si-copy-word')}

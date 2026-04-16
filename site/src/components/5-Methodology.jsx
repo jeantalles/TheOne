@@ -22,10 +22,13 @@ export default function Methodology() {
           end: '+=200%',
           pin: true,
           scrub: 1.2,
+          invalidateOnRefresh: true,
         }
       });
 
-      // Headline some
+      // Headline: fade in when pin starts, then fade out on scroll
+      gsap.set('.meth-headline', { autoAlpha: 0 });
+      tl.to('.meth-headline', { autoAlpha: 1, duration: 0.25, ease: 'power2.out' });
       tl.to({}, { duration: 0.42 });
       tl.to('.meth-headline', {
         opacity: 0, y: -32, filter: 'blur(10px)', duration: 0.24, ease: 'power1.out'
@@ -110,7 +113,7 @@ export default function Methodology() {
       className="bg-[#212121] relative font-halyard h-screen overflow-hidden"
     >
       {/* Headline */}
-      <div className="meth-headline absolute inset-0 flex flex-col items-center justify-center z-50 px-6 pointer-events-none">
+      <div className="meth-headline absolute inset-0 flex flex-col items-center justify-center z-50 px-6 pointer-events-none" style={{ opacity: 0 }}>
         <span className="text-[#FE6942] text-[19px] md:text-[21px] font-halyard tracking-widest uppercase block mb-8">
           Nossa Metodologia
         </span>

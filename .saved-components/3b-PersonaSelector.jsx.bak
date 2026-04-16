@@ -1,0 +1,167 @@
+import { useRef, useEffect } from 'react';
+import { gsap } from 'gsap';
+import { usePrefersReducedMotion } from '../hooks/useMediaQuery';
+
+const OPTIONS = [
+  { value: 'empresario', label: 'Empresário' },
+  { value: 'gestor',     label: 'Gestor de Marketing & Growth' },
+];
+
+export default function PersonaSelector({ isVisible, onSelect, persona }) {
+  const contentRef = useRef(null);
+  const buttonsRef = useRef(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const confirmed = Boolean(persona);
+
+  // Entry animation — fires on mount (component only renders when isVisible=true)
+  useEffect(() => {
+    if (!isVisible || prefersReducedMotion) return undefined;
+
+    const ctx = gsap.context(() => {
+      const elements = contentRef.current?.querySelectorAll('.ps-animate');
+      if (!elements?.length) return;
+      gsap.fromTo(
+        elements,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, ease: 'power2.out', duration: 0.55, stagger: 0.13 }
+      );
+    }, contentRef);
+
+    return () => ctx.revert();
+  }, [isVisible, prefersReducedMotion]);
+
+  const handleSelect = (value) => {
+    if (confirmed) return;
+    onSelect(value);
+  };
+
+  const initialOpacity = prefersReducedMotion ? 1 : 0;
+
+  return (
+    <div
+      data-navbar-theme="light"
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 70,
+        backgroundColor: '#F5EFEB',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '6rem 1.5rem',
+        overscrollBehavior: 'contain',
+      }}
+    >
+      <div
+        ref={contentRef}
+        className="max-w-3xl w-full flex flex-col items-center gap-10 text-center"
+      >
+        <p
+          className="ps-animate font-halyard tracking-widest uppercase text-[#FE6942]"
+          style={{ fontSize: '23px', opacity: initialOpacity }}
+        >
+          Antes de continuar
+        </p>
+
+        <h2
+          className="ps-animate font-editorial font-normal leading-[1.1] text-[#151311]"
+          style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.6rem)', opacity: initialOpacity }}
+        >
+          Essa história tem dois caminhos. Qual é o seu?
+        </h2>
+
+        <div
+          ref={buttonsRef}
+          className="ps-animate flex flex-col sm:flex-row gap-4 w-full"
+          style={{ opacity: initialOpacity }}
+        >
+          {OPTIONS.map((opt) => {
+            const isSelected = persona === opt.value;
+            const isDimmed = confirmed && !isSelected;
+
+            return (
+              <button
+                key={opt.value}
+                onClick={() => handleSelect(opt.value)}
+                disabled={confirmed}
+                className="flex-1 relative flex items-center justify-center py-10 px-8 rounded-[20px] transition-all duration-300 active:scale-[0.97] cursor-pointer overflow-hidden"
+                style={{
+                  border: isSelected
+                    ? '1.5px solid #FE6942'
+                    : '1.5px solid rgba(21, 19, 17, 0.18)',
+                  backgroundColor: isSelected
+                    ? 'rgba(254, 105, 66, 0.07)'
+                    : 'transparent',
+                  opacity: isDimmed ? 0.3 : 1,
+                  pointerEvents: confirmed ? 'none' : 'auto',
+                }}
+                onMouseEnter={(e) => {
+                  if (!isSelected && !confirmed) {
+                    e.currentTarget.style.backgroundColor = 'rgba(21, 19, 17, 0.04)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isSelected && !confirmed) {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                  }
+                }}
+              >
+                <span
+                  className="font-editorial font-normal leading-[1.1] text-[#151311] transition-opacity duration-200"
+                  style={{
+                    fontSize: 'clamp(1.5rem, 2.4vw, 2rem)',
+                    opacity: isSelected && confirmed ? 0 : 1,
+                  }}
+                >
+                  {opt.label}
+                </span>
+
+                {isSelected && confirmed && (
+                  <CheckMark />
+                )}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CheckMark() {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    gsap.fromTo(
+      ref.current,
+      { scale: 0, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.45, ease: 'back.out(1.8)' }
+    );
+  }, []);
+
+  return (
+    <span
+      ref={ref}
+      className="absolute inset-0 flex items-center justify-center"
+      style={{ opacity: 0 }}
+    >
+      <svg
+        width="36"
+        height="36"
+        viewBox="0 0 36 36"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle cx="18" cy="18" r="17" stroke="#FE6942" strokeWidth="1.5" />
+        <path
+          d="M11 18.5L15.5 23L25 13"
+          stroke="#FE6942"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    </span>
+  );
+}
