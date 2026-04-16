@@ -73,7 +73,7 @@ export default function Methodology() {
         { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.4, ease: 'power3.out' },
         '-=0.25'
       );
-      tl.to({}, { duration: 0.7 });
+      tl.to({}, { duration: 1.8 });
 
       // PILAR 3
       tl.to('.meth-bullet-2',

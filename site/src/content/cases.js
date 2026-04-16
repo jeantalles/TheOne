@@ -51,7 +51,7 @@ export const caseStudies = [
     ],
     solutions: [
       'Estratégia e Posicionamento de Marca',
-      'Identidade Verbal e Narrativa',
+      'Narrativa e Identidade Verbal',
       'Identidade Visual',
       'Design de Embalagem',
       'Estratégia de Lançamento de Marca',
@@ -166,32 +166,35 @@ export const caseStudies = [
       {
         title: 'O Negócio',
         text: [
-          'Este é um texto de posicionamento padrão. A marca Camilla Toscano veio com o desafio de reprogramar o caos comercial e se conectar com grandes empresas de tecnologia.',
+          'A marca Camilla Toscano nasceu quando ela decidiu sair do mundo corporativo para abrir o próprio negócio e ajudar outras empresas com todo o conhecimento que adquiriu ao longo da carreira. Ela tem uma experiência enorme em estruturar vendas e fechar grandes contratos, uma bagagem construída em mais de uma década na linha de frente de vendas B2B, incluindo sete anos de atuação na Salesforce, onde conduziu negociações de alta complexidade por toda a América Latina e Estados Unidos. O seu grande talento é pegar produtos muito técnicos ou difíceis de explicar e transformá-los num discurso de vendas simples e direto, sem precisar inventar ou exagerar sobre o que o produto realmente faz.',
         ],
       },
       {
         title: 'O Problema',
         text: [
-          'Havia a necessidade de alinhar discurso, narrativa e imagem pessoal, gerando um posicionamento mais claro e desejado pelo seu público.',
+          'Quando chegou até a gente, a Camilla ainda não sabia exatamente como se posicionar. A sua ideia inicial era entrar no mercado como uma "consultora de vendas" genérica. E esse era o grande perigo: o mercado de consultoria comercial é extremamente competitivo, já dominado por empresas gigantes e consolidadas no Brasil e no exterior. Como ela ainda não era conhecida no mercado, entrar vendendo a mesma coisa e competindo de igual para igual com esses grandes players seria uma batalha exaustiva e desleal. Além de correr o risco de se misturar no meio de um mercado saturado de "fórmulas mágicas", ela desperdiçaria muita energia tentando falar com todo mundo, sem conseguir se destacar para ninguém.',
         ],
       },
       {
         title: 'O que Fizemos',
         text: [
-          'Utilizamos nossa metodologia de branding e storytelling para traçar uma identidade visual moderna e sofisticada.',
+          'Foi durante o nosso processo de diagnóstico e estratégia que encontramos a melhor saída. Analisando o histórico dela, percebemos que a sua principal força estava justamente no setor de tecnologia. Portanto, não fazia sentido ela ser mais uma consultora genérica; era muito mais inteligente posicioná-la de forma especialista no mercado tech. Com esse foco definido, criamos o conceito "O Código Humano", que defende que vender não é dom, mas sim um processo que pode ser ensinado e organizado. Também ajustamos a postura da marca para que ela se tornasse uma guia estratégica, ajudando empresas a "reprogramarem" o caos comercial de empresas de tecnologia.',
         ],
       },
       {
         title: 'O Resultado',
         text: [
-          'Uma marca pessoal forte, coesa, com capacidade de liderar conversas no segmento B2B, gerando confiança e novas aquisições de clientes em tech.',
+          'A clareza foi tanta que o impacto aconteceu de imediato.',
+          'Mesmo antes do projeto ser 100% finalizado, apenas com os direcionamentos da fase de imersão, ela começou a aplicar o novo posicionamento no seu LinkedIn. O resultado validou a estratégia rapidamente: as suas publicações atingiram mais de 70 mil impressões (um salto de 286%), acompanhado de um crescimento acelerado de seguidores.',
+          'Mais importante do que o volume, ela atraiu exatamente as pessoas certas. Os dados mostraram que o seu perfil passou a ser acompanhado majoritariamente por profissionais de nível Sênior (42%) e do setor de Tecnologia da Informação (29%) — o alvo exato da estratégia. Ela trocou a incerteza por uma mensagem forte: "reprogramo o caos comercial de empresas de tecnologia", consolidando-se como a parceira ideal para negócios que querem crescer de forma previsível e sem improvisos.',
         ],
       },
     ],
     solutions: [
       'Estratégia e Posicionamento de Marca',
-      'Identidade Verbal e Narrativa',
+      'Narrativa e Identidade Verbal',
       'Identidade Visual',
+      'Site Brand Experience',
     ],
     clientFeedback: {
       name: 'Camilla Toscano',

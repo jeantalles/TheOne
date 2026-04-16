@@ -199,16 +199,20 @@ export default function App() {
           <PersonaTrigger onTrigger={handleTrigger} triggered={triggered} />
           <GradientTransition />
         </div>
-        <Storytelling persona={persona} />
-        <TheOne />
-        <Methodology />
-        <Audience />
-        <Products />
-        <Suspense fallback={null}>
-          <Cases />
-          <Founders />
-          <FinalCTA />
-        </Suspense>
+        {persona && (
+          <>
+            <Storytelling persona={persona} />
+            <TheOne />
+            <Methodology />
+            <Audience />
+            <Products />
+            <Suspense fallback={null}>
+              <Cases />
+              <Founders />
+              <FinalCTA />
+            </Suspense>
+          </>
+        )}
       </main>
       <footer className="border-t border-white/5 bg-[#212121] py-8 text-center">
         <p className="text-white/38 text-xs font-mono font-bold tracking-[0.3em] uppercase">© 2026 THE ONE ASSESSORIA DE MARCA.</p>

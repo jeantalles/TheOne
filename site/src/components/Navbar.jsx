@@ -6,7 +6,7 @@ const navLinks = [
   { name: 'O Contexto',    id: 'o-problema'  },
   { name: 'A TheOne',      id: 'a-theone'    },
   { name: 'Metodologia',   id: 'metodologia' },
-  { name: 'Produtos',      id: 'solucoes'    },
+  { name: 'Soluções',      id: 'solucoes'    },
   { name: 'Cases',         id: 'cases'       },
 ];
 
@@ -215,7 +215,7 @@ export default function Navbar() {
           <img
             src={useDarkLogo ? '/logo-navbar-black.svg' : '/logo-navbar.svg'}
             alt="The One"
-            style={{ height: '46px', width: 'auto', display: 'block' }}
+            style={{ height: '54px', width: 'auto', display: 'block' }}
           />
         </a>
 

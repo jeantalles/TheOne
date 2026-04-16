@@ -8,6 +8,19 @@ import mercadoMediaImage from '../assets/products-step-01/mercado-media.jpeg';
 import posicionamentoImage from '../assets/products-step-01/posicionamento.jpeg';
 import icpImage from '../assets/products-step-01/icp.jpeg';
 import conteudoImage from '../assets/products-step-01/estrategia de conteudo.jpeg';
+import hierarquiaDiscursoImage from '../assets/products-step-01/hierarquia-discurso.jpg';
+import namingImage from '../assets/products-step-01/naming.png';
+import estrategiaCanaisImage from '../assets/products-step-01/estrategia-canais.jpg';
+import narrativaTheOneImage from '../assets/products-step-02/narrativa-theone.jpg';
+import plataformaMarcaImage from '../assets/products-step-02/plataforma-de-marca.jpg';
+import identidadeVisualImage from '../assets/products-step-03/identidade-visual.jpg';
+import cobrandingImage from '../assets/products-step-04/co-branding.jpg';
+import estrategiaLancamentoImage from '../assets/products-step-04/estrategia-de-lancamento.jpg';
+import arquiteturaReceitaImage from '../assets/products-step-04/arquitetura-de-receita.jpg';
+import siteBrandExperienceImage from '../assets/products-step-04/site-brand-experience.jpg';
+
+
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,9 +28,9 @@ const STEPS = [
   {
     number: '01',
     label: 'Pesquisa e Diagnóstico',
-    description: 'Entendemos o jogo antes para construir uma marca que vai vencê-lo.',
+    description: 'Antes de ir a campo entendemos o jogo, para construir uma marca que vai vencê-lo.',
     cards: [
-      { label: 'Diagnóstico de negócio', src: negocioMediaImage },
+      { label: 'Diagnóstico de negócio e marca', src: negocioMediaImage },
       { label: 'Diagnóstico de público', src: publicoMediaImage },
       { label: 'Diagnóstico de mercado', src: mercadoMediaImage },
     ],
@@ -28,8 +41,11 @@ const STEPS = [
     description: 'Definimos o lugar que a sua marca deve ocupar para deixar de ser só mais uma opção.',
     cards: [
       { label: 'Posicionamento estratégico', src: posicionamentoImage },
-      { label: 'ICP e posicionamento',   src: icpImage },
+      { label: 'Atração de ICP',   src: icpImage },
       { label: 'Estratégia de conteúdo', src: conteudoImage },
+      { label: 'Estratégia de canais', src: estrategiaCanaisImage },
+      { label: 'Narrativa TheOne', src: narrativaTheOneImage },
+      { label: 'Plataforma de marca', src: plataformaMarcaImage },
     ],
   },
   {
@@ -37,35 +53,37 @@ const STEPS = [
     label: 'Identidade de Marca',
     description: 'Transformamos estratégia em uma marca que o mercado reconhece, lembra e deseja.',
     cards: [
-      { label: 'Identidade verbal',    src: null },
-      { label: 'Identidade visual',    src: null },
-      { label: 'Experiência de marca', src: null },
+      { label: 'Narrativa e identidade verbal',    src: hierarquiaDiscursoImage },
+      { label: 'Identidade visual',    src: identidadeVisualImage },
+      { label: 'Naming', src: namingImage },
     ],
   },
   {
     number: '04',
     label: 'Lançamento e Go-to-Market',
-    description: 'Levamos posicionamento para o mercado com lógica de presença, crescimento e receita.',
+    description: 'É onde seremos vistos, lembrados, desejados e comprados.',
     cards: [
-      { label: 'Plano de distribuição',    src: null },
-      { label: 'Estratégia de lançamento', src: null },
-      { label: 'Arquitetura de receita',   src: null },
+      { label: 'Distribuição e Collabs',    src: cobrandingImage },
+      { label: 'Estratégia de lançamento', src: estrategiaLancamentoImage },
+      { label: 'Arquitetura de receita e produtos',   src: arquiteturaReceitaImage },
+      { label: 'Site Brand Experience',   src: siteBrandExperienceImage },
     ],
   },
   {
     number: '05',
     label: 'Assessoria ou Consultoria TheOne',
-    description: 'Garantimos que a estratégia ganhe vida na operação, com seu time ou ao seu lado.',
+    description: 'Ficamos ao seu lado para garantir que o seu posicionamento seja efetivado rumo a se tornar a marca número um.',
     cards: [
       { label: 'Playbook de execução',       src: null },
       { label: 'Treinamento do time',        src: null },
       { label: 'Acompanhamento operacional', src: null },
+      { label: 'Sistema de Conteúdo',        src: null },
     ],
   },
 ];
 
 // Both drums share the same row height — keeps them in perfect sync
-const ROW_H  = 460;
+const ROW_H  = 540;
 const CONT_H = ROW_H * 3; // 1140px (overflows 900px viewport on each side; clipped by sticky overflow:hidden)
 const STEP_SCROLL_VH = 100; // vh of scroll per step transition; 4 transitions = 400vh total
 const NEAR_SCALE = 0.56;
@@ -246,7 +264,7 @@ export default function Products() {
               className="mt-4 text-white font-halyard font-light"
               style={{ fontSize: 'clamp(1.25rem, 2.3vw, 1.72rem)' }}
             >
-              Da base à efetivação do posicionamento inevitável.
+              Cada projeto é personalizado. Da construção da base a efetivação do posicionamento inevitável.
             </p>
             <div className="mt-10 md:mt-12 flex flex-col gap-3">
               <span className="text-white/50 font-halyard font-medium text-[0.95rem] md:text-[1.1rem] mb-1 uppercase tracking-[0.12em]">
@@ -256,6 +274,7 @@ export default function Products() {
                 'Construção de marca e go-to-market',
                 'Reposicionamento de marca',
                 'Construção de marca pessoal',
+                'Geração de demanda com sistema de conteúdo',
                 'Arquitetura de receita e produtos'
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3 md:gap-4">
@@ -415,8 +434,8 @@ export default function Products() {
                       >
                         {step.description}
                       </p>
-                      <div style={{ display: 'flex', gap: '24px', width: '100%' }}>
-                        {step.cards.map(card => (
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px', width: '100%' }}>
+                        {step.cards.map((card) => (
                           <DeliverableCard key={card.label} label={card.label} src={card.src} />
                         ))}
                       </div>

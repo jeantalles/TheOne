@@ -60,38 +60,11 @@ export default function FinalCTA() {
             marginBottom: '6px',
           }}
         >
-          <span className="block">Construímos</span>
-          <span className="block">
-            marcas{' '}
-            <span style={{ color: '#FF4B1C' }}>
-              TheOne
-            </span>
-            <span
-              className="inline-block align-top font-halyard text-[#FF8E6C]"
-              style={{
-                fontSize: '0.36em',
-                letterSpacing: '0.04em',
-                marginLeft: '0.18em',
-                marginTop: '0.45em',
-                fontWeight: 600,
-              }}
-            >
-              &trade;
-            </span>
-          </span>
+          <span className="block">Torne-se a escolha</span>
+          <span className="block">número um.</span>
         </h1>
 
-        <p
-          className="mx-auto mb-12 max-w-[42rem] leading-[1.35] font-halyard"
-          style={{
-            fontSize: 'clamp(1.1475rem, 1.53vw, 1.6875rem)',
-            marginTop: '38px',
-            color: 'rgba(74, 65, 64, 0.88)',
-            fontWeight: 400,
-          }}
-        >
-          Para negócios visionários que não querem ser só mais uma opção e querem se tornar a alternativa inevitável em seu mercado.
-        </p>
+
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-[14px] sm:gap-[18px]">
           <PrimaryCTAButton style={{ fontSize: '16.2px' }}>Quero ser TheOne</PrimaryCTAButton>

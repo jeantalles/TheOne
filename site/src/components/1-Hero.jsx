@@ -553,7 +553,7 @@ export default function Hero() {
               }}
             >
               <span
-                className="block font-sans font-medium leading-[0.92] text-black/70"
+                className="block font-editorial font-normal leading-[0.92] text-black/70"
                 style={{
                   fontSize: 'clamp(3.2rem, 8vw, 7.5rem)',
                   letterSpacing: '-0.03em',
@@ -574,18 +574,6 @@ export default function Hero() {
                   &trade;
                 </span>
               </span>
-              <span
-                className="block font-editorial font-normal"
-                style={{
-                  fontSize: 'clamp(0.95rem, 4.5vw, 2.2rem)',
-                  paddingTop: '2px',
-                  color: '#1A1A1A',
-                  lineHeight: 1.06,
-                  opacity: 0.73,
-                }}
-              >
-                Torne-se a escolha número um.
-              </span>
             </h2>
 
             <div
@@ -598,8 +586,8 @@ export default function Hero() {
                 willChange: 'transform, filter, opacity',
               }}
             >
-              <p className="mx-auto max-w-2xl text-[clamp(1.1rem,2vw,1.5rem)] font-halyard font-normal leading-[1.5] text-white/80">
-                Para negócios visionários que não querem ser só mais uma opção e querem se tornar a alternativa inevitável em seu mercado.
+              <p className="mx-auto max-w-2xl text-[clamp(1.25rem,2.6vw,1.85rem)] font-halyard font-normal leading-[1.5] text-white/80">
+                Para negócios visionários que não querem ser só mais uma opção e querem se tornar a marca número um e alternativa inevitável em seu mercado.
               </p>
 
               <PrimaryCTAButton

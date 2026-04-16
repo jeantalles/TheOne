@@ -83,7 +83,7 @@ export default function PersonaSelector({ onSelect }) {
         {/* Label */}
         <p
           className="font-halyard tracking-widest uppercase"
-          style={{ fontSize: '23px', color: '#FE6942', margin: 0 }}
+          style={{ fontSize: '30px', color: '#FE6942', margin: 0 }}
         >
           Antes de continuar
         </p>

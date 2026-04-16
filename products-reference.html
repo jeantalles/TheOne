@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Produtos — 01 Projeto / 02 Operação (referência)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
+    :root {
+      --accent: #FF5224;
+      --accent-light: #FED1C5;
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      background: #212121;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ── Typography scale ── */
+    .t-hero     { font-size: clamp(2.2rem, 5vw, 3.875rem); line-height: 1.08; letter-spacing: -0.02em; font-weight: 400; }
+    .t-large    { font-size: clamp(2.2rem, 4.5vw, 3.56rem); font-weight: 300; line-height: 1.2; }
+    .t-product  { font-size: clamp(1.3rem, 2.2vw, 1.75rem); font-weight: 400; }
+    .t-body     { font-size: clamp(1rem, 1.8vw, 1.44rem); font-weight: 300; line-height: 1.4; }
+    .t-card     { font-size: clamp(1rem, 1.6vw, 1.31rem); font-weight: 300; line-height: 1.3; }
+    .t-tag      { font-size: 16.59px; font-weight: 400; letter-spacing: 0.05em; text-transform: uppercase; }
+    .t-label    { font-size: 31px; font-weight: 300; letter-spacing: 0.05em; color: #5B5B5B; margin-top: 2.5rem; }
+    .t-badge    { font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; }
+
+    /* ── Gradient text ── */
+    .grad {
+      background: linear-gradient(90deg, var(--accent-light), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Divider ── */
+    .v-divider {
+      display: none;
+      position: absolute;
+      left: 50%;
+      top: 1rem;
+      bottom: 1rem;
+      width: 1px;
+      background: rgba(255,255,255,0.1);
+      transform: translateX(-50%);
+    }
+    @media (min-width: 768px) { .v-divider { display: block; } }
+
+    /* ── Card ── */
+    .feature-card {
+      display: flex;
+      gap: 2.5rem;
+      align-items: flex-start;
+      padding: 1.5rem;
+      margin: -1.5rem;
+      border-radius: 1.5rem;
+      border: 1px solid transparent;
+      transition: background 500ms ease, border-color 500ms ease;
+      cursor: default;
+    }
+    .feature-card:hover {
+      background: rgba(255,255,255,0.02);
+      border-color: rgba(255,255,255,0.06);
+    }
+    .feature-card:hover .card-title { color: var(--accent); }
+    .feature-card:hover .card-text  { opacity: 1; transform: translateY(-3px); }
+    .card-text  { opacity: 0.7; transition: opacity 400ms ease, transform 300ms ease; }
+    .card-title { transition: color 500ms ease; }
+
+    /* ── Icon ── */
+    .icon-wrap {
+      width: 60px;
+      height: 60px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .icon-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,82,36,0.2);
+      border-radius: 50%;
+      filter: blur(16px);
+      opacity: 0;
+      transition: opacity 500ms ease;
+    }
+    .feature-card:hover .icon-wrap::before { opacity: 1; }
+
+    /* ── Module box ── */
+    .module-box {
+      background: transparent;
+      border: 1px solid #5B5B5B;
+      border-radius: 32.7px;
+      padding: 3rem 3.5rem;
+    }
+    @media (max-width: 768px) { .module-box { padding: 2rem 1.5rem; } }
+
+    /* ── Badge ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 9999px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.03);
+      padding: 0.5rem 1rem;
+    }
+
+    /* ── Scroll-reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-header  { transition-delay: 0s; }
+  </style>
+</head>
+<body>
+
+<section id="solucoes" style="padding: 5rem 1.5rem; max-width: 1700px; margin: 0 auto;">
+
+  <!-- ── HEADER ── -->
+  <div class="reveal reveal-header" style="text-align:center; padding-bottom: 6rem; margin-bottom: 5rem;">
+    <h1 class="t-hero">
+      Como sua marca se torna <span class="grad">TheOne</span><sup style="font-size:0.5em; color:#FF9E84; vertical-align:super; margin-left:2px;">™</sup>
+    </h1>
+    <p style="margin-top:1.5rem; color:#C7C7C7; font-size: clamp(1rem,2vw,1.3rem); font-weight:300;">
+      Seu projeto será desenhado de forma personalizada.
+    </p>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 01 / PROJETO                              -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="reveal" style="display:flex; flex-direction:column; gap:2.5rem; margin-bottom:8rem;">
+    <div style="display:flex; flex-direction:row; gap:2.5rem; align-items:flex-start; flex-wrap:wrap;">
+
+      <!-- Sidebar -->
+      <div style="min-width:220px; flex:0 0 18%;">
+        <div style="position:sticky; top:7rem;">
+          <h2 class="t-large" style="margin:0 0 0.5rem;">
+            Construindo a fundação <br>
+            para se tornar <br>
+            <span class="grad" style="font-weight:400;">inevitável</span>
+          </h2>
+          <div class="t-label">01 / PROJETO</div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div style="flex:1; min-width:280px;">
+
+        <!-- TheBrand / TheRebrand -->
+        <div style="position:relative; display:grid; grid-template-columns:1fr 1fr; gap:4rem; margin-bottom:4rem;">
+          <div class="v-divider"></div>
+
+          <div>
+            <div class="t-tag" style="color:var(--accent); margin-bottom:1.25rem;">Construção de Marca</div>
+            <h3 class="t-product" style="margin:0 0 1.5rem; font-size: clamp(2rem,4vw,3.56rem); font-weight:400;">TheBrand</h3>
+            <p class="t-body" style="color:#C7C7C7;">
+              <strong style="color:#fff; font-weight:400;">Para negócios visionários que estão nascendo, novos produtos ou marcas pessoais que buscam ser inevitáveis.</strong>
+              Construímos sua marca para ser TheOne na mente do seu cliente, se tornar referência e impactar o mercado.
+            </p>
+          </div>
+
+          <div>
+            <div class="t-tag" style="color:var(--accent); margin-bottom:1.25rem;">Reposicionamento de Marca</div>
+            <h3 class="t-product" style="margin:0 0 1.5rem; font-size: clamp(2rem,4vw,3.56rem); font-weight:400;">TheRebrand</h3>
+            <p class="t-body" style="color:#C7C7C7;">
+              Para negócios visionários que mudaram seu portfólio ou modelo de negócio, não são percebidos à altura do que entregam ou buscam atingir um novo público.
+              Reposicionamos sua marca para elevar seu valor de mercado.
+            </p>
+          </div>
+        </div>
+
+        <!-- Módulos 01 -->
+        <div class="module-box">
+          <div style="margin-bottom:3rem;">
+            <span class="badge t-badge" style="color:#C7C7C7;">Soluções modulares</span>
+          </div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:3rem 2.5rem;">
+
+            <div class="feature-card">
+              <div class="icon-wrap">
+                <!-- Mira: posicionamento -->
+                <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="url(#grad1)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <defs>
+                    <linearGradient id="grad1" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#FED1C5"/><stop offset="1" stop-color="#FF5224"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="12" cy="12" r="10"/>
+                  <circle cx="12" cy="12" r="4"/>
+                  <line x1="12" y1="2" x2="12" y2="8"/>
+                  <line x1="12" y1="16" x2="12" y2="22"/>
+                  <line x1="2" y1="12" x2="8" y2="12"/>
+                  <line x1="16" y1="12" x2="22" y2="12"/>
+                </svg>
+              </div>
+              <div>
+                <h4 class="card-title t-product" style="margin:0 0 0.75rem;">Estratégia de marca</h4>
+                <p class="card-text t-card" style="color:#C7C7C7;">
+                  Construção da fundação da sua marca. Através de pesquisas e workshops construímos seu posicionamento inevitável.
+                </p>
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="icon-wrap">
+                <!-- Olho: identidade visual -->
+                <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="url(#grad2)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <defs>
+                    <linearGradient id="grad2" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#FED1C5"/><stop offset="1" stop-color="#FF5224"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+              </div>
+              <div>
+                <h4 class="card-title t-product" style="margin:0 0 0.75rem;">Identidade</h4>
+                <p class="card-text t-card" style="color:#C7C7C7;">
+                  Traduzimos a estratégia em identidade. Criação de nome, identidade visual e comunicação verbal, garantindo que sua marca tenha uma personalidade própria e diferenciadora.
+                </p>
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="icon-wrap">
+                <!-- Monitor: site -->
+                <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="url(#grad3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <defs>
+                    <linearGradient id="grad3" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#FED1C5"/><stop offset="1" stop-color="#FF5224"/>
+                    </linearGradient>
+                  </defs>
+                  <rect x="2" y="3" width="20" height="14" rx="2"/>
+                  <path d="M8 21h8M12 17v4"/>
+                  <path d="M6 8h4M6 11h7"/>
+                </svg>
+              </div>
+              <div>
+                <h4 class="card-title t-product" style="margin:0 0 0.75rem;">Site Brand Experience</h4>
+                <p class="card-text t-card" style="color:#C7C7C7;">
+                  Um site que vai muito além do institucional. Desenvolvemos uma experiência imersiva que serve como extensão do seu posicionamento, focada em gerar engajamento, conexão com os clientes e conversão.
+                </p>
+              </div>
+            </div>
+
+            <div class="feature-card">
+              <div class="icon-wrap">
+                <!-- Foguete: launch -->
+                <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="url(#grad4)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <defs>
+                    <linearGradient id="grad4" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#FED1C5"/><stop offset="1" stop-color="#FF5224"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/>
+                  <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>
+                  <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/>
+                  <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/>
+                </svg>
+              </div>
+              <div>
+                <h4 class="card-title t-product" style="margin:0 0 0.75rem;">Launch</h4>
+                <p class="card-text t-card" style="color:#C7C7C7;">
+                  Conduzimos estrategicamente todo o processo de entrada no mercado, garantindo que o nascimento da sua marca ou rebranding aconteça de forma impactante.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- 02 / OPERAÇÃO                             -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="reveal reveal-delay-1" style="display:flex; flex-direction:row; gap:2.5rem; align-items:flex-start; flex-wrap:wrap;">
+
+    <!-- Sidebar -->
+    <div style="min-width:220px; flex:0 0 18%;">
+      <div style="position:sticky; top:7rem;">
+        <h2 class="t-large" style="margin:0 0 0.5rem;">
+          Efetivando seu <br>
+          <span class="grad" style="font-weight:400;">posicionamento</span>
+        </h2>
+        <div class="t-label">02 / OPERAÇÃO</div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div style="flex:1; min-width:280px;">
+
+      <!-- Consultoria / Assessoria -->
+      <div style="position:relative; display:grid; grid-template-columns:1fr 1fr; gap:4rem; margin-bottom:4rem;">
+        <div class="v-divider"></div>
+
+        <div>
+          <div class="t-tag" style="color:var(--accent); margin-bottom:1.25rem;">Inteligência Estratégica</div>
+          <h3 class="t-product" style="margin:0 0 1.5rem; font-size: clamp(2rem,4vw,3.56rem); font-weight:400; line-height:1.1;">Consultoria <br>TheOne</h3>
+          <p class="t-body" style="color:#C7C7C7;">
+            <strong style="color:#fff; font-weight:400;">Para negócios visionários que já possuem equipe de marketing interna, nós atuamos como a inteligência estratégica.</strong>
+            Damos o norte, o diagnóstico e as diretrizes do que precisa ser feito para você crescer rumo a Top #01 no mercado.
+          </p>
+        </div>
+
+        <div>
+          <div class="t-tag" style="color:var(--accent); margin-bottom:1.25rem;">Aliado Operacional</div>
+          <h3 class="t-product" style="margin:0 0 1.5rem; font-size: clamp(2rem,4vw,3.56rem); font-weight:400; line-height:1.1;">Assessoria <br>TheOne</h3>
+          <p class="t-body" style="color:#C7C7C7;">
+            Para negócios visionários que não possuem time interno de marketing.
+            <strong style="color:#fff; font-weight:400;">Além da inteligência estratégica, nós seremos os aliados na linha de frente.</strong>
+            Atuamos lado a lado assumindo a operação estratégica e a gestão do marketing, garantindo que cada ponto de contato esteja alinhado para sua marca se tornar inevitável.
+          </p>
+        </div>
+      </div>
+
+      <!-- Módulos 02 -->
+      <div class="module-box">
+        <div style="margin-bottom:3rem;">
+          <span class="badge t-badge" style="color:#C7C7C7;">Soluções modulares</span>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:3rem 2.5rem;">
+
+          <div class="feature-card">
+            <div class="icon-wrap">
+              <!-- Camadas: conteúdo -->
+              <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="url(#grad5)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <defs>
+                  <linearGradient id="grad5" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#FED1C5"/><stop offset="1" stop-color="#FF5224"/>
+                  </linearGradient>
+                </defs>
+                <path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/>
+                <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/>
+                <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>
+              </svg>
+            </div>
+            <div>
+              <h4 class="card-title t-product" style="margin:0 0 0.75rem;">Sistema de Conteúdo</h4>
+              <p class="card-text t-card" style="color:#C7C7C7;">
+                Seu posicionamento acontecendo no digital. Sistematizamos sua produção de conteúdo para fazer com que sua marca seja vista, lembrada e comprada.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon-wrap">
+              <!-- Trending up: growth -->
+              <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="url(#grad6)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <defs>
+                  <linearGradient id="grad6" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#FED1C5"/><stop offset="1" stop-color="#FF5224"/>
+                  </linearGradient>
+                </defs>
+                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                <polyline points="16 7 22 7 22 13"/>
+              </svg>
+            </div>
+            <div>
+              <h4 class="card-title t-product" style="margin:0 0 0.75rem;">Branding / Marketing / Growth</h4>
+              <p class="card-text t-card" style="color:#C7C7C7;">
+                A união dos três pilares para gerar receita. Fugimos das campanhas aleatórias para construir uma estrutura de marketing personalizada, onde o crescimento da empresa e o fortalecimento da sua marca caminham juntos.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon-wrap">
+              <!-- Pessoa: fundador posicionado -->
+              <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="url(#grad7)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <defs>
+                  <linearGradient id="grad7" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#FED1C5"/><stop offset="1" stop-color="#FF5224"/>
+                  </linearGradient>
+                </defs>
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <div>
+              <h4 class="card-title t-product" style="margin:0 0 0.75rem;">Fundador Posicionado</h4>
+              <p class="card-text t-card" style="color:#C7C7C7;">
+                Transformamos o fundador em um poderoso canal de aquisição. Ao humanizar a marca e construir uma autoridade inabalável, ampliamos o potencial de conexão com o público e abrimos novas portas de crescimento através da influência do founder.
+              </p>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="icon-wrap">
+              <!-- Barras: arquitetura de receita -->
+              <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="url(#grad8)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <defs>
+                  <linearGradient id="grad8" x1="0" y1="0" x2="24" y2="24" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#FED1C5"/><stop offset="1" stop-color="#FF5224"/>
+                  </linearGradient>
+                </defs>
+                <line x1="18" y1="20" x2="18" y2="10"/>
+                <line x1="12" y1="20" x2="12" y2="4"/>
+                <line x1="6" y1="20" x2="6" y2="14"/>
+              </svg>
+            </div>
+            <div>
+              <h4 class="card-title t-product" style="margin:0 0 0.75rem;">Arquitetura de Receita</h4>
+              <p class="card-text t-card" style="color:#C7C7C7;">
+                Revelamos o dinheiro que sua marca está deixando na mesa. Analisamos seu portfólio e sua escada de valor de acordo com seu posicionamento, definindo novas ofertas e a precificação ideal para maximizar o faturamento e a lucratividade do negócio.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ── Scroll-reveal observer ── -->
+<script>
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.08 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

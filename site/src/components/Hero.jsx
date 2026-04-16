@@ -46,7 +46,7 @@ const config = {
   h1FontSize: '64px',
   h2FontSize: '42px',
   h2PaddingTop: '20px',
-  subFontSize: '25px',
+  subFontSize: '29px',
   subMarginTop: '32px',
 };
 
@@ -108,7 +108,7 @@ export default function Hero() {
             }
           }}
         >
-          Para negócios visionários que não querem ser só mais uma opção e querem se tornar inevitável no seu mercado.
+          Para negócios visionários que não querem ser só mais uma opção e querem se tornar a marca número um e alternativa inevitável em seu mercado.
         </p>
 
         <div

@@ -109,27 +109,27 @@ Não entregamos um PDF e sumimos. Estruturamos a narrativa, o posicionamento e a
 
 ## 7. Produtos (A Jornada)
 **Headline:** A jornada para se tornar a escolha número um
-**Sub-headline:** Da base à efetivação do posicionamento inevitável.
+**Sub-headline:** Cada projeto é personalizado. Da construção da base a efetivação do posicionamento inevitável.
 
 **01. Pesquisa e Diagnóstico**
-Entendemos o jogo antes para construir uma marca que vai vencê-lo.
-_Tags: Validações iniciais, Diagnóstico de demanda, Diagnóstico de mercado, Diagnóstico do negócio._
+Antes de ir a campo entendemos o jogo, para construir uma marca que vai vencê-lo.
+_Tags: Validações iniciais, Diagnóstico de público, Diagnóstico de mercado, Diagnóstico de negócio e marca._
 
 **02. Estratégia de Marca e Posicionamento**
 Definimos o lugar que a sua marca deve ocupar para deixar de ser só mais uma opção.
-_Tags: Construção da base estratégica, Definição de ICP e posicionamento, Estratégia de conteúdo e canais, Definição de formatos de conteúdo._
+_Tags: Construção da base estratégica, Atração de ICP, Estratégia de conteúdo e canais, Definição de formatos de conteúdo, Estratégia de canais, Narrativa TheOne, Plataforma de marca._
 
 **03. Identidade de Marca**
 Transformamos estratégia em uma marca que o mercado reconhece, lembra e deseja.
-_Tags: Identidade verbal, Identidade visual, Experiência de marca._
+_Tags: narrativa e identidade verbal, Identidade visual, Naming._
 
 **04. Planejamento de Go-to-Market**
 Levamos posicionamento para o mercado com lógica de presença, crescimento e receita.
-_Tags: Mapeamento dos pontos de contato, Plano de distribuição e crescimento, Estratégia de lançamento, Arquitetura de receita, Funis de aquisição, conversão e retenção._
+_Tags: Collabs e co-branding, Distribuição e Collabs, Estratégia de lançamento, Arquitetura de receita e produtos, Site Brand Experience, Funis de aquisição, conversão e retenção._
 
 **05. Assessoria & Consultoria de Execução**
 Garantimos que a estratégia ganhe vida na operação, com seu time ou ao seu lado.
-_Tags: Treinamos seu time para executar com autonomia, Executamos a operação para você._
+_Tags: Acompanhamento de marca, Playbook de execução, Treinamento de time, Acompanhamento operacional, Sistema de Conteúdo._
 
 ---
 
@@ -167,7 +167,8 @@ Jacuzzi, Sicredi, Arezzo, Cyrela, Stihl, O Boticário, MAX Titanium.
 ## 10. Final CTA
 **Headline:** Construímos marcas TheOne™
 
-**Texto:** Para negócios visionários que não querem ser só mais uma opção e querem se tornar a alternativa inevitável em seu mercado.
+**Texto:** 
+
 
 **Botões:**
 1. Quero ser TheOne
