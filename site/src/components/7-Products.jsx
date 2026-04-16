@@ -1,9 +1,13 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import { ArrowRight } from 'lucide-react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import negocioMediaImage from '../assets/products-step-01/negocio-media.jpeg';
 import publicoMediaImage from '../assets/products-step-01/publico-media.jpeg';
 import mercadoMediaImage from '../assets/products-step-01/mercado-media.jpeg';
+import posicionamentoImage from '../assets/products-step-01/posicionamento.jpeg';
+import icpImage from '../assets/products-step-01/icp.jpeg';
+import conteudoImage from '../assets/products-step-01/estrategia de conteudo.jpeg';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,9 +27,9 @@ const STEPS = [
     label: 'Estratégia de Marca e Posicionamento',
     description: 'Definimos o lugar que a sua marca deve ocupar para deixar de ser só mais uma opção.',
     cards: [
-      { label: 'Base estratégica',       src: null },
-      { label: 'ICP e posicionamento',   src: null },
-      { label: 'Estratégia de conteúdo', src: null },
+      { label: 'Posicionamento estratégico', src: posicionamentoImage },
+      { label: 'ICP e posicionamento',   src: icpImage },
+      { label: 'Estratégia de conteúdo', src: conteudoImage },
     ],
   },
   {
@@ -40,7 +44,7 @@ const STEPS = [
   },
   {
     number: '04',
-    label: 'Planejamento de Go-to-Market',
+    label: 'Lançamento e Go-to-Market',
     description: 'Levamos posicionamento para o mercado com lógica de presença, crescimento e receita.',
     cards: [
       { label: 'Plano de distribuição',    src: null },
@@ -50,7 +54,7 @@ const STEPS = [
   },
   {
     number: '05',
-    label: 'Assessoria & Consultoria de Execução',
+    label: 'Assessoria ou Consultoria TheOne',
     description: 'Garantimos que a estratégia ganhe vida na operação, com seu time ou ao seu lado.',
     cards: [
       { label: 'Playbook de execução',       src: null },
@@ -233,8 +237,7 @@ export default function Products() {
             >
               A jornada que conduziremos
               <br />
-              com você para se tornar uma
-              <br />
+              com você para se tornar uma{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224]">
                 marca TheOne
               </span>
@@ -245,6 +248,27 @@ export default function Products() {
             >
               Da base à efetivação do posicionamento inevitável.
             </p>
+            <div className="mt-10 md:mt-12 flex flex-col gap-3">
+              <span className="text-white/50 font-halyard font-medium text-[0.95rem] md:text-[1.1rem] mb-1 uppercase tracking-[0.12em]">
+                te ajudamos em:
+              </span>
+              {[
+                'Construção de marca e go-to-market',
+                'Reposicionamento de marca',
+                'Construção de marca pessoal',
+                'Arquitetura de receita e produtos'
+              ].map((item, idx) => (
+                <div key={idx} className="flex items-center gap-3 md:gap-4">
+                  <ArrowRight className="text-[#FF5224] shrink-0" style={{ width: 'clamp(1.4rem, 2.6vw, 1.95rem)', height: 'clamp(1.4rem, 2.6vw, 1.95rem)' }} strokeWidth={2} />
+                  <span
+                    className="text-white font-halyard font-normal tracking-[-0.01em]"
+                    style={{ fontSize: 'clamp(1.4rem, 2.6vw, 1.95rem)' }}
+                  >
+                    {item}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

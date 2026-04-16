@@ -102,6 +102,67 @@ export default function App() {
     };
   }, [showSelector]);
 
+  useEffect(() => {
+    if (!isHomeRoute || typeof window === 'undefined') {
+      return undefined;
+    }
+
+    const historyState = window.history.state ?? {};
+    const targetScrollY = Number.isFinite(historyState.restoreScrollY)
+      ? historyState.restoreScrollY
+      : (Number.isFinite(historyState.savedScrollY) ? historyState.savedScrollY : null);
+    const shouldRestoreCasesOpen = Boolean(historyState.restoreCasesOpen || historyState.savedCasesOpen);
+
+    if (targetScrollY == null && !shouldRestoreCasesOpen) {
+      return undefined;
+    }
+
+    let rafId = 0;
+    let attempts = 0;
+    let cancelled = false;
+
+    const clearRestoreState = () => {
+      const nextState = { ...(window.history.state ?? {}) };
+      delete nextState.restoreScrollY;
+      delete nextState.savedScrollY;
+      delete nextState.restoreCasesOpen;
+      delete nextState.savedCasesOpen;
+      window.history.replaceState(
+        nextState,
+        '',
+        `${window.location.pathname}${window.location.search}${window.location.hash}`
+      );
+    };
+
+    const restoreScroll = () => {
+      if (cancelled) {
+        return;
+      }
+
+      window.scrollTo({ top: targetScrollY, left: 0, behavior: 'auto' });
+
+      if (Math.abs(window.scrollY - targetScrollY) > 2 && attempts < 8) {
+        attempts += 1;
+        rafId = requestAnimationFrame(restoreScroll);
+        return;
+      }
+
+      clearRestoreState();
+      window.dispatchEvent(new Event('scroll'));
+    };
+
+    rafId = requestAnimationFrame(() => {
+      rafId = requestAnimationFrame(restoreScroll);
+    });
+
+    return () => {
+      cancelled = true;
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+    };
+  }, [isHomeRoute, shouldUseLenis]);
+
   // ── Callback do trigger (seção vazia) ─────────────────────────────────────
   const handleTrigger = useCallback(() => {
     if (persona) return; // já selecionou — não mostrar de novo

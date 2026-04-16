@@ -4,7 +4,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useConstrainedMotion } from '../hooks/useMediaQuery';
 import { caseStudies } from '../content/cases';
-import { navigateToPath } from '../utils/router';
+import { navigateToPath, replaceCurrentHistoryState } from '../utils/router';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,6 +22,8 @@ const CASES = caseStudies.map((caseStudy) => ({
 }));
 
 export default function Cases() {
+  const shouldRestoreOpen = typeof window !== 'undefined'
+    && Boolean((window.history.state ?? {}).restoreCasesOpen || (window.history.state ?? {}).savedCasesOpen);
   const prefersConstrainedMotion = useConstrainedMotion();
   const sectionRef         = useRef(null);
   const folderWrapRef      = useRef(null);
@@ -34,17 +36,34 @@ export default function Cases() {
   const caseItemsRef       = useRef([]);
   const folderSTRef        = useRef(null);
   const folderTriggerRefs  = useRef([]);
-  const isOpenRef          = useRef(false);
+  const isOpenRef          = useRef(shouldRestoreOpen);
   const breatheRef         = useRef(null);
   const folderSceneRef     = useRef(null);
 
-  const [openState, setOpenState] = useState('closed');
+  const [openState, setOpenState] = useState(shouldRestoreOpen ? 'open' : 'closed');
   const isOpen = openState === 'open';
-  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(shouldRestoreOpen);
 
   const handleCaseNavigation = (slug, isPublished) => {
     if (!isPublished) return;
-    navigateToPath(`/cases/${slug}`);
+    const currentPath = `${window.location.pathname}${window.location.search}${window.location.hash}` || '/';
+    const currentScrollY = window.scrollY;
+
+    replaceCurrentHistoryState({
+      ...window.history.state,
+      savedScrollY: currentScrollY,
+      savedCasesOpen: isOpenRef.current,
+    });
+
+    navigateToPath(`/cases/${slug}`, {
+      state: {
+        returnTo: {
+          path: currentPath,
+          scrollY: currentScrollY,
+          casesOpen: isOpenRef.current,
+        },
+      },
+    });
   };
 
   // Lazy-load background images only when section enters viewport
@@ -59,6 +78,31 @@ export default function Cases() {
 
   // ── 1. Initial states + scroll entrance + idle breathing ─────────────────
   useEffect(() => {
+    if (shouldRestoreOpen) {
+      if (folderSceneRef.current) {
+        folderSceneRef.current.style.display = 'none';
+        folderSceneRef.current.style.pointerEvents = 'none';
+      }
+
+      if (stackRef.current) {
+        stackRef.current.style.maxHeight = 'none';
+        stackRef.current.style.overflow = 'visible';
+      }
+
+      caseItemsRef.current.forEach((item) => {
+        if (!item) return;
+        item.style.willChange = 'auto';
+        gsap.set(item, { opacity: 1, pointerEvents: 'auto', clearProps: 'transform' });
+        const card = item.querySelector('.case-card');
+        if (card) {
+          card.style.willChange = 'auto';
+          gsap.set(card, { clearProps: 'x,y,scale,rotate,rotateX,opacity' });
+        }
+      });
+
+      return () => {};
+    }
+
     // Case items hidden
     caseItemsRef.current.forEach((item) => {
       if (!item) return;
@@ -158,7 +202,7 @@ export default function Cases() {
       ctx.revert();
       breatheRef.current?.kill();
     };
-  }, [prefersConstrainedMotion]);
+  }, [prefersConstrainedMotion, shouldRestoreOpen]);
 
   // ── 2. Scroll stack animations — only after folder opens ─────────────────
   useEffect(() => {
@@ -407,11 +451,15 @@ export default function Cases() {
                       className={`case-card relative h-full w-full rounded-[32px] overflow-hidden group border-0 bg-[#111111] p-0 text-left ${
                         c.isPublished ? 'cursor-pointer' : 'cursor-default'
                       }`}
-                      style={{ border: '1px solid rgba(255,255,255,0.37)' }}
+                      style={{ 
+                        border: '1px solid rgba(255,255,255,0.37)',
+                        WebkitMaskImage: '-webkit-radial-gradient(white, black)',
+                        maskImage: 'radial-gradient(white, black)',
+                      }}
                     >
                       <div
                         className="case-image absolute inset-0 bg-cover bg-center transition-transform duration-[1.2s] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03]"
-                        style={{ backgroundImage: imagesLoaded ? `url(${c.image})` : undefined }}
+                        style={{ backgroundImage: imagesLoaded ? `url('${c.image}')` : undefined }}
                       />
                       <div className="case-card-overlay absolute inset-0 bg-black/[0.28] transition-colors duration-700" />
                       <div
@@ -431,8 +479,8 @@ export default function Cases() {
                           {c.title}
                         </h3>
                         <p
-                          className="font-halyard font-light tracking-[-0.01em] shrink-0 text-right"
-                          style={{ fontSize: 'clamp(0.9rem,1.5vw,1.3rem)', color: 'rgba(255,255,255,0.74)', opacity: 0.6 }}
+                          className="font-halyard font-light tracking-normal shrink-0 text-right"
+                          style={{ fontSize: 'clamp(0.9rem,1.5vw,1.3rem)', color: 'rgba(255,255,255,0.84)', opacity: 0.8 }}
                         >
                           {c.subtitle}
                         </p>
@@ -530,7 +578,7 @@ export default function Cases() {
                         style={{
                           zIndex: CASES.length - i,
                           marginLeft: `${(i - 1) * 8}%`,
-                          backgroundImage: imagesLoaded ? `linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.42) 100%), url(${c.image})` : undefined,
+                          backgroundImage: imagesLoaded ? `linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.42) 100%), url('${c.image}')` : undefined,
                           backgroundSize: 'cover',
                           backgroundPosition: 'center',
                         }}

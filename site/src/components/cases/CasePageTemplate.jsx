@@ -1,14 +1,7 @@
-import { ArrowLeft, ArrowUpRight, Play } from 'lucide-react';
-import { navigateToPath } from '../../utils/router';
+import { ArrowLeft } from 'lucide-react';
+import { getHistoryState, navigateToPath } from '../../utils/router';
 
-const mediaLayoutClasses = {
-  feature: 'md:col-span-12',
-  landscape: 'md:col-span-7',
-  portrait: 'md:col-span-5',
-  square: 'md:col-span-6',
-};
-
-function FeedbackAvatar({ name, avatar, accentSoft }) {
+function FeedbackAvatar({ name, avatar }) {
   if (avatar) {
     return (
       <img
@@ -27,427 +20,205 @@ function FeedbackAvatar({ name, avatar, accentSoft }) {
     .join('');
 
   return (
-    <div
-      className="flex h-16 w-16 items-center justify-center rounded-full text-sm font-medium uppercase tracking-[0.28em]"
-      style={{
-        background: `linear-gradient(145deg, ${accentSoft}, rgba(255,255,255,0.92))`,
-        color: '#151311',
-      }}
-    >
+    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white/10 text-sm font-medium uppercase tracking-widest text-white">
       {initials}
     </div>
   );
 }
 
-function CaseMediaBlock({ block, palette }) {
-  const isVideo = block.type === 'video';
-  const isImage = block.type === 'image';
-  const isPlaceholder = block.type === 'placeholder';
-  const wrapperClassName = mediaLayoutClasses[block.layout] ?? mediaLayoutClasses.square;
-  const baseCardClassName =
-    'group relative overflow-hidden rounded-[28px] border p-5 md:p-7 transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)]';
+function CaseMediaBlock({ block }) {
+  const aspectRatio = block.aspectRatio ?? '16 / 9';
 
-  if (isImage) {
+  if (block.type === 'image') {
     return (
-      <article
-        className={wrapperClassName}
-        style={{ aspectRatio: block.aspectRatio }}
-      >
-        <div
-          className={baseCardClassName}
-          style={{
-            height: '100%',
-            borderColor: palette.border,
-            backgroundColor: 'rgba(255,255,255,0.44)',
-          }}
-        >
-          <img
-            src={block.src}
-            alt={block.alt ?? block.title}
-            className="h-full w-full rounded-[22px] object-cover"
-          />
-        </div>
-      </article>
+      <div className="w-full">
+        <img
+          src={block.src}
+          alt={block.alt ?? block.title}
+          className="block h-auto w-full object-cover"
+        />
+      </div>
     );
   }
 
-  if (isVideo) {
+  if (block.type === 'video') {
     return (
-      <article
-        className={wrapperClassName}
-        style={{ aspectRatio: block.aspectRatio }}
-      >
-        <div
-          className={baseCardClassName}
-          style={{
-            height: '100%',
-            borderColor: palette.border,
-            backgroundColor: 'rgba(255,255,255,0.44)',
-          }}
+      <div className="w-full">
+        <video
+          className="block h-auto w-full"
+          autoPlay
+          controls
+          loop
+          muted={block.muted ?? true}
+          playsInline
+          poster={block.poster}
         >
-          <video
-            className="h-full w-full rounded-[22px] object-cover"
-            controls
-            playsInline
-            muted={block.muted ?? false}
-            poster={block.poster}
-          >
-            <source src={block.src} type={block.mimeType ?? 'video/mp4'} />
-          </video>
-        </div>
-      </article>
+          <source src={block.src} type={block.mimeType ?? 'video/mp4'} />
+        </video>
+      </div>
     );
   }
 
   return (
-    <article
-      className={wrapperClassName}
-      style={{ aspectRatio: block.aspectRatio }}
-    >
+    <div className="w-full">
       <div
-        className={baseCardClassName}
-        style={{
-          height: '100%',
-          borderColor: palette.border,
-          background: `linear-gradient(145deg, rgba(255,255,255,0.8) 0%, ${palette.placeholder} 100%)`,
-          boxShadow: '0 30px 90px rgba(21, 19, 17, 0.08)',
-        }}
-      >
-        <div
-          className="absolute inset-0 opacity-95"
-          style={{
-            background: `
-              radial-gradient(circle at top left, rgba(255,255,255,0.9) 0%, transparent 34%),
-              linear-gradient(135deg, rgba(143,168,177,0.26) 0%, rgba(255,255,255,0.08) 44%, rgba(199,242,43,0.18) 100%)
-            `,
-          }}
-        />
-        <div className="relative flex h-full flex-col justify-between">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <p
-                className="font-halyard text-[0.72rem] font-semibold uppercase tracking-[0.24em]"
-                style={{ color: palette.muted }}
-              >
-                {block.label}
-              </p>
-            </div>
-            {block.layout === 'feature' ? (
-              <div
-                className="flex h-11 w-11 items-center justify-center rounded-full border"
-                style={{
-                  borderColor: 'rgba(21, 19, 17, 0.08)',
-                  backgroundColor: 'rgba(255,255,255,0.55)',
-                }}
-              >
-                <Play size={18} strokeWidth={1.85} color={palette.ink} />
-              </div>
-            ) : (
-              <ArrowUpRight size={20} strokeWidth={1.7} color={palette.ink} className="shrink-0" />
-            )}
-          </div>
-
-          <div className={block.layout === 'feature' ? 'mx-auto max-w-2xl text-center' : ''}>
-            <h3
-              className={`font-halyard leading-[1.04] tracking-[-0.03em] text-[#151311] ${
-                block.layout === 'feature'
-                  ? 'text-[clamp(2rem,4vw,3.6rem)] font-medium'
-                  : 'text-[clamp(1.4rem,2.4vw,2rem)] font-medium'
-              }`}
-            >
-              {block.title}
-            </h3>
-            {block.description ? (
-              <p
-                className={`mt-4 font-halyard text-[0.98rem] leading-[1.55] ${
-                  block.layout === 'feature'
-                    ? 'mx-auto max-w-xl text-[#5F5752]'
-                    : 'max-w-sm text-[#5F5752]'
-                }`}
-              >
-                {block.description}
-              </p>
-            ) : null}
-          </div>
-        </div>
-      </div>
-    </article>
+        className="w-full bg-[#1A1A1A]"
+        style={{ aspectRatio }}
+      />
+    </div>
   );
 }
 
 export default function CasePageTemplate({ caseStudy, isFallback = false }) {
-  const palette = caseStudy.palette ?? {
-    canvas: '#F3EEE8',
-    surface: '#F7F2ED',
-    border: 'rgba(21, 19, 17, 0.09)',
-    ink: '#151311',
-    muted: '#5F5752',
-    accent: '#FE6942',
-    accentSoft: '#8FA8B1',
-    placeholder: '#D9DCDD',
+  const hasDescriptionSections = caseStudy.descriptionSections.length > 0;
+  const hasFeedback = Boolean(caseStudy.clientFeedback?.quote);
+  const hasSolutions = caseStudy.solutions.length > 0;
+
+  const handleBackNavigation = () => {
+    const returnTo = getHistoryState().returnTo;
+
+    if (returnTo?.path) {
+      navigateToPath(returnTo.path, {
+        replace: true,
+        resetScroll: false,
+        state: {
+          restoreScrollY: returnTo.scrollY ?? 0,
+          restoreCasesOpen: Boolean(returnTo.casesOpen),
+        },
+      });
+      return;
+    }
+
+    navigateToPath('/');
   };
 
   return (
-    <div
-      className="min-h-screen font-halyard"
-      style={{ backgroundColor: palette.canvas, color: palette.ink }}
-    >
-      <header
-        className="sticky top-0 z-40 border-b backdrop-blur-xl"
-        style={{
-          borderColor: palette.border,
-          backgroundColor: 'rgba(243, 238, 232, 0.82)',
-        }}
-      >
-        <div className="mx-auto flex max-w-[1520px] items-center justify-between gap-4 px-5 py-4 md:px-8 lg:px-12">
+    <div className="min-h-screen bg-[#212121] font-halyard text-white">
+      <header className="px-6 pt-6 md:px-10 md:pt-8 lg:px-14">
+        <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between">
           <button
             type="button"
-            onClick={() => navigateToPath('/')}
-            className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200"
-            style={{ color: palette.ink, backgroundColor: 'rgba(255,255,255,0.46)' }}
+            onClick={handleBackNavigation}
+            className="inline-flex items-center gap-3 font-sans text-[clamp(1.1rem,1.3vw,1.35rem)] tracking-[-0.01em] text-white/72 transition-colors duration-200 hover:text-white"
           >
-            <ArrowLeft size={16} strokeWidth={1.9} />
-            Voltar para a home
+            <ArrowLeft size={24} strokeWidth={1.7} />
+            Voltar
           </button>
-
           <button
             type="button"
             aria-label="Ir para a home"
             onClick={() => navigateToPath('/')}
-            className="shrink-0"
           >
-            <img
-              src="/logo-navbar-black.svg"
-              alt="The One"
-              className="h-10 w-auto md:h-11"
-            />
+            <img src="/logo-navbar.svg" alt="The One" className="h-8 w-auto md:h-9" />
           </button>
         </div>
       </header>
 
-      <main className="px-5 pb-20 pt-6 md:px-8 md:pb-24 md:pt-10 lg:px-12">
-        <div className="mx-auto max-w-[1520px]">
-          <section className="mb-10 md:mb-14">
-            <div
-              className="rounded-[32px] border p-3 md:rounded-[42px] md:p-5"
-              style={{
-                borderColor: palette.border,
-                backgroundColor: 'rgba(255,255,255,0.42)',
-                boxShadow: '0 30px 90px rgba(21, 19, 17, 0.08)',
-              }}
-            >
-              <div
-                className="overflow-hidden rounded-[26px] md:rounded-[34px]"
-                style={{
-                  background: `linear-gradient(135deg, rgba(195,223,229,0.95) 0%, ${palette.accentSoft} 100%)`,
-                }}
-              >
-                <div
-                  className="p-3 md:p-5 lg:p-7"
-                  style={{ aspectRatio: '1507 / 678' }}
-                >
-                  <img
-                    src={caseStudy.coverImage}
-                    alt={caseStudy.title}
-                    className="h-full w-full rounded-[22px] object-cover object-center"
-                  />
-                </div>
-              </div>
-            </div>
-          </section>
+      <main className="pb-16 md:pb-24">
+        <section className="mx-auto w-[90%] max-w-[1680px] pt-8 md:pt-10 lg:pt-14">
+          <div className="overflow-hidden rounded-[22px] md:rounded-[28px]">
+            <img
+              src={caseStudy.coverImage}
+              alt={caseStudy.title}
+              className="block h-auto w-full object-cover"
+            />
+          </div>
+        </section>
 
-          <section className="grid gap-12 lg:grid-cols-[minmax(0,1.4fr)_minmax(320px,0.72fr)]">
-            <div className="max-w-4xl">
-              <div className="mb-10 md:mb-12">
-                <p
-                  className="mb-4 text-[0.74rem] font-semibold uppercase tracking-[0.26em]"
-                  style={{ color: palette.muted }}
-                >
-                  {isFallback ? 'Case detail' : caseStudy.category}
+        <section className="mx-auto w-[90%] max-w-[1680px] pb-20 pt-12 md:pb-28 md:pt-[4.5rem]">
+          <h1 className="max-w-5xl font-sans text-[clamp(2.3rem,4.6vw,4.8rem)] font-light leading-[0.94] tracking-normal text-white">
+            {caseStudy.title}
+          </h1>
+
+          <div className="pt-14 md:grid md:grid-cols-[minmax(0,1fr)_minmax(18rem,30rem)] md:items-start md:gap-x-12 md:pt-20 lg:gap-x-16">
+            <div className="max-w-4xl space-y-12 md:max-w-none md:space-y-14 md:pr-6 lg:max-w-[52rem] lg:pr-10">
+              {hasDescriptionSections ? (
+                caseStudy.descriptionSections.map((section) => (
+                  <section key={section.title}>
+                    <h2 className="mb-4 font-sans text-[clamp(1.35rem,1.6vw,1.8rem)] font-normal tracking-normal text-white">
+                      {section.title}
+                    </h2>
+                    <div className="space-y-5">
+                      {section.text.map((paragraph) => (
+                        <p
+                          key={paragraph}
+                          className="font-sans text-[clamp(1.12rem,1.62vw,1.38rem)] font-light leading-[1.58] text-white/88"
+                        >
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                  </section>
+                ))
+              ) : caseStudy.intro ? (
+                <p className="font-sans text-[clamp(1.12rem,1.62vw,1.38rem)] font-light leading-[1.58] text-white/88">
+                  {caseStudy.intro}
                 </p>
-                <h1 className="font-halyard text-[clamp(2.5rem,5vw,4.8rem)] font-medium leading-[0.96] tracking-[-0.05em]">
-                  {caseStudy.title}
-                </h1>
-                {caseStudy.intro ? (
-                  <p
-                    className="mt-5 max-w-3xl text-[1.05rem] leading-[1.65] md:text-[1.16rem]"
-                    style={{ color: palette.muted }}
-                  >
-                    {caseStudy.intro}
-                  </p>
-                ) : null}
-              </div>
-
-              {caseStudy.descriptionSections.length > 0 ? (
-                <div className="space-y-10 md:space-y-12">
-                  {caseStudy.descriptionSections.map((section) => (
-                    <article key={section.title}>
-                      <h2 className="text-[1.55rem] font-semibold leading-none tracking-[-0.03em]">
-                        {section.title}
-                      </h2>
-                      <div
-                        className="mt-4 space-y-4 text-[1rem] leading-[1.75] md:text-[1.06rem]"
-                        style={{ color: palette.muted }}
-                      >
-                        {section.text.map((paragraph) => (
-                          <p key={paragraph}>{paragraph}</p>
-                        ))}
-                      </div>
-                    </article>
-                  ))}
-                </div>
               ) : (
-                <div
-                  className="rounded-[28px] border px-6 py-7"
-                  style={{
-                    borderColor: palette.border,
-                    backgroundColor: 'rgba(255,255,255,0.4)',
-                  }}
-                >
-                  <p className="text-[1rem] leading-[1.7]" style={{ color: palette.muted }}>
-                    Este case ainda está em estruturação. O template já está pronto para receber conteúdo, feedbacks e mídia final sem precisar refazer a página.
-                  </p>
-                </div>
+                <p className="text-[clamp(1rem,1.35vw,1.18rem)] leading-[1.6] text-white/36">
+                  {isFallback ? 'Este case ainda está em construção.' : 'Conteúdo em atualização.'}
+                </p>
               )}
             </div>
 
-            <aside className="space-y-8 lg:pt-20">
-              <section
-                className="rounded-[28px] border px-6 py-7"
-                style={{
-                  borderColor: palette.border,
-                  backgroundColor: 'rgba(255,255,255,0.44)',
-                }}
-              >
-                <p
-                  className="text-[0.74rem] font-semibold uppercase tracking-[0.24em]"
-                  style={{ color: palette.muted }}
-                >
-                  Soluções
-                </p>
-                <div className="mt-5 flex flex-wrap gap-3">
-                  {caseStudy.solutions.length > 0 ? (
-                    caseStudy.solutions.map((solution) => (
-                      <span
+            <aside className="mt-14 space-y-12 md:mt-0 md:w-full md:max-w-[30rem] md:justify-self-end md:space-y-16">
+              {hasSolutions ? (
+                <section>
+                  <h2 className="mb-6 font-sans text-[clamp(1.35rem,1.6vw,1.8rem)] font-normal tracking-normal text-white">
+                    Soluções
+                  </h2>
+                  <ul className="flex list-none flex-col gap-3">
+                    {caseStudy.solutions.map((solution) => (
+                      <li
                         key={solution}
-                        className="inline-flex rounded-full px-4 py-2 text-[0.98rem] leading-none"
-                        style={{
-                          backgroundColor: 'rgba(255,255,255,0.84)',
-                          border: `1px solid ${palette.border}`,
-                          color: palette.ink,
-                        }}
+                        className="inline-flex w-fit max-w-full items-center self-start rounded-[999px] border border-white/[0.05] bg-[rgba(255,255,255,0.16)] px-6 py-4 font-sans text-[clamp(1.08rem,1.45vw,1.38rem)] font-normal leading-[1.15] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]"
                       >
                         {solution}
-                      </span>
-                    ))
-                  ) : (
-                    <span
-                      className="inline-flex rounded-full px-4 py-2 text-[0.98rem] leading-none"
-                      style={{
-                        backgroundColor: 'rgba(255,255,255,0.84)',
-                        border: `1px solid ${palette.border}`,
-                        color: palette.muted,
-                      }}
-                    >
-                      Soluções serão adicionadas em breve
-                    </span>
-                  )}
-                </div>
-              </section>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              ) : null}
 
-              <section
-                className="rounded-[28px] border px-6 py-7"
-                style={{
-                  borderColor: palette.border,
-                  backgroundColor: 'rgba(255,255,255,0.44)',
-                }}
-              >
-                <p
-                  className="text-[0.74rem] font-semibold uppercase tracking-[0.24em]"
-                  style={{ color: palette.muted }}
-                >
-                  Feedback do cliente
-                </p>
-
-                {caseStudy.clientFeedback?.quote ? (
-                  <div className="mt-6">
+              {hasFeedback ? (
+                <section>
+                  <h2 className="mb-6 font-sans text-[clamp(1.35rem,1.6vw,1.8rem)] font-normal tracking-normal text-white">
+                    Feedback do cliente
+                  </h2>
+                  {caseStudy.clientFeedback.name ? (
                     <div className="flex items-center gap-4">
                       <FeedbackAvatar
                         name={caseStudy.clientFeedback.name}
                         avatar={caseStudy.clientFeedback.avatar}
-                        accentSoft={palette.accentSoft}
                       />
                       <div>
-                        <p className="text-[1.28rem] font-semibold leading-none tracking-[-0.03em]">
+                        <p className="font-sans text-[clamp(1.25rem,1.7vw,1.72rem)] font-medium leading-none text-white">
                           {caseStudy.clientFeedback.name}
                         </p>
                         {caseStudy.clientFeedback.role ? (
-                          <p className="mt-2 text-sm leading-none" style={{ color: palette.muted }}>
+                          <p className="mt-2 text-[clamp(1rem,1.25vw,1.18rem)] font-normal text-white/58">
                             {caseStudy.clientFeedback.role}
                           </p>
                         ) : null}
                       </div>
                     </div>
-                    <p
-                      className="mt-6 text-[1.05rem] leading-[1.75]"
-                      style={{ color: palette.muted }}
-                    >
-                      “{caseStudy.clientFeedback.quote}”
-                    </p>
-                  </div>
-                ) : (
-                  <p className="mt-5 text-[1rem] leading-[1.7]" style={{ color: palette.muted }}>
-                    Espaço reservado para depoimento, avatar e cargo do cliente.
+                  ) : null}
+                  <p className="mt-8 max-w-[24rem] font-sans text-[clamp(1.12rem,1.62vw,1.38rem)] font-light leading-[1.58] text-white/88">
+                    "{caseStudy.clientFeedback.quote}"
                   </p>
-                )}
-              </section>
+                </section>
+              ) : null}
             </aside>
-          </section>
+          </div>
+        </section>
 
-          <section className="mt-16 md:mt-24">
-            <div className="mb-8 md:mb-10">
-              <p
-                className="text-[0.74rem] font-semibold uppercase tracking-[0.26em]"
-                style={{ color: palette.muted }}
-              >
-                Mídia do projeto
-              </p>
-              <h2 className="mt-3 font-editorial text-[clamp(2.1rem,4vw,4rem)] leading-[0.98] tracking-[-0.03em] text-[#151311]">
-                Estrutura pronta para imagens e vídeos do case
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-5">
-              {caseStudy.mediaBlocks.length > 0 ? (
-                caseStudy.mediaBlocks.map((block) => (
-                  <CaseMediaBlock key={block.id} block={block} palette={palette} />
-                ))
-              ) : (
-                <article className="md:col-span-12">
-                  <div
-                    className="flex min-h-[340px] items-center justify-center rounded-[28px] border px-8 py-10 text-center"
-                    style={{
-                      borderColor: palette.border,
-                      background: `linear-gradient(145deg, rgba(255,255,255,0.8) 0%, ${palette.placeholder} 100%)`,
-                    }}
-                  >
-                    <div className="max-w-2xl">
-                      <p
-                        className="text-[0.74rem] font-semibold uppercase tracking-[0.24em]"
-                        style={{ color: palette.muted }}
-                      >
-                        Em breve
-                      </p>
-                      <h3 className="mt-4 text-[clamp(1.8rem,3vw,3rem)] font-medium leading-[1.05] tracking-[-0.03em]">
-                        A galeria deste case ainda será publicada
-                      </h3>
-                    </div>
-                  </div>
-                </article>
-              )}
-            </div>
+        {caseStudy.mediaBlocks.length > 0 ? (
+          <section className="overflow-hidden">
+            {caseStudy.mediaBlocks.map((block) => (
+              <CaseMediaBlock key={block.id} block={block} />
+            ))}
           </section>
-        </div>
+        ) : null}
       </main>
     </div>
   );
