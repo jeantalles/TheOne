@@ -7,6 +7,7 @@ import { useConstrainedMotion } from '../hooks/useMediaQuery';
 gsap.registerPlugin(ScrollTrigger);
 
 const EASE_EXPO = 'expo.out';
+const CASE_IMAGE_ASPECT_RATIO = '1507 / 678';
 
 const CASES = [
   {
@@ -14,21 +15,21 @@ const CASES = [
     title: 'Zenic',
     subtitle: 'Construção de Marca',
     result: '+300% de percepção de valor',
-    image: 'https://images.unsplash.com/photo-1497215728101-856f4ea42174?q=75&w=1200&auto=format&fit=crop&fm=webp',
+    image: '/images/cases/zenic.jpg',
   },
   {
     id: 2,
     title: 'Thunders Tecnologia',
     subtitle: 'Reposicionamento de Marca',
     result: 'Liderança regional garantida',
-    image: 'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?q=75&w=1200&auto=format&fit=crop&fm=webp',
+    image: '/images/cases/thunders.jpg',
   },
   {
     id: 3,
     title: 'Camilla Toscano',
     subtitle: 'Construção de Marca Pessoal',
     result: 'Aquisição Série A de $10M',
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=75&w=1200&auto=format&fit=crop&fm=webp',
+    image: '/images/cases/camilla.jpg',
   },
 ];
 
@@ -397,11 +398,14 @@ export default function Cases() {
                   className="case-stack-item sticky top-[108px] md:top-[124px]"
                   style={{
                     zIndex: 20 + i,
-                    marginTop: i === 0 ? 0 : '-22vh',
+                    marginTop: i === 0 ? 0 : 'calc(-22vh + 30px)',
                     paddingBottom: i === CASES.length - 1 ? '16vh' : '22vh',
                   }}
                 >
-                  <div className="relative mx-auto w-full h-[calc(54vh+50px)] md:h-[calc(68vh+50px)]" style={{ perspective: '1400px' }}>
+                  <div
+                    className="relative mx-auto w-full max-w-[1507px]"
+                    style={{ perspective: '1400px', aspectRatio: CASE_IMAGE_ASPECT_RATIO }}
+                  >
                     <div className="case-card relative h-full rounded-[32px] overflow-hidden group cursor-pointer bg-[#111111]" style={{ border: '1px solid rgba(255,255,255,0.37)' }}>
                       <div
                         className="case-image absolute inset-0 bg-cover bg-center transition-transform duration-[1.2s] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03]"
@@ -411,7 +415,7 @@ export default function Cases() {
                       <div
                         className="case-meta absolute bottom-0 left-0 right-0 flex items-center justify-between px-8 md:px-12"
                         style={{
-                          height: '17%',
+                          height: 'clamp(68px, 12%, 84px)',
                           backgroundColor: 'rgba(10,10,10,0.8)',
                           borderBottomLeftRadius: '32px',
                           borderBottomRightRadius: '32px',

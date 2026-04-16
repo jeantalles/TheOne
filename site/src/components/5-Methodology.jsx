@@ -28,8 +28,8 @@ export default function Methodology() {
 
       // Headline: fade in when pin starts, then fade out on scroll
       gsap.set('.meth-headline', { autoAlpha: 0 });
-      tl.to('.meth-headline', { autoAlpha: 1, duration: 0.25, ease: 'power2.out' });
-      tl.to({}, { duration: 0.42 });
+      tl.to('.meth-headline', { autoAlpha: 1, duration: 0.14, ease: 'power2.out' });
+      tl.to({}, { duration: 0.22 });
       tl.to('.meth-headline', {
         opacity: 0, y: -32, filter: 'blur(10px)', duration: 0.24, ease: 'power1.out'
       });
@@ -110,7 +110,7 @@ export default function Methodology() {
     <section
       id="metodologia"
       ref={containerRef}
-      className="bg-[#212121] relative font-halyard h-screen overflow-hidden"
+      className="bg-[#212121] relative font-halyard h-screen overflow-hidden -mt-[8vh] md:-mt-[10vh]"
     >
       {/* Headline */}
       <div className="meth-headline absolute inset-0 flex flex-col items-center justify-center z-50 px-6 pointer-events-none" style={{ opacity: 0 }}>

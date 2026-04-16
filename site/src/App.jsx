@@ -1,4 +1,4 @@
-import { useEffect, useRef, lazy, Suspense } from 'react';
+import { useCallback, useEffect, useRef, useState, lazy, Suspense } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -7,6 +7,8 @@ import Navbar from './components/Navbar';
 import Hero from './components/1-Hero';
 import GradientTransition from './components/2-GradientTransition';
 import StorytellingIntro from './components/3a-StorytellingIntro';
+import PersonaTrigger from './components/3b-PersonaTrigger';
+import PersonaSelector from './components/3c-PersonaSelector';
 import Storytelling from './components/3-Storytelling';
 import TheOne from './components/4-TheOne';
 import Methodology from './components/5-Methodology';
@@ -30,6 +32,12 @@ export default function App() {
   const prefersConstrainedMotion = useConstrainedMotion();
   const shouldUseLightScroll = prefersReducedMotion || prefersConstrainedMotion;
 
+  // ── Persona state ──────────────────────────────────────────────────────────
+  const [persona, setPersona] = useState(null);
+  const [showSelector, setShowSelector] = useState(false);
+  const [triggered, setTriggered] = useState(false);
+
+  // ── Lenis smooth scroll ───────────────────────────────────────────────────
   useEffect(() => {
     if (shouldUseLightScroll) {
       return undefined;
@@ -67,6 +75,42 @@ export default function App() {
     };
   }, [shouldUseLightScroll]);
 
+  // ── Bloquear / liberar scroll quando o popup está ativo ───────────────────
+  useEffect(() => {
+    const lenis = lenisRef.current;
+
+    if (showSelector) {
+      // Parar Lenis
+      lenis?.stop();
+      // Fallback para scroll nativo (modo reduzido)
+      document.body.style.overflow = 'hidden';
+    } else {
+      lenis?.start();
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showSelector]);
+
+  // ── Callback do trigger (seção vazia) ─────────────────────────────────────
+  const handleTrigger = useCallback(() => {
+    if (persona) return; // já selecionou — não mostrar de novo
+    setTriggered(true);
+    setShowSelector(true);
+  }, [persona]);
+
+  // ── Callback de seleção de persona ───────────────────────────────────────
+  const handlePersonaSelect = useCallback((value) => {
+    setPersona(value);
+    setShowSelector(false);
+    // Deixar o React commitar o Storytelling atualizado antes de recalcular
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => ScrollTrigger.refresh())
+    );
+  }, []);
+
   if (isDesignSystem) {
     return <Suspense fallback={null}><DesignSystem /></Suspense>;
   }
@@ -78,9 +122,11 @@ export default function App() {
         <div style={{ backgroundColor: '#F5EEE9' }}>
           <Hero />
           <StorytellingIntro />
+          {/* Seção vazia que dispara o popup de persona */}
+          <PersonaTrigger onTrigger={handleTrigger} triggered={triggered} />
           <GradientTransition />
         </div>
-        <Storytelling />
+        <Storytelling persona={persona} />
         <TheOne />
         <Methodology />
         <Audience />
@@ -94,6 +140,11 @@ export default function App() {
       <footer className="border-t border-white/5 bg-[#212121] py-8 text-center">
         <p className="text-white/38 text-xs font-mono font-bold tracking-[0.3em] uppercase">© 2026 THE ONE ASSESSORIA DE MARCA.</p>
       </footer>
+
+      {/* Popup de seleção de persona — fixo, sem fundo, sem backdrop */}
+      {showSelector && (
+        <PersonaSelector onSelect={handlePersonaSelect} />
+      )}
     </div>
   );
 }

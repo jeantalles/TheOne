@@ -191,7 +191,27 @@ export default function Navbar() {
         className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-10 md:px-16"
         style={{ height: '72px', paddingTop: '20px', opacity: 0, pointerEvents: 'none' }}
       >
-        <a href="#" className="flex items-center">
+        <a
+          href="#"
+          className="flex items-center"
+          onClick={(e) => {
+            e.preventDefault();
+            // O Hero ocupa 560vh e o estado "laranja completo" está em ~82%
+            // do scroll da seção. ScrollTrigger usa start:'top top', end:'bottom bottom',
+            // então a distância scrollável = (5.6 - 1) × vh = 4.6vh.
+            // Alvo: 0.82 × 4.6 × vh ≈ 3.772 × window.innerHeight
+            const target = Math.round(0.82 * 4.6 * window.innerHeight);
+            const lenis = window.__theOneLenis;
+            if (lenis) {
+              lenis.scrollTo(target, {
+                duration: 1.6,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+              });
+            } else {
+              window.scrollTo({ top: target, behavior: 'smooth' });
+            }
+          }}
+        >
           <img
             src={useDarkLogo ? '/logo-navbar-black.svg' : '/logo-navbar.svg'}
             alt="The One"

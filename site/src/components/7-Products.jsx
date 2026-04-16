@@ -70,6 +70,7 @@ const PIN_SCROLL_ANCHOR_RATIO = 0.5;
 const EDGE_EXIT_COOLDOWN_MS = 520;
 const EDGE_EXIT_ARM_WINDOW_MS = 900;
 const EDGE_EXIT_MIN_DELAY_MS = 180;
+const STEP_COOLDOWN_MS = 420; // blocks next step while momentum dissipates
 const NEAR_SCALE = 0.56;
 const NEAR_OPACITY = 0.22;
 const FAR_SCALE = 0.32;
@@ -267,6 +268,7 @@ export default function Products() {
         resetEdgeRelease();
         isAnimating = true;
         stepTween?.kill();
+        observer?.disable(); // clears accumulated delta; re-enabled after cooldown
 
         const playhead = { value: tl.totalTime() };
 
@@ -282,12 +284,15 @@ export default function Products() {
             isAnimating = false;
             edgeExitCooldownUntil = performance.now() + EDGE_EXIT_COOLDOWN_MS;
             syncPinAnchor();
+            // Re-enable after cooldown with a fresh zero-delta state
+            gsap.delayedCall(STEP_COOLDOWN_MS / 1000, () => {
+              if (pinTrigger?.isActive && !isReleasing) observer?.enable();
+            });
           },
           onInterrupt: () => {
+            // Killed externally (releaseScroll / onLeave / unmount) — caller re-enables
             currentStep = Math.round(playhead.value);
             isAnimating = false;
-            edgeExitCooldownUntil = performance.now() + EDGE_EXIT_COOLDOWN_MS;
-            syncPinAnchor();
           },
         });
       };

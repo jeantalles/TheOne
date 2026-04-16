@@ -41,7 +41,7 @@ export default function TheOne() {
   }, []);
 
   return (
-    <section id="a-theone" ref={containerRef} className="bg-[#212121] text-white relative pt-[164px] pb-24 md:pt-[200px] md:pb-32 px-4 overflow-hidden">
+    <section id="a-theone" ref={containerRef} className="bg-[#212121] text-white relative pt-[164px] pb-12 md:pt-[200px] md:pb-16 px-4 overflow-hidden">
       <div className="w-[90%] md:w-[94%] max-w-[1600px] mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-14 relative z-10">
 
         {/* Esquerda: Proposta de Valor TheOne */}
