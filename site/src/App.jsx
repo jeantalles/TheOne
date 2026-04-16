@@ -15,22 +15,30 @@ import Methodology from './components/5-Methodology';
 import Audience from './components/6-Audience';
 import Products from './components/7-Products';
 import { useConstrainedMotion, usePrefersReducedMotion } from './hooks/useMediaQuery';
+import { usePathname } from './utils/router';
 
 // Below-fold heavy components — loaded lazily to reduce initial bundle
 const Cases = lazy(() => import('./components/8-Cases'));
 const Founders = lazy(() => import('./components/9-Founders'));
 const FinalCTA = lazy(() => import('./components/10-FinalCTA'));
 const DesignSystem = lazy(() => import('./components/DesignSystem'));
+const CaseDetailPage = lazy(() => import('./components/cases/CaseDetailPage'));
 
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({ limitCallbacks: true });
 
 export default function App() {
   const lenisRef = useRef(null);
-  const isDesignSystem = window.location.pathname === '/design-system';
+  const pathname = usePathname();
+  const isHomeRoute = pathname === '/';
+  const isDesignSystem = pathname === '/design-system';
+  const caseSlug = pathname.startsWith('/cases/')
+    ? pathname.replace(/^\/cases\//, '').replace(/\/$/, '')
+    : null;
   const prefersReducedMotion = usePrefersReducedMotion();
   const prefersConstrainedMotion = useConstrainedMotion();
   const shouldUseLightScroll = prefersReducedMotion || prefersConstrainedMotion;
+  const shouldUseLenis = isHomeRoute && !shouldUseLightScroll;
 
   // ── Persona state ──────────────────────────────────────────────────────────
   const [persona, setPersona] = useState(null);
@@ -39,7 +47,7 @@ export default function App() {
 
   // ── Lenis smooth scroll ───────────────────────────────────────────────────
   useEffect(() => {
-    if (shouldUseLightScroll) {
+    if (!shouldUseLenis) {
       return undefined;
     }
 
@@ -73,7 +81,7 @@ export default function App() {
       }
       lenis.destroy();
     };
-  }, [shouldUseLightScroll]);
+  }, [shouldUseLenis]);
 
   // ── Bloquear / liberar scroll quando o popup está ativo ───────────────────
   useEffect(() => {
@@ -113,6 +121,10 @@ export default function App() {
 
   if (isDesignSystem) {
     return <Suspense fallback={null}><DesignSystem /></Suspense>;
+  }
+
+  if (caseSlug) {
+    return <Suspense fallback={null}><CaseDetailPage slug={caseSlug} /></Suspense>;
   }
 
   return (

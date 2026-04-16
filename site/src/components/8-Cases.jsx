@@ -3,35 +3,23 @@ import { ArrowUp } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useConstrainedMotion } from '../hooks/useMediaQuery';
+import { caseStudies } from '../content/cases';
+import { navigateToPath } from '../utils/router';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const EASE_EXPO = 'expo.out';
 const CASE_IMAGE_ASPECT_RATIO = '1507 / 678';
 
-const CASES = [
-  {
-    id: 1,
-    title: 'Zenic',
-    subtitle: 'Construção de Marca',
-    result: '+300% de percepção de valor',
-    image: '/images/cases/zenic.jpg',
-  },
-  {
-    id: 2,
-    title: 'Thunders Tecnologia',
-    subtitle: 'Reposicionamento de Marca',
-    result: 'Liderança regional garantida',
-    image: '/images/cases/thunders.jpg',
-  },
-  {
-    id: 3,
-    title: 'Camilla Toscano',
-    subtitle: 'Construção de Marca Pessoal',
-    result: 'Aquisição Série A de $10M',
-    image: '/images/cases/camilla.jpg',
-  },
-];
+const CASES = caseStudies.map((caseStudy) => ({
+  id: caseStudy.id,
+  slug: caseStudy.slug,
+  title: caseStudy.cardTitle,
+  subtitle: caseStudy.cardSubtitle,
+  result: caseStudy.result,
+  image: caseStudy.image,
+  isPublished: caseStudy.isPublished,
+}));
 
 export default function Cases() {
   const prefersConstrainedMotion = useConstrainedMotion();
@@ -53,6 +41,11 @@ export default function Cases() {
   const [openState, setOpenState] = useState('closed');
   const isOpen = openState === 'open';
   const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  const handleCaseNavigation = (slug, isPublished) => {
+    if (!isPublished) return;
+    navigateToPath(`/cases/${slug}`);
+  };
 
   // Lazy-load background images only when section enters viewport
   useEffect(() => {
@@ -391,7 +384,10 @@ export default function Cases() {
             }}
           >
             <div className="mx-auto w-full md:w-[96%] lg:w-[90%]">
-              {CASES.map((c, i) => (
+              {CASES.map((c, i) => {
+                const CardTag = c.isPublished ? 'button' : 'div';
+
+                return (
                 <div
                   key={c.id}
                   ref={(el) => { caseItemsRef.current[i] = el; }}
@@ -406,7 +402,13 @@ export default function Cases() {
                     className="relative mx-auto w-full max-w-[1507px]"
                     style={{ perspective: '1400px', aspectRatio: CASE_IMAGE_ASPECT_RATIO }}
                   >
-                    <div className="case-card relative h-full rounded-[32px] overflow-hidden group cursor-pointer bg-[#111111]" style={{ border: '1px solid rgba(255,255,255,0.37)' }}>
+                    <CardTag
+                      {...(c.isPublished ? { type: 'button', onClick: () => handleCaseNavigation(c.slug, c.isPublished) } : {})}
+                      className={`case-card relative h-full w-full rounded-[32px] overflow-hidden group border-0 bg-[#111111] p-0 text-left ${
+                        c.isPublished ? 'cursor-pointer' : 'cursor-default'
+                      }`}
+                      style={{ border: '1px solid rgba(255,255,255,0.37)' }}
+                    >
                       <div
                         className="case-image absolute inset-0 bg-cover bg-center transition-transform duration-[1.2s] ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.03]"
                         style={{ backgroundImage: imagesLoaded ? `url(${c.image})` : undefined }}
@@ -435,10 +437,14 @@ export default function Cases() {
                           {c.subtitle}
                         </p>
                       </div>
-                    </div>
+                      <div className="pointer-events-none absolute right-6 top-6 rounded-full border border-white/20 bg-black/35 px-4 py-2 text-[0.72rem] font-medium uppercase tracking-[0.22em] text-white/80 backdrop-blur-sm">
+                        {c.isPublished ? 'Abrir case' : 'Em breve'}
+                      </div>
+                    </CardTag>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
           </div>
 

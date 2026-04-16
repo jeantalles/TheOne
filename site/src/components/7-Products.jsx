@@ -1,12 +1,11 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { Observer } from 'gsap/Observer';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import negocioMediaImage from '../assets/products-step-01/negocio-media.jpeg';
 import publicoMediaImage from '../assets/products-step-01/publico-media.jpeg';
 import mercadoMediaImage from '../assets/products-step-01/mercado-media.jpeg';
 
-gsap.registerPlugin(ScrollTrigger, Observer);
+gsap.registerPlugin(ScrollTrigger);
 
 const STEPS = [
   {
@@ -64,13 +63,7 @@ const STEPS = [
 // Both drums share the same row height — keeps them in perfect sync
 const ROW_H  = 460;
 const CONT_H = ROW_H * 3; // 1140px (overflows 900px viewport on each side; clipped by sticky overflow:hidden)
-const STEP_TRANSITION_DURATION = 0.78;
-const STEP_PIN_DISTANCE_VH = 160;
-const PIN_SCROLL_ANCHOR_RATIO = 0.5;
-const EDGE_EXIT_COOLDOWN_MS = 520;
-const EDGE_EXIT_ARM_WINDOW_MS = 900;
-const EDGE_EXIT_MIN_DELAY_MS = 180;
-const STEP_COOLDOWN_MS = 420; // blocks next step while momentum dissipates
+const STEP_SCROLL_VH = 100; // vh of scroll per step transition; 4 transitions = 400vh total
 const NEAR_SCALE = 0.56;
 const NEAR_OPACITY = 0.22;
 const FAR_SCALE = 0.32;
@@ -140,33 +133,9 @@ export default function Products() {
   const contRowRefs  = useRef([]);
 
   const n = STEPS.length;
-  const lineInsetForStep = () => 50;
 
   useEffect(() => {
-    const lenis = typeof window !== 'undefined' ? window.__theOneLenis : null;
-
     const ctx = gsap.context(() => {
-      let currentStep = 0;
-      let isAnimating = false;
-      let stepTween = null;
-      let observer = null;
-      let pinTrigger = null;
-      let isReleasing = false;
-      let edgeReleaseDirection = 0;
-      let edgeReleaseArmedAt = 0;
-      let edgeExitCooldownUntil = 0;
-
-      const resetEdgeRelease = () => {
-        edgeReleaseDirection = 0;
-        edgeReleaseArmedAt = 0;
-      };
-
-      const syncPinAnchor = () => {
-        if (!pinTrigger?.isActive || isReleasing) return;
-
-        const anchorPosition = pinTrigger.start + ((pinTrigger.end - pinTrigger.start) * PIN_SCROLL_ANCHOR_RATIO);
-        pinTrigger.scroll(anchorPosition);
-      };
 
       /* ── header entrance ─────────────────────────────── */
       gsap.fromTo(
@@ -180,250 +149,71 @@ export default function Products() {
       );
 
       /* ── initial row states ──────────────────────────── */
-      // Content rows: scale + opacity
       contRowRefs.current.forEach((el, i) => {
         if (!el) return;
         const scale   = i === 0 ? 1 : i === 1 ? NEAR_SCALE : FAR_SCALE;
         const opacity = i === 0 ? 1 : i === 1 ? NEAR_OPACITY : FAR_OPACITY;
         gsap.set(el, { scale, opacity, transformOrigin: 'center center' });
       });
-      // Number rows: scale only — no opacity fade
       numRowRefs.current.forEach((el, i) => {
         if (!el) return;
         const scale = i === 0 ? 1 : i === 1 ? NEAR_SCALE : FAR_SCALE;
         gsap.set(el, { scale, opacity: 1, transformOrigin: 'center center' });
       });
 
-      /* ── line pre-filled to center — active circle is always at 50% ── */
-      // Starts touching circle 01; grows downward past center as steps advance
-      gsap.set(lineFillRef.current, { clipPath: `inset(0 0 ${lineInsetForStep(0)}% 0)` });
+      gsap.set(lineFillRef.current, { clipPath: 'inset(0 0 50% 0)' });
 
-      /* ── master timeline ─────────────────────────────── */
+      /* ── master timeline (driven by scroll via scrub) ── */
       const tl = gsap.timeline({ paused: true });
 
-      // ③ Per-step scale & opacity — content fades, numbers only scale
       for (let i = 0; i < n - 1; i++) {
         const cont = (idx) => [contRowRefs.current[idx]].filter(Boolean);
         const num  = (idx) => [numRowRefs.current[idx]].filter(Boolean);
-        const nextStep = i + 1;
 
-        tl.to(
-          lineFillRef.current,
-          {
-            clipPath: `inset(0 0 ${lineInsetForStep(nextStep)}% 0)`,
-            duration: 1,
-            ease: 'none',
-          },
-          i
-        );
-        tl.to(
-          [numTrackRef.current, contTrackRef.current],
-          {
-            y: -(nextStep * ROW_H),
-            duration: 1,
-            ease: 'none',
-          },
-          i
-        );
+        tl.to(lineFillRef.current,                    { clipPath: 'inset(0 0 50% 0)', duration: 1, ease: 'none' }, i);
+        tl.to([numTrackRef.current, contTrackRef.current], { y: -((i + 1) * ROW_H),  duration: 1, ease: 'none' }, i);
 
         tl.to(cont(i),     { scale: NEAR_SCALE, opacity: NEAR_OPACITY, duration: 1, ease: 'none' }, i);
-        tl.to(num(i),      { scale: NEAR_SCALE,                   duration: 1, ease: 'none' }, i);
-        tl.to(cont(i + 1), { scale: 1,    opacity: 1,    duration: 1, ease: 'none' }, i);
-        tl.to(num(i + 1),  { scale: 1,                   duration: 1, ease: 'none' }, i);
+        tl.to(num(i),      { scale: NEAR_SCALE,                        duration: 1, ease: 'none' }, i);
+        tl.to(cont(i + 1), { scale: 1, opacity: 1,                     duration: 1, ease: 'none' }, i);
+        tl.to(num(i + 1),  { scale: 1,                                 duration: 1, ease: 'none' }, i);
 
         if (i + 2 < n) {
-          tl.to(
-            cont(i + 2),
-            { scale: NEAR_SCALE, opacity: NEAR_OPACITY, duration: 1, ease: 'none' },
-            i
-          );
-          tl.to(
-            num(i + 2),
-            { scale: NEAR_SCALE, duration: 1, ease: 'none' },
-            i
-          );
+          tl.to(cont(i + 2), { scale: NEAR_SCALE, opacity: NEAR_OPACITY, duration: 1, ease: 'none' }, i);
+          tl.to(num(i + 2),  { scale: NEAR_SCALE,                        duration: 1, ease: 'none' }, i);
         }
         if (i - 1 >= 0) {
-          tl.to(
-            cont(i - 1),
-            { scale: FAR_SCALE, opacity: FAR_OPACITY, duration: 1, ease: 'none' },
-            i
-          );
-          tl.to(
-            num(i - 1),
-            { scale: FAR_SCALE, duration: 1, ease: 'none' },
-            i
-          );
+          tl.to(cont(i - 1), { scale: FAR_SCALE, opacity: FAR_OPACITY, duration: 1, ease: 'none' }, i);
+          tl.to(num(i - 1),  { scale: FAR_SCALE,                       duration: 1, ease: 'none' }, i);
         }
       }
 
-      tl.totalTime(0);
-
-      const animateToStep = (targetStep) => {
-        const clampedStep = gsap.utils.clamp(0, n - 1, targetStep);
-
-        if (clampedStep === currentStep || isAnimating) return;
-
-        isReleasing = false;
-        resetEdgeRelease();
-        isAnimating = true;
-        stepTween?.kill();
-        observer?.disable(); // clears accumulated delta; re-enabled after cooldown
-
-        const playhead = { value: tl.totalTime() };
-
-        stepTween = gsap.to(playhead, {
-          value: clampedStep,
-          duration: STEP_TRANSITION_DURATION,
-          ease: 'power2.inOut',
-          onUpdate: () => {
-            tl.totalTime(playhead.value);
-          },
-          onComplete: () => {
-            currentStep = clampedStep;
-            isAnimating = false;
-            edgeExitCooldownUntil = performance.now() + EDGE_EXIT_COOLDOWN_MS;
-            syncPinAnchor();
-            // Re-enable after cooldown with a fresh zero-delta state
-            gsap.delayedCall(STEP_COOLDOWN_MS / 1000, () => {
-              if (pinTrigger?.isActive && !isReleasing) observer?.enable();
-            });
-          },
-          onInterrupt: () => {
-            // Killed externally (releaseScroll / onLeave / unmount) — caller re-enables
-            currentStep = Math.round(playhead.value);
-            isAnimating = false;
-          },
-        });
-      };
-
-      const shouldReleaseAtEdge = (direction) => {
-        const now = performance.now();
-
-        if (now < edgeExitCooldownUntil) {
-          return false;
-        }
-
-        if (edgeReleaseDirection !== direction || now - edgeReleaseArmedAt > EDGE_EXIT_ARM_WINDOW_MS) {
-          edgeReleaseDirection = direction;
-          edgeReleaseArmedAt = now;
-          return false;
-        }
-
-        if (now - edgeReleaseArmedAt < EDGE_EXIT_MIN_DELAY_MS) {
-          return false;
-        }
-
-        resetEdgeRelease();
-        return true;
-      };
-
-      const releaseScroll = (direction) => {
-        isReleasing = true;
-        observer?.disable();
-        stepTween?.kill();
-        isAnimating = false;
-        resetEdgeRelease();
-        lenis?.start?.();
-
-        if (!pinTrigger) return;
-
-        requestAnimationFrame(() => {
-          pinTrigger.scroll(direction > 0 ? pinTrigger.end + 2 : pinTrigger.start - 2);
-        });
-      };
-
-      observer = Observer.create({
-        type: 'wheel,touch',
-        tolerance: 14,
-        preventDefault: true,
-        wheelSpeed: 1,
-        onDown: () => {
-          if (!pinTrigger?.isActive || isAnimating) return;
-
-          if (currentStep < n - 1) {
-            animateToStep(currentStep + 1);
-            return;
-          }
-
-          if (shouldReleaseAtEdge(1)) {
-            releaseScroll(1);
-          }
-        },
-        onUp: () => {
-          if (!pinTrigger?.isActive || isAnimating) return;
-
-          if (currentStep > 0) {
-            animateToStep(currentStep - 1);
-            return;
-          }
-
-          if (shouldReleaseAtEdge(-1)) {
-            releaseScroll(-1);
-          }
-        },
-      });
-      observer.disable();
-
-      /* ── pin + step navigation ───────────────────────── */
-      pinTrigger = ScrollTrigger.create({
+      /* ── pin + scrub — same architecture as Storytelling ── */
+      ScrollTrigger.create({
         trigger: stickyRef.current,
         start: 'top top',
-        end: () => `+=${window.innerHeight * STEP_PIN_DISTANCE_VH / 100}`,
+        end: () => `+=${window.innerHeight * STEP_SCROLL_VH / 100 * (n - 1)}`,
         pin: true,
         pinSpacing: true,
         anticipatePin: 1,
-        onEnter: () => {
-          isReleasing = false;
-          lenis?.stop?.();
-          currentStep = 0;
-          isAnimating = false;
-          stepTween?.kill();
-          tl.totalTime(0);
-          resetEdgeRelease();
-          edgeExitCooldownUntil = performance.now() + EDGE_EXIT_COOLDOWN_MS;
-          syncPinAnchor();
-          observer?.enable();
+        scrub: 1,
+        snap: {
+          snapTo: 1 / (n - 1),
+          duration: { min: 0.3, max: 0.6 },
+          ease: 'power2.inOut',
+          delay: 0.05,
         },
-        onEnterBack: () => {
-          isReleasing = false;
-          lenis?.stop?.();
-          currentStep = n - 1;
-          isAnimating = false;
-          stepTween?.kill();
-          tl.totalTime(n - 1);
-          resetEdgeRelease();
-          edgeExitCooldownUntil = performance.now() + EDGE_EXIT_COOLDOWN_MS;
-          syncPinAnchor();
-          observer?.enable();
+        onUpdate: (self) => {
+          tl.totalTime(self.progress * (n - 1));
         },
-        onLeave: () => {
-          isReleasing = false;
-          lenis?.start?.();
-          observer?.disable();
-          stepTween?.kill();
-          isAnimating = false;
-          resetEdgeRelease();
-        },
-        onLeaveBack: () => {
-          isReleasing = false;
-          lenis?.start?.();
-          observer?.disable();
-          stepTween?.kill();
-          isAnimating = false;
-          resetEdgeRelease();
-        },
-        onRefresh: () => {
-          tl.totalTime(currentStep);
+        onRefresh: (self) => {
+          tl.totalTime(self.progress * (n - 1));
         },
       });
 
     }, sectionRef);
 
-    return () => {
-      lenis?.start?.();
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
