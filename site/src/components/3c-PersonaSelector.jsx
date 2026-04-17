@@ -63,7 +63,7 @@ export default function PersonaSelector({ onSelect }) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '6rem 1.5rem',
+        padding: 'clamp(2rem, 10vh, 6rem) 1.5rem',
         pointerEvents: 'auto',
       }}
     >
@@ -76,14 +76,14 @@ export default function PersonaSelector({ onSelect }) {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '2.5rem',
+          gap: 'clamp(1.25rem, 4vw, 2.5rem)',
           textAlign: 'center',
         }}
       >
         {/* Label */}
         <p
           className="font-halyard tracking-widest uppercase"
-          style={{ fontSize: '30px', color: '#FE6942', margin: 0 }}
+          style={{ fontSize: 'clamp(1.1rem, 5vw, 1.875rem)', color: '#FE6942', margin: 0 }}
         >
           Antes de continuar
         </p>
@@ -101,7 +101,7 @@ export default function PersonaSelector({ onSelect }) {
         </h2>
 
         {/* Cards */}
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '1rem', width: '100%' }}>
+        <div className="flex flex-col sm:flex-row gap-4 sm:gap-4 w-full">
           {OPTIONS.map((opt) => {
             const isSelected = selected === opt.value;
             const isDimmed   = selected !== null && !isSelected;
@@ -131,7 +131,7 @@ function PersonaCard({ label, isSelected, isDimmed, confirmed, onClick }) {
       disabled={confirmed}
       className="flex-1 relative flex items-center justify-center rounded-[20px] transition-all duration-300 active:scale-[0.97] cursor-pointer overflow-hidden"
       style={{
-        padding: '2.5rem 2rem',
+        padding: 'clamp(1.25rem, 4vw, 2.5rem) clamp(1rem, 3vw, 2rem)',
         border: isSelected
           ? '1.5px solid #FE6942'
           : '1.5px solid rgba(21, 19, 17, 0.18)',

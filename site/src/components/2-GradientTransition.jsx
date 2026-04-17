@@ -54,6 +54,7 @@ export default function GradientTransition() {
         style={{
           width: '100%',
           aspectRatio: '1920 / 2448',
+          maxHeight: 'min(2448px, 150vw)',
           flex: 'none',
           position: 'relative',
           overflow: 'visible',

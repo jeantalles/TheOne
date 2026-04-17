@@ -300,7 +300,8 @@ export default function Navbar() {
         </div>
 
         <button
-          className="md:hidden text-white z-[60]"
+          className="md:hidden z-[60]"
+          style={{ color: '#FE6942' }}
           onClick={() => setMenuOpen(!menuOpen)}
         >
           {menuOpen ? <X size={26} /> : <Menu size={26} />}
@@ -309,9 +310,8 @@ export default function Navbar() {
 
       <div
         ref={menuRef}
-        className="fixed inset-0 z-40 bg-[#212121] pt-32 px-8 flex flex-col pointer-events-none data-[open=true]:pointer-events-auto"
-        style={{ clipPath: 'inset(0 0 100% 0)' }}
-        data-open={menuOpen}
+        className="fixed inset-0 z-40 bg-[#212121] pt-32 px-8 flex flex-col"
+        style={{ clipPath: 'inset(0 0 100% 0)', pointerEvents: menuOpen ? 'auto' : 'none' }}
       >
         <div className="flex flex-col gap-8">
           {navLinks.map((l) => (
@@ -329,6 +329,38 @@ export default function Navbar() {
             </a>
           ))}
         </div>
+
+        {/* WhatsApp CTA — mobile menu */}
+        <a
+          href="https://wa.me/5551997513675?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20TheOne%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setMenuOpen(false)}
+          className="mt-10 inline-flex items-center gap-3 font-sans capitalize active:scale-[0.98]"
+          style={{
+            fontSize: '18px',
+            color: '#6B2F1D',
+            padding: '10px 22px 10px 10px',
+            borderRadius: '999px',
+            background: 'linear-gradient(135deg, rgba(255,215,205,0.95) 0%, rgba(255,127,86,0.88) 100%)',
+            border: '1px solid rgba(255,120,82,0.18)',
+            alignSelf: 'flex-start',
+          }}
+        >
+          <span
+            className="inline-flex items-center justify-center"
+            style={{
+              width: '32px',
+              height: '32px',
+              borderRadius: '999px',
+              background: 'rgba(255,248,244,0.42)',
+              color: '#A84B31',
+            }}
+          >
+            <WhatsAppIcon style={{ width: '16px', height: '16px', display: 'block' }} />
+          </span>
+          Agendar Diagnóstico
+        </a>
       </div>
     </>
   );

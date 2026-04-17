@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import PrimaryCTAButton from './PrimaryCTAButton';
-import { useConstrainedMotion, usePrefersReducedMotion } from '../hooks/useMediaQuery';
+import { useConstrainedMotion, useMediaQuery, usePrefersReducedMotion } from '../hooks/useMediaQuery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -114,6 +114,7 @@ function buildParticles(width, height) {
 export default function Hero() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const prefersConstrainedMotion = useConstrainedMotion();
+  const isMobileViewport = useMediaQuery('(max-width: 767px)');
   const shouldUseStaticScene = prefersReducedMotion || prefersConstrainedMotion;
   const sectionRef = useRef(null);
   const stickyRef = useRef(null);
@@ -252,17 +253,13 @@ export default function Hero() {
       introWordRefs.current.forEach((word, index) => {
         if (!word) return;
 
-        // Unblur as user starts scrolling (staggered per word)
-        const unblurIn = easeOut3(norm(progress, 0.0 + index * 0.014, 0.10 + index * 0.014));
-        // Opacity: starts at 0.85 (visible but blurred), reaches 1 when unblurred — fades only on exit
-        const opacity = lerp(0.85, 1.0, unblurIn);
-        const blur = lerp(12, 0, unblurIn);
-        const translateY = lerp(6, 0, unblurIn);
-        // Color: dark on warm background → white as orange takes over
+        const revealIn = easeOut3(norm(progress, 0.0 + index * 0.014, 0.10 + index * 0.014));
+        const opacity = lerp(0.85, 1.0, revealIn);
+        const translateY = lerp(6, 0, revealIn);
         const wordColor = blendRgb([21, 19, 17], [255, 255, 255], Math.min(1, takeover * 2.2));
 
         word.style.opacity = opacity.toFixed(3);
-        word.style.filter = blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : 'none';
+        word.style.filter = 'none';
         word.style.transform = translateY > 0.1 ? `translate3d(0, ${translateY.toFixed(1)}px, 0)` : 'none';
         word.style.color = `rgb(${wordColor[0]}, ${wordColor[1]}, ${wordColor[2]})`;
       });
@@ -474,7 +471,7 @@ export default function Hero() {
       ref={sectionRef}
       className="relative"
       style={{
-        height: shouldUseStaticScene ? '100vh' : HERO_SCROLL_HEIGHT,
+        height: shouldUseStaticScene ? '100vh' : (isMobileViewport ? '380vh' : HERO_SCROLL_HEIGHT),
         backgroundColor: 'transparent',
         zIndex: 2,
       }}
@@ -514,7 +511,7 @@ export default function Hero() {
         >
           <h2
             className="max-w-[900px] text-center font-sans font-normal leading-[1.1] text-[#151311]"
-            style={{ fontSize: 'clamp(1.5rem, 4.2vw, 3.8rem)', letterSpacing: '-0.02em' }}
+            style={{ fontSize: 'clamp(2.25rem, 4.2vw, 3.8rem)', letterSpacing: '-0.02em' }}
           >
             {INTRO_WORDS.map((word, index) => (
               <span
@@ -525,9 +522,9 @@ export default function Hero() {
                 className="inline-block"
                 style={{
                   opacity: 0.85,
-                  filter: 'blur(12px)',
-                  transform: 'none',
-                  willChange: 'transform, filter, opacity',
+                  filter: 'none',
+                  transform: 'translate3d(0, 6px, 0)',
+                  willChange: 'transform, opacity',
                   marginRight: index === INTRO_WORDS.length - 1 ? 0 : '0.16em',
                 }}
               >
@@ -540,7 +537,10 @@ export default function Hero() {
         <div
           ref={finalWrapRef}
           className="absolute inset-0 z-40 flex items-start justify-center px-6"
-          style={{ pointerEvents: shouldUseStaticScene ? 'auto' : 'none' }}
+          style={{
+            pointerEvents: shouldUseStaticScene ? 'auto' : 'none',
+            paddingTop: shouldUseStaticScene ? 'clamp(6rem, 18vh, 10rem)' : undefined,
+          }}
         >
           <div className="mx-auto flex w-full max-w-5xl flex-col items-center text-center">
             <h2
@@ -555,7 +555,7 @@ export default function Hero() {
               <span
                 className="block font-editorial font-normal leading-[0.92] text-black/70"
                 style={{
-                  fontSize: 'clamp(3.2rem, 8vw, 7.5rem)',
+                  fontSize: 'clamp(4.2rem, 8vw, 7.5rem)',
                   letterSpacing: '-0.03em',
                   paddingBottom: '40px',
                 }}
@@ -586,7 +586,7 @@ export default function Hero() {
                 willChange: 'transform, filter, opacity',
               }}
             >
-              <p className="mx-auto max-w-2xl text-[clamp(1.25rem,2.6vw,1.85rem)] font-halyard font-normal leading-[1.5] text-white/80">
+              <p className="mx-auto max-w-2xl max-w-full text-[clamp(1.25rem,2.6vw,1.85rem)] font-halyard font-normal leading-[1.5] text-white/80">
                 Para negócios visionários que não querem ser só mais uma opção e querem se tornar a marca número um e alternativa inevitável em seu mercado.
               </p>
 
@@ -600,7 +600,7 @@ export default function Hero() {
                 textColor="rgba(255, 243, 236, 0.96)"
                 border="1px solid rgba(0, 0, 0, 0.08)"
                 style={{
-                  minWidth: '320px',
+                  minWidth: 'min(320px, 90vw)',
                 }}
               >
                 Agendar Diagnóstico

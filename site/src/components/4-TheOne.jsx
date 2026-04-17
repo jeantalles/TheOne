@@ -7,7 +7,7 @@ export default function TheOne() {
 
   const style = {
     titulo: "clamp(2.5rem, 4vw, 3.5rem)",
-    texto: "20px",
+    textoDesktop: "20px",
     alturaLinhaTexto: "1.4",
   };
 
@@ -40,8 +40,26 @@ export default function TheOne() {
     return () => ctx.revert();
   }, []);
 
+  const imageCard = (className = '') => (
+    <div className={`sol-right w-full md:w-[45%] relative h-[280px] sm:h-[380px] md:h-[650px] rounded-[32.7px] overflow-hidden border border-[#5B5B5B] bg-[#141414] shadow-2xl flex items-center justify-center group cursor-pointer ${className}`.trim()}>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(254,105,66,0.1)_0%,transparent_60%)] mix-blend-screen z-10 transition-opacity duration-700 group-hover:opacity-100 opacity-50"></div>
+
+      <img
+        src="/theone-hand.jpg"
+        alt="The One #1 Hand"
+        width="1024"
+        height="681"
+        loading="lazy"
+        decoding="async"
+        fetchPriority="low"
+        sizes="(min-width: 768px) 45vw, 100vw"
+        className="w-full h-full object-cover opacity-90 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
+      />
+    </div>
+  );
+
   return (
-    <section id="a-theone" ref={containerRef} className="bg-[#212121] text-white relative pt-[164px] pb-12 md:pt-[200px] md:pb-16 px-4 overflow-hidden">
+    <section id="a-theone" ref={containerRef} className="bg-[#212121] text-white relative pt-20 md:pt-[164px] lg:pt-[200px] pb-12 md:pb-16 px-4 overflow-hidden">
       <div className="w-[90%] md:w-[94%] max-w-[1600px] mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-14 relative z-10">
 
         {/* Esquerda: Proposta de Valor TheOne */}
@@ -51,7 +69,12 @@ export default function TheOne() {
             nasceu a <span className="text-gradient">TheOne.</span>
           </h2>
 
-          <div className="flex flex-col gap-6 font-halyard font-light text-[#C7C7C7] w-full" style={{ fontSize: style.texto, lineHeight: style.alturaLinhaTexto }}>
+          {imageCard('md:hidden')}
+
+          <div
+            className="flex flex-col gap-6 font-halyard font-light text-[#C7C7C7] w-full text-[clamp(1.1rem,4.6vw,1.28rem)] md:text-[20px]"
+            style={{ lineHeight: style.alturaLinhaTexto }}
+          >
             <p className="max-w-[620px] relative -top-px">
               Vimos de perto o que acontece quando marketing vira linha de produção e nos recusamos a ser mais um desse modelo.{" "}
               {"A TheOne é a assessoria de marca que nasceu para construir marcas TheOne™: a escolha número um na mente do seu público.".split(' ').map((word, i) => (
@@ -63,7 +86,7 @@ export default function TheOne() {
             <p className="max-w-[620px] relative -top-px">
               Não entregamos um PDF e sumimos. Estruturamos a narrativa, o posicionamento e a presença da sua marca em todos os principais pontos de contato. Seremos seus aliados na efetivação da estratégia para consolidar o seu negócio como o número um do seu mercado.
             </p>
-            <ul className="pt-4 md:pt-6 grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-y-5 md:gap-x-10 lg:gap-x-14 text-left text-white font-light w-full">
+            <ul className="pt-4 md:pt-6 grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-y-5 md:gap-x-10 lg:gap-x-14 text-left text-white font-light w-full text-[clamp(1.02rem,4.2vw,1.16rem)] md:text-[20px]">
               <li className="flex items-start gap-3 min-w-0">
                 <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
                 <span>
@@ -86,26 +109,7 @@ export default function TheOne() {
           </div>
         </div>
 
-        {/* Direita: Foto / Imagem Representativa */}
-        <div className="sol-right w-full md:w-[45%] relative h-[500px] md:h-[650px] rounded-[32.7px] overflow-hidden border border-[#5B5B5B] bg-[#141414] shadow-2xl flex items-center justify-center group cursor-pointer">
-          {/* Glow / Efeito de Luz Interno (Reforça o estilo Apple/Premium) */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(254,105,66,0.1)_0%,transparent_60%)] mix-blend-screen z-10 transition-opacity duration-700 group-hover:opacity-100 opacity-50"></div>
-
-          {/* Imagem Placeholder Premium */}
-          <img
-            src="/theone-hand.jpg"
-            alt="The One #1 Hand"
-            width="1024"
-            height="681"
-            loading="lazy"
-            decoding="async"
-            fetchPriority="low"
-            sizes="(min-width: 768px) 45vw, 100vw"
-            className="w-full h-full object-cover opacity-90 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
-          />
-
-
-        </div>
+        {imageCard('hidden md:flex')}
 
       </div>
     </section>

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ArrowRight } from 'lucide-react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 import negocioMediaImage from '../assets/products-step-01/negocio-media.jpeg';
 import publicoMediaImage from '../assets/products-step-01/publico-media.jpeg';
 import mercadoMediaImage from '../assets/products-step-01/mercado-media.jpeg';
@@ -20,6 +21,7 @@ import arquiteturaReceitaImage from '../assets/products-step-04/arquitetura-de-r
 import siteBrandExperienceImage from '../assets/products-step-04/site-brand-experience.jpg';
 import playbookImage from '../assets/products-step-05/playbook.jpg';
 import sistemaDeConteudoImage from '../assets/products-step-05/sistema-de-conteudo.jpeg';
+import treinamentoDoTimeImage from '../assets/products-step-05/treinamento-do-time.jpeg';
 
 
 
@@ -77,8 +79,8 @@ const STEPS = [
     description: 'Ficamos ao seu lado para garantir que o seu posicionamento seja efetivado rumo a se tornar a marca número um.',
     cards: [
       { label: 'Playbook de execução',       src: playbookImage },
-      { label: 'Treinamento do time',        src: null },
-      { label: 'Acompanhamento operacional', src: null },
+      { label: 'Consultoria e treinamento de time', src: treinamentoDoTimeImage },
+      { label: 'Assessoria',                 src: null },
       { label: 'Sistema de Conteúdo',        src: sistemaDeConteudoImage },
     ],
   },
@@ -146,6 +148,111 @@ function DeliverableCard({ label, src }) {
   );
 }
 
+// ── Mobile: card compacto 2-col ──────────────────────────────────────────────
+function MobileDeliverableCard({ label, src }) {
+  return (
+    <div className="min-w-0">
+      <p
+        className="font-halyard font-light text-white mb-2 leading-[1.2]"
+        style={{ fontSize: 'clamp(0.8rem, 3.5vw, 0.95rem)' }}
+      >
+        {label}
+      </p>
+      <div
+        style={{
+          borderRadius: '14px',
+          overflow: 'hidden',
+          border: '1px solid rgba(255,255,255,0.08)',
+          aspectRatio: '16 / 9',
+        }}
+      >
+        {src ? (
+          <img
+            src={src}
+            alt={label}
+            loading="lazy"
+            decoding="async"
+            className="block w-full h-full object-cover"
+          />
+        ) : (
+          <div className="w-full h-full bg-[#1c1c1c]" />
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── Mobile: lista vertical de steps ──────────────────────────────────────────
+function ProductsMobileList({ steps }) {
+  const stepRefs = useRef([]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      stepRefs.current.forEach((el) => {
+        if (!el) return;
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 28 },
+          {
+            opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+          }
+        );
+      });
+    });
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <div className="px-6 py-8 flex flex-col gap-14">
+      {steps.map((step, i) => (
+        <div key={step.number} ref={(el) => { stepRefs.current[i] = el; }}>
+          {/* Number + label */}
+          <div className="flex items-start gap-4 mb-3">
+            <div
+              className="shrink-0 w-12 h-12 rounded-full border border-white/10 bg-[#1c1c1c] flex items-center justify-center"
+            >
+              <span
+                className="font-halyard tabular-nums"
+                style={{
+                  fontSize: '18px',
+                  background: 'linear-gradient(135deg, #FED1C5, #FF5224)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text',
+                }}
+              >
+                {step.number}
+              </span>
+            </div>
+            <h3
+              className="font-editorial font-normal leading-[1.1] text-[#FF744F] pt-1"
+              style={{ fontSize: 'clamp(1.3rem, 5vw, 1.8rem)' }}
+            >
+              {step.label}
+            </h3>
+          </div>
+
+          {/* Description */}
+          <p
+            className="font-halyard font-normal text-white leading-[1.5] mb-5"
+            style={{ fontSize: 'clamp(0.95rem, 4vw, 1.1rem)' }}
+          >
+            {step.description}
+          </p>
+
+          {/* Cards 2-col grid */}
+          <div className="grid grid-cols-2 gap-3">
+            {step.cards.map((card) => (
+              <MobileDeliverableCard key={card.label} label={card.label} src={card.src} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function Products() {
   const sectionRef   = useRef(null);
   const headerRef    = useRef(null);
@@ -156,9 +263,12 @@ export default function Products() {
   const contTrackRef = useRef(null);
   const contRowRefs  = useRef([]);
 
+  const isMobile = useMediaQuery('(max-width: 767px)');
   const n = STEPS.length;
 
   useEffect(() => {
+    if (isMobile) return undefined;
+
     const ctx = gsap.context(() => {
 
       /* ── header entrance ─────────────────────────────── */
@@ -238,7 +348,7 @@ export default function Products() {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
   return (
     <section
@@ -294,10 +404,13 @@ export default function Products() {
         </div>
       </div>
 
-      {/* ── Sticky ───────────────────────────────────────── */}
+      {/* ── Mobile list (< 768px) ────────────────────────── */}
+      {isMobile && <ProductsMobileList steps={STEPS} />}
+
+      {/* ── Desktop sticky drum (≥ 768px) ────────────────── */}
       <div
         ref={stickyRef}
-        className="h-screen"
+        className="h-screen hidden md:block"
         style={{ overflow: 'hidden' }}
       >
         <div className="absolute inset-0 px-6 md:px-12 lg:px-16">

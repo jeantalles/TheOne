@@ -1,6 +1,5 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 const founders = [
   {
@@ -100,7 +99,7 @@ export default function Founders() {
                       fetchPriority="low"
                       sizes="(min-width: 768px) 40vw, 100vw"
                       onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                      className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:scale-[1.04]"
+                      className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] [@media(hover:hover)]:group-hover:scale-[1.04]"
                     />
                     {/* Large decorative number */}
                     <span className="absolute bottom-5 right-7 font-editorial text-[100px] leading-none text-white/[0.06] select-none pointer-events-none">

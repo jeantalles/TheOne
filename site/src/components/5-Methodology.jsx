@@ -123,6 +123,16 @@ export default function Methodology() {
         </h2>
       </div>
 
+      {/* Mobile context — visible on mobile/tablet (below lg), pyramid has no bullets there */}
+      <div className="absolute inset-x-0 bottom-10 z-30 pointer-events-none flex lg:hidden justify-center px-6 text-center">
+        <p
+          className="font-sans font-light text-[#C7C7C7] leading-[1.5]"
+          style={{ fontSize: 'clamp(0.95rem, 4vw, 1.15rem)', maxWidth: '400px' }}
+        >
+          Nossa metodologia parte de <span className="text-white">3 pilares</span>: público, negócio e mercado — para chegar ao posicionamento inevitável.
+        </p>
+      </div>
+
       {/* Bullet 1 */}
       <div className="meth-bullet-1 absolute inset-0 z-40 pointer-events-none hidden lg:flex items-center justify-center px-6 pt-24 md:pt-28" style={{ opacity: 0 }}>
         <p className="font-sans font-normal text-[24px] xl:text-[30px] leading-[1.45] text-[#C7C7C7] text-center max-w-[680px]">

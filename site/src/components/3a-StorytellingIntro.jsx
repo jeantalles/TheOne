@@ -21,7 +21,7 @@ const TOKEN_STYLES = {
 
 const FONT_CONFIG = {
   tag: '23px',
-  titulo: 'clamp(1.8rem, 5vw, 3.8rem)',
+  titulo: 'clamp(2.3rem, 7.4vw, 4.2rem)',
   texto: '27px',
   textLineHeight: '1.4',
   paragraphSpacing: '1em',
@@ -276,9 +276,9 @@ export default function StorytellingIntro() {
       id="o-problema"
       ref={containerRef}
       data-navbar-theme="light"
-      className="min-h-[100svh] relative flex flex-col items-center justify-start px-6 overflow-hidden"
+      className="min-h-[100svh] relative flex flex-col items-center justify-start px-6"
       style={{
-        backgroundColor: 'transparent',
+        backgroundColor: '#F5F0EB',
         marginTop: `calc(-1 * ${STORYTELLING_INTRO_OVERLAP})`,
         zIndex: 0,
       }}

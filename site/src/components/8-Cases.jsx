@@ -438,7 +438,7 @@ export default function Cases() {
                   className="case-stack-item sticky top-[108px] md:top-[124px]"
                   style={{
                     zIndex: 20 + i,
-                    marginTop: i === 0 ? 0 : 'calc(-22vh + 30px)',
+                    marginTop: i === 0 ? 0 : 'clamp(-80px, calc(-22vh + 30px), -30px)',
                     paddingBottom: i === CASES.length - 1 ? '16vh' : '22vh',
                   }}
                 >
