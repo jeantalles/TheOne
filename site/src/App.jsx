@@ -25,7 +25,12 @@ const DesignSystem = lazy(() => import('./components/DesignSystem'));
 const CaseDetailPage = lazy(() => import('./components/cases/CaseDetailPage'));
 
 gsap.registerPlugin(ScrollTrigger);
-ScrollTrigger.config({ limitCallbacks: true });
+ScrollTrigger.config({
+  limitCallbacks: true,
+  // Avoid mobile browser chrome show/hide from forcing ScrollTrigger refreshes
+  // mid-scroll, which can make the page jump in long narrative sections.
+  ignoreMobileResize: true,
+});
 
 export default function App() {
   const lenisRef = useRef(null);

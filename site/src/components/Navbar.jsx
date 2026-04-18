@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { Menu, X } from 'lucide-react';
 
 const navLinks = [
   { name: 'O Contexto',    id: 'o-problema'  },
@@ -18,13 +17,49 @@ function WhatsAppIcon(props) {
   );
 }
 
+function HamburgerIcon({ open }) {
+  const ease = 'cubic-bezier(0.23, 1, 0.32, 1)';
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <line
+        x1="3" y1="6" x2="21" y2="6"
+        stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+        style={{
+          transformOrigin: '12px 6px',
+          transition: `transform 380ms ${ease}`,
+          transform: open ? 'translateY(6px) rotate(45deg)' : 'translateY(0) rotate(0)',
+        }}
+      />
+      <line
+        x1="3" y1="12" x2="21" y2="12"
+        stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+        style={{
+          transformOrigin: '12px 12px',
+          transition: `opacity 220ms ease, transform 380ms ${ease}`,
+          opacity: open ? 0 : 1,
+          transform: open ? 'scaleX(0.15)' : 'scaleX(1)',
+        }}
+      />
+      <line
+        x1="3" y1="18" x2="21" y2="18"
+        stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+        style={{
+          transformOrigin: '12px 18px',
+          transition: `transform 380ms ${ease}`,
+          transform: open ? 'translateY(-6px) rotate(-45deg)' : 'translateY(0) rotate(0)',
+        }}
+      />
+    </svg>
+  );
+}
+
 function useActiveSection() {
   const [active, setActive] = useState(null);
   const navigatingTo = useRef(null);
   const rafId = useRef(null);
 
   const detect = () => {
-    if (rafId.current) return; // already scheduled this frame
+    if (rafId.current) return;
     rafId.current = requestAnimationFrame(() => {
       rafId.current = null;
       if (window.scrollY < 80) { setActive(null); return; }
@@ -65,8 +100,10 @@ export default function Navbar() {
   const [hovered, setHovered] = useState(null);
   const [useDarkLogo, setUseDarkLogo] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [useLightMobileMenuIcon, setUseLightMobileMenuIcon] = useState(false);
+  const [navbarThemeOverride, setNavbarThemeOverride] = useState(null);
   const { active, navigateTo } = useActiveSection();
-  
+
   const navRef = useRef(null);
   const menuRef = useRef(null);
   const pillRef = useRef(null);
@@ -80,6 +117,11 @@ export default function Navbar() {
       if (themeRafId) return;
       themeRafId = requestAnimationFrame(() => {
         themeRafId = null;
+        if (navbarThemeOverride) {
+          setUseDarkLogo(navbarThemeOverride === 'light');
+          return;
+        }
+
         const probeY = 48;
         const lightSections = document.querySelectorAll('[data-navbar-theme="light"]');
         let isLightBackground = false;
@@ -100,7 +142,7 @@ export default function Navbar() {
       window.removeEventListener('resize', detectTheme);
       if (themeRafId) cancelAnimationFrame(themeRafId);
     };
-  }, []);
+  }, [navbarThemeOverride]);
 
   useEffect(() => {
     const onVisibilityChange = (event) => {
@@ -110,6 +152,28 @@ export default function Navbar() {
     window.addEventListener('hero-navbar-visibility', onVisibilityChange);
     return () => {
       window.removeEventListener('hero-navbar-visibility', onVisibilityChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    const onMobileMenuThemeChange = (event) => {
+      setUseLightMobileMenuIcon(Boolean(event.detail?.light));
+    };
+
+    window.addEventListener('hero-mobile-menu-theme', onMobileMenuThemeChange);
+    return () => {
+      window.removeEventListener('hero-mobile-menu-theme', onMobileMenuThemeChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    const onNavbarThemeOverride = (event) => {
+      setNavbarThemeOverride(event.detail?.theme ?? null);
+    };
+
+    window.addEventListener('navbar-theme-override', onNavbarThemeOverride);
+    return () => {
+      window.removeEventListener('navbar-theme-override', onNavbarThemeOverride);
     };
   }, []);
 
@@ -131,7 +195,7 @@ export default function Navbar() {
     if (pillTarget && linksRef.current[pillTarget]) {
       const linkEl = linksRef.current[pillTarget];
       const liEl = linkEl.parentElement;
-      
+
       if (!liEl) return;
 
       const { offsetLeft, offsetTop, offsetWidth, offsetHeight } = liEl;
@@ -153,19 +217,34 @@ export default function Navbar() {
     }
   }, [pillTarget]);
 
-  // Mobile menu animation
+  // Mobile menu animation — scale + opacity + stagger
   useEffect(() => {
+    const menu = menuRef.current;
+    if (!menu) return;
+
     if (menuOpen) {
-      gsap.to(menuRef.current, {
-        clipPath: 'inset(0 0 0 0)',
-        duration: 0.4,
-        ease: "power2.inOut"
-      });
+      gsap.killTweensOf(menu);
+      gsap.set(menu, { pointerEvents: 'auto' });
+      gsap.fromTo(
+        menu,
+        { opacity: 0, scale: 0.96 },
+        { opacity: 1, scale: 1, duration: 0.45, ease: 'power3.out' }
+      );
+
+      const items = menu.querySelectorAll('.mobile-link');
+      gsap.fromTo(
+        items,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.055, ease: 'power3.out', delay: 0.1 }
+      );
     } else {
-      gsap.to(menuRef.current, {
-        clipPath: 'inset(0 0 100% 0)',
-        duration: 0.4,
-        ease: "power2.inOut"
+      gsap.killTweensOf(menu);
+      gsap.to(menu, {
+        opacity: 0,
+        scale: 0.96,
+        duration: 0.22,
+        ease: 'power2.in',
+        onComplete: () => gsap.set(menu, { pointerEvents: 'none' }),
       });
     }
   }, [menuOpen]);
@@ -196,10 +275,6 @@ export default function Navbar() {
           className="flex items-center"
           onClick={(e) => {
             e.preventDefault();
-            // O Hero ocupa 560vh e o estado "laranja completo" está em ~82%
-            // do scroll da seção. ScrollTrigger usa start:'top top', end:'bottom bottom',
-            // então a distância scrollável = (5.6 - 1) × vh = 4.6vh.
-            // Alvo: 0.82 × 4.6 × vh ≈ 3.772 × window.innerHeight
             const target = Math.round(0.82 * 4.6 * window.innerHeight);
             const lenis = window.__theOneLenis;
             if (lenis) {
@@ -229,7 +304,6 @@ export default function Navbar() {
             WebkitBackdropFilter: 'blur(28px)',
           }}
         >
-          {/* Animated Pill */}
           <div
             ref={pillRef}
             className="absolute pointer-events-none"
@@ -300,29 +374,45 @@ export default function Navbar() {
         </div>
 
         <button
-          className="md:hidden z-[60]"
-          style={{ color: '#FE6942' }}
+          className="md:hidden z-[60] transition-transform duration-150 active:scale-[0.88]"
+          style={{ color: menuOpen || useLightMobileMenuIcon ? '#FFFFFF' : '#FE6942' }}
           onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
         >
-          {menuOpen ? <X size={26} /> : <Menu size={26} />}
+          <HamburgerIcon open={menuOpen} />
         </button>
       </nav>
 
+      {/* Mobile menu — frosted glass overlay */}
       <div
         ref={menuRef}
-        className="fixed inset-0 z-40 bg-[#212121] pt-32 px-8 flex flex-col"
-        style={{ clipPath: 'inset(0 0 100% 0)', pointerEvents: menuOpen ? 'auto' : 'none' }}
+        className="fixed inset-0 z-40 flex flex-col pt-28 px-8"
+        style={{
+          opacity: 0,
+          pointerEvents: 'none',
+          background: 'rgba(10, 10, 10, 0.92)',
+          backdropFilter: 'blur(40px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(40px) saturate(180%)',
+          borderTop: '1px solid rgba(255,255,255,0.06)',
+          willChange: 'transform, opacity',
+        }}
       >
-        <div className="flex flex-col gap-8">
-          {navLinks.map((l) => (
+        <div className="flex flex-col gap-2 mt-8">
+          {navLinks.map((l, i) => (
             <a
               key={l.id}
               href={`#${l.id}`}
               onClick={() => { setMenuOpen(false); navigateTo(l.id); }}
-              className="font-sans capitalize transition-colors"
+              className="mobile-link font-sans capitalize"
               style={{
-                fontSize: '32px',
-                color: active === l.id ? '#ffffff' : 'rgba(255,255,255,0.74)',
+                fontSize: '36px',
+                fontWeight: 400,
+                letterSpacing: '-0.02em',
+                lineHeight: 1.2,
+                padding: '10px 0',
+                color: active === l.id ? '#ffffff' : 'rgba(255,255,255,0.5)',
+                borderBottom: i < navLinks.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none',
+                transition: 'color 200ms ease',
               }}
             >
               {l.name}
@@ -330,13 +420,12 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* WhatsApp CTA — mobile menu */}
         <a
           href="https://wa.me/5551997513675?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20TheOne%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es"
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => setMenuOpen(false)}
-          className="mt-10 inline-flex items-center gap-3 font-sans capitalize active:scale-[0.98]"
+          className="mobile-link mt-10 inline-flex items-center gap-3 font-sans capitalize active:scale-[0.97]"
           style={{
             fontSize: '18px',
             color: '#6B2F1D',
@@ -345,6 +434,7 @@ export default function Navbar() {
             background: 'linear-gradient(135deg, rgba(255,215,205,0.95) 0%, rgba(255,127,86,0.88) 100%)',
             border: '1px solid rgba(255,120,82,0.18)',
             alignSelf: 'flex-start',
+            transition: 'transform 160ms ease-out',
           }}
         >
           <span

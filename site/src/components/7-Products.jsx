@@ -182,7 +182,7 @@ function MobileDeliverableCard({ label, src }) {
   );
 }
 
-// ── Mobile: lista vertical de steps ──────────────────────────────────────────
+// ── Mobile: lista vertical de steps com timeline ─────────────────────────────
 function ProductsMobileList({ steps }) {
   const stepRefs = useRef([]);
 
@@ -191,11 +191,20 @@ function ProductsMobileList({ steps }) {
       stepRefs.current.forEach((el) => {
         if (!el) return;
         gsap.fromTo(
-          el,
-          { opacity: 0, y: 28 },
+          el.querySelector('.step-header'),
+          { opacity: 0, y: 20 },
           {
-            opacity: 1, y: 0, duration: 0.7, ease: 'power3.out',
+            opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
             scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+          }
+        );
+        gsap.fromTo(
+          el.querySelectorAll('.mobile-card'),
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1, y: 0, duration: 0.55, ease: 'power3.out',
+            stagger: 0.1,
+            scrollTrigger: { trigger: el, start: 'top 80%', once: true },
           }
         );
       });
@@ -204,51 +213,69 @@ function ProductsMobileList({ steps }) {
   }, []);
 
   return (
-    <div className="px-6 py-8 flex flex-col gap-14">
-      {steps.map((step, i) => (
-        <div key={step.number} ref={(el) => { stepRefs.current[i] = el; }}>
-          {/* Number + label */}
-          <div className="flex items-start gap-4 mb-3">
-            <div
-              className="shrink-0 w-12 h-12 rounded-full border border-white/10 bg-[#1c1c1c] flex items-center justify-center"
-            >
-              <span
-                className="font-halyard tabular-nums"
-                style={{
-                  fontSize: '18px',
-                  background: 'linear-gradient(135deg, #FED1C5, #FF5224)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                }}
-              >
-                {step.number}
-              </span>
-            </div>
-            <h3
-              className="font-editorial font-normal leading-[1.1] text-[#FF744F] pt-1"
-              style={{ fontSize: 'clamp(1.3rem, 5vw, 1.8rem)' }}
-            >
-              {step.label}
-            </h3>
-          </div>
+    <div className="px-5 pt-10 pb-12">
+      {steps.map((step, i) => {
+        const isLast = i === steps.length - 1;
+        return (
+          <div key={step.number} className="flex gap-4 pb-5" ref={(el) => { stepRefs.current[i] = el; }}>
 
-          {/* Description */}
+            {/* Coluna da timeline */}
+            <div className="flex flex-col items-center shrink-0 w-12">
+              <div className="shrink-0 w-12 h-12 rounded-full border border-white/10 bg-[#1c1c1c] flex items-center justify-center">
+                <span
+                  className="font-halyard tabular-nums"
+                  style={{
+                    fontSize: '18px',
+                    background: 'linear-gradient(135deg, #FED1C5, #FF5224)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                  }}
+                >
+                  {step.number}
+                </span>
+              </div>
+              {!isLast && (
+                <div
+                  className="w-px flex-1 my-3"
+                  style={{
+                    background: 'linear-gradient(to bottom, rgba(255,82,36,0.5), rgba(255,82,36,0.08))',
+                    minHeight: '48px',
+                  }}
+                />
+              )}
+            </div>
+
+            {/* Coluna de conteúdo */}
+            <div className="flex-1 min-w-0 pb-12">
+              <div className="step-header">
+                <h3
+                  className="font-editorial font-normal leading-[1.1] text-[#FF744F] pt-1 mb-3"
+                  style={{ fontSize: 'clamp(2.02rem, 7.25vw, 2.58rem)' }}
+                >
+                  {step.label}
+                </h3>
           <p
             className="font-halyard font-normal text-white leading-[1.5] mb-5"
-            style={{ fontSize: 'clamp(0.95rem, 4vw, 1.1rem)' }}
+            style={{ fontSize: 'clamp(1.18rem, 4.95vw, 1.38rem)' }}
           >
             {step.description}
           </p>
+              </div>
 
-          {/* Cards 2-col grid */}
-          <div className="grid grid-cols-2 gap-3">
-            {step.cards.map((card) => (
-              <MobileDeliverableCard key={card.label} label={card.label} src={card.src} />
-            ))}
+              {/* Cards 1 por linha */}
+              <div className="flex flex-col gap-4">
+                {step.cards.map((card) => (
+                  <div key={card.label} className="mobile-card">
+                    <MobileDeliverableCard label={card.label} src={card.src} />
+                  </div>
+                ))}
+              </div>
+            </div>
+
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

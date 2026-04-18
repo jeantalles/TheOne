@@ -151,7 +151,7 @@ export default function StorytellingIntro() {
     if (!isCompactLayout || prefersReducedMotion) return undefined;
 
     const ctx = gsap.context(() => {
-      const panel = containerRef.current?.querySelector('.si-panel-mobile');
+      const panel = containerRef.current;
       if (!panel) return;
 
       const titleWords = panel.querySelectorAll('.si-mobile-title-word');
@@ -162,18 +162,18 @@ export default function StorytellingIntro() {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: panel,
-          start: 'top 85%',
-          end: 'bottom 80%',
-          scrub: 1.4,
+          start: 'top 76%',
+          end: 'bottom 58%',
+          scrub: 1.8,
         },
       });
 
       if (titleWords.length) {
-        tl.to(titleWords, { opacity: 1, ease: 'none', stagger: { each: 0.045 } }, 0);
+        tl.to(titleWords, { opacity: 1, ease: 'none', stagger: { each: 0.055 } }, 0);
       }
 
       if (copyWords.length) {
-        tl.to(copyWords, { opacity: 1, ease: 'none', stagger: { each: 0.022 } }, 0.28);
+        tl.to(copyWords, { opacity: 1, ease: 'none', stagger: { each: 0.026 } }, 0.34);
       }
     }, containerRef);
 
@@ -224,7 +224,7 @@ export default function StorytellingIntro() {
     const lines = STORY.content.split('\n');
     return (
       <div
-        className="si-panel-mobile-body mt-6 max-w-4xl font-halyard font-light"
+        className="si-panel-mobile-body mt-6 max-w-4xl font-halyard font-normal"
         style={{
           fontSize: 'clamp(1.35rem, 5.2vw, 1.65rem)',
           lineHeight: FONT_CONFIG.textLineHeight,
@@ -250,8 +250,29 @@ export default function StorytellingIntro() {
         ref={containerRef}
         data-navbar-theme="light"
         className="si-panel-mobile relative flex flex-col items-center justify-center px-6 py-24"
-        style={{ backgroundColor: '#F5F0EB' }}
+        style={{
+          backgroundColor: '#F5F0EB',
+          marginTop: `calc(-1 * ${STORYTELLING_INTRO_OVERLAP})`,
+          marginBottom: STORYTELLING_INTRO_OVERLAP,
+          zIndex: 0,
+        }}
       >
+        <div
+          className="absolute left-0 right-0 pointer-events-none z-0"
+          style={{
+            top: `calc(-1 * ${STORYTELLING_INTRO_OVERLAP})`,
+            height: `calc(100% + ${STORYTELLING_INTRO_OVERLAP})`,
+            backgroundColor: '#F5F0EB',
+          }}
+        />
+        <div
+          className="absolute left-0 right-0 pointer-events-none z-0"
+          style={{
+            top: `calc(-1 * ${STORYTELLING_INTRO_OVERLAP})`,
+            height: `calc(100% + ${STORYTELLING_INTRO_OVERLAP})`,
+            background: 'radial-gradient(circle at center, rgba(255,82,36,0.04) 0%, transparent 60%)',
+          }}
+        />
         <div className="relative z-10 max-w-5xl w-full text-center flex flex-col items-center gap-8 py-16">
           <span
             className="text-[#FE6942] font-halyard tracking-widest uppercase"
@@ -316,7 +337,7 @@ export default function StorytellingIntro() {
           {renderWords(STORY.title, 'si-title-word')}
         </h2>
         <p
-          className="si-copy-container font-halyard font-light max-w-4xl mt-6"
+          className="si-copy-container font-halyard font-normal max-w-4xl mt-6"
           style={{
             fontSize: FONT_CONFIG.texto,
             lineHeight: FONT_CONFIG.textLineHeight,

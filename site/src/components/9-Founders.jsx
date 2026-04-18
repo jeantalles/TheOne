@@ -1,6 +1,15 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 
+const CLIENT_LOGOS = [
+  { src: '/images/founders-logos/o-boticario.png', alt: 'O Boticario' },
+  { src: '/images/founders-logos/max-titanium.png', alt: 'Max Titanium' },
+  { src: '/images/founders-logos/stihl.png', alt: 'Stihl' },
+  { src: '/images/founders-logos/jacuzzi.png', alt: 'Jacuzzi' },
+  { src: '/images/founders-logos/arezzo.png', alt: 'Arezzo' },
+  { src: '/images/founders-logos/cyrela.png', alt: 'Cyrela' },
+];
+
 const founders = [
   {
     number: '01',
@@ -57,13 +66,13 @@ export default function Founders() {
     <section
       id="fundadores"
       ref={sectionRef}
-      className="py-20 md:py-32 px-6 md:px-12 lg:px-16 bg-[#212121] font-halyard overflow-hidden"
+      className="pt-20 pb-28 md:py-32 px-6 md:px-12 lg:px-16 bg-[#212121] font-halyard overflow-hidden"
     >
       <div className="max-w-[1500px] mx-auto">
 
         {/* Header */}
         <div className="mb-12 md:mb-20">
-          <h2 className="font-editorial text-4xl md:text-5xl lg:text-[56px] text-white leading-[1.1]">
+          <h2 className="font-editorial text-[2.9rem] md:text-5xl lg:text-[56px] text-white leading-[1.16] md:leading-[1.1]">
             Quem está por trás da{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224]">
               TheOne.
@@ -84,7 +93,7 @@ export default function Founders() {
 
                   {/* Photo */}
                   <div
-                    className={`relative overflow-hidden w-full md:w-[40%] aspect-[3/4] md:aspect-auto md:min-h-[750px] flex-shrink-0 ${
+                    className={`relative overflow-hidden w-full md:w-[40%] aspect-[4/5] md:aspect-auto md:min-h-[620px] lg:min-h-[660px] flex-shrink-0 ${
                       isReversed ? 'md:order-2' : ''
                     }`}
                     style={{ background: '#1a1a1a' }}
@@ -102,14 +111,14 @@ export default function Founders() {
                       className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] [@media(hover:hover)]:group-hover:scale-[1.04]"
                     />
                     {/* Large decorative number */}
-                    <span className="absolute bottom-5 right-7 font-editorial text-[100px] leading-none text-white/[0.06] select-none pointer-events-none">
+                    <span className="absolute bottom-5 right-7 hidden md:block font-editorial text-[100px] leading-none text-white/[0.06] select-none pointer-events-none">
                       {f.number}
                     </span>
                   </div>
 
                   {/* Content */}
                   <div
-                    className={`relative z-10 flex flex-col justify-center bg-[#212121] px-6 md:px-14 lg:px-16 py-10 md:py-16 flex-1 ${
+                    className={`relative z-10 flex flex-col justify-center bg-[#212121] px-6 md:px-14 lg:px-16 pt-10 pb-14 md:py-16 flex-1 ${
                       isReversed ? 'md:order-1' : ''
                     }`}
                   >
@@ -124,24 +133,43 @@ export default function Founders() {
                     </h3>
 
                     {/* Role */}
-                    <p className="text-[#FE6942] text-[15px] uppercase tracking-[0.18em] mb-10">
+                    <p className="text-[#FE6942] text-[15px] md:text-[17px] uppercase tracking-[0.18em] mb-10">
                       {f.role}
                     </p>
 
                     {/* Divider */}
-                    <div className="w-10 h-[1px] bg-white/10 mb-10" />
+                    <div className="w-16 h-[1px] bg-white/10 mb-10" />
 
                     {/* Bullets */}
-                    <ul className="space-y-6">
+                    <ul className="space-y-7 md:space-y-8">
                       {f.bullets.map((b, j) => (
                         <li key={j} className="flex gap-4 items-start">
-                          <span className="text-[#FE6942] text-base mt-0.5 shrink-0">→</span>
-                          <p className="text-[#C7C7C7] font-light text-[17px] md:text-[21px] leading-[1.55]">
+                          <span className="text-[#FE6942] text-[1.2rem] md:text-[1.45rem] leading-none mt-1 shrink-0">→</span>
+                          <p className="text-[#E1E1E1] font-light text-[20px] md:text-[26px] leading-[1.52] max-w-[34ch]">
                             {b}
                           </p>
                         </li>
                       ))}
                     </ul>
+
+                    <div className="mt-14 md:mt-14">
+                      <div className="grid grid-cols-3 md:grid-cols-4 gap-x-6 gap-y-6 md:gap-x-5 md:gap-y-6 px-1 md:px-0">
+                        {CLIENT_LOGOS.map((logo) => (
+                          <div
+                            key={logo.alt}
+                            className="flex h-[24px] items-center justify-start md:h-[26px]"
+                          >
+                            <img
+                              src={logo.src}
+                              alt={logo.alt}
+                              loading="lazy"
+                              decoding="async"
+                              className="max-h-full w-auto max-w-[68px] object-contain opacity-68 md:max-w-[96px]"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
 
                 </div>

@@ -59,10 +59,12 @@ export default function FinalCTA() {
               hoverBoxShadow="0 18px 40px rgba(24,20,18,0.28)"
               textColor="#f5eee8"
               style={{
-                fontSize: '19px',
-                height: '72px',
-                padding: '0 68px',
+                fontSize: 'clamp(1rem, 4.2vw, 1.1875rem)',
+                height: 'clamp(60px, 14vw, 72px)',
+                padding: '0 clamp(1.95rem, 8.2vw, 4.75rem)',
                 borderRadius: '999px',
+                whiteSpace: 'nowrap',
+                maxWidth: '100%',
               }}
             >
               Quero ser TheOne

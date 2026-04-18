@@ -1,6 +1,6 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
-import { usePrefersReducedMotion } from '../hooks/useMediaQuery';
+import { useMediaQuery, usePrefersReducedMotion } from '../hooks/useMediaQuery';
 
 const OPTIONS = [
   { value: 'empresario', label: 'Empresário' },
@@ -9,7 +9,10 @@ const OPTIONS = [
 
 export default function PersonaSelector({ onSelect }) {
   const contentRef = useRef(null);
+  const cardsRef = useRef(null);
+  const shakingRef = useRef(false);
   const prefersReducedMotion = usePrefersReducedMotion();
+  const isMobileViewport = useMediaQuery('(max-width: 767px)');
   const [selected, setSelected] = useState(null); // valor selecionado (pré-saída)
 
   // ── Slide-in-up ao montar ─────────────────────────────────────────────────
@@ -26,6 +29,87 @@ export default function PersonaSelector({ onSelect }) {
 
     return () => ctx.revert();
   }, [prefersReducedMotion]);
+
+  // ── Shake nos cards (compartilhado: idle + scroll/touch) ─────────────────
+  const triggerShake = useCallback(() => {
+    if (shakingRef.current || prefersReducedMotion || !cardsRef.current) return;
+    shakingRef.current = true;
+    const cards = Array.from(cardsRef.current.children);
+    const shakeX = 10;
+    const settleX = 7;
+    const tailX = 3;
+    const stepDuration = 0.08;
+    const tailDuration = 0.06;
+
+    cards.forEach((card, i) => {
+      gsap.to(card, {
+        delay: i * 0.05,
+        keyframes: [
+          { x: -shakeX, duration: stepDuration, ease: 'none' },
+          { x:  shakeX, duration: stepDuration, ease: 'none' },
+          { x: -settleX, duration: stepDuration, ease: 'none' },
+          { x:  settleX, duration: stepDuration, ease: 'none' },
+          { x: -tailX, duration: tailDuration, ease: 'none' },
+          { x:  0, duration: tailDuration, ease: 'none' },
+        ],
+        onComplete: i === cards.length - 1
+          ? () => { shakingRef.current = false; }
+          : undefined,
+      });
+    });
+  }, [prefersReducedMotion]);
+
+  // ── Shake idle a cada 2s ──────────────────────────────────────────────────
+  useEffect(() => {
+    if (prefersReducedMotion || !cardsRef.current) return undefined;
+
+    let intervalId = null;
+
+    // Pequeno delay inicial para não colidir com o slide-in
+    const timeoutId = setTimeout(() => {
+      triggerShake();
+      intervalId = setInterval(triggerShake, 2000);
+    }, 1400);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (intervalId) clearInterval(intervalId);
+    };
+  }, [prefersReducedMotion, triggerShake]);
+
+  useEffect(() => {
+    const overlay = contentRef.current?.parentElement;
+    if (!overlay || prefersReducedMotion) return undefined;
+
+    let touchStartY = 0;
+
+    const onWheel = (e) => {
+      e.preventDefault();
+      triggerShake();
+    };
+
+    const onTouchStart = (e) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const onTouchMove = (e) => {
+      const delta = Math.abs(e.touches[0].clientY - touchStartY);
+      if (delta > (isMobileViewport ? 5 : 8)) {
+        e.preventDefault();
+        triggerShake();
+      }
+    };
+
+    overlay.addEventListener('wheel', onWheel, { passive: false });
+    overlay.addEventListener('touchstart', onTouchStart, { passive: true });
+    overlay.addEventListener('touchmove', onTouchMove, { passive: false });
+
+    return () => {
+      overlay.removeEventListener('wheel', onWheel);
+      overlay.removeEventListener('touchstart', onTouchStart);
+      overlay.removeEventListener('touchmove', onTouchMove);
+    };
+  }, [isMobileViewport, prefersReducedMotion, triggerShake]);
 
   // ── Selecionar persona ────────────────────────────────────────────────────
   const handleSelect = (value) => {
@@ -101,7 +185,7 @@ export default function PersonaSelector({ onSelect }) {
         </h2>
 
         {/* Cards */}
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-4 w-full">
+        <div ref={cardsRef} className="flex flex-col sm:flex-row gap-4 sm:gap-4 w-full">
           {OPTIONS.map((opt) => {
             const isSelected = selected === opt.value;
             const isDimmed   = selected !== null && !isSelected;
@@ -113,6 +197,7 @@ export default function PersonaSelector({ onSelect }) {
                 isSelected={isSelected}
                 isDimmed={isDimmed}
                 confirmed={selected !== null}
+                isMobile={isMobileViewport}
                 onClick={() => handleSelect(opt.value)}
               />
             );
@@ -124,7 +209,8 @@ export default function PersonaSelector({ onSelect }) {
 }
 
 // ── Card individual ───────────────────────────────────────────────────────────
-function PersonaCard({ label, isSelected, isDimmed, confirmed, onClick }) {
+function PersonaCard({ label, isSelected, isDimmed, confirmed, onClick, isMobile }) {
+  const defaultBg = isMobile ? '#F5F0EC' : 'transparent';
   return (
     <button
       onClick={onClick}
@@ -137,7 +223,7 @@ function PersonaCard({ label, isSelected, isDimmed, confirmed, onClick }) {
           : '1.5px solid rgba(21, 19, 17, 0.18)',
         backgroundColor: isSelected
           ? 'rgba(254, 105, 66, 0.07)'
-          : 'transparent',
+          : defaultBg,
         opacity: isDimmed ? 0.3 : 1,
         pointerEvents: confirmed ? 'none' : 'auto',
         outline: 'none',
@@ -149,7 +235,7 @@ function PersonaCard({ label, isSelected, isDimmed, confirmed, onClick }) {
       }}
       onMouseLeave={(e) => {
         if (!isSelected && !confirmed) {
-          e.currentTarget.style.backgroundColor = 'transparent';
+          e.currentTarget.style.backgroundColor = defaultBg;
         }
       }}
     >

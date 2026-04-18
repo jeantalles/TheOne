@@ -72,7 +72,7 @@ export default function TheOne() {
           {imageCard('md:hidden')}
 
           <div
-            className="flex flex-col gap-6 font-halyard font-light text-[#C7C7C7] w-full text-[clamp(1.1rem,4.6vw,1.28rem)] md:text-[20px]"
+            className="flex flex-col gap-6 font-halyard font-light text-[#C7C7C7] w-full text-[clamp(1.24rem,5.15vw,1.42rem)] md:text-[20px]"
             style={{ lineHeight: style.alturaLinhaTexto }}
           >
             <p className="max-w-[620px] relative -top-px">
@@ -86,7 +86,7 @@ export default function TheOne() {
             <p className="max-w-[620px] relative -top-px">
               Não entregamos um PDF e sumimos. Estruturamos a narrativa, o posicionamento e a presença da sua marca em todos os principais pontos de contato. Seremos seus aliados na efetivação da estratégia para consolidar o seu negócio como o número um do seu mercado.
             </p>
-            <ul className="pt-4 md:pt-6 grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-y-5 md:gap-x-10 lg:gap-x-14 text-left text-white font-light w-full text-[clamp(1.02rem,4.2vw,1.16rem)] md:text-[20px]">
+            <ul className="pt-4 md:pt-6 grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-y-5 md:gap-x-10 lg:gap-x-14 text-left text-white font-light w-full text-[clamp(1.14rem,4.75vw,1.3rem)] md:text-[22px]">
               <li className="flex items-start gap-3 min-w-0">
                 <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
                 <span>
@@ -102,7 +102,7 @@ export default function TheOne() {
               <li className="flex items-start gap-3 min-w-0">
                 <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
                 <span>
-                  Não atendemos centenas de clientes. Nós selecionamos empresas que têm visão de crescimento e propósito de gerar transformação para nos tornarmos aliados.
+                  Não atuamos com centenas, nem dezenas de clientes. Nós selecionamos empresas que têm visão de crescimento e propósito de gerar transformação para nos tornarmos aliados.
                 </span>
               </li>
             </ul>

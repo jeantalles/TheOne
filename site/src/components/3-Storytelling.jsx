@@ -21,6 +21,7 @@ const STORYTELLING_CONFIG = {
 
 const TOKEN_STYLES = {
   WHITE: { color: '#FFFFFF', fontWeight: 400 },
+  ORANGE: { color: '#FE6942', fontWeight: 400 },
   QUESTION: {
     color: '#FFFFFF',
     fontFamily: '"PP Editorial New", serif',
@@ -36,8 +37,8 @@ const PANEL_03 = {
   title: 'O problema é que o marketing tradicional não foi feito para negócios visionários.',
   titleWidth: '1000px',
   titleSizeDesktop: 'clamp(2rem, 5vw, 3.8rem)',
-  titleSizeMobile: 'clamp(2.05rem, 7.5vw, 3.1rem)',
-  content: 'Nossa história começou na linha de frente de [WHITE]uma das maiores assessorias de marketing da América Latina.[/WHITE] Vimos empresas despejando rios de dinheiro em uma solução industrializada que prometia resultado, mas não resolviam os problemas de cada negócio. [WHITE]Nós vimos o marketing ruir de dentro pra fora.[/WHITE]\n\nDo outro lado, vemos agências de branding entregando conceitos poéticos, mas abandonando o cliente na execução. Um focando só na performance, e o outro só no branding.\n\nE no meio desse abismo ficam empresas como a sua, com potencial e produto valioso, investindo e sem atingir a visão que buscam.',
+  titleSizeMobile: 'clamp(2.28rem, 8.15vw, 3.34rem)',
+  content: 'Nossa história começou na linha de frente de [WHITE]uma das maiores assessorias de marketing da América Latina.[/WHITE] Vimos empresas despejando rios de dinheiro em uma solução industrializada que prometia resultado, mas não resolviam os problemas de cada negócio. [WHITE]Nós vimos o marketing ruir de dentro pra fora.[/WHITE]\n\nDo outro lado, vemos agências de branding entregando conceitos poéticos, mas abandonando o cliente na execução. Um focando só na performance, e o outro só no branding.\n\n[WHITE]E no meio desse abismo ficam empresas como a sua[/WHITE], com potencial e produto valioso, investindo e sem atingir a visão que buscam.',
 };
 
 const PANEL_04 = {
@@ -45,7 +46,7 @@ const PANEL_04 = {
   title: 'Você pode pagar para aparecer. Mas não pode pagar para ser escolhido.',
   titleWidth: '920px',
   titleSizeDesktop: 'clamp(2.2rem, 6vw, 4.2rem)',
-  titleSizeMobile: 'clamp(2.15rem, 7.7vw, 3.25rem)',
+  titleSizeMobile: 'clamp(2.4rem, 8.35vw, 3.48rem)',
   textSizeDesktop: '23px',
   textSizeMobile: 'clamp(1.25rem, 4.8vw, 1.5rem)',
   content: 'O tráfego te coloca na frente do cliente, mas se a sua oferta parece igual à do concorrente, você pagou pra ser visto e ignorado. E se parar de anunciar a qualquer momento pode pôr sua empresa em risco, você não está escalando, está dependente.\n\n[WHITE]Ser visto não é suficiente. Você precisa ser lembrado. E desejado.[/WHITE]\n\nE quando o mercado não enxerga o que te diferencia, ele faz o de sempre, te compara pelo preço. Não importa o quanto seu produto é superior. Sem um posicionamento inevitável, você compete de igual para igual com quem entrega menos.\n\n[QUESTION]E aí fica a pergunta: Você quer ser só mais um?[/QUESTION]',
@@ -57,8 +58,8 @@ const STORIES = {
       tag: '02 ⏤ 04',
       title: 'Sabemos que você quer construir um legado.',
       titleWidth: '700px',
-      titleSizeMobile: 'clamp(2.15rem, 7.5vw, 3.2rem)',
-      content: 'Assim como nós, você é ambicioso, tem visão, mas sente que [WHITE]seu negócio vale mais do que o mercado valoriza.[/WHITE] As pessoas ao redor não entendem por que você não se acomoda, não aceita entregar o básico e [WHITE]sempre está buscando elevar o nível do seu negócio.[/WHITE]\n\nVocê não quer apenas bater metas no fim do mês, você quer gerar riqueza, transformação, ditar as regras do seu mercado e ser a referência número um. [WHITE]Afinal, você é um visionário.[/WHITE]',
+      titleSizeMobile: 'clamp(2.38rem, 8.1vw, 3.42rem)',
+      content: 'Assim como nós, você é ambicioso, tem visão, mas sente que [WHITE]seu negócio vale mais do que o mercado valoriza.[/WHITE] As pessoas ao redor não entendem por que você não se acomoda, não aceita entregar o básico e [WHITE]sempre está buscando elevar o nível do seu negócio.[/WHITE]\n\nVocê não quer apenas bater metas no fim do mês, você quer gerar riqueza, transformação, ditar as regras do seu mercado e ser a referência número um. [ORANGE]Afinal, você é um visionário[/ORANGE].',
     },
     PANEL_03,
     PANEL_04,
@@ -68,7 +69,7 @@ const STORIES = {
       tag: '02 ⏤ 04',
       title: 'Você sabe o que precisa mudar pra atingir a visão da empresa que atua.',
       titleWidth: '820px',
-      titleSizeMobile: 'clamp(2.1rem, 7.5vw, 3.15rem)',
+      titleSizeMobile: 'clamp(2.32rem, 8vw, 3.38rem)',
       content: 'Você está à frente de uma empresa com produto bom e visão de crescimento, [WHITE]mas sem uma marca bem estruturada.[/WHITE] Quando olha pra comunicação, sente que o mercado não enxerga o valor que a empresa entrega e que cada área tem uma visão diferente da marca, porque o posicionamento não está claro pra ninguém.\n\nO tráfego pago está ficando cada vez mais caro e não podem depender disso. Você não pode só entregar resultado no fim do mês. Você quer construir uma marca que seja a escolha número um e que faça a empresa ser a referência no mercado em que atua.',
     },
     PANEL_03,
@@ -433,7 +434,7 @@ export default function Storytelling({ persona }) {
               </span>
               <h2
                 className="story-title-container font-editorial font-normal leading-[1.1] text-white story-mobile-title"
-                style={{ fontSize: story.titleSizeMobile || 'clamp(2.1rem, 7.5vw, 3.8rem)', maxWidth: story.titleWidth }}
+                style={{ fontSize: story.titleSizeMobile || 'clamp(2.34rem, 8.15vw, 4rem)', maxWidth: story.titleWidth }}
               >
                 {renderCompactTitle(story.title)}
               </h2>

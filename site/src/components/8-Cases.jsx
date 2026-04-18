@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowUp } from 'lucide-react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useConstrainedMotion } from '../hooks/useMediaQuery';
+import { useConstrainedMotion, useMediaQuery } from '../hooks/useMediaQuery';
 import { caseStudies } from '../content/cases';
 import { navigateToPath, replaceCurrentHistoryState } from '../utils/router';
 
@@ -25,6 +25,7 @@ export default function Cases() {
   const shouldRestoreOpen = typeof window !== 'undefined'
     && Boolean((window.history.state ?? {}).restoreCasesOpen || (window.history.state ?? {}).savedCasesOpen);
   const prefersConstrainedMotion = useConstrainedMotion();
+  const isMobileViewport = useMediaQuery('(max-width: 767px)');
   const sectionRef         = useRef(null);
   const folderWrapRef      = useRef(null);
   const folderShellRef     = useRef(null);
@@ -43,6 +44,12 @@ export default function Cases() {
   const [openState, setOpenState] = useState(shouldRestoreOpen ? 'open' : 'closed');
   const isOpen = openState === 'open';
   const [imagesLoaded, setImagesLoaded] = useState(shouldRestoreOpen);
+  const caseCardAspectRatio = isMobileViewport ? '1.02 / 1' : CASE_IMAGE_ASPECT_RATIO;
+  const caseCardRadius = isMobileViewport ? '22px' : '32px';
+  const folderEntranceStart = isMobileViewport ? 'top 98%' : 'top 94%';
+  const folderEntranceEnd = isMobileViewport ? 'top 60%' : 'top 52%';
+  const folderInnerStart = isMobileViewport ? 'top 96%' : 'top 92%';
+  const folderInnerEnd = isMobileViewport ? 'top 58%' : 'top 50%';
 
   const handleCaseNavigation = (slug, isPublished) => {
     if (!isPublished) return;
@@ -144,7 +151,7 @@ export default function Cases() {
         { opacity: 0.3, y: 120, scale: 0.76 },
         { opacity: 1, y: 0, scale: 1.06, ease: 'none',
           scrollTrigger: {
-            trigger: folderWrapRef.current, start: 'top 94%', end: 'top 52%', scrub: 0.9,
+            trigger: folderWrapRef.current, start: folderEntranceStart, end: folderEntranceEnd, scrub: 0.9,
             onUpdate: (self) => {
               if (self.progress > 0.85 && breatheRef.current && !isOpenRef.current) {
                 if (breatheRef.current.paused()) breatheRef.current.play();
@@ -160,25 +167,25 @@ export default function Cases() {
       reg(gsap.fromTo(folderShellRef.current,
         { y: 24, scale: 0.93, rotateX: 7 },
         { y: -8, scale: 1.02, rotateX: 0, ease: 'none',
-          scrollTrigger: { trigger: folderWrapRef.current, start: 'top 92%', end: 'top 50%', scrub: 0.9 } }
+          scrollTrigger: { trigger: folderWrapRef.current, start: folderInnerStart, end: folderInnerEnd, scrub: 0.9 } }
       ));
 
       reg(gsap.fromTo(folderBackRef.current,
         { y: 24, scale: 0.94 },
         { y: -10, scale: 1.03, ease: 'none',
-          scrollTrigger: { trigger: folderWrapRef.current, start: 'top 92%', end: 'top 52%', scrub: 1.0 } }
+          scrollTrigger: { trigger: folderWrapRef.current, start: folderInnerStart, end: folderEntranceEnd, scrub: 1.0 } }
       ));
 
       reg(gsap.fromTo(folderFrontRef.current,
         { y: 16, scaleY: 0.94 },
         { y: -4, scaleY: 1.01, ease: 'none',
-          scrollTrigger: { trigger: folderWrapRef.current, start: 'top 92%', end: 'top 52%', scrub: 1.0 } }
+          scrollTrigger: { trigger: folderWrapRef.current, start: folderInnerStart, end: folderEntranceEnd, scrub: 1.0 } }
       ));
 
       reg(gsap.fromTo(folderPocketRef.current,
         { y: 16, scale: 0.94 },
         { y: 0, scale: 1, ease: 'none',
-          scrollTrigger: { trigger: folderWrapRef.current, start: 'top 92%', end: 'top 50%', scrub: 0.9 } }
+          scrollTrigger: { trigger: folderWrapRef.current, start: folderInnerStart, end: folderInnerEnd, scrub: 0.9 } }
       ));
 
       folderPreviewRefs.current.forEach((card, i) => {
@@ -186,7 +193,7 @@ export default function Cases() {
         reg(gsap.fromTo(card,
           { y: 56 + i * 16, scale: 0.84 - i * 0.04, rotate: (i - 1) * -6 },
           { y: 8 + i * 8, scale: 0.96 - i * 0.03, rotate: (i - 1) * -2.5, ease: 'none',
-            scrollTrigger: { trigger: folderWrapRef.current, start: 'top 92%', end: 'top 50%', scrub: 0.9 } }
+            scrollTrigger: { trigger: folderWrapRef.current, start: folderInnerStart, end: folderInnerEnd, scrub: 0.9 } }
         ));
       });
     }, sectionRef);
@@ -202,7 +209,7 @@ export default function Cases() {
       ctx.revert();
       breatheRef.current?.kill();
     };
-  }, [prefersConstrainedMotion, shouldRestoreOpen]);
+  }, [folderEntranceEnd, folderEntranceStart, folderInnerEnd, folderInnerStart, isMobileViewport, prefersConstrainedMotion, shouldRestoreOpen]);
 
   // ── 2. Scroll stack animations — only after folder opens ─────────────────
   useEffect(() => {
@@ -438,20 +445,21 @@ export default function Cases() {
                   className="case-stack-item sticky top-[108px] md:top-[124px]"
                   style={{
                     zIndex: 20 + i,
-                    marginTop: i === 0 ? 0 : 'clamp(-80px, calc(-22vh + 30px), -30px)',
-                    paddingBottom: i === CASES.length - 1 ? '16vh' : '22vh',
+                    marginTop: i === 0 ? 0 : 'clamp(-44px, calc(-12vh + 18px), -18px)',
+                    paddingBottom: i === CASES.length - 1 ? '12vh' : '16vh',
                   }}
                 >
                   <div
                     className="relative mx-auto w-full max-w-[1507px]"
-                    style={{ perspective: '1400px', aspectRatio: CASE_IMAGE_ASPECT_RATIO }}
+                    style={{ perspective: '1400px', aspectRatio: caseCardAspectRatio }}
                   >
                     <CardTag
                       {...(c.isPublished ? { type: 'button', onClick: () => handleCaseNavigation(c.slug, c.isPublished) } : {})}
-                      className={`case-card relative h-full w-full rounded-[32px] overflow-hidden group border-0 bg-[#111111] p-0 text-left ${
+                      className={`case-card relative h-full w-full overflow-hidden group border-0 bg-[#111111] p-0 text-left ${
                         c.isPublished ? 'cursor-pointer' : 'cursor-default'
                       }`}
-                      style={{ 
+                      style={{
+                        borderRadius: caseCardRadius,
                         border: '1px solid rgba(255,255,255,0.37)',
                         WebkitMaskImage: '-webkit-radial-gradient(white, black)',
                         maskImage: 'radial-gradient(white, black)',
@@ -467,8 +475,8 @@ export default function Cases() {
                         style={{
                           height: 'clamp(68px, 12%, 84px)',
                           backgroundColor: 'rgba(10,10,10,0.8)',
-                          borderBottomLeftRadius: '32px',
-                          borderBottomRightRadius: '32px',
+                          borderBottomLeftRadius: caseCardRadius,
+                          borderBottomRightRadius: caseCardRadius,
                           borderTop: '1px solid rgba(255,255,255,0.37)',
                         }}
                       >

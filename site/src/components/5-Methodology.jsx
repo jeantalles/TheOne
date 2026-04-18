@@ -1,12 +1,14 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { Users, Briefcase, Target } from 'lucide-react';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 
 // Comprimentos aproximados de cada linha no viewBox 400x400
 const LINE_LEN = [322, 312, 322];
 
 export default function Methodology() {
   const containerRef = useRef(null);
+  const isMobileViewport = useMediaQuery('(max-width: 767px)');
 
   useEffect(() => {
     let ctx = gsap.context(() => {
@@ -19,7 +21,7 @@ export default function Methodology() {
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: '+=200%',
+          end: isMobileViewport ? '+=340%' : '+=200%',
           pin: true,
           scrub: 1.2,
           invalidateOnRefresh: true,
@@ -27,11 +29,15 @@ export default function Methodology() {
       });
 
       // Headline: fade in when pin starts, then fade out on scroll
+      const headlineFadeInDuration = isMobileViewport ? 0.22 : 0.14;
+      const headlineHoldDuration = isMobileViewport ? 0.9 : 0.22;
+      const headlineFadeOutDuration = isMobileViewport ? 0.42 : 0.24;
+
       gsap.set('.meth-headline', { autoAlpha: 0 });
-      tl.to('.meth-headline', { autoAlpha: 1, duration: 0.14, ease: 'power2.out' });
-      tl.to({}, { duration: 0.22 });
+      tl.to('.meth-headline', { autoAlpha: 1, duration: headlineFadeInDuration, ease: 'power2.out' });
+      tl.to({}, { duration: headlineHoldDuration });
       tl.to('.meth-headline', {
-        opacity: 0, y: -32, filter: 'blur(10px)', duration: 0.24, ease: 'power1.out'
+        opacity: 0, y: -32, filter: 'blur(10px)', duration: headlineFadeOutDuration, ease: 'power1.out'
       });
 
       // Abertura
@@ -93,10 +99,12 @@ export default function Methodology() {
         '-=0.2'
       );
       tl.to({}, { duration: 0.45 });
-      tl.to('.meth-bullet-3',
-        { opacity: 0, y: -24, filter: 'blur(12px)', duration: 0.35, ease: 'power2.inOut' }
-      );
-      tl.to({}, { duration: 0.22 });
+      if (!isMobileViewport) {
+        tl.to('.meth-bullet-3',
+          { opacity: 0, y: -24, filter: 'blur(12px)', duration: 0.35, ease: 'power2.inOut' }
+        );
+        tl.to({}, { duration: 0.22 });
+      }
       tl.fromTo('.meth-center',
         { scale: 1.12, opacity: 0, filter: 'blur(20px)' },
         { scale: 1, opacity: 1, filter: 'blur(0px)', duration: 0.55, ease: 'power4.out' }
@@ -104,7 +112,7 @@ export default function Methodology() {
       tl.to({}, { duration: 1.7 });
     }, containerRef);
     return () => ctx.revert();
-  }, []);
+  }, [isMobileViewport]);
 
   return (
     <section
@@ -117,25 +125,37 @@ export default function Methodology() {
         <span className="text-[#FE6942] text-[19px] md:text-[21px] font-halyard tracking-widest uppercase block mb-8">
           Nossa Metodologia
         </span>
-        <h2 className="font-editorial text-[43px] md:text-[58px] lg:text-[74px] text-white text-center leading-[1.1] max-w-5xl">
-          A ciência por trás de uma <br />
-          marca <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224]">TheOne.</span>
+        <h2
+          className="font-editorial text-white text-center leading-[1.05] md:leading-[1.1]"
+          style={{
+            fontSize: isMobileViewport ? 'clamp(2.85rem, 10.2vw, 3.45rem)' : undefined,
+            maxWidth: isMobileViewport ? 'min(92vw, 26rem)' : undefined,
+          }}
+        >
+          {isMobileViewport ? (
+            <>
+              A ciência por trás
+              <br />
+              de uma marca
+              <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224]">TheOne.</span>
+            </>
+          ) : (
+            <>
+              A ciência por trás de uma <br />
+              marca <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224]">TheOne.</span>
+            </>
+          )}
         </h2>
       </div>
 
-      {/* Mobile context — visible on mobile/tablet (below lg), pyramid has no bullets there */}
-      <div className="absolute inset-x-0 bottom-10 z-30 pointer-events-none flex lg:hidden justify-center px-6 text-center">
-        <p
-          className="font-sans font-light text-[#C7C7C7] leading-[1.5]"
-          style={{ fontSize: 'clamp(0.95rem, 4vw, 1.15rem)', maxWidth: '400px' }}
-        >
-          Nossa metodologia parte de <span className="text-white">3 pilares</span>: público, negócio e mercado — para chegar ao posicionamento inevitável.
-        </p>
-      </div>
 
       {/* Bullet 1 */}
-      <div className="meth-bullet-1 absolute inset-0 z-40 pointer-events-none hidden lg:flex items-center justify-center px-6 pt-24 md:pt-28" style={{ opacity: 0 }}>
-        <p className="font-sans font-normal text-[24px] xl:text-[30px] leading-[1.45] text-[#C7C7C7] text-center max-w-[680px]">
+      <div
+        className="meth-bullet-1 absolute z-40 pointer-events-none flex items-start justify-center px-5 lg:inset-0 lg:items-center lg:justify-center lg:px-6 lg:pt-28"
+        style={{ opacity: 0, ...(isMobileViewport ? { top: '96px', left: 0, right: 0 } : {}) }}
+      >
+        <p className="font-sans font-normal text-[23px] lg:text-[24px] xl:text-[30px] leading-[1.5] lg:leading-[1.45] text-[#C7C7C7] text-center max-w-[340px] lg:max-w-[680px]">
           Nossa metodologia de construção de marca é baseada em{' '}
           <span className="text-white">pesquisa aprofundada em 3 pilares:</span>{' '}
           Seu público, seu negócio, seu mercado.
@@ -143,15 +163,21 @@ export default function Methodology() {
       </div>
 
       {/* Bullet 2 */}
-      <div className="meth-bullet-2 absolute inset-0 z-40 pointer-events-none hidden lg:flex items-center justify-center px-6 pt-24 md:pt-28" style={{ opacity: 0 }}>
-        <p className="font-sans font-normal text-[24px] xl:text-[30px] leading-[1.45] text-[#C7C7C7] text-center max-w-[620px]">
+      <div
+        className="meth-bullet-2 absolute z-40 pointer-events-none flex items-start justify-center px-5 lg:inset-0 lg:items-center lg:justify-center lg:px-6 lg:pt-28"
+        style={{ opacity: 0, ...(isMobileViewport ? { top: '130px', left: 0, right: 0 } : {}) }}
+      >
+        <p className="font-sans font-normal text-[27px] lg:text-[24px] xl:text-[30px] leading-[1.5] lg:leading-[1.45] text-[#C7C7C7] text-center max-w-[340px] lg:max-w-[620px]">
           Nós construímos marca baseado em <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224]">dados.</span>
         </p>
       </div>
 
       {/* Bullet 3 (com Glow nos números via classe global) */}
-      <div className="meth-bullet-3 absolute inset-0 z-40 pointer-events-none hidden lg:flex items-center justify-center px-6 pt-24 md:pt-28" style={{ opacity: 0 }}>
-        <p className="font-sans font-normal text-[22px] xl:text-[28px] leading-[1.55] text-[#C7C7C7] text-center max-w-[980px]">
+      <div
+        className="meth-bullet-3 absolute z-40 pointer-events-none flex items-start justify-center px-5 lg:inset-0 lg:items-center lg:justify-center lg:px-6 lg:pt-28"
+        style={{ opacity: 0, ...(isMobileViewport ? { top: '96px', left: 0, right: 0 } : {}) }}
+      >
+        <p className="font-sans font-normal text-[18px] lg:text-[22px] xl:text-[28px] leading-[1.65] lg:leading-[1.55] text-[#C7C7C7] text-center max-w-[340px] lg:max-w-[980px]">
           <span className="font-light">Se entendemos profundamente:</span>
           <br />
           <span className="text-[#FE6942] glow-method-text">1.</span> O que o público precisa, deseja, tem medo
@@ -165,8 +191,8 @@ export default function Methodology() {
       </div>
 
       {/* Pirâmide */}
-      <div className="relative w-full h-full flex items-center justify-center pt-24 md:pt-28">
-        <div className="meth-pyramid-shell relative flex-shrink-0 opacity-0" style={{ width: 'min(90vw, 96vh, 960px)', height: 'min(90vw, 96vh, 960px)' }}>
+      <div className="relative w-full h-full flex items-end lg:items-center justify-center pb-16 lg:pb-0 lg:pt-28">
+        <div className="meth-pyramid-shell relative flex-shrink-0 opacity-0" style={{ width: isMobileViewport ? 'min(86vw, 46vh)' : 'min(90vw, 96vh, 960px)', height: isMobileViewport ? 'min(86vw, 46vh)' : 'min(90vw, 96vh, 960px)' }}>
           <svg width="100%" height="100%" viewBox="0 0 400 400" className="absolute inset-0 pointer-events-none">
             <line x1="200" y1="52" x2="356" y2="334" stroke="rgba(255,82,36,0.45)" strokeWidth="1.2" className="meth-line-1" />
             <line x1="356" y1="334" x2="44" y2="334" stroke="rgba(255,82,36,0.45)" strokeWidth="1.2" className="meth-line-2" />
@@ -217,7 +243,7 @@ export default function Methodology() {
           </div>
 
           {/* Centro */}
-          <div className="meth-center absolute top-[54%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 text-center w-[300px] md:w-[390px] opacity-0">
+          <div className="meth-center absolute top-[54%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 text-center w-[82%] md:w-[300px] lg:w-[390px] opacity-0">
             <p className="text-white font-editorial tracking-tight text-[30px] md:text-[40px] leading-none">
               Posicionamento
             </p>

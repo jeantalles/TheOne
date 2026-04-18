@@ -58,9 +58,11 @@ export default function Audience() {
     <section id="para-quem" ref={containerRef} className="pt-24 pb-16 md:pt-44 md:pb-32 px-6 md:px-12 lg:px-24 bg-[#212121] relative overflow-hidden font-halyard">
       <div className="aud-fade-shell">
         <div className="max-w-7xl mx-auto mb-14 md:mb-24 text-center">
-          <h2 className="font-editorial text-[32px] md:text-[46px] lg:text-6xl text-white leading-[1.1]">
+          <h2 className="font-editorial text-[38px] md:text-[54px] lg:text-[4.35rem] text-white leading-[1.06]">
             Quem nós servimos
-            <span className="text-[#C7C7C7] text-[18px] md:text-[29px] font-light max-w-2xl mx-auto block mt-4 md:mt-6 font-halyard tracking-normal">Os inconformados que tem visão.</span>
+            <span className="text-[#D7D7D7] text-[21px] md:text-[33px] font-light max-w-3xl mx-auto block mt-4 md:mt-6 font-halyard tracking-normal leading-[1.22]">
+              Os inconformados que tem visão.
+            </span>
           </h2>
         </div>
         <div className="max-w-[1500px] mx-auto grid md:grid-cols-2 gap-12 lg:gap-16">
@@ -71,7 +73,7 @@ export default function Audience() {
               {viList.map((item, i) => (
                 <div key={i} className="flex gap-4 items-start aud-item">
                   <Check size={24} strokeWidth={2} className="shrink-0 mt-0.5 md:mt-1 text-[#FE6942]" />
-                  <p className="font-light text-[#C7C7C7] text-[19px] md:text-[21px] leading-[1.3]">{item}</p>
+                  <p className="font-light text-white/92 text-[19px] md:text-[21px] leading-[1.42]">{item}</p>
                 </div>
               ))}
             </div>
@@ -83,7 +85,7 @@ export default function Audience() {
               {gmList.map((item, i) => (
                 <div key={i} className="flex gap-4 items-start aud-item">
                   <Check size={24} strokeWidth={2} className="shrink-0 mt-0.5 md:mt-1 text-[#FE6942]" />
-                  <p className="font-light text-[#C7C7C7] text-[19px] md:text-[21px] leading-[1.3]">{item}</p>
+                  <p className="font-light text-white/92 text-[19px] md:text-[21px] leading-[1.42]">{item}</p>
                 </div>
               ))}
             </div>

@@ -9,6 +9,8 @@ gsap.registerPlugin(ScrollTrigger);
 const INTRO_WORDS = ['Não', 'seja', 'só', 'mais', 'um'];
 const NAVBAR_REVEAL_PROGRESS = 0.78;
 const HERO_SCROLL_HEIGHT = '560vh';
+const HERO_SCROLL_HEIGHT_MOBILE = '380svh';
+const HERO_STICKY_HEIGHT_MOBILE = '100svh';
 const HERO_MAIN_PROGRESS_END = 0.82;
 
 const WARM_BG = [245, 240, 236];
@@ -128,6 +130,7 @@ export default function Hero() {
   const finalBodyRef = useRef(null);
   const scrollHintRef = useRef(null);
   const navbarVisibleRef = useRef(null);
+  const mobileMenuLightRef = useRef(false);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -140,6 +143,16 @@ export default function Hero() {
       navbarVisibleRef.current = isVisible;
       window.dispatchEvent(new CustomEvent('hero-navbar-visibility', {
         detail: { visible: isVisible },
+      }));
+    };
+    const updateMobileMenuTheme = (isLight) => {
+      if (mobileMenuLightRef.current === isLight) {
+        return;
+      }
+
+      mobileMenuLightRef.current = isLight;
+      window.dispatchEvent(new CustomEvent('hero-mobile-menu-theme', {
+        detail: { light: isLight },
       }));
     };
 
@@ -168,6 +181,7 @@ export default function Hero() {
         finalBodyRef.current.style.filter = 'none';
         finalBodyRef.current.style.transform = 'none';
       }
+      updateMobileMenuTheme(false);
       return undefined;
     }
 
@@ -216,19 +230,22 @@ export default function Hero() {
       }
     };
 
-    const setSceneStyles = (progress) => {
+    const setSceneStyles = (progress, exitProgress = 0) => {
       const centerAccent = easeInOut3(norm(progress, 0.44, 0.56));
       const centerExpand = easeInOut3(norm(progress, 0.60, 0.76));
       const takeover = easeInOut3(norm(progress, 0.68, 0.88));
       const finalTitle = easeOut3(norm(progress, 0.80, 0.90));
       const finalBody = easeOut3(norm(progress, 0.84, 0.96));
+      const shouldUseLightMobileMenu = takeover > 0.28 && exitProgress < 0.12;
+
+      updateMobileMenuTheme(shouldUseLightMobileMenu);
 
       // Background starts warm white and transitions to orange gradient
       const gradStart = mixColor(WARM_BG, ORANGE_START, takeover);
       const gradEnd = mixColor(WARM_BG, ORANGE_END, takeover);
       stickyRef.current.style.background = `linear-gradient(to right, ${gradStart}, ${gradEnd})`;
 
-      stickyRef.current.setAttribute('data-navbar-theme', 'light');
+      stickyRef.current.setAttribute('data-navbar-theme', takeover > 0.25 ? 'dark' : 'light');
 
       glowRef.current.style.opacity = `${lerp(0.08, 0.34, Math.max(centerAccent * 0.8, centerExpand, takeover))}`;
       glowRef.current.style.background = `
@@ -408,11 +425,24 @@ export default function Hero() {
     };
 
     const onResize = () => {
+      const nextWidth = window.innerWidth;
+      const nextHeight = window.innerHeight;
+      const widthDelta = Math.abs(nextWidth - viewportWidth);
+      const heightDelta = Math.abs(nextHeight - viewportHeight);
+
+      // Mobile browsers frequently fire resize events while the URL bar expands
+      // or collapses. Ignoring those height-only changes keeps downstream
+      // sections from jumping during scroll, while still allowing real resizes
+      // like orientation changes to reflow normally.
+      if (isMobileViewport && widthDelta < 2 && heightDelta > 0 && heightDelta < 160) {
+        return;
+      }
+
       resizeCanvas();
       mainScrollProgress = Math.min(1, scrollProgress / HERO_MAIN_PROGRESS_END);
       exitScrollProgress = Math.max(0, (scrollProgress - HERO_MAIN_PROGRESS_END) / (1 - HERO_MAIN_PROGRESS_END));
       updateNavbarVisibility(mainScrollProgress >= NAVBAR_REVEAL_PROGRESS);
-      setSceneStyles(mainScrollProgress);
+      setSceneStyles(mainScrollProgress, exitScrollProgress);
       setExitStyles(exitScrollProgress);
       scheduleDraw();
       ScrollTrigger.refresh();
@@ -427,7 +457,7 @@ export default function Hero() {
     if (fontReady) {
       fontReady.then(() => {
         resizeCanvas();
-        setSceneStyles(mainScrollProgress);
+        setSceneStyles(mainScrollProgress, exitScrollProgress);
         setExitStyles(exitScrollProgress);
         scheduleDraw();
       });
@@ -449,7 +479,7 @@ export default function Hero() {
         mainScrollProgress = Math.min(1, scrollProgress / HERO_MAIN_PROGRESS_END);
         exitScrollProgress = Math.max(0, (scrollProgress - HERO_MAIN_PROGRESS_END) / (1 - HERO_MAIN_PROGRESS_END));
         updateNavbarVisibility(mainScrollProgress >= NAVBAR_REVEAL_PROGRESS);
-        setSceneStyles(mainScrollProgress);
+        setSceneStyles(mainScrollProgress, exitScrollProgress);
         setExitStyles(exitScrollProgress);
         scheduleDraw();
       },
@@ -459,6 +489,7 @@ export default function Hero() {
 
     return () => {
       updateNavbarVisibility(true);
+      updateMobileMenuTheme(false);
       cancelAnimationFrame(rafId);
       window.removeEventListener('resize', onResize);
       trigger.kill();
@@ -471,15 +502,18 @@ export default function Hero() {
       ref={sectionRef}
       className="relative"
       style={{
-        height: shouldUseStaticScene ? '100vh' : (isMobileViewport ? '380vh' : HERO_SCROLL_HEIGHT),
+        height: shouldUseStaticScene
+          ? (isMobileViewport ? HERO_STICKY_HEIGHT_MOBILE : '100vh')
+          : (isMobileViewport ? HERO_SCROLL_HEIGHT_MOBILE : HERO_SCROLL_HEIGHT),
         backgroundColor: 'transparent',
         zIndex: 2,
       }}
     >
       <div
         ref={stickyRef}
-        className="sticky top-0 h-screen overflow-hidden"
+        className="sticky top-0 overflow-hidden"
         style={{
+          height: isMobileViewport ? HERO_STICKY_HEIGHT_MOBILE : '100vh',
           backgroundColor: 'rgb(245, 240, 236)',
           zIndex: 2,
           willChange: shouldUseStaticScene ? undefined : 'clip-path',

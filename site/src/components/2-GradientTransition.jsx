@@ -1,14 +1,29 @@
 import { useRef, useEffect } from 'react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 
 const BOTTOM_TRIM_PX = 100;
+const BOTTOM_SEAM_MASK_PX = 60;
 
 export default function GradientTransition() {
   const containerRef = useRef(null);
   const figureRef    = useRef(null);
+  const isMobileViewport = useMediaQuery('(max-width: 767px)');
 
   useEffect(() => {
     const figure = figureRef.current;
+    let currentNavbarTheme = null;
+
+    const updateNavbarTheme = (theme) => {
+      if (currentNavbarTheme === theme) {
+        return;
+      }
+
+      currentNavbarTheme = theme;
+      window.dispatchEvent(new CustomEvent('navbar-theme-override', {
+        detail: { theme },
+      }));
+    };
 
     // Anima rotateX: 82.689deg → 0 enquanto o container entra na viewport
     const st = ScrollTrigger.create({
@@ -21,10 +36,17 @@ export default function GradientTransition() {
         figure.style.transform = rotX > 0.05
           ? `rotateX(${rotX.toFixed(3)}deg)`
           : 'none';
+
+        updateNavbarTheme(self.progress < 0.48 ? 'dark' : 'light');
       },
+      onLeave: () => updateNavbarTheme(null),
+      onLeaveBack: () => updateNavbarTheme(null),
     });
 
-    return () => st.kill();
+    return () => {
+      updateNavbarTheme(null);
+      st.kill();
+    };
   }, []);
 
   return (
@@ -39,7 +61,7 @@ export default function GradientTransition() {
       ref={containerRef}
       data-navbar-theme="light"
       style={{
-        backgroundColor: '#F5F0EB',
+        background: 'linear-gradient(to bottom, #F5F0EB 50%, #000000 100%)',
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
@@ -52,17 +74,20 @@ export default function GradientTransition() {
       <figure
         ref={figureRef}
         style={{
-          width: '100%',
+          width: isMobileViewport ? '114%' : '100%',
           aspectRatio: '1920 / 2448',
-          maxHeight: 'min(2448px, 150vw)',
+          maxHeight: isMobileViewport ? 'min(2448px, 172vw)' : 'min(2448px, 150vw)',
           flex: 'none',
           position: 'relative',
           overflow: 'visible',
           transformOrigin: '50% 0% 0px',
           willChange: 'transform',
           transform: 'rotateX(82.689deg)',
+          backfaceVisibility: 'hidden',
+          WebkitBackfaceVisibility: 'hidden',
           margin: 0,
           marginBottom: `-${BOTTOM_TRIM_PX}px`,
+          marginLeft: isMobileViewport ? '-7%' : 0,
           padding: 0,
           userSelect: 'none',
           pointerEvents: 'none',
@@ -88,6 +113,19 @@ export default function GradientTransition() {
           />
         </div>
       </figure>
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: `${BOTTOM_SEAM_MASK_PX}px`,
+          backgroundColor: '#000000',
+          pointerEvents: 'none',
+          transform: 'translateZ(0)',
+        }}
+      />
     </div>
   );
 }
