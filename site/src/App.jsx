@@ -24,6 +24,12 @@ const FinalCTA = lazy(() => import('./components/10-FinalCTA'));
 const DesignSystem = lazy(() => import('./components/DesignSystem'));
 const CaseDetailPage = lazy(() => import('./components/cases/CaseDetailPage'));
 
+// Prevent browser from restoring scroll position on reload (must be synchronous,
+// before any useEffect, so the browser sees it before scroll restoration fires).
+if (typeof window !== 'undefined') {
+  window.history.scrollRestoration = 'manual';
+}
+
 gsap.registerPlugin(ScrollTrigger);
 ScrollTrigger.config({
   limitCallbacks: true,
@@ -31,6 +37,19 @@ ScrollTrigger.config({
   // mid-scroll, which can make the page jump in long narrative sections.
   ignoreMobileResize: true,
 });
+
+function isReloadNavigation() {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  const navigationEntry = window.performance?.getEntriesByType?.('navigation')?.[0];
+  if (navigationEntry && typeof navigationEntry.type === 'string') {
+    return navigationEntry.type === 'reload';
+  }
+
+  return window.performance?.navigation?.type === 1;
+}
 
 export default function App() {
   const lenisRef = useRef(null);
@@ -49,6 +68,16 @@ export default function App() {
   const [persona, setPersona] = useState(null);
   const [showSelector, setShowSelector] = useState(false);
   const [triggered, setTriggered] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.history) {
+      return undefined;
+    }
+
+    return () => {
+      window.history.scrollRestoration = 'auto';
+    };
+  }, []);
 
   // ── Lenis smooth scroll ───────────────────────────────────────────────────
   useEffect(() => {
@@ -109,6 +138,71 @@ export default function App() {
 
   useEffect(() => {
     if (!isHomeRoute || typeof window === 'undefined') {
+      return undefined;
+    }
+
+    const reloadedHome = isReloadNavigation();
+    const historyState = window.history.state ?? {};
+    const hasExplicitRestoreState = Number.isFinite(historyState.restoreScrollY)
+      || Number.isFinite(historyState.savedScrollY)
+      || Boolean(historyState.restoreCasesOpen || historyState.savedCasesOpen);
+
+    if (hasExplicitRestoreState && !reloadedHome) {
+      return undefined;
+    }
+
+    let rafId = 0;
+    let attempts = 0;
+    let cancelled = false;
+
+    const resetToHeroStart = () => {
+      if (cancelled) {
+        return;
+      }
+
+      if (reloadedHome && hasExplicitRestoreState) {
+        const nextState = { ...(window.history.state ?? {}) };
+        delete nextState.restoreScrollY;
+        delete nextState.savedScrollY;
+        delete nextState.restoreCasesOpen;
+        delete nextState.savedCasesOpen;
+        window.history.replaceState(
+          nextState,
+          '',
+          `${window.location.pathname}${window.location.search}${window.location.hash}`
+        );
+      }
+
+      lenisRef.current?.scrollTo(0, { immediate: true });
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+
+      if (Math.abs(window.scrollY) > 2 && attempts < 8) {
+        attempts += 1;
+        rafId = requestAnimationFrame(resetToHeroStart);
+        return;
+      }
+
+      window.dispatchEvent(new Event('scroll'));
+    };
+
+    rafId = requestAnimationFrame(() => {
+      rafId = requestAnimationFrame(resetToHeroStart);
+    });
+
+    return () => {
+      cancelled = true;
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+    };
+  }, [isHomeRoute, shouldUseLenis]);
+
+  useEffect(() => {
+    if (!isHomeRoute || typeof window === 'undefined') {
+      return undefined;
+    }
+
+    if (isReloadNavigation()) {
       return undefined;
     }
 
