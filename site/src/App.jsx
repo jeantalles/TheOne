@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState, lazy, Suspense } from 'react'
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 import Navbar from './components/Navbar';
 import Hero from './components/1-Hero';
@@ -321,6 +322,7 @@ export default function App() {
       {showSelector && (
         <PersonaSelector onSelect={handlePersonaSelect} />
       )}
+      <SpeedInsights />
     </div>
   );
 }

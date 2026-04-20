@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { getHistoryState, navigateToPath } from '../../utils/router';
 
@@ -70,6 +71,10 @@ function CaseMediaBlock({ block }) {
 }
 
 export default function CasePageTemplate({ caseStudy, isFallback = false }) {
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, []);
+
   const hasDescriptionSections = caseStudy.descriptionSections.length > 0;
   const hasSolutions = caseStudy.solutions.length > 0;
   const feedbackEntries = Array.isArray(caseStudy.clientFeedbacks) && caseStudy.clientFeedbacks.length > 0
