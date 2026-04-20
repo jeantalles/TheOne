@@ -287,7 +287,7 @@ export const caseStudies = [
     ],
     clientFeedback: {
       name: 'Camilla Toscano',
-      role: 'Especialista em Marca',
+      role: 'Consultora Comercial',
       quote: 'Ver a minha essência profissional traduzida numa marca com tanta clareza foi fundamental para a nova fase do meu negócio.',
       avatar: '/images/cases/Camilla Toscano/cliente.png',
     },

@@ -29,7 +29,7 @@ const founders = [
     number: '02',
     badge: 'Co-Fundador',
     name: 'Pedro Xavier',
-    role: 'Estrategista de Marketing e Funil',
+    role: 'Estrategista de Marketing e Receita',
     bullets: [
       '7 anos de experiência em marketing, com atuação em copy, estratégia, liderança e growth.',
       'Copy Sênior, Especialista e Head de Marketing na maior assessoria de marketing e vendas do país.',

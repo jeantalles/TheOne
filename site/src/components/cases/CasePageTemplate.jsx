@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { ArrowLeft, X } from 'lucide-react';
 import { getHistoryState, navigateToPath } from '../../utils/router';
 
 function FeedbackAvatar({ name, avatar }) {
@@ -28,17 +28,43 @@ function FeedbackAvatar({ name, avatar }) {
 }
 
 function CaseMediaBlock({ block }) {
+  const [isZoomed, setIsZoomed] = useState(false);
   const aspectRatio = block.aspectRatio ?? '16 / 9';
 
   if (block.type === 'image') {
     return (
-      <div className="w-full">
-        <img
-          src={block.src}
-          alt={block.alt ?? block.title}
-          className="block h-auto w-full object-cover"
-        />
-      </div>
+      <>
+        <div 
+          className="w-full relative cursor-zoom-in"
+          onClick={() => setIsZoomed(true)}
+        >
+          <img
+            src={block.src}
+            alt={block.alt ?? block.title}
+            className="block h-auto w-full object-cover"
+          />
+        </div>
+
+        {isZoomed && (
+          <div 
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-md cursor-zoom-out p-4 md:p-8 transition-opacity duration-300"
+            onClick={() => setIsZoomed(false)}
+          >
+            <button 
+              className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors bg-black/20 rounded-full p-2"
+              onClick={() => setIsZoomed(false)}
+            >
+              <X size={24} />
+            </button>
+            <img
+              src={block.src}
+              alt={block.alt ?? block.title}
+              className="max-w-full max-h-full object-contain rounded-md shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        )}
+      </>
     );
   }
 
