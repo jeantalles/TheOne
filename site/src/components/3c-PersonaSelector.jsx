@@ -216,7 +216,7 @@ function PersonaCard({ label, sublabel, isSelected, isDimmed, confirmed, onClick
     <button
       onClick={onClick}
       disabled={confirmed}
-      className="flex-1 relative flex flex-col items-center justify-center rounded-[20px] transition-all duration-300 active:scale-[0.97] cursor-pointer overflow-hidden"
+      className="flex-1 relative flex flex-col items-center justify-center rounded-[20px] transition-colors transition-opacity duration-300 active:scale-[0.97] cursor-pointer overflow-hidden"
       style={{
         padding: 'clamp(1.25rem, 4vw, 2.5rem) clamp(1rem, 3vw, 2rem)',
         border: isSelected
@@ -259,7 +259,7 @@ function PersonaCard({ label, sublabel, isSelected, isDimmed, confirmed, onClick
         <span
           className="font-halyard"
           style={{
-            fontSize: 'clamp(0.75rem, 1.2vw, 0.95rem)',
+            fontSize: 'clamp(0.85rem, 1.5vw, 1.15rem)',
             color: 'rgba(21, 19, 17, 0.5)',
             opacity: isSelected && confirmed ? 0 : 1,
             transition: 'opacity 0.2s ease',
