@@ -211,7 +211,7 @@ export default function PersonaSelector({ onSelect }) {
 
 // ── Card individual ───────────────────────────────────────────────────────────
 function PersonaCard({ label, sublabel, isSelected, isDimmed, confirmed, onClick, isMobile }) {
-  const defaultBg = isMobile ? 'transparent' : '#F5F0EC';
+  const defaultBg = isMobile ? '#F6F1ED' : '#F5F0EC';
   return (
     <button
       onClick={onClick}

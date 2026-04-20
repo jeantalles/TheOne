@@ -22,6 +22,7 @@ import siteBrandExperienceImage from '../assets/products-step-04/site-brand-expe
 import playbookImage from '../assets/products-step-05/playbook.jpg';
 import sistemaDeConteudoImage from '../assets/products-step-05/sistema-de-conteudo.jpeg';
 import treinamentoDoTimeImage from '../assets/products-step-05/treinamento-do-time.jpeg';
+import assessoriaImage from '../assets/products-step-05/assessoria.jpg';
 
 
 
@@ -80,7 +81,7 @@ const STEPS = [
     cards: [
       { label: 'Playbook de execução',       src: playbookImage },
       { label: 'Consultoria e treinamento de time', src: treinamentoDoTimeImage },
-      { label: 'Assessoria',                 src: null },
+      { label: 'Assessoria',                 src: assessoriaImage },
       { label: 'Sistema de Conteúdo',        src: sistemaDeConteudoImage },
     ],
   },
