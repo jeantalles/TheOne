@@ -222,10 +222,13 @@ export default function Hero() {
       particles = buildParticles(viewportWidth, viewportHeight);
       centerParticle = particles.find((particle) => particle.isCenter) ?? null;
 
-      // Position final wrap to appear just below where the heading lands after its travel
+      // Position final wrap to appear just below where the heading lands after its travel.
+      // Heading lands at 50vh - 20vh (max travel) = 30vh from top.
+      // headingHeightEst uses Math.max so narrow viewports (where text may wrap to 2 lines)
+      // get at least 96px — enough for two lines of the 2.25rem mobile font size.
       if (finalWrapRef.current) {
-        const headingLandY = viewportHeight * 0.28; // 50vh - 22vh travel = 28vh from top
-        const headingHeightEst = Math.min(viewportHeight * 0.09, 88);
+        const headingLandY = viewportHeight * 0.30;
+        const headingHeightEst = Math.max(viewportHeight * 0.09, 96);
         finalWrapRef.current.style.paddingTop = `${headingLandY + headingHeightEst - 8}px`;
       }
     };

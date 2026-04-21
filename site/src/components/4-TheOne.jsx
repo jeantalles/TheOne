@@ -6,7 +6,7 @@ export default function TheOne() {
   const containerRef = useRef(null);
 
   const style = {
-    titulo: "clamp(2.5rem, 4vw, 3.5rem)",
+    titulo: "clamp(2rem, 3.2vw, 2.9rem)",
     textoDesktop: "20px",
     alturaLinhaTexto: "1.4",
   };
@@ -65,8 +65,7 @@ export default function TheOne() {
         {/* Esquerda: Proposta de Valor TheOne */}
         <div className="sol-left w-full md:w-[55%] flex flex-col items-start text-left gap-8">
           <h2 className="font-editorial font-normal leading-[1.05] text-white" style={{ fontSize: style.titulo }}>
-            Dessa inconformidade <br />
-            nasceu a <span className="text-gradient">TheOne.</span>
+            Vimos o que acontece quando marketing vira linha de produção e <span className="text-gradient">nos recusamos a ser mais um desse modelo.</span>
           </h2>
 
           {imageCard('md:hidden')}
@@ -76,7 +75,6 @@ export default function TheOne() {
             style={{ lineHeight: style.alturaLinhaTexto }}
           >
             <p className="max-w-[620px] relative -top-px">
-              Vimos de perto o que acontece quando marketing vira linha de produção e nos recusamos a ser mais um desse modelo.{" "}
               {"A TheOne é a assessoria de marca que nasceu para construir marcas TheOne™: a escolha número um na mente do seu público.".split(' ').map((word, i) => (
                 <span key={`second-${i}`} className="conclusion-highlight-word inline-block mr-[0.2em] whitespace-nowrap">
                   {word}
@@ -84,9 +82,9 @@ export default function TheOne() {
               ))}
             </p>
             <p className="max-w-[620px] relative -top-px">
-              Não entregamos um PDF e sumimos. Estruturamos a narrativa, o posicionamento e a presença da sua marca em todos os principais pontos de contato. Seremos seus aliados na efetivação da estratégia para consolidar o seu negócio como o número um do seu mercado.
+              Não entregamos um PDF e sumimos. Estruturamos como você se posiciona nos principais canais para você se tornar a opção inevitável no seu mercado. Seremos seus aliados na efetivação da estratégia para consolidar o seu negócio como o número um do seu mercado.
             </p>
-            <ul className="pt-4 md:pt-6 grid grid-cols-1 md:grid-cols-3 gap-y-4 md:gap-y-5 md:gap-x-10 lg:gap-x-14 text-left text-white font-light w-full text-[clamp(1.14rem,4.75vw,1.3rem)] md:text-[22px]">
+            <ul className="pt-4 md:pt-6 flex flex-col gap-y-4 md:gap-y-5 text-left text-white font-light w-full text-[clamp(1.14rem,4.75vw,1.3rem)] md:text-[22px]">
               <li className="flex items-start gap-3 min-w-0">
                 <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
                 <span>

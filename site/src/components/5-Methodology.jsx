@@ -21,7 +21,7 @@ export default function Methodology() {
         scrollTrigger: {
           trigger: containerRef.current,
           start: 'top top',
-          end: isMobileViewport ? '+=340%' : '+=200%',
+          end: isMobileViewport ? '+=340%' : '+=420%',
           pin: true,
           scrub: 1.2,
           invalidateOnRefresh: true,
@@ -128,7 +128,7 @@ export default function Methodology() {
         <h2
           className="font-editorial text-white text-center leading-[1.05] md:leading-[1.1]"
           style={{
-            fontSize: isMobileViewport ? 'clamp(2.85rem, 10.2vw, 3.45rem)' : undefined,
+            fontSize: isMobileViewport ? 'clamp(2.85rem, 10.2vw, 3.45rem)' : 'clamp(3.2rem, 5.5vw, 5rem)',
             maxWidth: isMobileViewport ? 'min(92vw, 26rem)' : undefined,
           }}
         >

@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Proposta — The One</title>
+
+  <style>
+    /* ── FONTES ─────────────────────────────────────────────── */
+    @font-face {
+      font-family: 'PP Editorial New';
+      src: url('./site/Fontes/PP Editorial New/PPEditorialNew-Regular-BF644b214ff145f.otf') format('opentype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'PP Editorial New';
+      src: url('./site/Fontes/PP Editorial New/PPEditorialNew-Ultrabold-BF644b21500840c.otf') format('opentype');
+      font-weight: 800; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Halyard Display';
+      src: url('./site/Fontes/Halyard/Halyard Display Light.ttf') format('truetype');
+      font-weight: 300; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Halyard Display';
+      src: url('./site/Fontes/Halyard/Halyard Display Regular.ttf') format('truetype');
+      font-weight: 400; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Halyard Display';
+      src: url('./site/Fontes/Halyard/Halyard Display Medium.ttf') format('truetype');
+      font-weight: 500; font-style: normal; font-display: swap;
+    }
+    @font-face {
+      font-family: 'Halyard Display';
+      src: url('./site/Fontes/Halyard/Halyard Display SemiBold.ttf') format('truetype');
+      font-weight: 600; font-style: normal; font-display: swap;
+    }
+
+    /* ── RESET ───────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:        #F5F0EB;
+      --dark:         #212121;
+      --darker:       #0a0a0a;
+      --card-dark:    #111111;
+      --accent:       #FE6942;
+      --accent-hot:   #FF5224;
+      --accent-light: #FED1C5;
+      --accent-cta:   #F85324;
+      --black:        #181412;
+      --ink:          #1a1a1a;
+      --muted-dark:   #C7C7C7;
+      --muted-light:  rgba(24,20,18,0.55);
+      --border-dark:  rgba(255,255,255,0.08);
+      --border-light: rgba(24,20,18,0.1);
+      --ease-out:     cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+
+    body {
+      background: var(--darker);
+      color: #f5f5f5;
+      font-family: 'Halyard Display', sans-serif;
+      overflow-x: hidden;
+    }
+
+    ::selection { background: rgba(255,77,0,0.3); color: #fff; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: #0a0a0a; }
+    ::-webkit-scrollbar-thumb { background: #FF4D00; border-radius: 2px; }
+
+    /* ── NOISE ───────────────────────────────────────────────── */
+    .noise-overlay {
+      pointer-events: none; position: fixed; inset: 0; z-index: 9999; opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ── HERO ────────────────────────────────────────────────── */
+    #hero { position: relative; height: 100vh; z-index: 2; }
+    #hero-sticky { position: sticky; top: 0; height: 100vh; overflow: hidden; background: rgb(245,240,236); }
+    #hero-glow { pointer-events: none; position: absolute; inset: 0; z-index: 0; opacity: 0.08; }
+    #hero-grain {
+      pointer-events: none; position: absolute; inset: 0; z-index: 0; opacity: 0.08;
+      background-image: radial-gradient(circle at 20% 20%, rgba(0,0,0,0.06) 0.5px, transparent 0.5px),
+                        radial-gradient(circle at 80% 60%, rgba(0,0,0,0.05) 0.5px, transparent 0.5px);
+      background-size: 24px 24px, 28px 28px; mix-blend-mode: multiply;
+    }
+    #hero-canvas { pointer-events: none; position: absolute; inset: 0; z-index: 10; }
+    #hero-intro {
+      pointer-events: none; position: absolute; inset: 0; z-index: 20;
+      display: flex; align-items: center; justify-content: center; padding: 0 24px;
+    }
+    #hero-intro h2 {
+      font-family: 'Halyard Display', sans-serif; font-weight: 400;
+      font-size: clamp(2.25rem, 4.2vw, 3.8rem); letter-spacing: -0.02em;
+      line-height: 1.1; text-align: center; color: #151311; max-width: 900px;
+    }
+    #hero-intro h2 span { display: inline-block; will-change: transform, opacity; margin-right: 0.16em; }
+    #hero-intro h2 span:last-child { margin-right: 0; }
+    #hero-final {
+      position: absolute; inset: 0; z-index: 40;
+      display: flex; align-items: flex-start; justify-content: center; padding: 0 24px;
+    }
+    #hero-final-inner { width: 100%; max-width: 960px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+    #hero-proposal-tag {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(21,19,17,0.5); margin-bottom: 16px; opacity: 0;
+    }
+    #hero-title {
+      font-family: 'PP Editorial New', serif; font-weight: 400;
+      font-size: clamp(4.2rem, 8vw, 7.5rem); letter-spacing: -0.03em; line-height: 0.92;
+      color: rgba(21,19,17,0.94); margin-bottom: 40px; opacity: 0;
+    }
+    #hero-title sup {
+      font-family: 'Halyard Display', sans-serif; font-size: 0.288em;
+      letter-spacing: 0.04em; font-weight: 600; vertical-align: top;
+      margin-left: 0.18em; margin-top: 0.55em; display: inline-block;
+    }
+    #hero-body { display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0; }
+    #hero-client { font-size: clamp(1.1rem, 2.4vw, 1.6rem); font-weight: 400; line-height: 1.5; color: rgba(21,19,17,0.75); }
+    #hero-date { font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(21,19,17,0.45); }
+    #hero-scroll-hint {
+      pointer-events: none; position: absolute; inset: 0; z-index: 50;
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 8px;
+      padding-bottom: clamp(2.5rem, 7vh, 4.5rem);
+    }
+    #hero-scroll-hint span { font-family: 'PP Editorial New', serif; font-size: 1.2rem; letter-spacing: 0.08em; color: rgba(21,19,17,0.45); }
+    #hero-scroll-hint svg { animation: scrollBounce 1.8s ease-in-out infinite; color: rgba(21,19,17,0.35); }
+    @keyframes scrollBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+    /* ── STORYTELLING INTRO (cream) ──────────────────────────── */
+    #story-intro {
+      background: var(--cream);
+      min-height: 100svh; position: relative; z-index: 0;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; padding: 0 24px;
+    }
+    #story-intro::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(circle at center, rgba(255,82,36,0.04) 0%, transparent 60%);
+    }
+    .si-inner {
+      position: relative; z-index: 1; max-width: 960px; width: 100%;
+      text-align: center; display: flex; flex-direction: column; align-items: center;
+      gap: 32px; padding: clamp(6rem, 18vh, 11rem) 0;
+    }
+    .si-tag {
+      font-family: 'Halyard Display', sans-serif; font-size: 23px; font-weight: 400;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+    }
+    .si-title {
+      font-family: 'PP Editorial New', serif; font-weight: 400;
+      font-size: clamp(2.3rem, 7.4vw, 4.2rem); line-height: 1.1;
+      color: var(--black); letter-spacing: -0.02em;
+    }
+    .si-title-word { display: inline-block; margin-right: 0.25em; opacity: 0.08; }
+    .si-body {
+      font-family: 'Halyard Display', sans-serif; font-weight: 400;
+      font-size: 27px; line-height: 1.4; color: var(--black);
+      max-width: 860px;
+    }
+    .si-copy-word { display: inline-block; margin-right: 0.22em; opacity: 0.08; }
+
+    /* ── STORYTELLING PANELS (dark) ──────────────────────────── */
+    #storytelling {
+      background: linear-gradient(to bottom, #010000 0%, var(--dark) 100%);
+    }
+    .story-panel {
+      min-height: 100svh; position: relative;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; padding: 0 24px; overflow: hidden;
+    }
+    .story-panel::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(circle at center, rgba(255,82,36,0.06) 0%, transparent 60%);
+    }
+    .story-panel-inner {
+      position: relative; z-index: 1; max-width: 960px; width: 100%;
+      text-align: center; display: flex; flex-direction: column; align-items: center;
+      gap: 32px; padding: clamp(6rem, 18vh, 11rem) 0;
+    }
+    .story-tag {
+      font-family: 'Halyard Display', sans-serif; font-size: 23px; font-weight: 400;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+    }
+    .story-title {
+      font-family: 'PP Editorial New', serif; font-weight: 400;
+      font-size: clamp(2.2rem, 6vw, 4.4rem); line-height: 1.1;
+      color: #fff; letter-spacing: -0.02em;
+    }
+    .story-title-word { display: inline-block; margin-right: 0.25em; opacity: 0.05; }
+    .story-body {
+      font-family: 'Halyard Display', sans-serif; font-weight: 300;
+      font-size: 27px; line-height: 1.4; color: var(--muted-dark);
+      max-width: 860px;
+    }
+    .story-copy-word { display: inline-block; margin-right: 0.22em; opacity: 0.05; }
+    .story-copy-word.w { color: #fff; }
+    .story-copy-word.o { color: var(--accent); }
+    .story-copy-word.q {
+      font-family: 'PP Editorial New', serif; color: #fff;
+      font-size: clamp(1.7rem, 2.5vw, 2.6rem); line-height: 1.05; letter-spacing: -0.02em;
+    }
+
+    /* ── THEONE SECTION (dark) ───────────────────────────────── */
+    #theone {
+      background: var(--dark); padding: 120px 0 100px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .theone-inner {
+      max-width: 1480px; margin: 0 auto; padding: 0 56px;
+      display: flex; align-items: center; gap: 80px;
+    }
+    .theone-left { flex: 1; min-width: 0; }
+    .theone-left h2 {
+      font-family: 'PP Editorial New', serif; font-weight: 400;
+      font-size: clamp(2.5rem, 4vw, 3.5rem);
+      line-height: 1.05; color: #fff; letter-spacing: -0.02em; margin-bottom: 32px;
+    }
+    .theone-body {
+      display: flex; flex-direction: column; gap: 20px;
+      font-family: 'Halyard Display', sans-serif; font-weight: 300;
+      font-size: clamp(1.1rem, 1.6vw, 1.25rem); color: var(--muted-dark); line-height: 1.65;
+    }
+    .theone-body p { max-width: 620px; }
+    .theone-bullets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px 40px; margin-top: 16px; list-style: none; }
+    .theone-bullets li {
+      display: flex; align-items: flex-start; gap: 12px;
+      font-family: 'Halyard Display', sans-serif; font-weight: 300;
+      font-size: clamp(1rem, 1.4vw, 1.1rem); color: #fff; line-height: 1.55;
+    }
+    .theone-bullets li::before {
+      content: ''; flex-shrink: 0; width: 8px; height: 8px;
+      border-radius: 50%; background: var(--accent); margin-top: 8px;
+    }
+    .theone-right {
+      flex-shrink: 0; width: 42%; height: 600px; border-radius: 32px;
+      overflow: hidden; border: 1px solid #5B5B5B; background: #141414; position: relative;
+    }
+    .theone-right img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms var(--ease-out); }
+    .theone-right:hover img { transform: scale(1.04); }
+
+    /* ── FOUNDERS (dark) ─────────────────────────────────────── */
+    #founders { background: var(--dark); padding: 40px 0 100px; }
+    .founders-inner { max-width: 1480px; margin: 0 auto; padding: 0 56px; }
+    .founders-header { margin-bottom: 48px; }
+    .founders-header h2 {
+      font-family: 'PP Editorial New', serif; font-weight: 400;
+      font-size: clamp(2.5rem, 4.5vw, 3.5rem);
+      line-height: 1.1; color: #fff; letter-spacing: -0.02em;
+    }
+    .founder-cards { display: flex; flex-direction: column; gap: 20px; }
+    .founder-card {
+      border: 1px solid #5B5B5B; border-radius: 32px; overflow: hidden;
+      display: flex; transition: border-color 500ms ease;
+    }
+    .founder-card:hover { border-color: rgba(254,105,66,0.3); }
+    .founder-card.rev { flex-direction: row-reverse; }
+    .founder-photo {
+      flex-shrink: 0; width: 38%; min-height: 580px;
+      position: relative; background: #1a1a1a; overflow: hidden;
+    }
+    .founder-photo img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      transition: transform 700ms var(--ease-out);
+    }
+    .founder-card:hover .founder-photo img { transform: scale(1.04); }
+    .founder-num {
+      position: absolute; bottom: 20px; right: 24px;
+      font-family: 'PP Editorial New', serif; font-size: 100px; line-height: 1;
+      color: rgba(255,255,255,0.05); pointer-events: none; user-select: none;
+    }
+    .founder-content {
+      flex: 1; display: flex; flex-direction: column; justify-content: center;
+      background: var(--dark); padding: 56px 64px;
+    }
+    .founder-badge {
+      display: inline-flex; align-items: center; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent);
+      border: 1px solid rgba(254,105,66,0.3); padding: 6px 16px; border-radius: 999px;
+      width: fit-content; margin-bottom: 24px;
+    }
+    .founder-name {
+      font-family: 'PP Editorial New', serif; font-weight: 400;
+      font-size: clamp(2rem, 3.5vw, 3.5rem); line-height: 1.05;
+      color: #fff; margin-bottom: 10px; letter-spacing: -0.02em;
+    }
+    .founder-role {
+      font-size: 13px; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 36px;
+    }
+    .founder-divider { width: 64px; height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 36px; }
+    .founder-bullets { list-style: none; display: flex; flex-direction: column; gap: 24px; }
+    .founder-bullets li { display: flex; align-items: flex-start; gap: 14px; }
+    .founder-bullets li::before { content: '→'; color: var(--accent); font-size: 1.1rem; flex-shrink: 0; margin-top: 2px; }
+    .founder-bullets li p {
+      font-weight: 300; font-size: clamp(1rem, 1.5vw, 1.2rem);
+      color: #E1E1E1; line-height: 1.55; max-width: 34ch;
+    }
+    .founder-logos {
+      display: grid; grid-template-columns: repeat(6, auto); gap: 20px 24px;
+      align-items: center; margin-top: 48px; padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .founder-logos img { max-height: 24px; width: auto; max-width: 96px; object-fit: contain; opacity: 0.5; transition: opacity 200ms ease; }
+    .founder-logos img:hover { opacity: 0.75; }
+
+    /* ── CONTEXTO / SEU PROJETO (light) ──────────────────────── */
+    #contexto { background: var(--cream); padding: 96px 0 100px; }
+    .ctx-inner { max-width: 1200px; margin: 0 auto; padding: 0 56px; }
+
+    .ctx-section-title {
+      font-family: 'Halyard Display', sans-serif; font-weight: 700;
+      font-size: clamp(3rem, 7vw, 5.5rem); letter-spacing: -0.02em;
+      color: var(--black); text-align: center; margin-bottom: 64px;
+    }
+
+    /* A → B cards */
+    .ctx-grid { display: grid; grid-template-columns: 1fr 64px 1fr; align-items: start; gap: 0; }
+
+    .ctx-card {
+      background: #fff; border-radius: 16px; padding: 40px 44px;
+      border: 1.5px solid rgba(24,20,18,0.1);
+      box-shadow: 0 2px 16px rgba(24,20,18,0.06);
+    }
+    .ctx-card.ctx-b { border-color: var(--accent); }
+
+    .ctx-card h3 {
+      font-family: 'Halyard Display', sans-serif; font-weight: 700;
+      font-size: 22px; color: var(--black); margin-bottom: 24px;
+    }
+    .ctx-card.ctx-b h3 { color: var(--accent); }
+
+    .ctx-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+    .ctx-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-family: 'Halyard Display', sans-serif; font-weight: 400;
+      font-size: 17px; line-height: 1.55; color: var(--black);
+    }
+    .ctx-list li::before {
+      content: '▪'; color: var(--accent); flex-shrink: 0; font-size: 10px; margin-top: 6px;
+    }
+
+    .ctx-arrow {
+      display: flex; align-items: flex-start; justify-content: center; padding-top: 80px;
+    }
+    .ctx-arrow svg { width: 40px; height: 40px; }
+
+    /* Timeline (light) */
+    .ctx-timeline { margin-top: 80px; }
+    .ctx-timeline-label {
+      display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(24,20,18,0.4); margin-bottom: 40px;
+    }
+    .tl-track { position: relative; display: flex; align-items: flex-start; }
+    .tl-track::before {
+      content: ''; position: absolute; top: 27px; left: 5%; right: 5%; height: 1.5px;
+      background: linear-gradient(to right, var(--accent-light), var(--accent-hot) 60%, rgba(255,82,36,0.15) 100%);
+    }
+    .tl-step { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
+    .tl-node {
+      width: 54px; height: 54px; border-radius: 50%; background: #fff;
+      border: 1.5px solid rgba(255,82,36,0.35);
+      display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
+      box-shadow: 0 2px 12px rgba(255,82,36,0.12);
+    }
+    .tl-node span {
+      font-size: 14px; font-weight: 600;
+      background: linear-gradient(135deg, var(--accent-light), var(--accent-hot));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .tl-content { text-align: center; padding: 0 8px; }
+    .tl-content h4 { font-size: 13px; font-weight: 700; color: var(--black); margin-bottom: 5px; }
+    .tl-content p { font-size: 12px; color: rgba(24,20,18,0.5); line-height: 1.5; margin-bottom: 8px; }
+    .tl-badge {
+      display: inline-flex; font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+      color: var(--accent); background: rgba(254,105,66,0.08);
+      border: 1px solid rgba(254,105,66,0.2); padding: 3px 10px; border-radius: 20px;
+    }
+
+    /* Scope (light) */
+    .ctx-scope { margin-top: 80px; padding-top: 80px; border-top: 1.5px solid rgba(24,20,18,0.08); }
+    .ctx-scope-header { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; margin-bottom: 48px; }
+    .ctx-scope-header h3 {
+      font-family: 'PP Editorial New', serif; font-weight: 400;
+      font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.1;
+      color: var(--black); letter-spacing: -0.02em;
+    }
+    .ctx-scope-tag {
+      display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
+    }
+    .ctx-scope-desc { font-size: 18px; font-weight: 400; color: rgba(24,20,18,0.6); line-height: 1.7; }
+
+    .deliverables-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .del-card {
+      background: #fff; border: 1.5px solid rgba(24,20,18,0.08);
+      border-radius: 16px; padding: 32px 28px;
+      transition: border-color 250ms ease, box-shadow 250ms ease;
+    }
+    .del-card:hover { border-color: rgba(254,105,66,0.3); box-shadow: 0 4px 20px rgba(254,105,66,0.08); }
+    .del-num { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: rgba(254,105,66,0.55); margin-bottom: 14px; }
+    .del-card h4 { font-size: 16px; font-weight: 700; color: var(--black); margin-bottom: 10px; line-height: 1.3; }
+    .del-card p { font-size: 14px; color: rgba(24,20,18,0.5); line-height: 1.65; }
+
+    /* Result card (light) */
+    .ctx-result {
+      margin-top: 12px; background: #fff;
+      border: 1.5px solid rgba(254,105,66,0.25); border-radius: 24px;
+      padding: 56px 52px; position: relative; overflow: hidden;
+    }
+    .ctx-result::before {
+      content: ''; position: absolute; top: -80px; right: -80px; width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(255,82,36,0.06) 0%, transparent 65%); pointer-events: none;
+    }
+    .ctx-result-tag { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
+    .ctx-result h3 {
+      font-family: 'PP Editorial New', serif; font-weight: 400;
+      font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 1.1;
+      color: var(--black); margin-bottom: 40px; letter-spacing: -0.02em;
+    }
+    .ctx-result-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px 48px; }
+    .ctx-result-item { display: flex; align-items: flex-start; gap: 14px; }
+    .ctx-result-icon {
+      flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(254,105,66,0.1); border: 1px solid rgba(254,105,66,0.25);
+      display: flex; align-items: center; justify-content: center; margin-top: 2px;
+    }
+    .ctx-result-icon svg { width: 13px; height: 13px; }
+    .ctx-result-item h5 { font-size: 15px; font-weight: 700; color: var(--black); margin-bottom: 4px; }
+    .ctx-result-item p { font-size: 14px; color: rgba(24,20,18,0.5); line-height: 1.6; }
+
+    /* ── INVESTIMENTO (dark + orange card) ───────────────────── */
+    #investimento { background: var(--dark); padding: 100px 0; }
+    .inv-inner { max-width: 1200px; margin: 0 auto; padding: 0 56px; }
+    .inv-header { margin-bottom: 48px; }
+    .inv-header-tag { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; }
+    .inv-header h2 {
+      font-family: 'PP Editorial New', serif; font-weight: 400;
+      font-size: clamp(2.4rem, 5vw, 3.8rem); line-height: 1.06;
+      color: #fff; letter-spacing: -0.02em; max-width: 680px;
+    }
+    .inv-card {
+      position: relative; border-radius: 36px; overflow: hidden;
+      background: var(--accent-cta);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 0 28px 80px rgba(0,0,0,0.32);
+      padding: clamp(48px,7vw,80px) clamp(40px,6vw,72px);
+    }
+    .inv-card::before {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(196,53,0,0.3) 60%, transparent 100%);
+    }
+    .inv-card-inner { position: relative; z-index: 1; }
+    .inv-label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(24,20,18,0.55); margin-bottom: 20px; }
+    .inv-name {
+      font-family: 'PP Editorial New', serif; font-weight: 400;
+      font-size: clamp(2.2rem, 4.5vw, 4rem); line-height: 1.0; letter-spacing: -0.02em;
+      color: var(--black); opacity: 0.92; margin-bottom: 40px;
+    }
+    .inv-body { display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: end; }
+    .inv-includes-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(24,20,18,0.5); margin-bottom: 16px; display: block; }
+    .inv-includes ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .inv-includes ul li { display: flex; align-items: center; gap: 10px; font-size: 16px; font-weight: 400; color: rgba(24,20,18,0.82); }
+    .inv-includes ul li::before { content: '→'; color: rgba(24,20,18,0.45); font-size: 13px; flex-shrink: 0; }
+    .inv-pricing { text-align: right; flex-shrink: 0; }
+    .inv-value {
+      font-family: 'PP Editorial New', serif; font-weight: 400;
+      font-size: clamp(3rem, 6vw, 5.5rem); line-height: 1; letter-spacing: -0.02em;
+      color: var(--black); opacity: 0.94; margin-bottom: 8px;
+    }
+    .inv-installment { font-size: 14px; color: rgba(24,20,18,0.55); margin-bottom: 28px; }
+    .inv-cta {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: 'Halyard Display', sans-serif; font-size: 14px; font-weight: 600; letter-spacing: 0.04em;
+      background: var(--black); color: #f5eee8; border: none; cursor: pointer;
+      padding: 18px 36px; border-radius: 999px; text-decoration: none;
+      box-shadow: 0 12px 30px rgba(24,20,18,0.22);
+      transition: transform 160ms ease-out, box-shadow 160ms ease-out;
+    }
+    .inv-cta:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(24,20,18,0.32); }
+    .inv-cta:active { transform: scale(0.97); }
+    .inv-validity {
+      margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(24,20,18,0.12);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .inv-validity p { font-size: 13px; color: rgba(24,20,18,0.5); }
+    .inv-validity strong { font-weight: 600; color: rgba(24,20,18,0.75); }
+
+    /* ── SHARED UTILS ────────────────────────────────────────── */
+    .gradient-text {
+      background: linear-gradient(120deg, var(--accent-light), var(--accent-hot));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+
+    [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out); }
+    [data-reveal].visible { opacity: 1; transform: translateY(0); }
+    [data-reveal][data-d="1"] { transition-delay: 0.08s; }
+    [data-reveal][data-d="2"] { transition-delay: 0.16s; }
+
+    .tl-step { opacity: 0; transform: translateY(16px); transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out); }
+    .tl-step.visible { opacity: 1; transform: translateY(0); }
+    .tl-step:nth-child(1) { transition-delay: 0.00s; }
+    .tl-step:nth-child(2) { transition-delay: 0.08s; }
+    .tl-step:nth-child(3) { transition-delay: 0.16s; }
+    .tl-step:nth-child(4) { transition-delay: 0.24s; }
+    .tl-step:nth-child(5) { transition-delay: 0.32s; }
+
+    .del-card { opacity: 0; transform: translateY(20px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out), border-color 250ms ease, box-shadow 250ms ease; }
+    .del-card.visible { opacity: 1; transform: translateY(0); }
+    .del-card:nth-child(1) { transition-delay: 0.00s; }
+    .del-card:nth-child(2) { transition-delay: 0.06s; }
+    .del-card:nth-child(3) { transition-delay: 0.12s; }
+    .del-card:nth-child(4) { transition-delay: 0.18s; }
+    .del-card:nth-child(5) { transition-delay: 0.24s; }
+    .del-card:nth-child(6) { transition-delay: 0.30s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      [data-reveal], .tl-step, .del-card { transition: none; opacity: 1; transform: none; }
+      .si-title-word, .si-copy-word, .story-title-word, .story-copy-word { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise-overlay"></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       HERO — animação canvas do site
+  ═══════════════════════════════════════════════════════ -->
+  <section id="hero">
+    <div id="hero-sticky">
+      <div id="hero-glow"></div>
+      <div id="hero-grain"></div>
+      <canvas id="hero-canvas"></canvas>
+
+      <div id="hero-intro">
+        <h2>
+          <span>Não</span><span>seja</span><span>só</span><span>mais</span><span>um</span>
+        </h2>
+      </div>
+
+      <div id="hero-final">
+        <div id="hero-final-inner">
+          <p id="hero-proposal-tag">Proposta Exclusiva · Abril 2026</p>
+          <h1 id="hero-title">Seja TheOne<sup>™</sup></h1>
+          <div id="hero-body">
+            <p id="hero-client">Proposta preparada para [Nome do Cliente]</p>
+            <p id="hero-date">The One · Brand &amp; Strategy Studio</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="hero-scroll-hint">
+        <span>Role para ver a proposta</span>
+        <svg width="12" height="18" viewBox="0 0 12 18" fill="none">
+          <path d="M6 1L6 17M6 17L1.5 11.5M6 17L10.5 11.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       STORYTELLING INTRO — fundo creme, texto animado
+  ═══════════════════════════════════════════════════════ -->
+  <section id="story-intro">
+    <div class="si-inner">
+      <span class="si-tag">01 ⏤ 04</span>
+      <h2 class="si-title">
+        <span class="si-title-word">Você</span>
+        <span class="si-title-word">não</span>
+        <span class="si-title-word">pode</span>
+        <span class="si-title-word">se</span>
+        <span class="si-title-word">vender</span>
+        <span class="si-title-word">da</span>
+        <span class="si-title-word">mesma</span>
+        <span class="si-title-word">forma</span>
+        <span class="si-title-word">que</span>
+        <span class="si-title-word">o</span>
+        <span class="si-title-word">restante</span>
+        <span class="si-title-word">do</span>
+        <span class="si-title-word">seu</span>
+        <span class="si-title-word">mercado</span>
+      </h2>
+      <p class="si-body">
+        <span class="si-copy-word">Ter</span>
+        <span class="si-copy-word">um</span>
+        <span class="si-copy-word">bom</span>
+        <span class="si-copy-word">produto,</span>
+        <span class="si-copy-word">rodar</span>
+        <span class="si-copy-word">anúncio,</span>
+        <span class="si-copy-word">e</span>
+        <span class="si-copy-word">produzir</span>
+        <span class="si-copy-word">conteúdo</span>
+        <span class="si-copy-word">não</span>
+        <span class="si-copy-word">é</span>
+        <span class="si-copy-word">mais</span>
+        <span class="si-copy-word">um</span>
+        <span class="si-copy-word">diferencial.</span>
+        <span class="si-copy-word">O</span>
+        <span class="si-copy-word">mercado</span>
+        <span class="si-copy-word">tá</span>
+        <span class="si-copy-word">ficando</span>
+        <span class="si-copy-word">cada</span>
+        <span class="si-copy-word">vez</span>
+        <span class="si-copy-word">mais</span>
+        <span class="si-copy-word">competitivo</span>
+        <span class="si-copy-word">e</span>
+        <span class="si-copy-word">parecido.</span>
+        <br><br>
+        <span class="si-copy-word">Num</span>
+        <span class="si-copy-word">ambiente</span>
+        <span class="si-copy-word">assim,</span>
+        <span class="si-copy-word">só</span>
+        <span class="si-copy-word">se</span>
+        <span class="si-copy-word">torna</span>
+        <span class="si-copy-word">a</span>
+        <span class="si-copy-word">escolha</span>
+        <span class="si-copy-word">número</span>
+        <span class="si-copy-word">um</span>
+        <span class="si-copy-word">quem</span>
+        <span class="si-copy-word">constrói</span>
+        <span class="si-copy-word">um</span>
+        <span class="si-copy-word">posicionamento</span>
+        <span class="si-copy-word">impossível</span>
+        <span class="si-copy-word">de</span>
+        <span class="si-copy-word">ser</span>
+        <span class="si-copy-word">ignorado.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       STORYTELLING PANELS — fundo escuro, 3 painéis pinados
+  ═══════════════════════════════════════════════════════ -->
+  <div id="storytelling">
+
+    <!-- Painel 02: Legado -->
+    <div class="story-panel">
+      <div class="story-panel-inner">
+        <span class="story-tag">02 ⏤ 04</span>
+        <h2 class="story-title">
+          <span class="story-title-word">Sabemos</span>
+          <span class="story-title-word">que</span>
+          <span class="story-title-word">você</span>
+          <span class="story-title-word">quer</span>
+          <span class="story-title-word">construir</span>
+          <span class="story-title-word">um</span>
+          <span class="story-title-word">legado.</span>
+        </h2>
+        <p class="story-body">
+          <span class="story-copy-word">Assim</span>
+          <span class="story-copy-word">como</span>
+          <span class="story-copy-word">nós,</span>
+          <span class="story-copy-word">você</span>
+          <span class="story-copy-word">é</span>
+          <span class="story-copy-word">ambicioso,</span>
+          <span class="story-copy-word">tem</span>
+          <span class="story-copy-word">visão,</span>
+          <span class="story-copy-word">mas</span>
+          <span class="story-copy-word">sente</span>
+          <span class="story-copy-word">que</span>
+          <span class="story-copy-word w">seu</span>
+          <span class="story-copy-word w">negócio</span>
+          <span class="story-copy-word w">vale</span>
+          <span class="story-copy-word w">mais</span>
+          <span class="story-copy-word w">do</span>
+          <span class="story-copy-word w">que</span>
+          <span class="story-copy-word w">o</span>
+          <span class="story-copy-word w">mercado</span>
+          <span class="story-copy-word w">valoriza.</span>
+          <span class="story-copy-word">Você</span>
+          <span class="story-copy-word">não</span>
+          <span class="story-copy-word">quer</span>
+          <span class="story-copy-word">apenas</span>
+          <span class="story-copy-word">bater</span>
+          <span class="story-copy-word">metas</span>
+          <span class="story-copy-word">no</span>
+          <span class="story-copy-word">fim</span>
+          <span class="story-copy-word">do</span>
+          <span class="story-copy-word">mês,</span>
+          <span class="story-copy-word">você</span>
+          <span class="story-copy-word">quer</span>
+          <span class="story-copy-word">gerar</span>
+          <span class="story-copy-word">riqueza,</span>
+          <span class="story-copy-word">transformação,</span>
+          <span class="story-copy-word">ditar</span>
+          <span class="story-copy-word">as</span>
+          <span class="story-copy-word">regras</span>
+          <span class="story-copy-word">do</span>
+          <span class="story-copy-word">seu</span>
+          <span class="story-copy-word">mercado.</span>
+          <span class="story-copy-word o">Afinal,</span>
+          <span class="story-copy-word o">você</span>
+          <span class="story-copy-word o">é</span>
+          <span class="story-copy-word o">um</span>
+          <span class="story-copy-word o">visionário.</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Painel 03: Problema -->
+    <div class="story-panel">
+      <div class="story-panel-inner">
+        <span class="story-tag">03 ⏤ 04</span>
+        <h2 class="story-title" style="max-width:1000px">
+          <span class="story-title-word">O</span>
+          <span class="story-title-word">problema</span>
+          <span class="story-title-word">é</span>
+          <span class="story-title-word">que</span>
+          <span class="story-title-word">o</span>
+          <span class="story-title-word">marketing</span>
+          <span class="story-title-word">tradicional</span>
+          <span class="story-title-word">não</span>
+          <span class="story-title-word">foi</span>
+          <span class="story-title-word">feito</span>
+          <span class="story-title-word">para</span>
+          <span class="story-title-word">negócios</span>
+          <span class="story-title-word">visionários.</span>
+        </h2>
+        <p class="story-body">
+          <span class="story-copy-word">Nossa</span>
+          <span class="story-copy-word">história</span>
+          <span class="story-copy-word">começou</span>
+          <span class="story-copy-word">na</span>
+          <span class="story-copy-word">linha</span>
+          <span class="story-copy-word">de</span>
+          <span class="story-copy-word">frente</span>
+          <span class="story-copy-word">de</span>
+          <span class="story-copy-word w">uma</span>
+          <span class="story-copy-word w">das</span>
+          <span class="story-copy-word w">maiores</span>
+          <span class="story-copy-word w">assessorias</span>
+          <span class="story-copy-word w">de</span>
+          <span class="story-copy-word w">marketing</span>
+          <span class="story-copy-word w">da</span>
+          <span class="story-copy-word w">América</span>
+          <span class="story-copy-word w">Latina.</span>
+          <span class="story-copy-word">Vimos</span>
+          <span class="story-copy-word">empresas</span>
+          <span class="story-copy-word">despejando</span>
+          <span class="story-copy-word">rios</span>
+          <span class="story-copy-word">de</span>
+          <span class="story-copy-word">dinheiro</span>
+          <span class="story-copy-word">em</span>
+          <span class="story-copy-word">soluções</span>
+          <span class="story-copy-word">industrializadas.</span>
+          <span class="story-copy-word w">Nós</span>
+          <span class="story-copy-word w">vimos</span>
+          <span class="story-copy-word w">o</span>
+          <span class="story-copy-word w">marketing</span>
+          <span class="story-copy-word w">ruir</span>
+          <span class="story-copy-word w">de</span>
+          <span class="story-copy-word w">dentro</span>
+          <span class="story-copy-word w">pra</span>
+          <span class="story-copy-word w">fora.</span>
+          <span class="story-copy-word">E</span>
+          <span class="story-copy-word w">no</span>
+          <span class="story-copy-word w">meio</span>
+          <span class="story-copy-word w">desse</span>
+          <span class="story-copy-word w">abismo</span>
+          <span class="story-copy-word w">ficam</span>
+          <span class="story-copy-word w">empresas</span>
+          <span class="story-copy-word w">como</span>
+          <span class="story-copy-word w">a</span>
+          <span class="story-copy-word w">sua,</span>
+          <span class="story-copy-word">com</span>
+          <span class="story-copy-word">potencial</span>
+          <span class="story-copy-word">e</span>
+          <span class="story-copy-word">produto</span>
+          <span class="story-copy-word">valioso,</span>
+          <span class="story-copy-word">investindo</span>
+          <span class="story-copy-word">e</span>
+          <span class="story-copy-word">sem</span>
+          <span class="story-copy-word">atingir</span>
+          <span class="story-copy-word">a</span>
+          <span class="story-copy-word">visão</span>
+          <span class="story-copy-word">que</span>
+          <span class="story-copy-word">buscam.</span>
+        </p>
+      </div>
+    </div>
+
+    <!-- Painel 04: Ser escolhido -->
+    <div class="story-panel">
+      <div class="story-panel-inner">
+        <span class="story-tag">04 ⏤ 04</span>
+        <h2 class="story-title" style="max-width:920px">
+          <span class="story-title-word">Você</span>
+          <span class="story-title-word">pode</span>
+          <span class="story-title-word">pagar</span>
+          <span class="story-title-word">para</span>
+          <span class="story-title-word">aparecer.</span>
+          <span class="story-title-word">Mas</span>
+          <span class="story-title-word">não</span>
+          <span class="story-title-word">pode</span>
+          <span class="story-title-word">pagar</span>
+          <span class="story-title-word">para</span>
+          <span class="story-title-word">ser</span>
+          <span class="story-title-word">escolhido.</span>
+        </h2>
+        <p class="story-body">
+          <span class="story-copy-word">O</span>
+          <span class="story-copy-word">tráfego</span>
+          <span class="story-copy-word">te</span>
+          <span class="story-copy-word">coloca</span>
+          <span class="story-copy-word">na</span>
+          <span class="story-copy-word">frente</span>
+          <span class="story-copy-word">do</span>
+          <span class="story-copy-word">cliente,</span>
+          <span class="story-copy-word">mas</span>
+          <span class="story-copy-word">se</span>
+          <span class="story-copy-word">a</span>
+          <span class="story-copy-word">sua</span>
+          <span class="story-copy-word">oferta</span>
+          <span class="story-copy-word">parece</span>
+          <span class="story-copy-word">igual</span>
+          <span class="story-copy-word">à</span>
+          <span class="story-copy-word">do</span>
+          <span class="story-copy-word">concorrente,</span>
+          <span class="story-copy-word">você</span>
+          <span class="story-copy-word">pagou</span>
+          <span class="story-copy-word">pra</span>
+          <span class="story-copy-word">ser</span>
+          <span class="story-copy-word">visto</span>
+          <span class="story-copy-word">e</span>
+          <span class="story-copy-word">ignorado.</span>
+          <br><br>
+          <span class="story-copy-word w">Ser</span>
+          <span class="story-copy-word w">visto</span>
+          <span class="story-copy-word w">não</span>
+          <span class="story-copy-word w">é</span>
+          <span class="story-copy-word w">suficiente.</span>
+          <span class="story-copy-word w">Você</span>
+          <span class="story-copy-word w">precisa</span>
+          <span class="story-copy-word w">ser</span>
+          <span class="story-copy-word w">lembrado.</span>
+          <span class="story-copy-word w">E</span>
+          <span class="story-copy-word w">desejado.</span>
+          <br><br>
+          <span class="story-copy-word q">E</span>
+          <span class="story-copy-word q">aí</span>
+          <span class="story-copy-word q">fica</span>
+          <span class="story-copy-word q">a</span>
+          <span class="story-copy-word q">pergunta:</span>
+          <span class="story-copy-word q">Você</span>
+          <span class="story-copy-word q">quer</span>
+          <span class="story-copy-word q">ser</span>
+          <span class="story-copy-word q">só</span>
+          <span class="story-copy-word q">mais</span>
+          <span class="story-copy-word q">um?</span>
+        </p>
+      </div>
+    </div>
+
+  </div><!-- /storytelling -->
+
+  <!-- ═══════════════════════════════════════════════════════
+       A THEONE
+  ═══════════════════════════════════════════════════════ -->
+  <section id="theone">
+    <div class="theone-inner">
+      <div class="theone-left" data-reveal>
+        <h2>Dessa inconformidade<br>nasceu a <span class="gradient-text">TheOne.</span></h2>
+        <div class="theone-body">
+          <p>Vimos de perto o que acontece quando marketing vira linha de produção e nos recusamos a ser mais um desse modelo. A TheOne é a assessoria de marca que nasceu para construir marcas TheOne™: a escolha número um na mente do seu público.</p>
+          <p>Não entregamos um PDF e sumimos. Estruturamos a narrativa, o posicionamento e a presença da sua marca em todos os principais pontos de contato.</p>
+          <ul class="theone-bullets">
+            <li>São +8 anos construindo marcas que lideram, com profissionais formados nas maiores operações de marketing do Brasil.</li>
+            <li>Nossos projetos são personalizados. Nenhum negócio com ambição cabe numa solução industrializada.</li>
+            <li>Não atuamos com centenas de clientes. Selecionamos empresas com visão de crescimento para nos tornarmos aliados.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="theone-right" data-reveal data-d="1">
+        <img src="./site/public/theone-hand.jpg" alt="The One" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       FUNDADORES
+  ═══════════════════════════════════════════════════════ -->
+  <section id="founders">
+    <div class="founders-inner">
+      <div class="founders-header" data-reveal>
+        <h2>Quem está por trás da <span class="gradient-text">TheOne.</span></h2>
+      </div>
+      <div class="founder-cards">
+
+        <div class="founder-card" data-reveal>
+          <div class="founder-photo">
+            <img src="./site/public/images/Jean.jpeg" alt="Jean Talles" loading="lazy">
+            <span class="founder-num">01</span>
+          </div>
+          <div class="founder-content">
+            <span class="founder-badge">Fundador</span>
+            <h3 class="founder-name">Jean Talles</h3>
+            <p class="founder-role">Estrategista de Marca e Comunicação</p>
+            <div class="founder-divider"></div>
+            <ul class="founder-bullets">
+              <li><p>Especialista em branding, comunicação e marketing com 08 anos de mercado.</p></li>
+              <li><p>Liderou e estruturou o setor de comunicação para key accounts B2B e B2C na maior assessoria de marketing do país.</p></li>
+              <li><p>Fundador e idealizador da TheOne, consultoria que empodera empresários visionários no Brasil.</p></li>
+            </ul>
+            <div class="founder-logos">
+              <img src="./site/public/images/founders-logos/o-boticario.png" alt="O Boticário" loading="lazy">
+              <img src="./site/public/images/founders-logos/max-titanium.png" alt="Max Titanium" loading="lazy">
+              <img src="./site/public/images/founders-logos/stihl.png" alt="Stihl" loading="lazy">
+              <img src="./site/public/images/founders-logos/jacuzzi.png" alt="Jacuzzi" loading="lazy">
+              <img src="./site/public/images/founders-logos/arezzo.png" alt="Arezzo" loading="lazy">
+              <img src="./site/public/images/founders-logos/cyrela.png" alt="Cyrela" loading="lazy">
+            </div>
+          </div>
+        </div>
+
+        <div class="founder-card rev" data-reveal>
+          <div class="founder-photo">
+            <img src="./site/public/images/Pedro.jpeg" alt="Pedro Xavier" loading="lazy">
+            <span class="founder-num">02</span>
+          </div>
+          <div class="founder-content">
+            <span class="founder-badge">Co-Fundador</span>
+            <h3 class="founder-name">Pedro Xavier</h3>
+            <p class="founder-role">Estrategista de Marketing e Receita</p>
+            <div class="founder-divider"></div>
+            <ul class="founder-bullets">
+              <li><p>7 anos de experiência em marketing, com atuação em copy, estratégia, liderança e growth.</p></li>
+              <li><p>Copy Sênior, Especialista e Head de Marketing na maior assessoria de marketing e vendas do país.</p></li>
+              <li><p>Hoje conduz diagnósticos e direcionamentos estratégicos para o crescimento de empresas.</p></li>
+            </ul>
+            <div class="founder-logos">
+              <img src="./site/public/images/founders-logos/o-boticario.png" alt="O Boticário" loading="lazy">
+              <img src="./site/public/images/founders-logos/max-titanium.png" alt="Max Titanium" loading="lazy">
+              <img src="./site/public/images/founders-logos/stihl.png" alt="Stihl" loading="lazy">
+              <img src="./site/public/images/founders-logos/jacuzzi.png" alt="Jacuzzi" loading="lazy">
+              <img src="./site/public/images/founders-logos/arezzo.png" alt="Arezzo" loading="lazy">
+              <img src="./site/public/images/founders-logos/cyrela.png" alt="Cyrela" loading="lazy">
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       CONTEXTO / SEU PROJETO — fundo creme/branco
+  ═══════════════════════════════════════════════════════ -->
+  <section id="contexto">
+    <div class="ctx-inner">
+
+      <h2 class="ctx-section-title" data-reveal>Contexto</h2>
+
+      <!-- A → B -->
+      <div class="ctx-grid" data-reveal data-d="1">
+
+        <div class="ctx-card ctx-a">
+          <h3>Cenário Atual</h3>
+          <ul class="ctx-list">
+            <li>Marca sem posicionamento claro no mercado</li>
+            <li>Dificuldade em atrair o cliente ideal</li>
+            <li>Comunicação inconsistente entre canais</li>
+            <li>Concorrentes com presença e percepção mais forte</li>
+            <li>Crescimento dependente de indicações, sem previsibilidade</li>
+            <li>Marketing repetitivo, sem estratégia definida</li>
+          </ul>
+        </div>
+
+        <div class="ctx-arrow">
+          <svg viewBox="0 0 40 40" fill="none">
+            <defs>
+              <linearGradient id="arrowG" x1="4" y1="20" x2="36" y2="20" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FED1C5"/>
+                <stop offset="1" stop-color="#FF5224"/>
+              </linearGradient>
+            </defs>
+            <path d="M4 20h28M22 10l14 10-14 10" stroke="url(#arrowG)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+
+        <div class="ctx-card ctx-b">
+          <h3>Cenário Desejado</h3>
+          <ul class="ctx-list">
+            <li>Marca reconhecida como referência no segmento</li>
+            <li>Atração consistente de clientes de alto valor</li>
+            <li>Identidade coesa que gera confiança imediata</li>
+            <li>Posicionamento que justifica preço premium naturalmente</li>
+            <li>Crescimento com autoridade e previsibilidade</li>
+            <li>Comunicação sofisticada e estratégica em todos os canais</li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Timeline -->
+      <div class="ctx-timeline">
+        <span class="ctx-timeline-label" data-reveal>Cronograma estimado do projeto</span>
+        <div class="tl-track" id="tl-track">
+          <div class="tl-step">
+            <div class="tl-node"><span>01</span></div>
+            <div class="tl-content">
+              <h4>Descoberta</h4>
+              <p>Diagnóstico de negócio, público e mercado</p>
+              <span class="tl-badge">2 semanas</span>
+            </div>
+          </div>
+          <div class="tl-step">
+            <div class="tl-node"><span>02</span></div>
+            <div class="tl-content">
+              <h4>Estratégia</h4>
+              <p>Posicionamento, narrativa e plataforma de marca</p>
+              <span class="tl-badge">3 semanas</span>
+            </div>
+          </div>
+          <div class="tl-step">
+            <div class="tl-node"><span>03</span></div>
+            <div class="tl-content">
+              <h4>Identidade</h4>
+              <p>Visual, verbal e sistema completo de marca</p>
+              <span class="tl-badge">3 semanas</span>
+            </div>
+          </div>
+          <div class="tl-step">
+            <div class="tl-node"><span>04</span></div>
+            <div class="tl-content">
+              <h4>Lançamento</h4>
+              <p>Go-to-market, site e distribuição</p>
+              <span class="tl-badge">2 semanas</span>
+            </div>
+          </div>
+          <div class="tl-step">
+            <div class="tl-node"><span>05</span></div>
+            <div class="tl-content">
+              <h4>Assessoria</h4>
+              <p>Acompanhamento e ajustes contínuos</p>
+              <span class="tl-badge">Contínuo</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scope -->
+      <div class="ctx-scope">
+        <div class="ctx-scope-header" data-reveal>
+          <div>
+            <span class="ctx-scope-tag">Escopo de Entregas</span>
+            <h3>O que vai ser construído</h3>
+          </div>
+          <p class="ctx-scope-desc">Um projeto completo de construção de marca — do diagnóstico estratégico até o lançamento. Cada entrega cria um sistema coeso que posiciona sua empresa como a escolha inevitável.</p>
+        </div>
+
+        <div class="deliverables-grid" id="deliverables">
+          <div class="del-card"><span class="del-num">01</span><h4>Diagnóstico Estratégico</h4><p>Pesquisa aprofundada de público, mercado e negócio para fundamentar todas as decisões de posicionamento.</p></div>
+          <div class="del-card"><span class="del-num">02</span><h4>Posicionamento de Marca</h4><p>Definição do espaço único que sua marca vai ocupar na mente do cliente ideal, tornando a concorrência irrelevante.</p></div>
+          <div class="del-card"><span class="del-num">03</span><h4>Narrativa TheOne</h4><p>Construção do discurso de marca — a história que conecta o que você faz ao que o cliente mais precisa ouvir.</p></div>
+          <div class="del-card"><span class="del-num">04</span><h4>Identidade Visual</h4><p>Sistema visual completo: logo, tipografia, paleta, aplicações e guia de uso. Uma marca que se reconhece à distância.</p></div>
+          <div class="del-card"><span class="del-num">05</span><h4>Site Brand Experience</h4><p>Site construído para converter: design imersivo, copy estratégico e experiência que reforça o posicionamento premium.</p></div>
+          <div class="del-card"><span class="del-num">06</span><h4>Playbook de Execução</h4><p>Manual completo de como executar a marca no dia a dia — para o time, parceiros e qualquer ponto de contato.</p></div>
+        </div>
+
+        <div class="ctx-result" data-reveal>
+          <span class="ctx-result-tag">Resultado Final Esperado</span>
+          <h3>Uma marca que o mercado reconhece,<br>lembra e <span class="gradient-text">deseja.</span></h3>
+          <div class="ctx-result-grid">
+            <div class="ctx-result-item">
+              <div class="ctx-result-icon"><svg viewBox="0 0 13 13" fill="none" stroke="#FE6942" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M7 2l4.5 4.5L7 11"/></svg></div>
+              <div><h5>Autoridade de mercado</h5><p>Posicionamento que justifica preço premium e elimina objeções antes da primeira conversa.</p></div>
+            </div>
+            <div class="ctx-result-item">
+              <div class="ctx-result-icon"><svg viewBox="0 0 13 13" fill="none" stroke="#FE6942" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M7 2l4.5 4.5L7 11"/></svg></div>
+              <div><h5>Atração do cliente certo</h5><p>Comunicação que filtra naturalmente e atrai quem tem real potencial de compra.</p></div>
+            </div>
+            <div class="ctx-result-item">
+              <div class="ctx-result-icon"><svg viewBox="0 0 13 13" fill="none" stroke="#FE6942" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M7 2l4.5 4.5L7 11"/></svg></div>
+              <div><h5>Consistência em todos os canais</h5><p>Identidade coesa que transmite a mesma percepção em qualquer ponto de contato.</p></div>
+            </div>
+            <div class="ctx-result-item">
+              <div class="ctx-result-icon"><svg viewBox="0 0 13 13" fill="none" stroke="#FE6942" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M7 2l4.5 4.5L7 11"/></svg></div>
+              <div><h5>Crescimento com previsibilidade</h5><p>Base estratégica que sustenta o crescimento e torna as decisões de negócio mais claras.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       INVESTIMENTO
+  ═══════════════════════════════════════════════════════ -->
+  <section id="investimento">
+    <div class="inv-inner">
+      <div class="inv-header" data-reveal>
+        <span class="inv-header-tag">Investimento</span>
+        <h2>O que você investe para<br>se tornar <span class="gradient-text">TheOne.</span></h2>
+      </div>
+      <div class="inv-card" data-reveal data-d="1">
+        <div class="inv-card-inner">
+          <span class="inv-label">TheBrand · Projeto Completo</span>
+          <p class="inv-name">Construção de marca<br>e go-to-market</p>
+          <div class="inv-body">
+            <div class="inv-includes">
+              <span class="inv-includes-label">Incluso neste projeto</span>
+              <ul>
+                <li>Diagnóstico estratégico completo</li>
+                <li>Posicionamento e narrativa de marca</li>
+                <li>Identidade visual e verbal</li>
+                <li>Site Brand Experience</li>
+                <li>Estratégia de lançamento e go-to-market</li>
+                <li>Playbook de execução</li>
+              </ul>
+            </div>
+            <div class="inv-pricing">
+              <p class="inv-value">R$ XX.XXX</p>
+              <p class="inv-installment">ou 3× de R$ X.XXX no cartão</p>
+              <a href="https://wa.me/5551997513675" class="inv-cta">Aceitar Proposta →</a>
+            </div>
+          </div>
+          <div class="inv-validity">
+            <p>Proposta válida até <strong>30 de Abril de 2026</strong></p>
+            <p>Dúvidas? <strong>Fale no WhatsApp</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GSAP via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/ScrollTrigger.min.js"></script>
+
+  <script>
+  // ── HERO CANVAS ────────────────────────────────────────────
+  (function () {
+    function clamp(v,mn,mx){if(mn===undefined)mn=0;if(mx===undefined)mx=1;return Math.min(mx,Math.max(mn,v));}
+    function norm(v,s,e){return clamp((v-s)/(e-s));}
+    function lerp(a,b,t){return a+(b-a)*t;}
+    function easeOut3(t){return 1-Math.pow(1-t,3);}
+    function easeInOut3(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+    function blendRgb(f,t,a){return[Math.round(lerp(f[0],t[0],a)),Math.round(lerp(f[1],t[1],a)),Math.round(lerp(f[2],t[2],a))];}
+    const WB=[245,240,236],OS=[255,182,163],OE=[255,84,39],PG=[140,140,140],COR=4;
+    const sticky=document.getElementById('hero-sticky'),glow=document.getElementById('hero-glow'),
+          grain=document.getElementById('hero-grain'),canvas=document.getElementById('hero-canvas'),
+          ctx=canvas.getContext('2d'),intro=document.getElementById('hero-intro'),
+          words=intro.querySelectorAll('span'),finalWrap=document.getElementById('hero-final'),
+          propTag=document.getElementById('hero-proposal-tag'),title=document.getElementById('hero-title'),
+          body=document.getElementById('hero-body'),hint=document.getElementById('hero-scroll-hint');
+    let vw=0,vh=0,particles=[],cp=null,rafId=0,startTime=null;
+    const DUR=7200;
+    function buildParts(w,h){const gap=20,sz=w<768?48:72,sp=sz+gap,cx=w/2,cy=h/2,ox=cx-Math.round(cx/sp)*sp,oy=cy-Math.round(cy/sp)*sp,cols=Math.ceil((w-ox)/sp)+2,rows=Math.ceil((h-oy)/sp)+2,list=[];for(let r=0;r<rows;r++)for(let c=0;c<cols;c++)list.push({x:ox+c*sp,y:oy+r*sp,size:sz,alpha:0.12+Math.random()*0.12,delay:Math.random()*0.6,isCenter:false});let ci=0,nd=Infinity;for(let i=0;i<list.length;i++){const d=Math.hypot(list[i].x-cx,list[i].y-cy);if(d<nd){nd=d;ci=i;}}list[ci].isCenter=true;list[ci].alpha=0.38;return list;}
+    function resize(){vw=window.innerWidth;vh=window.innerHeight;const dpr=Math.min(window.devicePixelRatio||1,1.5);canvas.width=vw*dpr;canvas.height=vh*dpr;canvas.style.width=vw+'px';canvas.style.height=vh+'px';ctx.setTransform(1,0,0,1,0,0);ctx.scale(dpr,dpr);particles=buildParts(vw,vh);cp=particles.find(function(p){return p.isCenter;})||null;finalWrap.style.paddingTop=(vh*0.28+Math.min(vh*0.09,88)-8)+'px';}
+    function render(p){
+      ctx.clearRect(0,0,vw,vh);
+      var bg=easeOut3(norm(p,0.15,0.50)),c2c=easeInOut3(norm(p,0.36,0.44)),ca=easeInOut3(norm(p,0.44,0.56)),ce=easeInOut3(norm(p,0.60,0.76)),tk=easeInOut3(norm(p,0.68,0.88)),cl=easeOut3(norm(p,0.88,0.98)),so=easeOut3(norm(p,0.15,0.25))*(1-easeOut3(norm(p,0.94,1)));
+      var scx=vw/2,scy=vh/2;
+      for(var i=0;i<particles.length;i++){var pt=particles[i];if(pt.isCenter)continue;var ap=easeOut3(clamp((bg-pt.delay)/0.13));if(ap<=0.001)continue;var cd=Math.hypot(pt.x-scx,pt.y-scy),df=1-cd/Math.hypot(scx,scy),ft=1-tk*lerp(0.8,1.12,df),al=pt.alpha*ap*Math.max(0,ft)*(1-cl)*so;if(al>0.01){var hf=(pt.size/2)*ap*lerp(1,0.82,tk);ctx.beginPath();ctx.roundRect(pt.x-hf,pt.y-hf,hf*2,hf*2,COR*ap);ctx.fillStyle='rgba('+PG[0]+','+PG[1]+','+PG[2]+','+al.toFixed(3)+')';ctx.fill();}}
+      if(cp){var cpa=easeOut3(clamp((bg-cp.delay)/0.13));if(cpa>0.001){var cpx=cp.x,cpy=cp.y,hu=Math.max(Math.hypot(cpx,cpy),Math.hypot(vw-cpx,cpy),Math.hypot(cpx,vh-cpy),Math.hypot(vw-cpx,vh-cpy))*1.06,bh=(cp.size/2)*cpa,eh=bh*lerp(1,vw<768?4.8:5.8,ce),oh=lerp(eh,hu,tk),oa=clamp(cp.alpha*cpa*so*(1-cl)),cr=lerp(COR*cpa,oh,c2c);var ga=oa*(1-ca);if(ga>0.005){ctx.beginPath();ctx.roundRect(cpx-oh,cpy-oh,oh*2,oh*2,Math.min(cr,oh));ctx.fillStyle='rgba('+PG[0]+','+PG[1]+','+PG[2]+','+ga.toFixed(3)+')';ctx.fill();}if(ca>0.005){var oa2=clamp(ca*so*(1-cl)),gr=ctx.createLinearGradient(cpx-oh,cpy,cpx+oh,cpy);gr.addColorStop(0,'rgba('+OS[0]+','+OS[1]+','+OS[2]+','+oa2.toFixed(3)+')');gr.addColorStop(1,'rgba('+OE[0]+','+OE[1]+','+OE[2]+','+oa2.toFixed(3)+')');ctx.beginPath();ctx.roundRect(cpx-oh,cpy-oh,oh*2,oh*2,Math.min(cr,oh));ctx.fillStyle=gr;ctx.fill();}}}
+      var gs=blendRgb(WB,OS,tk),ge=blendRgb(WB,OE,tk);sticky.style.background='linear-gradient(to right,rgb('+gs.join(',')+')),rgb('+ge.join(','))+')'.replace(/\)\)/,')')+')'
+      ;sticky.style.background='linear-gradient(to right,rgb('+gs+')),rgb('+ge+'))'.replace('rgb('+gs+'))','rgb('+gs[0]+','+gs[1]+','+gs[2]+')').replace('rgb('+ge+')','rgb('+ge[0]+','+ge[1]+','+ge[2]+')');
+      glow.style.opacity=lerp(0.08,0.34,Math.max(ca*0.8,ce,tk)).toFixed(3);
+      grain.style.opacity=lerp(0.08,0.05,tk).toFixed(3);
+      var ht=easeInOut3(norm(p,0.32,0.80)),hy=lerp(vh*-0.16,vh*-0.20,ht);
+      intro.style.transform='translateY('+hy.toFixed(1)+'px)';intro.style.opacity='1';
+      words.forEach(function(w,idx){var ri=easeOut3(norm(p,0+idx*0.014,0.10+idx*0.014));w.style.opacity=lerp(0.85,1.0,ri).toFixed(3);var ty=lerp(6,0,ri);w.style.transform=ty>0.1?'translate3d(0,'+ty.toFixed(1)+'px,0)':'none';var wc=blendRgb([21,19,17],[255,255,255],Math.min(1,tk*2.2));w.style.color='rgb('+wc.join(',')+')'});
+      var ft=easeOut3(norm(p,0.80,0.90));title.style.opacity=ft.toFixed(3);title.style.filter=ft<0.99?'blur('+lerp(18,0,ft).toFixed(2)+'px)':'none';title.style.transform=ft<0.99?'translateY('+lerp(32,0,ft).toFixed(1)+'px)':'none';
+      propTag.style.opacity=ft.toFixed(3);
+      var fb=easeOut3(norm(p,0.84,0.96));body.style.opacity=fb.toFixed(3);body.style.filter=fb<0.99?'blur('+lerp(14,0,fb).toFixed(2)+'px)':'none';body.style.transform=fb<0.99?'translateY('+lerp(24,0,fb).toFixed(1)+'px)':'none';
+      hint.style.opacity=(1-easeOut3(norm(p,0,0.06))).toFixed(3);
+    }
+    // fix bg assignment
+    function setBg(tk){var gs=blendRgb(WB,OS,tk),ge=blendRgb(WB,OE,tk);sticky.style.background='linear-gradient(to right,rgb('+gs[0]+','+gs[1]+','+gs[2]+'),rgb('+ge[0]+','+ge[1]+','+ge[2]+')';}
+    function renderFull(p){ctx.clearRect(0,0,vw,vh);var bg=easeOut3(norm(p,0.15,0.50)),c2c=easeInOut3(norm(p,0.36,0.44)),ca=easeInOut3(norm(p,0.44,0.56)),ce=easeInOut3(norm(p,0.60,0.76)),tk=easeInOut3(norm(p,0.68,0.88)),cl=easeOut3(norm(p,0.88,0.98)),so=easeOut3(norm(p,0.15,0.25))*(1-easeOut3(norm(p,0.94,1)));var scx=vw/2,scy=vh/2;for(var i=0;i<particles.length;i++){var pt=particles[i];if(pt.isCenter)continue;var ap=easeOut3(clamp((bg-pt.delay)/0.13));if(ap<=0.001)continue;var cd=Math.hypot(pt.x-scx,pt.y-scy),df=1-cd/Math.hypot(scx,scy),ft2=1-tk*lerp(0.8,1.12,df),al=pt.alpha*ap*Math.max(0,ft2)*(1-cl)*so;if(al>0.01){var hf=(pt.size/2)*ap*lerp(1,0.82,tk);ctx.beginPath();ctx.roundRect(pt.x-hf,pt.y-hf,hf*2,hf*2,COR*ap);ctx.fillStyle='rgba('+PG[0]+','+PG[1]+','+PG[2]+','+al.toFixed(3)+')';ctx.fill();}}if(cp){var cpa=easeOut3(clamp((bg-cp.delay)/0.13));if(cpa>0.001){var cpx=cp.x,cpy=cp.y,hu=Math.max(Math.hypot(cpx,cpy),Math.hypot(vw-cpx,cpy),Math.hypot(cpx,vh-cpy),Math.hypot(vw-cpx,vh-cpy))*1.06,bh=(cp.size/2)*cpa,eh=bh*lerp(1,vw<768?4.8:5.8,ce),oh=lerp(eh,hu,tk),oa=clamp(cp.alpha*cpa*so*(1-cl)),cr=lerp(COR*cpa,oh,c2c);var ga=oa*(1-ca);if(ga>0.005){ctx.beginPath();ctx.roundRect(cpx-oh,cpy-oh,oh*2,oh*2,Math.min(cr,oh));ctx.fillStyle='rgba('+PG[0]+','+PG[1]+','+PG[2]+','+ga.toFixed(3)+')';ctx.fill();}if(ca>0.005){var oa2=clamp(ca*so*(1-cl)),gr=ctx.createLinearGradient(cpx-oh,cpy,cpx+oh,cpy);gr.addColorStop(0,'rgba('+OS[0]+','+OS[1]+','+OS[2]+','+oa2.toFixed(3)+')');gr.addColorStop(1,'rgba('+OE[0]+','+OE[1]+','+OE[2]+','+oa2.toFixed(3)+')');ctx.beginPath();ctx.roundRect(cpx-oh,cpy-oh,oh*2,oh*2,Math.min(cr,oh));ctx.fillStyle=gr;ctx.fill();}}}setBg(tk);glow.style.opacity=lerp(0.08,0.34,Math.max(ca*0.8,ce,tk)).toFixed(3);grain.style.opacity=lerp(0.08,0.05,tk).toFixed(3);var ht=easeInOut3(norm(p,0.32,0.80)),hy=lerp(vh*-0.16,vh*-0.20,ht);intro.style.transform='translateY('+hy.toFixed(1)+'px)';intro.style.opacity='1';words.forEach(function(w,idx){var ri=easeOut3(norm(p,0+idx*0.014,0.10+idx*0.014));w.style.opacity=lerp(0.85,1.0,ri).toFixed(3);var ty=lerp(6,0,ri);w.style.transform=ty>0.1?'translate3d(0,'+ty.toFixed(1)+'px,0)':'none';var wc=blendRgb([21,19,17],[255,255,255],Math.min(1,tk*2.2));w.style.color='rgb('+wc.join(',')+')'});var ft=easeOut3(norm(p,0.80,0.90));title.style.opacity=ft.toFixed(3);title.style.filter=ft<0.99?'blur('+lerp(18,0,ft).toFixed(2)+'px)':'none';title.style.transform=ft<0.99?'translateY('+lerp(32,0,ft).toFixed(1)+'px)':'none';propTag.style.opacity=ft.toFixed(3);var fb=easeOut3(norm(p,0.84,0.96));body.style.opacity=fb.toFixed(3);body.style.filter=fb<0.99?'blur('+lerp(14,0,fb).toFixed(2)+'px)':'none';body.style.transform=fb<0.99?'translateY('+lerp(24,0,fb).toFixed(1)+'px)':'none';hint.style.opacity=(1-easeOut3(norm(p,0,0.06))).toFixed(3);}
+    function tick(ts){if(!startTime)startTime=ts;var elapsed=ts-startTime,p=Math.min(1,elapsed/DUR);renderFull(p);if(p<1)rafId=requestAnimationFrame(tick);}
+    resize();renderFull(0);
+    document.fonts.ready.then(function(){resize();renderFull(0);rafId=requestAnimationFrame(tick);});
+    window.addEventListener('resize',function(){resize();});
+  }());
+
+  // ── GSAP STORYTELLING ─────────────────────────────────────
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Storytelling Intro — pin + word reveal
+  (function(){
+    var panel=document.getElementById('story-intro');
+    var tw=panel.querySelectorAll('.si-title-word');
+    var cw=panel.querySelectorAll('.si-copy-word');
+    var tl=gsap.timeline({scrollTrigger:{trigger:panel,pin:true,pinSpacing:true,start:'top top',end:'+=110%',scrub:1.5}});
+    tl.fromTo(tw,{opacity:0.08,y:8},{opacity:1,y:0,ease:'none',stagger:{each:0.045}});
+    tl.fromTo(cw,{opacity:0.08,y:8},{opacity:1,y:0,ease:'none',stagger:{each:0.05}},0.16);
+  }());
+
+  // Storytelling Panels — pin + word reveal each
+  (function(){
+    var panels=document.querySelectorAll('.story-panel');
+    panels.forEach(function(panel,idx){
+      var tw=panel.querySelectorAll('.story-title-word');
+      var cw=panel.querySelectorAll('.story-copy-word');
+      var tl=gsap.timeline({scrollTrigger:{trigger:panel,pin:true,pinSpacing:true,start:idx===0?'top top':'center center',end:'+=130%',scrub:1.5}});
+      tl.fromTo(tw,{opacity:0.05,y:8},{opacity:1,y:0,ease:'none',stagger:{each:0.045}});
+      tl.fromTo(cw,{opacity:0.05,y:8},{opacity:1,y:0,ease:'none',stagger:{each:0.05}},0.16);
+    });
+  }());
+
+  // ── SCROLL REVEALS ─────────────────────────────────────────
+  var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});},{threshold:0.08,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('[data-reveal]').forEach(function(el){io.observe(el);});
+
+  var tlIo=new IntersectionObserver(function(entries){if(entries[0].isIntersecting){document.querySelectorAll('.tl-step').forEach(function(el){el.classList.add('visible');});tlIo.disconnect();}},{threshold:0.2});
+  tlIo.observe(document.getElementById('tl-track'));
+
+  var gIo=new IntersectionObserver(function(entries){if(entries[0].isIntersecting){document.querySelectorAll('.del-card').forEach(function(el){el.classList.add('visible');});gIo.disconnect();}},{threshold:0.1});
+  gIo.observe(document.getElementById('deliverables'));
+  </script>
+
+</body>
+</html>

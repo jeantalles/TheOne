@@ -80,7 +80,7 @@ export default function Audience() {
           </div>
           <div className="aud-card-right border border-[#5B5B5B] rounded-[32.7px] bg-transparent p-8 md:pt-12 md:pb-12 md:pl-12 md:pr-16 hover:bg-[#ffffff05] transition-colors duration-500 origin-center relative overflow-hidden group">
             <div className="absolute inset-0 bg-[#FF5224]/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            <h3 className="font-editorial text-white text-[26px] md:text-[38px] leading-tight tracking-tight mb-10 relative z-10">Gestores de<br /><span className="text-[#FE6942]">Growth & Marketing</span></h3>
+            <h3 className="font-editorial text-white text-[26px] md:text-[38px] leading-tight tracking-tight mb-10 relative z-10">Gestores de<br /><span className="text-[#FE6942]">Growth, Marketing & Vendas</span></h3>
             <div className="space-y-6 relative z-10">
               {gmList.map((item, i) => (
                 <div key={i} className="flex gap-4 items-start aud-item">
