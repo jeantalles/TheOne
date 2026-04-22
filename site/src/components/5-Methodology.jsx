@@ -184,7 +184,7 @@ export default function Methodology() {
           <br />
           <span className="text-[#FE6942] glow-method-text">2.</span> Como os concorrentes se posicionam e se vendem
           <br />
-          <span className="text-[#FE6942] glow-method-text">3.</span> Nossa solução, transformação e onde nos diferenciamos
+          <span className="text-[#FE6942] glow-method-text">3.</span> Sua solução, transformação e onde se diferenciam
           <br />
           <span className="font-light">Conseguimos construir um...</span>
         </p>

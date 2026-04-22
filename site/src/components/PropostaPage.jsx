@@ -263,7 +263,7 @@ function Escopo() {
               {scope.entrega}
             </h2>
           </div>
-          <p className="font-halyard font-light text-[#181412]/62 text-[18px] md:text-[22px] leading-[1.55] max-w-[760px] lg:pt-8">
+          <p className="font-halyard font-light text-[#181412] text-[18px] md:text-[22px] leading-[1.55] max-w-[760px] lg:pt-8">
             Um sistema estratégico organizado por etapas: primeiro entendemos o terreno, depois definimos o posicionamento e, por fim, desenhamos como a marca se efetiva nos canais certos.
           </p>
         </div>
@@ -285,7 +285,7 @@ function Escopo() {
                 </div>
               </div>
 
-              <p className="font-halyard font-light text-[#181412]/58 text-[15px] md:text-[16px] leading-[1.55] mb-4">
+              <p className="font-halyard font-light text-[#181412] text-[15px] md:text-[16px] leading-[1.55] mb-4">
                 {pilar.descricao}
               </p>
 
@@ -295,7 +295,7 @@ function Escopo() {
                     <h4 className="font-halyard font-semibold text-[#181412] text-[15px] leading-[1.25] mb-1.5">
                       {item.titulo}
                     </h4>
-                    <p className="font-halyard font-light text-[#181412]/54 text-[14px] leading-[1.45]">
+                    <p className="font-halyard font-light text-[#181412] text-[14px] leading-[1.45]">
                       {item.descricao}
                     </p>
                   </div>
@@ -314,7 +314,7 @@ function Escopo() {
               {agentName}
             </h3>
           </div>
-          <p className="font-halyard font-light text-[#181412]/66 text-[16px] md:text-[18px] leading-[1.55]">
+          <p className="font-halyard font-light text-[#181412] text-[16px] md:text-[18px] leading-[1.55]">
             {scope.bonus.descricao}
           </p>
         </div>

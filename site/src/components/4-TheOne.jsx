@@ -75,7 +75,7 @@ export default function TheOne() {
             style={{ lineHeight: style.alturaLinhaTexto }}
           >
             <p className="max-w-[620px] relative -top-px">
-              {"A TheOne é a assessoria de marca que nasceu para construir marcas TheOne™: a escolha número um na mente do seu público.".split(' ').map((word, i) => (
+              {"A TheOne é a consultoria de marca que nasceu para construir marcas TheOne™: a escolha número um na mente do seu público.".split(' ').map((word, i) => (
                 <span key={`second-${i}`} className="conclusion-highlight-word inline-block mr-[0.2em] whitespace-nowrap">
                   {word}
                 </span>
