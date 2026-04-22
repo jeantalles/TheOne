@@ -57,7 +57,7 @@ export default function App() {
   const lenisRef = useRef(null);
   const pathname = usePathname();
   const isHomeRoute = pathname === '/';
-  const isPropostaRoute = pathname === '/proposta';
+  const isPropostaRoute = pathname === '/proposta' || pathname === '/proposta/';
   const isDesignSystem = pathname === '/design-system';
   const caseSlug = pathname.startsWith('/cases/')
     ? pathname.replace(/^\/cases\//, '').replace(/\/$/, '')
