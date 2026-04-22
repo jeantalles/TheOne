@@ -3,9 +3,9 @@ import { gsap } from 'gsap';
 
 const navLinks = [
   { name: 'O Contexto',    id: 'o-problema'  },
-  { name: 'A TheOne',      id: 'a-theone'    },
+  { name: 'Soluções',      id: 'a-theone'    },
   { name: 'Metodologia',   id: 'metodologia' },
-  { name: 'Soluções',      id: 'solucoes'    },
+  { name: 'Como funciona', id: 'solucoes'    },
   { name: 'Cases',         id: 'cases'       },
 ];
 

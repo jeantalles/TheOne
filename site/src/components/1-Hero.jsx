@@ -113,7 +113,7 @@ function buildParticles(width, height) {
   return particles;
 }
 
-export default function Hero() {
+export default function Hero({ introPhrases = [], showLogo = false }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const prefersConstrainedMotion = useConstrainedMotion();
   const isMobileViewport = useMediaQuery('(max-width: 767px)');
@@ -124,6 +124,7 @@ export default function Hero() {
   const grainRef = useRef(null);
   const introRef = useRef(null);
   const introWordRefs = useRef([]);
+  const introPhraseRefs = useRef([]);
   const canvasRef = useRef(null);
   const finalWrapRef = useRef(null);
   const finalTitleRef = useRef(null);
@@ -181,6 +182,11 @@ export default function Hero() {
         finalBodyRef.current.style.opacity = '1';
         finalBodyRef.current.style.filter = 'none';
         finalBodyRef.current.style.transform = 'none';
+      }
+      if (logoRef.current) {
+        logoRef.current.style.opacity = '1';
+        logoRef.current.style.filter = 'none';
+        logoRef.current.style.transform = 'none';
       }
       updateMobileMenuTheme(false);
       return undefined;
@@ -271,11 +277,28 @@ export default function Hero() {
       introRef.current.style.transform = `translateY(${headingY.toFixed(1)}px)`;
       introRef.current.style.opacity = '1';
 
+
+      // Intro phrases (proposta only) — each occupies ~10% of progress
+      const PHRASE_STEP = 0.10;
+      const wordsOffset = introPhrases.length * PHRASE_STEP;
+
+      introPhraseRefs.current.forEach((el, idx) => {
+        if (!el) return;
+        const base = idx * PHRASE_STEP;
+        const inFactor  = easeOut3(norm(progress, base, base + 0.035));
+        const outFactor = easeOut3(norm(progress, base + 0.065, base + PHRASE_STEP));
+        el.style.opacity = Math.max(0, inFactor - outFactor).toFixed(3);
+      });
+
+      // Words — shifted when phrases are present, starting from 0 instead of 0.85
       introWordRefs.current.forEach((word, index) => {
         if (!word) return;
 
-        const revealIn = easeOut3(norm(progress, 0.0 + index * 0.014, 0.10 + index * 0.014));
-        const opacity = lerp(0.85, 1.0, revealIn);
+        const startP  = wordsOffset + index * 0.014;
+        const endP    = wordsOffset + 0.10 + index * 0.014;
+        const revealIn = easeOut3(norm(progress, startP, endP));
+        const baseOpacity = introPhrases.length > 0 ? 0 : 0.85;
+        const opacity = lerp(baseOpacity, 1.0, revealIn);
         const translateY = lerp(6, 0, revealIn);
         const wordColor = blendRgb([21, 19, 17], [255, 255, 255], Math.min(1, takeover * 2.2));
 
@@ -293,8 +316,8 @@ export default function Hero() {
 
       if (logoRef.current) {
         logoRef.current.style.opacity = finalTitle.toFixed(3);
-        logoRef.current.style.filter = titleBlur > 0.05 ? `blur(${titleBlur.toFixed(2)}px)` : 'none';
         logoRef.current.style.transform = titleY > 0.1 ? `translate3d(0, ${titleY.toFixed(1)}px, 0)` : 'none';
+        logoRef.current.style.filter = titleBlur > 0.05 ? `invert(1) blur(${titleBlur.toFixed(2)}px)` : 'invert(1)';
       }
 
       const bodyBlur = lerp(14, 0, finalBody);
@@ -553,6 +576,23 @@ export default function Hero() {
           className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-6"
           style={shouldUseStaticScene ? { display: 'none' } : { willChange: 'transform, opacity' }}
         >
+          {/* Intro phrases (proposta only) — positioned absolute, centered */}
+          {introPhrases.length > 0 && introPhrases.map((content, idx) => (
+            <div
+              key={idx}
+              ref={(node) => { introPhraseRefs.current[idx] = node; }}
+              className="absolute inset-0 flex items-center justify-center text-center px-6 pointer-events-none"
+              style={{ opacity: 0, willChange: 'opacity' }}
+            >
+              <p
+                className="font-sans font-normal text-[#151311]"
+                style={{ fontSize: 'clamp(2.25rem, 4.2vw, 3.8rem)', letterSpacing: '-0.02em' }}
+              >
+                {content}
+              </p>
+            </div>
+          ))}
+
           <div className="flex flex-col items-center">
             <h2
             className="max-w-[900px] text-center font-sans font-normal leading-[1.1] text-[#151311]"
@@ -566,7 +606,7 @@ export default function Hero() {
                 }}
                 className="inline-block"
                 style={{
-                  opacity: 0.85,
+                  opacity: introPhrases.length > 0 ? 0 : 0.85,
                   filter: 'none',
                   transform: 'translate3d(0, 6px, 0)',
                   willChange: 'transform, opacity',
@@ -589,18 +629,15 @@ export default function Hero() {
           }}
         >
           <div className="mx-auto flex w-full max-w-5xl flex-col items-center text-center">
-            <img
-              ref={logoRef}
-              src="/logo-navbar.svg"
-              alt="The One"
-              className="h-10 md:h-12 w-auto mb-8"
-              style={{
-                opacity: shouldUseStaticScene ? 1 : 0,
-                filter: shouldUseStaticScene ? 'none' : 'blur(18px)',
-                transform: shouldUseStaticScene ? 'none' : 'translate3d(0, 32px, 0)',
-                willChange: 'transform, opacity, filter',
-              }}
-            />
+            {showLogo && (
+              <img
+                ref={logoRef}
+                src="/logo-navbar-black.svg"
+                alt="The One"
+                className="h-16 md:h-20 w-auto mb-[100px]"
+                style={{ opacity: 0, willChange: 'transform, opacity, filter' }}
+              />
+            )}
             <h2
               ref={finalTitleRef}
               style={{

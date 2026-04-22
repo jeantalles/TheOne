@@ -387,55 +387,54 @@
 
     /* Scope (light) */
     .ctx-scope { margin-top: 80px; padding-top: 80px; border-top: 1.5px solid rgba(24,20,18,0.08); }
-    .ctx-scope-header { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; margin-bottom: 48px; }
+    .ctx-scope-header { display: grid; grid-template-columns: 0.82fr 1.18fr; gap: 56px; align-items: start; margin-bottom: 36px; }
     .ctx-scope-header h3 {
       font-family: 'PP Editorial New', serif; font-weight: 400;
-      font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.1;
-      color: var(--black); letter-spacing: -0.02em;
+      font-size: clamp(2.2rem, 4vw, 3.8rem); line-height: 1.02;
+      color: var(--black); letter-spacing: -0.02em; max-width: 520px;
     }
     .ctx-scope-tag {
       display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.22em;
       text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
     }
-    .ctx-scope-desc { font-size: 18px; font-weight: 400; color: rgba(24,20,18,0.6); line-height: 1.7; }
+    .ctx-scope-desc { font-size: 20px; font-weight: 300; color: rgba(24,20,18,0.62); line-height: 1.6; padding-top: 28px; }
 
     .deliverables-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .del-card {
+    .scope-pillar {
       background: #fff; border: 1.5px solid rgba(24,20,18,0.08);
-      border-radius: 16px; padding: 32px 28px;
-      transition: border-color 250ms ease, box-shadow 250ms ease;
+      border-radius: 8px; padding: 28px 24px;
+      transition: border-color 250ms var(--ease-out), box-shadow 250ms var(--ease-out);
     }
-    .del-card:hover { border-color: rgba(254,105,66,0.3); box-shadow: 0 4px 20px rgba(254,105,66,0.08); }
-    .del-num { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: rgba(254,105,66,0.55); margin-bottom: 14px; }
-    .del-card h4 { font-size: 16px; font-weight: 700; color: var(--black); margin-bottom: 10px; line-height: 1.3; }
-    .del-card p { font-size: 14px; color: rgba(24,20,18,0.5); line-height: 1.65; }
-
-    /* Result card (light) */
-    .ctx-result {
-      margin-top: 12px; background: #fff;
-      border: 1.5px solid rgba(254,105,66,0.25); border-radius: 24px;
-      padding: 56px 52px; position: relative; overflow: hidden;
+    .scope-pillar:hover { border-color: rgba(254,105,66,0.3); box-shadow: 0 4px 20px rgba(254,105,66,0.08); }
+    .scope-pillar-head { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
+    .scope-index {
+      flex-shrink: 0; width: 40px; height: 40px; border-radius: 8px; background: var(--black);
+      color: #fff; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700;
     }
-    .ctx-result::before {
-      content: ''; position: absolute; top: -80px; right: -80px; width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(255,82,36,0.06) 0%, transparent 65%); pointer-events: none;
+    .scope-label { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+    .scope-pillar h4 { font-size: 19px; font-weight: 700; color: var(--black); line-height: 1.1; text-transform: uppercase; }
+    .scope-pillar-intro { font-size: 15px; font-weight: 300; color: rgba(24,20,18,0.58); line-height: 1.55; margin-bottom: 16px; }
+    .scope-items { border-top: 1px solid rgba(24,20,18,0.08); }
+    .scope-item { padding: 14px 0; border-bottom: 1px solid rgba(24,20,18,0.08); }
+    .scope-item:last-child { border-bottom: 0; padding-bottom: 0; }
+    .scope-item strong { display: block; font-size: 14px; font-weight: 700; color: var(--black); line-height: 1.25; margin-bottom: 5px; }
+    .scope-item p { font-size: 13px; font-weight: 300; color: rgba(24,20,18,0.54); line-height: 1.45; }
+    .scope-bonus {
+      display: grid; grid-template-columns: 260px 1fr; gap: 36px; align-items: start;
+      margin-top: 12px; border: 1.5px solid rgba(254,105,66,0.35); border-radius: 8px;
+      background: rgba(254,105,66,0.06); padding: 28px 32px;
     }
-    .ctx-result-tag { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent); margin-bottom: 18px; }
-    .ctx-result h3 {
+    .scope-bonus h4 {
       font-family: 'PP Editorial New', serif; font-weight: 400;
-      font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 1.1;
-      color: var(--black); margin-bottom: 40px; letter-spacing: -0.02em;
+      font-size: clamp(1.8rem, 2.6vw, 2.4rem); line-height: 1.02;
+      color: var(--black); letter-spacing: -0.02em;
     }
-    .ctx-result-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px 48px; }
-    .ctx-result-item { display: flex; align-items: flex-start; gap: 14px; }
-    .ctx-result-icon {
-      flex-shrink: 0; width: 32px; height: 32px; border-radius: 50%;
-      background: rgba(254,105,66,0.1); border: 1px solid rgba(254,105,66,0.25);
-      display: flex; align-items: center; justify-content: center; margin-top: 2px;
+    .scope-bonus p { font-size: 17px; font-weight: 300; color: rgba(24,20,18,0.66); line-height: 1.55; }
+
+    @media (max-width: 980px) {
+      .ctx-scope-header, .deliverables-grid, .scope-bonus { grid-template-columns: 1fr; }
+      .ctx-scope-desc { padding-top: 0; }
     }
-    .ctx-result-icon svg { width: 13px; height: 13px; }
-    .ctx-result-item h5 { font-size: 15px; font-weight: 700; color: var(--black); margin-bottom: 4px; }
-    .ctx-result-item p { font-size: 14px; color: rgba(24,20,18,0.5); line-height: 1.6; }
 
     /* ── INVESTIMENTO (dark + orange card) ───────────────────── */
     #investimento { background: var(--dark); padding: 100px 0; }
@@ -1049,42 +1048,66 @@
       <div class="ctx-scope">
         <div class="ctx-scope-header" data-reveal>
           <div>
-            <span class="ctx-scope-tag">Escopo de Entregas</span>
-            <h3>O que vai ser construído</h3>
+            <span class="ctx-scope-tag">Título da entrega</span>
+            <h3>Guia de Estratégia de Posicionamento e Marca</h3>
           </div>
-          <p class="ctx-scope-desc">Um projeto completo de construção de marca — do diagnóstico estratégico até o lançamento. Cada entrega cria um sistema coeso que posiciona sua empresa como a escolha inevitável.</p>
+          <p class="ctx-scope-desc">Um sistema estratégico organizado por etapas: primeiro entendemos o terreno, depois definimos o posicionamento e, por fim, desenhamos como a marca se efetiva nos canais certos.</p>
         </div>
 
         <div class="deliverables-grid" id="deliverables">
-          <div class="del-card"><span class="del-num">01</span><h4>Diagnóstico Estratégico</h4><p>Pesquisa aprofundada de público, mercado e negócio para fundamentar todas as decisões de posicionamento.</p></div>
-          <div class="del-card"><span class="del-num">02</span><h4>Posicionamento de Marca</h4><p>Definição do espaço único que sua marca vai ocupar na mente do cliente ideal, tornando a concorrência irrelevante.</p></div>
-          <div class="del-card"><span class="del-num">03</span><h4>Narrativa TheOne</h4><p>Construção do discurso de marca — a história que conecta o que você faz ao que o cliente mais precisa ouvir.</p></div>
-          <div class="del-card"><span class="del-num">04</span><h4>Identidade Visual</h4><p>Sistema visual completo: logo, tipografia, paleta, aplicações e guia de uso. Uma marca que se reconhece à distância.</p></div>
-          <div class="del-card"><span class="del-num">05</span><h4>Site Brand Experience</h4><p>Site construído para converter: design imersivo, copy estratégico e experiência que reforça o posicionamento premium.</p></div>
-          <div class="del-card"><span class="del-num">06</span><h4>Playbook de Execução</h4><p>Manual completo de como executar a marca no dia a dia — para o time, parceiros e qualquer ponto de contato.</p></div>
+          <article class="scope-pillar del-card">
+            <div class="scope-pillar-head">
+              <span class="scope-index">01</span>
+              <div>
+                <span class="scope-label">Pilar 1</span>
+                <h4>A Fundação: Diagnóstico e Pesquisa</h4>
+              </div>
+            </div>
+            <p class="scope-pillar-intro">É aqui que nos aprofundamos e entendemos de forma completa seu negócio, mercado e público.</p>
+            <div class="scope-items">
+              <div class="scope-item"><strong>Raio-X do Negócio</strong><p>Mapeamento de contexto, objetivos de negócio, impulsionadores, detratores e desafios que impactam a percepção e o crescimento da marca.</p></div>
+              <div class="scope-item"><strong>Análise de Concorrentes</strong><p>Como os players do setor se posicionam, onde estão os padrões repetidos e quais brechas estratégicas existem para sua marca ocupar.</p></div>
+              <div class="scope-item"><strong>Mapeamento Profundo de Público</strong><p>Definição de público baseada não só em dados demográficos, mas nas necessidades, dores e desejos de quem compra.</p></div>
+            </div>
+          </article>
+          <article class="scope-pillar del-card">
+            <div class="scope-pillar-head">
+              <span class="scope-index">02</span>
+              <div>
+                <span class="scope-label">Pilar 2</span>
+                <h4>A Estratégia de Posicionamento e Marca</h4>
+              </div>
+            </div>
+            <p class="scope-pillar-intro">Baseado no que observamos do contexto do seu negócio, mercado e público, construímos uma estratégia para se tornar uma das principais referências, se diferenciar da concorrência e gerar desejo no público.</p>
+            <div class="scope-items">
+              <div class="scope-item"><strong>Posicionamento e Diferenciação</strong><p>Definição da proposta única de valor, diferenciais estratégicos, território da marca e do posicionamento inevitável.</p></div>
+              <div class="scope-item"><strong>Identidade da Marca</strong><p>Construímos o porquê vão se conectar conosco, definição de propósito, valores, crenças, personalidade e arquétipos.</p></div>
+              <div class="scope-item"><strong>Conceito e Narrativa</strong><p>Criação do conceito central, declaração de posicionamento, transformação da marca e narrativa que sustenta sua comunicação.</p></div>
+            </div>
+          </article>
+          <article class="scope-pillar del-card">
+            <div class="scope-pillar-head">
+              <span class="scope-index">03</span>
+              <div>
+                <span class="scope-label">Pilar 3</span>
+                <h4>A Efetivação</h4>
+              </div>
+            </div>
+            <p class="scope-pillar-intro">O plano prático para efetivar a estratégia da marca e posicionamento.</p>
+            <div class="scope-items">
+              <div class="scope-item"><strong>Estratégia de Canais</strong><p>Como a marca deve se portar em cada ponto de contato com seu cliente para ser vista, lembrada, desejada e comprada. Instagram, LinkedIn, WhatsApp, site, eventos e outros canais.</p></div>
+              <div class="scope-item"><strong>Estratégia de Conteúdo</strong><p>Principais formatos, tópicos e comunicação para que a marca se conecte com seu público e se torne a alternativa inevitável.</p></div>
+              <div class="scope-item"><strong>Estratégia de Collabs</strong><p>Direcionamento de marcas e parceiros aos quais a marca deve se associar para potencializar crescimento, relevância e reputação no mercado.</p></div>
+            </div>
+          </article>
         </div>
 
-        <div class="ctx-result" data-reveal>
-          <span class="ctx-result-tag">Resultado Final Esperado</span>
-          <h3>Uma marca que o mercado reconhece,<br>lembra e <span class="gradient-text">deseja.</span></h3>
-          <div class="ctx-result-grid">
-            <div class="ctx-result-item">
-              <div class="ctx-result-icon"><svg viewBox="0 0 13 13" fill="none" stroke="#FE6942" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M7 2l4.5 4.5L7 11"/></svg></div>
-              <div><h5>Autoridade de mercado</h5><p>Posicionamento que justifica preço premium e elimina objeções antes da primeira conversa.</p></div>
-            </div>
-            <div class="ctx-result-item">
-              <div class="ctx-result-icon"><svg viewBox="0 0 13 13" fill="none" stroke="#FE6942" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M7 2l4.5 4.5L7 11"/></svg></div>
-              <div><h5>Atração do cliente certo</h5><p>Comunicação que filtra naturalmente e atrai quem tem real potencial de compra.</p></div>
-            </div>
-            <div class="ctx-result-item">
-              <div class="ctx-result-icon"><svg viewBox="0 0 13 13" fill="none" stroke="#FE6942" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M7 2l4.5 4.5L7 11"/></svg></div>
-              <div><h5>Consistência em todos os canais</h5><p>Identidade coesa que transmite a mesma percepção em qualquer ponto de contato.</p></div>
-            </div>
-            <div class="ctx-result-item">
-              <div class="ctx-result-icon"><svg viewBox="0 0 13 13" fill="none" stroke="#FE6942" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5h9M7 2l4.5 4.5L7 11"/></svg></div>
-              <div><h5>Crescimento com previsibilidade</h5><p>Base estratégica que sustenta o crescimento e torna as decisões de negócio mais claras.</p></div>
-            </div>
+        <div class="scope-bonus del-card">
+          <div>
+            <span class="scope-label">Bônus</span>
+            <h4>TheNomedoCliente Agent</h4>
           </div>
+          <p>Agente de IA especialista no seu negócio, treinado com toda sua estratégia de marca e posicionamento para otimizar apresentações, gerar ideias de conteúdo focadas no seu público, analisar pitchs de vendas no dia a dia e muito mais.</p>
         </div>
       </div>
 

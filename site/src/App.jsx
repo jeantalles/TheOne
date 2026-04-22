@@ -12,6 +12,7 @@ import PersonaTrigger from './components/3b-PersonaTrigger';
 import PersonaSelector from './components/3c-PersonaSelector';
 import Storytelling from './components/3-Storytelling';
 import TheOne from './components/4-TheOne';
+import SolucoesTheOne from './components/4b-SolucoesTheOne';
 import Methodology from './components/5-Methodology';
 import Audience from './components/6-Audience';
 import Products from './components/7-Products';
@@ -309,6 +310,7 @@ export default function App() {
           <>
             <Storytelling persona={persona} />
             <TheOne />
+            <SolucoesTheOne />
             <Methodology />
             <Audience />
             <Products />

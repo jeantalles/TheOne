@@ -404,30 +404,9 @@ export default function Products() {
               className="mt-4 text-white font-halyard font-light"
               style={{ fontSize: 'clamp(1.25rem, 2.3vw, 1.72rem)' }}
             >
-              Cada projeto é personalizado. Da construção da base a efetivação do posicionamento inevitável.
+              Seu projeto é personalizado com base nos desafios e objetivos do seu negócio, a jornada que seu projeto terá pode ser diferente da a seguir.
             </p>
-            <div className="mt-10 md:mt-12 flex flex-col gap-3">
-              <span className="text-white/50 font-halyard font-medium text-[0.95rem] md:text-[1.1rem] mb-1 uppercase tracking-[0.12em]">
-                te ajudamos em:
-              </span>
-              {[
-                'Construção de marca e go-to-market',
-                'Reposicionamento de marca',
-                'Construção de marca pessoal',
-                'Geração de demanda com sistema de conteúdo',
-                'Arquitetura de receita e produtos'
-              ].map((item, idx) => (
-                <div key={idx} className="flex items-center gap-3 md:gap-4">
-                  <ArrowRight className="text-[#FF5224] shrink-0" style={{ width: 'clamp(1.4rem, 2.6vw, 1.95rem)', height: 'clamp(1.4rem, 2.6vw, 1.95rem)' }} strokeWidth={2} />
-                  <span
-                    className="text-white font-halyard font-normal tracking-[-0.01em]"
-                    style={{ fontSize: 'clamp(1.4rem, 2.6vw, 1.95rem)' }}
-                  >
-                    {item}
-                  </span>
-                </div>
-              ))}
-            </div>
+
           </div>
         </div>
       </div>

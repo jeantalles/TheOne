@@ -10,6 +10,7 @@ import StorytellingIntro from './3a-StorytellingIntro';
 import PersonaTrigger from './3b-PersonaTrigger';
 import Storytelling from './3-Storytelling';
 import TheOne from './4-TheOne';
+import SolucoesTheOne from './4b-SolucoesTheOne';
 import Methodology from './5-Methodology';
 
 const Founders = lazy(() => import('./9-Founders'));
@@ -39,17 +40,72 @@ const PROPOSTA_DATA = {
     ],
   },
 
-  escopo: [
-    'Diagnóstico estratégico de marca',
-    'Pesquisa aprofundada de público e mercado',
-    'Plataforma de marca completa',
-    'Identidade verbal e tom de voz',
-    'Identidade visual e manual de marca',
-    'Estratégia de conteúdo',
-    'Presença digital estruturada',
-    'Playbook de comunicação',
-    'Acompanhamento estratégico mensal',
-  ],
+  escopo: {
+    entrega: 'Guia de Estratégia de Posicionamento e Marca',
+    pilares: [
+      {
+        label: 'Pilar 1',
+        titulo: 'A Fundação: Diagnóstico e Pesquisa',
+        descricao: 'É aqui que nos aprofundamos e entendemos de forma completa seu negócio, mercado e público.',
+        itens: [
+          {
+            titulo: 'Raio-X do Negócio',
+            descricao: 'Mapeamento de contexto, objetivos de negócio, impulsionadores, detratores e desafios que impactam a percepção e o crescimento da marca.',
+          },
+          {
+            titulo: 'Análise de Concorrentes',
+            descricao: 'Como os players do setor se posicionam, onde estão os padrões repetidos e quais brechas estratégicas existem para sua marca ocupar.',
+          },
+          {
+            titulo: 'Mapeamento Profundo de Público',
+            descricao: 'Definição de público baseada não só em dados demográficos, mas nas necessidades, dores e desejos de quem compra.',
+          },
+        ],
+      },
+      {
+        label: 'Pilar 2',
+        titulo: 'A Estratégia de Posicionamento e Marca',
+        descricao: 'Baseado no que observamos do contexto do seu negócio, mercado e público, construímos uma estratégia para se tornar uma das principais referências, se diferenciar da concorrência e gerar desejo no público.',
+        itens: [
+          {
+            titulo: 'Posicionamento e Diferenciação',
+            descricao: 'Definição da proposta única de valor, diferenciais estratégicos, território da marca e do posicionamento inevitável.',
+          },
+          {
+            titulo: 'Identidade da Marca',
+            descricao: 'Construímos o porquê vão se conectar conosco, definição de propósito, valores, crenças, personalidade e arquétipos.',
+          },
+          {
+            titulo: 'Conceito e Narrativa',
+            descricao: 'Criação do conceito central, declaração de posicionamento, transformação da marca e narrativa que sustenta sua comunicação.',
+          },
+        ],
+      },
+      {
+        label: 'Pilar 3',
+        titulo: 'A Efetivação',
+        descricao: 'O plano prático para efetivar a estratégia da marca e posicionamento.',
+        itens: [
+          {
+            titulo: 'Estratégia de Canais',
+            descricao: 'Como a marca deve se portar em cada ponto de contato com seu cliente para ser vista, lembrada, desejada e comprada. Instagram, LinkedIn, WhatsApp, site, eventos e outros canais.',
+          },
+          {
+            titulo: 'Estratégia de Conteúdo',
+            descricao: 'Principais formatos, tópicos e comunicação para que a marca se conecte com seu público e se torne a alternativa inevitável.',
+          },
+          {
+            titulo: 'Estratégia de Collabs',
+            descricao: 'Direcionamento de marcas e parceiros aos quais a marca deve se associar para potencializar crescimento, relevância e reputação no mercado.',
+          },
+        ],
+      },
+    ],
+    bonus: {
+      titulo: 'Agent',
+      descricao: 'Agente de IA especialista no seu negócio, treinado com toda sua estratégia de marca e posicionamento para otimizar apresentações, gerar ideias de conteúdo focadas no seu público, analisar pitchs de vendas no dia a dia e muito mais.',
+    },
+  },
 
   resultados: [
     'Posicionamento de marca claro e diferenciado no mercado',
@@ -94,142 +150,6 @@ const PROPOSTA_DATA = {
 };
 // ─────────────────────────────────────────────────────────────────────────────
 
-const SOLUCOES_THEONE = [
-  'Construção de Marca',
-  'Reposicionamento de Marca',
-  'Fundador Posicionado: marca pessoal e founder led growth',
-  'Go to Market e Lançamento',
-  'Sistema de Produção de Conteúdo para Gerar Receita',
-  'Arquitetura de Receita e Produto',
-  'Site Brand Experience',
-];
-
-// ── INTRO: FRASES DE BOAS-VINDAS ─────────────────────────────────────────────
-// Duas frases que precedem o "Não seja só mais um" da Hero, no mesmo estilo.
-function PropostaIntro() {
-  const wrapperRef = useRef(null);
-  const phrase1Ref = useRef(null);
-  const phrase2Ref = useRef(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: wrapperRef.current,
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: 1.2,
-        },
-      });
-
-      // "Olá, Cliente" — entra, fica, sai
-      tl.fromTo(phrase1Ref.current,
-        { opacity: 0, y: 8 },
-        { opacity: 1, y: 0, duration: 0.2, ease: 'power2.out' }
-      )
-      .to(phrase1Ref.current,
-        { opacity: 0, y: -8, duration: 0.18, ease: 'power2.in' },
-        '+=0.28'
-      )
-      // "Seja bem-vindo à TheOne" — entra e fica (a Hero assume na sequência)
-      .fromTo(phrase2Ref.current,
-        { opacity: 0, y: 8 },
-        { opacity: 1, y: 0, duration: 0.22, ease: 'power2.out' },
-        '+=0.1'
-      );
-    }, wrapperRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  // Mesmo estilo tipográfico dos INTRO_WORDS da Hero
-  const textStyle = {
-    fontSize: 'clamp(2.25rem, 4.2vw, 3.8rem)',
-    letterSpacing: '-0.02em',
-    color: '#151311',
-    opacity: 0,
-  };
-
-  return (
-    <div ref={wrapperRef} style={{ height: '160vh' }}>
-      <div
-        className="flex items-center justify-center overflow-hidden"
-        style={{ position: 'sticky', top: 0, height: '100svh' }}
-      >
-        <div className="relative flex items-center justify-center w-full h-full px-6 text-center">
-          <p ref={phrase1Ref} className="absolute font-sans font-normal" style={textStyle}>
-            Olá,{' '}
-            <span style={{ color: '#FE6942' }}>{PROPOSTA_DATA.cliente}</span>
-          </p>
-
-          <p ref={phrase2Ref} className="absolute font-sans font-normal" style={textStyle}>
-            Seja bem-vindo à{' '}
-            <span style={{ color: '#FE6942' }}>TheOne</span>
-          </p>
-
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── SEÇÃO: SOLUÇÕES THEONE ───────────────────────────────────────────────────
-function SolucoesTheOne() {
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.solution-title', {
-        opacity: 0,
-        y: 34,
-        stagger: 0.09,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 68%' },
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <section ref={sectionRef} className="bg-[#212121] text-white px-6 md:px-12 lg:px-16 pt-16 pb-24 md:pt-20 md:pb-32 border-t border-white/[0.06]">
-      <div className="max-w-[1400px] mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-[0.7fr_1.3fr] gap-12 lg:gap-20 items-start">
-          <div className="lg:sticky lg:top-28">
-            <span className="font-halyard text-[11px] tracking-[0.22em] uppercase text-[#FE6942] font-medium block mb-5">
-              Soluções
-            </span>
-            <h2 className="font-editorial font-normal text-white text-[clamp(2.1rem,3.35vw,3.1rem)] leading-[1.05] tracking-tight max-w-[16ch]">
-              Nossas soluções pra ajudar seu negócio a se tornar a escolha número um
-            </h2>
-          </div>
-
-          <div className="divide-y divide-white/[0.1] border-y border-white/[0.1]">
-            {SOLUCOES_THEONE.map((solucao, i) => (
-              <div key={solucao} className="solution-title group flex items-start gap-6 md:gap-10 py-7 md:py-9">
-                <span className="font-editorial font-normal text-[#FE6942]/45 text-[1.25rem] md:text-[1.7rem] leading-none mt-2 md:mt-1">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <h3 className="font-sans font-medium text-white text-[clamp(1.75rem,3.4vw,3.2rem)] leading-[1.05] tracking-tight transition-colors duration-300 group-hover:text-[#FE6942]">
-                  {solucao.includes(':') ? (
-                    <>
-                      {solucao.split(':')[0]}
-                      <span className="block mt-2 font-halyard font-light text-[0.45em] text-white/50 tracking-normal uppercase">
-                        {solucao.split(':')[1]}
-                      </span>
-                    </>
-                  ) : (
-                    solucao
-                  )}
-                </h3>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 // ── SEÇÃO: CONTEXTO A→B ───────────────────────────────────────────────────────
 function Contexto({ showDesejado = true }) {
@@ -250,8 +170,8 @@ function Contexto({ showDesejado = true }) {
       <div className="max-w-[1400px] mx-auto">
 
         <div className="mb-16 md:mb-20">
-          <span className="font-halyard text-[11px] tracking-[0.22em] uppercase text-[#FE6942] font-medium block mb-5">
-            Seu Projeto
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-medium block mb-5">
+            Análise de contexto
           </span>
           <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.5rem,4vw,3.5rem)] leading-[1.05] tracking-tight">
             O projeto de{' '}
@@ -259,7 +179,7 @@ function Contexto({ showDesejado = true }) {
           </h2>
         </div>
 
-        <div className={`grid items-start gap-6 md:gap-0 ${showDesejado ? 'grid-cols-1 md:grid-cols-[1fr_72px_1fr]' : 'grid-cols-1 md:grid-cols-[1fr]'}`}>
+        <div className="grid items-start gap-6 md:gap-0 grid-cols-1 md:grid-cols-[1fr_72px_1fr]">
 
           {/* Card A */}
           <div className="ctx-card bg-[#F8F8F8] rounded-2xl px-8 md:px-10 py-10 border border-black/10">
@@ -269,15 +189,15 @@ function Contexto({ showDesejado = true }) {
             <ul className="space-y-5">
               {PROPOSTA_DATA.contextoA.pontos.map((p, i) => (
                 <li key={i} className="flex items-start gap-4">
-                  <span className="text-black/25 text-[20px] leading-[1.55] shrink-0 mt-px select-none">—</span>
-                  <span className="font-halyard font-light text-[20px] leading-[1.55] text-[#181412]">{p}</span>
+                  <span className="text-black/25 text-[24px] leading-[1.55] shrink-0 mt-px select-none">—</span>
+                  <span className="font-halyard font-light text-[24px] leading-[1.55] text-[#181412]">{p}</span>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Seta central + Card B — só aparecem no slide 2 */}
-          {showDesejado && (
+          {showDesejado ? (
             <div className="ctx-card flex items-start justify-center pt-5 md:pt-14">
               <svg className="hidden md:block" width="36" height="36" viewBox="0 0 36 36" fill="none">
                 <path d="M7 18h22M21 9l9 9-9 9" stroke="#FE6942" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
@@ -286,9 +206,11 @@ function Contexto({ showDesejado = true }) {
                 <path d="M7 18h22M21 9l9 9-9 9" stroke="#FE6942" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
+          ) : (
+            <div className="hidden md:block" />
           )}
 
-          {showDesejado && (
+          {showDesejado ? (
             <div className="ctx-card bg-[#F8F8F8] rounded-2xl px-8 md:px-10 py-10 border-2 border-[#FE6942]">
               <h3 className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold mb-8">
                 Cenário Desejado
@@ -296,12 +218,14 @@ function Contexto({ showDesejado = true }) {
               <ul className="space-y-5">
                 {PROPOSTA_DATA.contextoB.pontos.map((p, i) => (
                   <li key={i} className="flex items-start gap-4">
-                    <span className="text-[#FE6942] text-[20px] leading-[1.55] shrink-0 mt-px select-none">→</span>
-                    <span className="font-halyard font-light text-[20px] leading-[1.55] text-[#181412]">{p}</span>
+                    <span className="text-[#FE6942] text-[24px] leading-[1.55] shrink-0 mt-px select-none">→</span>
+                    <span className="font-halyard font-light text-[24px] leading-[1.55] text-[#181412]">{p}</span>
                   </li>
                 ))}
               </ul>
             </div>
+          ) : (
+            <div className="hidden md:block" />
           )}
 
         </div>
@@ -313,11 +237,13 @@ function Contexto({ showDesejado = true }) {
 // ── SEÇÃO: ESCOPO ─────────────────────────────────────────────────────────────
 function Escopo() {
   const sectionRef = useRef(null);
+  const scope = PROPOSTA_DATA.escopo;
+  const agentName = `The${PROPOSTA_DATA.cliente.replace(/\s+/g, '')} ${scope.bonus.titulo}`;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.escopo-item', {
-        opacity: 0, y: 20, stagger: 0.06, duration: 0.7, ease: 'power3.out',
+      gsap.from('.escopo-block', {
+        opacity: 0, y: 22, stagger: 0.07, duration: 0.72, ease: 'power3.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 72%' },
       });
     }, sectionRef);
@@ -325,26 +251,72 @@ function Escopo() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-white pb-28 md:pb-36 px-6 md:px-12 lg:px-16">
-      <div className="max-w-[1400px] mx-auto">
+    <section ref={sectionRef} className="bg-white min-h-full px-6 md:px-12 lg:px-16 py-10 md:py-14 pb-28">
+      <div className="max-w-[1440px] mx-auto">
 
-        <div className="mb-12 border-t border-black/10 pt-16 md:pt-20">
-          <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2rem,3.2vw,2.75rem)] leading-[1.05] tracking-tight">
-            O que está incluso
-          </h2>
+        <div className="escopo-block grid grid-cols-1 lg:grid-cols-[0.74fr_1.26fr] gap-8 lg:gap-14 border-t border-black/10 pt-10 md:pt-12 mb-8 md:mb-10">
+          <div>
+            <span className="font-halyard text-[11px] tracking-[0.24em] uppercase text-[#FE6942] font-semibold block mb-4">
+              Título da entrega
+            </span>
+            <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.25rem,4vw,3.7rem)] leading-[1.02] tracking-tight max-w-[12ch]">
+              {scope.entrega}
+            </h2>
+          </div>
+          <p className="font-halyard font-light text-[#181412]/62 text-[18px] md:text-[22px] leading-[1.55] max-w-[760px] lg:pt-8">
+            Um sistema estratégico organizado por etapas: primeiro entendemos o terreno, depois definimos o posicionamento e, por fim, desenhamos como a marca se efetiva nos canais certos.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {PROPOSTA_DATA.escopo.map((item, i) => (
-            <div key={i} className="escopo-item flex items-start gap-4 bg-[#F8F8F8] rounded-xl px-6 py-5 border border-black/[0.08]">
-              <div className="w-5 h-5 rounded flex-shrink-0 mt-0.5 flex items-center justify-center bg-[#FE6942]">
-                <svg width="10" height="7" viewBox="0 0 10 7" fill="none">
-                  <path d="M1 3.5L3.5 6L9 1" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+          {scope.pilares.map((pilar, i) => (
+            <article key={pilar.label} className="escopo-block bg-[#F8F8F8] rounded-lg px-5 md:px-6 py-6 border border-black/[0.08] flex flex-col">
+              <div className="flex items-start gap-4 mb-5">
+                <span className="w-10 h-10 rounded-lg flex items-center justify-center bg-[#181412] text-white font-halyard text-[13px] font-semibold shrink-0">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <div>
+                  <span className="font-halyard text-[10px] tracking-[0.2em] uppercase text-[#FE6942] font-semibold block mb-2">
+                    {pilar.label}
+                  </span>
+                  <h3 className="font-halyard font-semibold text-[#181412] text-[19px] md:text-[21px] leading-[1.1] uppercase">
+                    {pilar.titulo}
+                  </h3>
+                </div>
               </div>
-              <span className="font-halyard font-light text-[18px] leading-[1.5] text-[#181412]">{item}</span>
-            </div>
+
+              <p className="font-halyard font-light text-[#181412]/58 text-[15px] md:text-[16px] leading-[1.55] mb-4">
+                {pilar.descricao}
+              </p>
+
+              <div className="mt-auto divide-y divide-black/[0.08]">
+                {pilar.itens.map((item) => (
+                  <div key={item.titulo} className="py-3.5 first:pt-0 last:pb-0">
+                    <h4 className="font-halyard font-semibold text-[#181412] text-[15px] leading-[1.25] mb-1.5">
+                      {item.titulo}
+                    </h4>
+                    <p className="font-halyard font-light text-[#181412]/54 text-[14px] leading-[1.45]">
+                      {item.descricao}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </article>
           ))}
+        </div>
+
+        <div className="escopo-block mt-3 rounded-lg border border-[#FE6942]/35 bg-[#FE6942]/[0.06] px-5 md:px-7 py-5 md:py-6 grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-4 lg:gap-8 items-start">
+          <div>
+            <span className="font-halyard text-[10px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold block mb-2">
+              Bônus
+            </span>
+            <h3 className="font-editorial font-normal text-[#181412] text-[clamp(1.7rem,2.5vw,2.35rem)] leading-[1.02] tracking-tight">
+              {agentName}
+            </h3>
+          </div>
+          <p className="font-halyard font-light text-[#181412]/66 text-[16px] md:text-[18px] leading-[1.55]">
+            {scope.bonus.descricao}
+          </p>
         </div>
 
       </div>
@@ -929,8 +901,13 @@ export default function PropostaPage() {
 
       {/* Intro do site — hero + storytelling + theone */}
       <div style={{ backgroundColor: '#F5EEE9' }}>
-        <PropostaIntro />
-        <Hero />
+        <Hero
+          showLogo={true}
+          introPhrases={[
+            <>Olá, <span style={{ color: '#FE6942' }}>{PROPOSTA_DATA.cliente}</span></>,
+            <>Seja bem-vindo à <span style={{ color: '#FE6942' }}>TheOne</span></>,
+          ]}
+        />
         <StorytellingIntro />
         <PersonaTrigger onTrigger={() => {}} triggered />
         <GradientTransition />
