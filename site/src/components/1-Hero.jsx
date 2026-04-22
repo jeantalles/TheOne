@@ -129,6 +129,7 @@ export default function Hero() {
   const finalTitleRef = useRef(null);
   const finalBodyRef = useRef(null);
   const scrollHintRef = useRef(null);
+  const logoRef = useRef(null);
   const navbarVisibleRef = useRef(null);
   const mobileMenuLightRef = useRef(false);
 
@@ -289,6 +290,12 @@ export default function Hero() {
       finalTitleRef.current.style.opacity = finalTitle.toFixed(3);
       finalTitleRef.current.style.filter = titleBlur > 0.05 ? `blur(${titleBlur.toFixed(2)}px)` : 'none';
       finalTitleRef.current.style.transform = titleY > 0.1 ? `translate3d(0, ${titleY.toFixed(1)}px, 0)` : 'none';
+
+      if (logoRef.current) {
+        logoRef.current.style.opacity = finalTitle.toFixed(3);
+        logoRef.current.style.filter = titleBlur > 0.05 ? `blur(${titleBlur.toFixed(2)}px)` : 'none';
+        logoRef.current.style.transform = titleY > 0.1 ? `translate3d(0, ${titleY.toFixed(1)}px, 0)` : 'none';
+      }
 
       const bodyBlur = lerp(14, 0, finalBody);
       const bodyY = lerp(24, 0, finalBody);
@@ -546,7 +553,8 @@ export default function Hero() {
           className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center px-6"
           style={shouldUseStaticScene ? { display: 'none' } : { willChange: 'transform, opacity' }}
         >
-          <h2
+          <div className="flex flex-col items-center">
+            <h2
             className="max-w-[900px] text-center font-sans font-normal leading-[1.1] text-[#151311]"
             style={{ fontSize: 'clamp(2.25rem, 4.2vw, 3.8rem)', letterSpacing: '-0.02em' }}
           >
@@ -570,6 +578,7 @@ export default function Hero() {
             ))}
           </h2>
         </div>
+      </div>
 
         <div
           ref={finalWrapRef}
@@ -580,6 +589,18 @@ export default function Hero() {
           }}
         >
           <div className="mx-auto flex w-full max-w-5xl flex-col items-center text-center">
+            <img
+              ref={logoRef}
+              src="/logo-navbar.svg"
+              alt="The One"
+              className="h-10 md:h-12 w-auto mb-8"
+              style={{
+                opacity: shouldUseStaticScene ? 1 : 0,
+                filter: shouldUseStaticScene ? 'none' : 'blur(18px)',
+                transform: shouldUseStaticScene ? 'none' : 'translate3d(0, 32px, 0)',
+                willChange: 'transform, opacity, filter',
+              }}
+            />
             <h2
               ref={finalTitleRef}
               style={{

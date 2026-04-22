@@ -168,6 +168,18 @@
   text-shadow: 0 0 15px rgba(255, 82, 36, 0.7);
 }
 
+/* ===== PROPOSTA SLIDESHOW ===== */
+@keyframes slideFromRight {
+  from { opacity: 0; transform: translateX(32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideFromLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.slide-from-right { animation: slideFromRight 0.44s cubic-bezier(0.23, 1, 0.32, 1) both; }
+.slide-from-left  { animation: slideFromLeft  0.44s cubic-bezier(0.23, 1, 0.32, 1) both; }
+
 /* ===== CARD SURFACES ===== */
 .card-surface {
   background: #111111;

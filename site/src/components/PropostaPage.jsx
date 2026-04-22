@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, lazy, Suspense } from 'react';
+import { useEffect, useRef, useState, useCallback, lazy, Suspense } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -95,12 +95,83 @@ const PROPOSTA_DATA = {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const SOLUCOES_THEONE = [
-  'Site Brand Experience',
   'Construção de Marca',
+  'Reposicionamento de Marca',
+  'Fundador Posicionado: marca pessoal e founder led growth',
   'Go to Market e Lançamento',
   'Sistema de Produção de Conteúdo para Gerar Receita',
   'Arquitetura de Receita e Produto',
+  'Site Brand Experience',
 ];
+
+// ── INTRO: FRASES DE BOAS-VINDAS ─────────────────────────────────────────────
+// Duas frases que precedem o "Não seja só mais um" da Hero, no mesmo estilo.
+function PropostaIntro() {
+  const wrapperRef = useRef(null);
+  const phrase1Ref = useRef(null);
+  const phrase2Ref = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: wrapperRef.current,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1.2,
+        },
+      });
+
+      // "Olá, Cliente" — entra, fica, sai
+      tl.fromTo(phrase1Ref.current,
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.2, ease: 'power2.out' }
+      )
+      .to(phrase1Ref.current,
+        { opacity: 0, y: -8, duration: 0.18, ease: 'power2.in' },
+        '+=0.28'
+      )
+      // "Seja bem-vindo à TheOne" — entra e fica (a Hero assume na sequência)
+      .fromTo(phrase2Ref.current,
+        { opacity: 0, y: 8 },
+        { opacity: 1, y: 0, duration: 0.22, ease: 'power2.out' },
+        '+=0.1'
+      );
+    }, wrapperRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  // Mesmo estilo tipográfico dos INTRO_WORDS da Hero
+  const textStyle = {
+    fontSize: 'clamp(2.25rem, 4.2vw, 3.8rem)',
+    letterSpacing: '-0.02em',
+    color: '#151311',
+    opacity: 0,
+  };
+
+  return (
+    <div ref={wrapperRef} style={{ height: '160vh' }}>
+      <div
+        className="flex items-center justify-center overflow-hidden"
+        style={{ position: 'sticky', top: 0, height: '100svh' }}
+      >
+        <div className="relative flex items-center justify-center w-full h-full px-6 text-center">
+          <p ref={phrase1Ref} className="absolute font-sans font-normal" style={textStyle}>
+            Olá,{' '}
+            <span style={{ color: '#FE6942' }}>{PROPOSTA_DATA.cliente}</span>
+          </p>
+
+          <p ref={phrase2Ref} className="absolute font-sans font-normal" style={textStyle}>
+            Seja bem-vindo à{' '}
+            <span style={{ color: '#FE6942' }}>TheOne</span>
+          </p>
+
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // ── SEÇÃO: SOLUÇÕES THEONE ───────────────────────────────────────────────────
 function SolucoesTheOne() {
@@ -139,8 +210,17 @@ function SolucoesTheOne() {
                 <span className="font-editorial font-normal text-[#FE6942]/45 text-[1.25rem] md:text-[1.7rem] leading-none mt-2 md:mt-1">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <h3 className="font-editorial font-normal text-white text-[clamp(2rem,4.7vw,4.7rem)] leading-[0.98] tracking-tight transition-colors duration-300 group-hover:text-[#FE6942]">
-                  {solucao}
+                <h3 className="font-sans font-medium text-white text-[clamp(1.75rem,3.4vw,3.2rem)] leading-[1.05] tracking-tight transition-colors duration-300 group-hover:text-[#FE6942]">
+                  {solucao.includes(':') ? (
+                    <>
+                      {solucao.split(':')[0]}
+                      <span className="block mt-2 font-halyard font-light text-[0.45em] text-white/50 tracking-normal uppercase">
+                        {solucao.split(':')[1]}
+                      </span>
+                    </>
+                  ) : (
+                    solucao
+                  )}
                 </h3>
               </div>
             ))}
@@ -152,7 +232,7 @@ function SolucoesTheOne() {
 }
 
 // ── SEÇÃO: CONTEXTO A→B ───────────────────────────────────────────────────────
-function Contexto() {
+function Contexto({ showDesejado = true }) {
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -179,11 +259,11 @@ function Contexto() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-[1fr_72px_1fr] items-start gap-6 md:gap-0">
+        <div className={`grid items-start gap-6 md:gap-0 ${showDesejado ? 'grid-cols-1 md:grid-cols-[1fr_72px_1fr]' : 'grid-cols-1 md:grid-cols-[1fr]'}`}>
 
           {/* Card A */}
           <div className="ctx-card bg-[#F8F8F8] rounded-2xl px-8 md:px-10 py-10 border border-black/10">
-            <h3 className="font-halyard text-[11px] tracking-[0.22em] uppercase text-black/40 font-semibold mb-8">
+            <h3 className="font-halyard text-[15px] tracking-[0.22em] uppercase text-black/40 font-semibold mb-8">
               Cenário Atual
             </h3>
             <ul className="space-y-5">
@@ -196,30 +276,33 @@ function Contexto() {
             </ul>
           </div>
 
-          {/* Seta central */}
-          <div className="ctx-card flex items-start justify-center pt-5 md:pt-14">
-            <svg className="hidden md:block" width="36" height="36" viewBox="0 0 36 36" fill="none">
-              <path d="M7 18h22M21 9l9 9-9 9" stroke="#FE6942" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <svg className="md:hidden" width="36" height="36" viewBox="0 0 36 36" fill="none" style={{ transform: 'rotate(90deg)' }}>
-              <path d="M7 18h22M21 9l9 9-9 9" stroke="#FE6942" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
+          {/* Seta central + Card B — só aparecem no slide 2 */}
+          {showDesejado && (
+            <div className="ctx-card flex items-start justify-center pt-5 md:pt-14">
+              <svg className="hidden md:block" width="36" height="36" viewBox="0 0 36 36" fill="none">
+                <path d="M7 18h22M21 9l9 9-9 9" stroke="#FE6942" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              <svg className="md:hidden" width="36" height="36" viewBox="0 0 36 36" fill="none" style={{ transform: 'rotate(90deg)' }}>
+                <path d="M7 18h22M21 9l9 9-9 9" stroke="#FE6942" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          )}
 
-          {/* Card B */}
-          <div className="ctx-card bg-[#F8F8F8] rounded-2xl px-8 md:px-10 py-10 border-2 border-[#FE6942]">
-            <h3 className="font-halyard text-[11px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold mb-8">
-              Cenário Desejado
-            </h3>
-            <ul className="space-y-5">
-              {PROPOSTA_DATA.contextoB.pontos.map((p, i) => (
-                <li key={i} className="flex items-start gap-4">
-                  <span className="text-[#FE6942] text-[20px] leading-[1.55] shrink-0 mt-px select-none">→</span>
-                  <span className="font-halyard font-light text-[20px] leading-[1.55] text-[#181412]">{p}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {showDesejado && (
+            <div className="ctx-card bg-[#F8F8F8] rounded-2xl px-8 md:px-10 py-10 border-2 border-[#FE6942]">
+              <h3 className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold mb-8">
+                Cenário Desejado
+              </h3>
+              <ul className="space-y-5">
+                {PROPOSTA_DATA.contextoB.pontos.map((p, i) => (
+                  <li key={i} className="flex items-start gap-4">
+                    <span className="text-[#FE6942] text-[20px] leading-[1.55] shrink-0 mt-px select-none">→</span>
+                    <span className="font-halyard font-light text-[20px] leading-[1.55] text-[#181412]">{p}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
         </div>
       </div>
@@ -292,7 +375,7 @@ function Resultados() {
             O que vamos alcançar
           </span>
           <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.2rem,3.5vw,3rem)] leading-[1.05] tracking-tight">
-            Resultados esperados
+            O que queremos atingir com esse projeto para o seu negócio
           </h2>
         </div>
 
@@ -405,7 +488,7 @@ function Cronograma() {
 }
 
 // ── SEÇÃO: PERGUNTA INTERATIVA ────────────────────────────────────────────────
-function PropostaQuestion({ onAnswer }) {
+function PropostaQuestion({ onAnswer, noLock = false }) {
   const [answered, setAnswered] = useState(false);
   const [choice, setChoice] = useState(null);
   const sectionRef = useRef(null);
@@ -414,6 +497,7 @@ function PropostaQuestion({ onAnswer }) {
   const responseRef = useRef(null);
 
   useEffect(() => {
+    if (noLock) return;
     const section = sectionRef.current;
     if (!section) return;
 
@@ -444,18 +528,16 @@ function PropostaQuestion({ onAnswer }) {
 
     observer.observe(section);
     return () => observer.disconnect();
-  }, [answered]);
+  }, [answered, noLock]);
 
   const handleAnswer = (ans) => {
     setChoice(ans);
     setAnswered(true);
 
-    // Anima conteúdo saindo
     if (contentRef.current) {
       gsap.to(contentRef.current, {
         opacity: 0, y: -24, filter: 'blur(8px)', duration: 0.45, ease: 'power2.in',
         onComplete: () => {
-          // Anima resposta entrando
           if (responseRef.current) {
             gsap.fromTo(
               responseRef.current,
@@ -463,10 +545,11 @@ function PropostaQuestion({ onAnswer }) {
               {
                 opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.55, ease: 'power3.out',
                 onComplete: () => {
-                  // Libera scroll após 1.5s
                   setTimeout(() => {
-                    window.__theOneLenis?.start();
-                    document.body.style.overflow = '';
+                    if (!noLock) {
+                      window.__theOneLenis?.start();
+                      document.body.style.overflow = '';
+                    }
                     onAnswer?.(ans);
                   }, 1400);
                 },
@@ -483,9 +566,8 @@ function PropostaQuestion({ onAnswer }) {
   return (
     <section
       ref={sectionRef}
-      className="min-h-[100svh] bg-white flex items-center justify-center px-6 py-20 relative overflow-hidden"
+      className="h-full bg-white flex items-center justify-center px-6 py-20 relative overflow-hidden"
     >
-      {/* Glow de fundo */}
       <div className="absolute inset-0 pointer-events-none"
         style={{ background: 'radial-gradient(circle at 50% 55%, rgba(254,105,66,0.05) 0%, transparent 65%)' }}
       />
@@ -503,7 +585,7 @@ function PropostaQuestion({ onAnswer }) {
         <div className="flex gap-5 flex-wrap justify-center">
           <button
             onClick={() => handleAnswer('sim')}
-            className="font-halyard font-medium text-white text-[16px] tracking-[0.08em] uppercase px-12 py-4 rounded-full transition-transform duration-150 active:scale-[0.97]"
+            className="font-halyard font-medium text-white text-[16px] tracking-[0.08em] uppercase px-12 py-4 rounded-full active:scale-[0.97]"
             style={{
               background: 'linear-gradient(135deg, #FED1C5 0%, #FF5224 100%)',
               transition: `transform 160ms ${ease}, box-shadow 300ms ${ease}`,
@@ -535,7 +617,7 @@ function PropostaQuestion({ onAnswer }) {
               Ótimo. Vamos avançar<br />para o investimento.
             </h3>
             <p className="font-halyard font-light text-[#181412]/55 text-[18px]">
-              Continue rolando para ver os detalhes.
+              Use a seta para continuar.
             </p>
           </>
         ) : (
@@ -550,6 +632,136 @@ function PropostaQuestion({ onAnswer }) {
         )}
       </div>
     </section>
+  );
+}
+
+
+// ── SLIDESHOW DAS SEÇÕES DA PROPOSTA ─────────────────────────────────────────
+const SLIDE_TOTAL = 7;
+const QUESTION_IDX = 5;
+
+function PropostaSlideshow() {
+  const [current, setCurrent] = useState(0);
+  const [animDir, setAnimDir] = useState('next');
+  const [questionAnswered, setQuestionAnswered] = useState(false);
+  const wrapperRef = useRef(null);
+  const isLockedRef = useRef(false);
+  const isTransitioning = useRef(false);
+
+  // Lock scroll when slideshow enters viewport
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !isLockedRef.current) {
+          isLockedRef.current = true;
+          const lenis = window.__theOneLenis;
+          if (lenis) {
+            lenis.scrollTo(el, {
+              duration: 0.6,
+              onComplete: () => {
+                lenis.stop();
+                document.body.style.overflow = 'hidden';
+              },
+            });
+          } else {
+            el.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => { document.body.style.overflow = 'hidden'; }, 600);
+          }
+        }
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const navigate = useCallback((dir) => {
+    if (isTransitioning.current) return;
+    if (dir > 0 && current === QUESTION_IDX && !questionAnswered) return;
+    const next = current + dir;
+    if (next < 0 || next >= SLIDE_TOTAL) return;
+    isTransitioning.current = true;
+    setAnimDir(dir > 0 ? 'next' : 'prev');
+    setCurrent(next);
+    setTimeout(() => { isTransitioning.current = false; }, 500);
+  }, [current, questionAnswered]);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+    };
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [navigate]);
+
+  const isNextBlocked = current === QUESTION_IDX && !questionAnswered;
+
+  return (
+    <div ref={wrapperRef} className="relative overflow-hidden bg-white" style={{ height: '100svh' }}>
+
+      {/* Slide content */}
+      <div
+        key={current}
+        className={`absolute inset-0 overflow-y-auto ${animDir === 'next' ? 'slide-from-right' : 'slide-from-left'}`}
+      >
+        {current === 0 && <Contexto showDesejado={false} />}
+        {current === 1 && <Contexto showDesejado={true} />}
+        {current === 2 && <Escopo />}
+        {current === 3 && <Resultados />}
+        {current === 4 && <Cronograma />}
+        {current === 5 && (
+          <PropostaQuestion
+            noLock
+            onAnswer={() => setQuestionAnswered(true)}
+          />
+        )}
+        {current === 6 && <Investimento />}
+      </div>
+
+      {/* Navigation: arrows + dots centered at bottom */}
+      <div className="absolute bottom-7 left-1/2 -translate-x-1/2 flex items-center gap-4 z-20">
+        <button
+          onClick={() => navigate(-1)}
+          disabled={current === 0}
+          aria-label="Slide anterior"
+          className="w-11 h-11 rounded-full border border-black/15 flex items-center justify-center transition-all duration-150 disabled:opacity-25 hover:border-black/30 active:scale-[0.97]"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M10 12L6 8l4-4" stroke="#181412" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+
+        {/* Dots */}
+        <div className="flex items-center gap-2">
+          {Array.from({ length: SLIDE_TOTAL }).map((_, i) => (
+            <div
+              key={i}
+              className="rounded-full transition-all duration-300"
+              style={{
+                width: i === current ? '18px' : '6px',
+                height: '6px',
+                backgroundColor: i === current ? '#FE6942' : 'rgba(0,0,0,0.14)',
+              }}
+            />
+          ))}
+        </div>
+
+        <button
+          onClick={() => navigate(1)}
+          disabled={isNextBlocked}
+          aria-label="Próximo slide"
+          className="w-11 h-11 rounded-full flex items-center justify-center transition-all duration-150 disabled:opacity-25 active:scale-[0.97]"
+          style={{ background: 'linear-gradient(135deg, #FED1C5 0%, #FF5224 100%)' }}
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M6 12l4-4-4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -717,6 +929,7 @@ export default function PropostaPage() {
 
       {/* Intro do site — hero + storytelling + theone */}
       <div style={{ backgroundColor: '#F5EEE9' }}>
+        <PropostaIntro />
         <Hero />
         <StorytellingIntro />
         <PersonaTrigger onTrigger={() => {}} triggered />
@@ -732,19 +945,9 @@ export default function PropostaPage() {
         <Founders />
       </Suspense>
 
-      {/* Seções da proposta */}
-      <Contexto />
-      <Escopo />
-      <Resultados />
-      <Cronograma />
-      <PropostaQuestion />
-      <Investimento />
+      {/* Slideshow da proposta */}
+      <PropostaSlideshow />
 
-      <footer className="border-t border-black/[0.07] bg-white py-8 text-center">
-        <p className="text-[#181412]/30 text-xs font-mono font-bold tracking-[0.3em] uppercase">
-          © 2026 THE ONE ASSESSORIA DE MARCA.
-        </p>
-      </footer>
     </div>
   );
 }
