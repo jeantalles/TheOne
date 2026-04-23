@@ -20,7 +20,7 @@ gsap.registerPlugin(ScrollTrigger);
 // ── DADOS DA PROPOSTA — LACQUA ────────────────────────────────────────────────
 const PROPOSTA_DATA = {
   cliente: 'Vitor',
-  empresa: 'L'acqua Purificadores',
+  empresa: "L'acqua Purificadores",
   data: 'Abril 2026',
 
   contextoA: {
@@ -51,11 +51,11 @@ const PROPOSTA_DATA = {
         itens: [
           {
             titulo: 'Imersão Estratégica',
-            descricao: 'Mapeamento completo do contexto do negócio, objetivos, impulsionadores, detratores e desafios que afetam a percepção da L'acqua no mercado.',
+            descricao: "Mapeamento completo do contexto do negócio, objetivos, impulsionadores, detratores e desafios que afetam a percepção da L'acqua no mercado.",
           },
           {
             titulo: 'Pesquisa de Mercado',
-            descricao: 'Como os concorrentes se posicionam, onde estão os padrões repetidos e quais brechas estratégicas existem para a L'acqua ocupar.',
+            descricao: "Como os concorrentes se posicionam, onde estão os padrões repetidos e quais brechas estratégicas existem para a L'acqua ocupar.",
           },
           {
             titulo: 'Mapeamento Profundo de Público',
@@ -70,11 +70,11 @@ const PROPOSTA_DATA = {
         itens: [
           {
             titulo: 'Posicionamento e Diferenciação',
-            descricao: 'Definição da proposta única de valor, diferenciais estratégicos e do território de marca que a L'acqua vai ocupar.',
+            descricao: "Definição da proposta única de valor, diferenciais estratégicos e do território de marca que a L'acqua vai ocupar.",
           },
           {
             titulo: 'Personalidade da Marca',
-            descricao: 'Propósito, valores, crenças e arquétipos que sustentam a conexão da L'acqua com seu público e justificam a escolha.',
+            descricao: "Propósito, valores, crenças e arquétipos que sustentam a conexão da L'acqua com seu público e justificam a escolha.",
           },
           {
             titulo: 'Conceito e Narrativa',
@@ -89,7 +89,7 @@ const PROPOSTA_DATA = {
         itens: [
           {
             titulo: 'Estratégia de Canais',
-            descricao: 'Como a L'acqua deve se portar em cada ponto de contato — Instagram, WhatsApp, Google, site e indicação — para ser vista, lembrada e escolhida.',
+            descricao: "Como a L'acqua deve se portar em cada ponto de contato — Instagram, WhatsApp, Google, site e indicação — para ser vista, lembrada e escolhida.",
           },
           {
             titulo: 'Estratégia de Conteúdo',
@@ -112,7 +112,7 @@ const PROPOSTA_DATA = {
     'Criação de um ativo de longo prazo, uma marca que continua gerando resultado mesmo sem anúncios',
     'Redução gradual da dependência de tráfego pago como principal fonte de vendas',
     'Aumento da demanda orgânica: indicação, busca direta e redes sociais',
-    'Crescimento da lembrança de marca na região, a L'acqua como opção número um em purificadores',
+    "Crescimento da lembrança de marca na região, a L'acqua como opção número um em purificadores",
     'Maior percepção de valor e menor sensibilidade a preço por parte dos clientes',
     'Fortalecimento da autoridade local como referência no segmento',
     'Melhora na qualidade dos leads, clientes mais alinhados com o posicionamento',
@@ -956,7 +956,7 @@ function PropostaSlideshow() {
 }
 
 // ── PÁGINA PRINCIPAL ──────────────────────────────────────────────────────────
-export default function PropostaL'acqua() {
+export default function PropostaLacqua() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const prefersConstrainedMotion = useConstrainedMotion();
   const shouldUseLenis = !prefersReducedMotion && !prefersConstrainedMotion;
