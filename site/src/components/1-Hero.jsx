@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import PrimaryCTAButton from './PrimaryCTAButton';
 import { useConstrainedMotion, useMediaQuery, usePrefersReducedMotion } from '../hooks/useMediaQuery';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -235,8 +234,8 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
       // get at least 96px — enough for two lines of the 2.25rem mobile font size.
       if (finalWrapRef.current) {
         const headingLandY = viewportHeight * 0.30;
-        const headingHeightEst = Math.max(viewportHeight * 0.09, 96);
-        finalWrapRef.current.style.paddingTop = `${headingLandY + headingHeightEst - 8}px`;
+        const headingHeightEst = Math.max(viewportHeight * 0.09, 96) + (showLogo ? 64 : 0);
+        finalWrapRef.current.style.paddingTop = `${headingLandY + headingHeightEst - 48}px`;
       }
     };
 
@@ -273,7 +272,7 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
 
       // Heading travels from 34vh to 30vh from top (above the circle throughout)
       const headingTravel = easeInOut3(norm(progress, 0.32, 0.80));
-      const headingY = lerp(viewportHeight * -0.16, viewportHeight * -0.20, headingTravel);
+      const headingY = lerp(viewportHeight * -0.18, viewportHeight * -0.24, headingTravel);
       introRef.current.style.transform = `translateY(${headingY.toFixed(1)}px)`;
       introRef.current.style.opacity = '1';
 
@@ -285,7 +284,7 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
       introPhraseRefs.current.forEach((el, idx) => {
         if (!el) return;
         const base = idx * PHRASE_STEP;
-        const inFactor  = easeOut3(norm(progress, base, base + 0.035));
+        const inFactor  = idx === 0 ? 1 : easeOut3(norm(progress, base, base + 0.035));
         const outFactor = easeOut3(norm(progress, base + 0.065, base + PHRASE_STEP));
         el.style.opacity = Math.max(0, inFactor - outFactor).toFixed(3);
       });
@@ -316,8 +315,9 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
 
       if (logoRef.current) {
         logoRef.current.style.opacity = finalTitle.toFixed(3);
-        logoRef.current.style.transform = titleY > 0.1 ? `translate3d(0, ${titleY.toFixed(1)}px, 0)` : 'none';
-        logoRef.current.style.filter = titleBlur > 0.05 ? `invert(1) blur(${titleBlur.toFixed(2)}px)` : 'invert(1)';
+        const logoY = titleY - 36;
+        logoRef.current.style.transform = `translate3d(0, ${logoY.toFixed(1)}px, 0)`;
+        logoRef.current.style.filter = 'none';
       }
 
       const bodyBlur = lerp(14, 0, finalBody);
@@ -582,7 +582,7 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
               key={idx}
               ref={(node) => { introPhraseRefs.current[idx] = node; }}
               className="absolute inset-0 flex items-center justify-center text-center px-6 pointer-events-none"
-              style={{ opacity: 0, willChange: 'opacity' }}
+              style={{ opacity: idx === 0 ? 1 : 0, willChange: 'opacity' }}
             >
               <p
                 className="font-sans font-normal text-[#151311]"
@@ -594,6 +594,18 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
           ))}
 
           <div className="flex flex-col items-center">
+            {showLogo && (
+              <img
+                ref={logoRef}
+                src="/logo-navbar.svg"
+                alt="The One"
+                className="h-16 md:h-20 w-auto mb-[60px]"
+                style={{
+                  opacity: 0,
+                  willChange: 'transform, opacity'
+                }}
+              />
+            )}
             <h2
             className="max-w-[900px] text-center font-sans font-normal leading-[1.1] text-[#151311]"
             style={{ fontSize: 'clamp(2.25rem, 4.2vw, 3.8rem)', letterSpacing: '-0.02em' }}
@@ -629,15 +641,6 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
           }}
         >
           <div className="mx-auto flex w-full max-w-5xl flex-col items-center text-center">
-            {showLogo && (
-              <img
-                ref={logoRef}
-                src="/logo-navbar-black.svg"
-                alt="The One"
-                className="h-16 md:h-20 w-auto mb-[100px]"
-                style={{ opacity: 0, willChange: 'transform, opacity, filter' }}
-              />
-            )}
             <h2
               ref={finalTitleRef}
               style={{
@@ -652,6 +655,7 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
                 style={{
                   fontSize: 'clamp(4.2rem, 8vw, 7.5rem)',
                   letterSpacing: '-0.03em',
+                  paddingTop: '10px',
                   paddingBottom: '40px',
                 }}
               >
@@ -685,21 +689,22 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
                 Para negócios visionários que não querem ser só mais uma opção e querem se tornar a marca número um e alternativa inevitável em seu mercado.
               </p>
 
-              <PrimaryCTAButton
-                href="https://wa.me/5551997513675?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20TheOne%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es"
-                className="mt-12"
-                background="rgba(0, 0, 0, 0.7)"
-                hoverBackground="rgba(0, 0, 0, 0.78)"
-                boxShadow="0 18px 42px rgba(0, 0, 0, 0.18)"
-                hoverBoxShadow="0 24px 56px rgba(0, 0, 0, 0.26)"
-                textColor="rgba(255, 243, 236, 0.96)"
-                border="1px solid rgba(0, 0, 0, 0.08)"
-                style={{
-                  minWidth: 'min(320px, 90vw)',
-                }}
-              >
-                Agendar Diagnóstico
-              </PrimaryCTAButton>
+              <div className="mt-12 flex flex-col items-center gap-3 text-white/80">
+                <span className="font-halyard text-[13px] md:text-[15px] font-medium uppercase tracking-[0.18em]">
+                  Role para baixo
+                </span>
+                <svg
+                  width="16"
+                  height="24"
+                  viewBox="0 0 16 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                  style={{ animation: 'scrollArrowBounce 1.8s ease-in-out infinite' }}
+                >
+                  <path d="M8 2L8 22M8 22L2.5 15.5M8 22L13.5 15.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
             </div>
           </div>
         </div>

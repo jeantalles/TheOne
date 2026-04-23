@@ -17,26 +17,27 @@ const Founders = lazy(() => import('./9-Founders'));
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ── CUSTOMIZE PER CLIENT ──────────────────────────────────────────────────────
+// ── DADOS DA PROPOSTA — LACQUA ────────────────────────────────────────────────
 const PROPOSTA_DATA = {
-  cliente: 'Nome do Cliente',
+  cliente: 'Vitor',
+  empresa: 'L'acqua Purificadores',
   data: 'Abril 2026',
 
   contextoA: {
     pontos: [
-      'Marca sem posicionamento claro no mercado',
-      'Comunicação inconsistente entre canais',
-      'Dependência de tráfego pago sem construção de marca',
-      'Concorrência em preço por falta de diferenciação',
+      'Dependência forte do Google Ads — faturamento cai quando o tráfego para',
+      'Dificuldade de comunicar diferenciais reais: qualidade, atendimento e reputação',
+      'Posicionamento difuso por atender públicos muito diferentes, do básico ao premium',
+      'Sensação de rodar sem sair do lugar, mesmo com alto esforço operacional',
     ],
   },
 
   contextoB: {
     pontos: [
-      'Marca reconhecida como referência no segmento',
-      'Narrativa e identidade visual alinhadas e impactantes',
-      'Presença orgânica que gera autoridade e desejo',
-      'Precificação premium sustentada pelo posicionamento',
+      'Marca como ativo de longo prazo que continua gerando resultado',
+      'Principal referência da região no segmento de purificadores de água',
+      'Demanda orgânica consistente além de indicação e mídia paga',
+      'Posicionamento claro que atrai clientes mais qualificados e menos sensíveis a preço',
     ],
   },
 
@@ -49,16 +50,16 @@ const PROPOSTA_DATA = {
         descricao: 'É aqui que nos aprofundamos e entendemos de forma completa seu negócio, mercado e público.',
         itens: [
           {
-            titulo: 'Raio-X do Negócio',
-            descricao: 'Mapeamento de contexto, objetivos de negócio, impulsionadores, detratores e desafios que impactam a percepção e o crescimento da marca.',
+            titulo: 'Imersão Estratégica',
+            descricao: 'Mapeamento completo do contexto do negócio, objetivos, impulsionadores, detratores e desafios que afetam a percepção da L'acqua no mercado.',
           },
           {
-            titulo: 'Análise de Concorrentes',
-            descricao: 'Como os players do setor se posicionam, onde estão os padrões repetidos e quais brechas estratégicas existem para sua marca ocupar.',
+            titulo: 'Pesquisa de Mercado',
+            descricao: 'Como os concorrentes se posicionam, onde estão os padrões repetidos e quais brechas estratégicas existem para a L'acqua ocupar.',
           },
           {
             titulo: 'Mapeamento Profundo de Público',
-            descricao: 'Definição de público baseada não só em dados demográficos, mas nas necessidades, dores e desejos de quem compra.',
+            descricao: 'Definição de público baseada não só em dados demográficos, mas nas necessidades, dores e desejos de quem compra purificadores na sua região.',
           },
         ],
       },
@@ -69,15 +70,15 @@ const PROPOSTA_DATA = {
         itens: [
           {
             titulo: 'Posicionamento e Diferenciação',
-            descricao: 'Definição da proposta única de valor, diferenciais estratégicos, território da marca e do posicionamento inevitável.',
+            descricao: 'Definição da proposta única de valor, diferenciais estratégicos e do território de marca que a L'acqua vai ocupar.',
           },
           {
             titulo: 'Personalidade da Marca',
-            descricao: 'Construímos o porquê vão se conectar conosco, definição de propósito, valores, crenças, personalidade e arquétipos.',
+            descricao: 'Propósito, valores, crenças e arquétipos que sustentam a conexão da L'acqua com seu público e justificam a escolha.',
           },
           {
             titulo: 'Conceito e Narrativa',
-            descricao: 'Criação do conceito central, declaração de posicionamento, transformação da marca e narrativa que sustenta sua comunicação.',
+            descricao: 'Criação do conceito central e da narrativa que unifica toda a comunicação da marca nos diferentes canais.',
           },
         ],
       },
@@ -88,15 +89,15 @@ const PROPOSTA_DATA = {
         itens: [
           {
             titulo: 'Estratégia de Canais',
-            descricao: 'Como a marca deve se portar em cada ponto de contato com seu cliente para ser vista, lembrada, desejada e comprada. Instagram, LinkedIn, WhatsApp, site, eventos e outros canais.',
+            descricao: 'Como a L'acqua deve se portar em cada ponto de contato — Instagram, WhatsApp, Google, site e indicação — para ser vista, lembrada e escolhida.',
           },
           {
             titulo: 'Estratégia de Conteúdo',
-            descricao: 'Principais formatos, tópicos e comunicação para que a marca se conecte com seu público e se torne a alternativa inevitável.',
+            descricao: 'Principais formatos, tópicos e linhas de comunicação para que a marca construa autoridade local e gere demanda orgânica.',
           },
           {
-            titulo: 'Estratégia de Collabs',
-            descricao: 'Direcionamento de marcas e parceiros aos quais a marca deve se associar para potencializar crescimento, relevância e reputação no mercado.',
+            titulo: 'Guia de Estratégia de Posicionamento',
+            descricao: 'Documento completo com toda a fundação estratégica da marca — o mapa que orienta toda decisão de comunicação, venda e crescimento.',
           },
         ],
       },
@@ -108,48 +109,22 @@ const PROPOSTA_DATA = {
   },
 
   resultados: [
-    'Posicionamento de marca claro e diferenciado no mercado',
-    'Narrativa que gera identificação e desejo no público certo',
-    'Identidade visual que eleva a percepção de valor do produto',
-    'Redução da dependência de tráfego pago com geração de demanda orgânica',
-    'Base sólida para escalabilidade sem perder a essência da marca',
+    'Criação de um ativo de longo prazo, uma marca que continua gerando resultado mesmo sem anúncios',
+    'Redução gradual da dependência de tráfego pago como principal fonte de vendas',
+    'Aumento da demanda orgânica: indicação, busca direta e redes sociais',
+    'Crescimento da lembrança de marca na região, a L'acqua como opção número um em purificadores',
+    'Maior percepção de valor e menor sensibilidade a preço por parte dos clientes',
+    'Fortalecimento da autoridade local como referência no segmento',
+    'Melhora na qualidade dos leads, clientes mais alinhados com o posicionamento',
   ],
 
   cronograma: [
-    { etapa: '01', nome: 'Imersão', duracao: '2 semanas', descricao: 'Diagnóstico, pesquisa e análise completa' },
-    { etapa: '02', nome: 'Estratégia', duracao: '3 semanas', descricao: 'Posicionamento, narrativa e plataforma de marca' },
-    { etapa: '03', nome: 'Identidade', duracao: '4 semanas', descricao: 'Identidade visual e verbal' },
-    { etapa: '04', nome: 'Implementação', duracao: '6 semanas', descricao: 'Aplicação em todos os pontos de contato' },
-    { etapa: '05', nome: 'Acompanhamento', duracao: 'Ongoing', descricao: 'Suporte estratégico mensal contínuo' },
+    { etapa: '01', nome: 'Imersão', descricao: 'Diagnóstico completo do negócio, mercado e público' },
+    { etapa: '02', nome: 'Pesquisa', descricao: 'Análise de concorrência e oportunidades de posicionamento' },
+    { etapa: '03', nome: 'Estratégia', descricao: 'Posicionamento, marca e diferenciação' },
+    { etapa: '04', nome: 'Efetivação', descricao: 'Estratégia de canais e conteúdo para colocar a marca para funcionar' },
+    { etapa: '05', nome: 'Entrega', descricao: 'Guia de Estratégia de Posicionamento e Marca' },
   ],
-
-  investimento: {
-    formasDePagamento: [
-      'Pagamento 50% no começo e 50% no final',
-      'Pagamento à vista com condição especial de 5%',
-    ],
-    meiosDePagamento: [
-      'Pix',
-      'Boleto',
-      'Cartão de crédito em até 12x com taxa da operadora',
-    ],
-    itens: [
-      {
-        etapa: '01',
-        nome: 'Diagnóstico Estratégico',
-        descricao: 'Análise completa de marca, mercado e público. Entrega do mapa de posicionamento da sua marca.',
-        valor: 'R$ 0.000',
-        periodo: 'Pagamento único',
-      },
-      {
-        etapa: '02',
-        nome: 'Implementação de Marca',
-        descricao: 'Desenvolvimento da plataforma de marca, narrativa, identidade visual e presença digital.',
-        valor: 'R$ 0.000/mês',
-        periodo: 'Mínimo 6 meses',
-      },
-    ],
-  },
 };
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -177,8 +152,8 @@ function Contexto({ showDesejado = true }) {
             Análise de contexto
           </span>
           <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.5rem,4vw,3.5rem)] leading-[1.05] tracking-tight">
-            O projeto de{' '}
-            <span className="text-[#FE6942]">{PROPOSTA_DATA.cliente}</span>
+            O projeto da{' '}
+            <span className="text-[#FE6942]">{PROPOSTA_DATA.empresa}</span>
           </h2>
         </div>
 
@@ -199,7 +174,6 @@ function Contexto({ showDesejado = true }) {
             </ul>
           </div>
 
-          {/* Seta central + Card B — só aparecem no slide 2 */}
           {showDesejado ? (
             <div className="ctx-card flex items-start justify-center pt-5 md:pt-14">
               <svg className="hidden md:block" width="36" height="36" viewBox="0 0 36 36" fill="none">
@@ -269,7 +243,7 @@ function Escopo({ visiblePillars = 3 }) {
           </div>
           <div className="lg:justify-self-end lg:pt-9">
             <p className="font-halyard font-light text-[#181412] text-[18px] md:text-[22px] leading-[1.55] max-w-[620px] lg:text-right">
-              Um sistema estratégico organizado por etapas: primeiro entendemos o terreno, depois definimos o posicionamento e, por fim, desenhamos como a marca se efetiva nos canais certos.
+              Um sistema estratégico organizado por etapas: primeiro entendemos o terreno, depois definimos o posicionamento e, por fim, desenhamos como a L'acqua se efetiva nos canais certos.
             </p>
           </div>
         </div>
@@ -316,9 +290,10 @@ function Escopo({ visiblePillars = 3 }) {
   );
 }
 
+// ── SEÇÃO: ENTREGÁVEIS ────────────────────────────────────────────────────────
 function Entregaveis() {
   const sectionRef = useRef(null);
-  const agentName = `The${PROPOSTA_DATA.cliente.replace(/\s+/g, '')} ${PROPOSTA_DATA.escopo.bonus.titulo}`;
+  const agentName = `The${PROPOSTA_DATA.empresa.split(' ')[0]} ${PROPOSTA_DATA.escopo.bonus.titulo}`;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -396,20 +371,20 @@ function Entregaveis() {
               <div className="relative mx-auto lg:mx-0 w-full max-w-[380px] rounded-[28px] border border-black/15 bg-[#F7F7F7] shadow-[0_20px_58px_rgba(0,0,0,0.08)] overflow-hidden aspect-[1.78]">
                 <div className="h-8 px-4 flex items-center justify-between border-b border-black/10 bg-white/70 font-halyard text-[10px] text-[#181412]/55">
                   <span>Gemini</span>
-                  <span>Zenic | Estratégia de marca</span>
+                  <span>L'acqua | Estratégia de marca</span>
                   <span className="rounded-full bg-[#BDE8FF] px-2 py-1 text-[#181412]/70">Fazer upgrade</span>
                 </div>
                 <div className="absolute inset-x-0 top-12 bottom-0 flex flex-col items-center justify-center text-center px-8">
                   <div className="w-9 h-9 rounded-full bg-[#C978F3]/80 text-white flex items-center justify-center font-halyard font-medium text-[15px] mb-4">
-                    Z
+                    L
                   </div>
                   <p className="font-halyard font-medium text-[#181412] text-[16px] mb-5">
-                    Zenic | Estrategista de marca
+                    L'acqua | Estrategista de marca
                   </p>
                   <div className="space-y-2 text-left font-halyard text-[12px] text-[#181412]/55">
                     <p>Recentes</p>
-                    <p><span className="text-[#C978F3]">■</span> Roteiro de vídeos de pré-lançamento</p>
-                    <p><span className="text-[#C978F3]">■</span> Estratégia de conteúdo pós-lançamento</p>
+                    <p><span className="text-[#C978F3]">■</span> Roteiro de vídeos para Instagram</p>
+                    <p><span className="text-[#C978F3]">■</span> Estratégia de conteúdo para o WhatsApp</p>
                   </div>
                 </div>
                 <div className="absolute left-1/2 bottom-5 -translate-x-1/2 w-[56%] rounded-2xl border border-black/10 bg-white px-4 py-3 font-halyard text-[11px] text-[#181412]/55">
@@ -443,8 +418,8 @@ function Resultados() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.resultado-item', {
-        opacity: 0, y: 40, stagger: 0.12, duration: 0.9, ease: 'power3.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+        opacity: 0, y: 16, stagger: 0.42, duration: 1.1, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 65%' },
       });
     }, sectionRef);
     return () => ctx.revert();
@@ -484,7 +459,6 @@ function Cronograma() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Linha horizontal anima de esq → dir
       if (lineRef.current) {
         gsap.fromTo(
           lineRef.current,
@@ -521,11 +495,13 @@ function Cronograma() {
           <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.2rem,3.5vw,3rem)] leading-[1.05] tracking-tight">
             Cronograma do projeto
           </h2>
+          <p className="font-halyard font-light text-[#181412]/65 text-[18px] md:text-[20px] leading-[1.5] mt-5 max-w-[32ch]">
+            Prazo estimado geral de até 30 dias para a entrega completa do projeto.
+          </p>
         </div>
 
         {/* Desktop: horizontal */}
         <div className="hidden md:block relative">
-          {/* Trilho */}
           <div className="absolute top-[36px] left-0 right-0 h-px bg-black/10" />
           <div
             ref={lineRef}
@@ -537,12 +513,10 @@ function Cronograma() {
           >
             {PROPOSTA_DATA.cronograma.map((step, i) => (
               <div key={i} className="crono-step flex flex-col items-center text-center px-4">
-                {/* Nó */}
                 <div className="w-[72px] h-[72px] rounded-full border-2 border-[#FE6942] bg-white flex items-center justify-center mb-6 relative z-10">
                   <span className="font-halyard font-medium text-[#FE6942] text-[1.55rem]">{step.etapa}</span>
                 </div>
                 <span className="font-halyard font-medium text-[#181412] text-[21px] mb-2">{step.nome}</span>
-                <span className="font-halyard font-normal text-[#FE6942] text-[15px] tracking-[0.1em] uppercase mb-3">{step.duracao}</span>
                 <p className="font-halyard font-light text-[#181412]/70 text-[17px] leading-[1.45]">{step.descricao}</p>
               </div>
             ))}
@@ -559,7 +533,6 @@ function Cronograma() {
                   <span className="font-halyard font-medium text-[#FE6942] text-[1rem]">{step.etapa}</span>
                 </div>
                 <span className="font-halyard font-medium text-[#181412] text-[21px] block mb-1">{step.nome}</span>
-                <span className="font-halyard text-[#FE6942] text-[14px] tracking-[0.1em] uppercase block mb-2">{step.duracao}</span>
                 <p className="font-halyard font-light text-[#181412]/70 text-[17px] leading-[1.45]">{step.descricao}</p>
               </div>
             ))}
@@ -597,10 +570,7 @@ function PropostaQuestion({ onAnswer, noLock = false }) {
           };
 
           if (lenis) {
-            lenis.scrollTo(section, {
-              duration: 0.8,
-              onComplete: doLock,
-            });
+            lenis.scrollTo(section, { duration: 0.8, onComplete: doLock });
           } else {
             section.scrollIntoView({ behavior: 'smooth' });
             setTimeout(doLock, 600);
@@ -656,7 +626,6 @@ function PropostaQuestion({ onAnswer, noLock = false }) {
         style={{ background: 'radial-gradient(circle at 50% 55%, rgba(254,105,66,0.05) 0%, transparent 65%)' }}
       />
 
-      {/* Pergunta */}
       <div ref={contentRef} className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center"
         style={{ opacity: answered ? 0 : 1, pointerEvents: answered ? 'none' : 'auto' }}
       >
@@ -688,7 +657,6 @@ function PropostaQuestion({ onAnswer, noLock = false }) {
         </div>
       </div>
 
-      {/* Resposta */}
       <div
         ref={responseRef}
         className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center pointer-events-none"
@@ -719,6 +687,140 @@ function PropostaQuestion({ onAnswer, noLock = false }) {
   );
 }
 
+// ── SEÇÃO: INVESTIMENTO — LACQUA (com duas opções de consultoria) ──────────────
+function Investimento() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.inv-block', {
+        opacity: 0, y: 40, stagger: 0.15, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="bg-white pt-16 pb-28 md:pt-20 md:pb-28 px-6 md:px-12 lg:px-16">
+      <div className="max-w-[1400px] mx-auto">
+
+        <div className="mb-10 md:mb-12 inv-block">
+          <h2 className="font-halyard font-medium text-[#181412] text-[clamp(2.5rem,4vw,3.5rem)] leading-[1.05] tracking-tight">
+            Investimento
+          </h2>
+        </div>
+
+        {/* Card 1: Estratégia */}
+        <div className="inv-block bg-[#F8F8F8] rounded-[24px] px-8 md:px-12 py-10 border border-black/[0.08] flex flex-col md:flex-row md:items-center gap-8 md:gap-16 mb-5 transition-shadow duration-500 hover:shadow-lg">
+          <span className="font-editorial font-normal text-[#FE6942]/25 text-[4rem] md:text-[5rem] leading-none shrink-0 select-none">
+            01
+          </span>
+          <div className="flex-1 min-w-0">
+            <h3 className="font-halyard font-medium text-[#181412] text-[1.75rem] md:text-[2.25rem] leading-[1.1] mb-3">
+              Estratégia de Posicionamento e Marca
+            </h3>
+            <p className="font-halyard font-normal text-[#181412] text-[18px] md:text-[20px] leading-[1.45] max-w-[52ch]">
+              Diagnóstico, pesquisa de mercado, posicionamento, narrativa, personalidade, estratégia de canais e conteúdo. Entrega do Guia completo.
+            </p>
+          </div>
+          <div className="shrink-0 md:text-right">
+            <div className="font-halyard font-medium text-gradient text-[2.5rem] md:text-[3.25rem] leading-[1]">
+              R$5.000
+            </div>
+          </div>
+        </div>
+
+        {/* Card 2: Consultoria — duas opções */}
+        <div className="inv-block bg-[#F8F8F8] rounded-[24px] px-8 md:px-12 py-10 border border-black/[0.08] mb-5">
+          <div className="flex flex-col md:flex-row md:items-start gap-8 md:gap-16">
+            <span className="font-editorial font-normal text-[#FE6942]/25 text-[4rem] md:text-[5rem] leading-none shrink-0 select-none">
+              02
+            </span>
+            <div className="flex-1 min-w-0">
+              <h3 className="font-halyard font-medium text-[#181412] text-[1.75rem] md:text-[2.25rem] leading-[1.1] mb-3">
+                Consultoria de Acompanhamento Mensal
+              </h3>
+              <p className="font-halyard font-normal text-[#181412] text-[18px] md:text-[20px] leading-[1.45] max-w-[52ch] mb-8">
+                Suporte estratégico para colocar o posicionamento em prática, com encontros regulares e suporte direto no WhatsApp. Mínimo 3 meses.
+              </p>
+
+              {/* Duas opções */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-white rounded-2xl px-6 py-6 border border-black/[0.08]">
+                  <div className="font-halyard text-[12px] tracking-[0.2em] uppercase text-[#181412]/40 mb-3">Essencial</div>
+                  <div className="font-halyard font-medium text-gradient text-[2rem] md:text-[2.5rem] leading-[1] mb-2">
+                    R$1.000<span className="text-[1rem] text-[#181412]/40 font-normal">/mês</span>
+                  </div>
+                  <ul className="space-y-1.5 mt-4">
+                    {['2 encontros mensais', 'Suporte via WhatsApp'].map((f) => (
+                      <li key={f} className="flex items-center gap-2.5 font-halyard font-light text-[16px] text-[#181412]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="bg-white rounded-2xl px-6 py-6 border-2 border-[#FE6942]">
+                  <div className="font-halyard text-[12px] tracking-[0.2em] uppercase text-[#FE6942] mb-3">Premium</div>
+                  <div className="font-halyard font-medium text-gradient text-[2rem] md:text-[2.5rem] leading-[1] mb-2">
+                    R$2.000<span className="text-[1rem] text-[#181412]/40 font-normal">/mês</span>
+                  </div>
+                  <ul className="space-y-1.5 mt-4">
+                    {['4 encontros mensais', 'Suporte via WhatsApp'].map((f) => (
+                      <li key={f} className="flex items-center gap-2.5 font-halyard font-light text-[16px] text-[#181412]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Formas e meios de pagamento */}
+        <div className="inv-block bg-[#F8F8F8] rounded-2xl px-8 md:px-10 py-8 border border-black/[0.08] flex flex-col md:flex-row gap-8 md:gap-16">
+          <div className="flex-1">
+            <h4 className="font-halyard font-medium text-[#181412] text-[15px] tracking-[0.12em] uppercase mb-5">
+              Formas de pagamento
+            </h4>
+            <ul className="space-y-3.5">
+              {['Pagamento 50% no início e 50% na entrega', 'Pagamento à vista com desconto especial'].map((f) => (
+                <li key={f} className="flex items-center gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0" />
+                  <span className="font-halyard font-light text-[18px] md:text-[19px] text-[#181412]">{f}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="flex-1">
+            <h4 className="font-halyard font-medium text-[#181412] text-[15px] tracking-[0.12em] uppercase mb-5">
+              Meios de pagamento
+            </h4>
+            <ul className="space-y-3.5">
+              {['Pix', 'Boleto', 'Cartão de crédito em até 12x com taxa da operadora'].map((f) => (
+                <li key={f} className="flex items-center gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0" />
+                  <span className="font-halyard font-light text-[18px] md:text-[19px] text-[#181412]">{f}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="inv-block mt-5 bg-[#F8F8F8] rounded-2xl px-8 md:px-10 py-6 border border-black/[0.08]">
+          <p className="font-halyard font-light text-[18px] md:text-[19px] text-[#181412]">
+            Validade da proposta: <strong>5 dias corridos</strong>.
+          </p>
+        </div>
+
+      </div>
+    </section>
+  );
+}
 
 // ── SLIDESHOW DAS SEÇÕES DA PROPOSTA ─────────────────────────────────────────
 const SLIDE_TOTAL = 8;
@@ -772,7 +874,7 @@ function PropostaSlideshow() {
       setEscopoVisiblePillars(dir > 0 ? 1 : PROPOSTA_DATA.escopo.pilares.length);
     }
     setCurrent(next);
-    setTimeout(() => { isTransitioning.current = false; }, 800); // Aumentado um pouco para evitar pulos acidentais
+    setTimeout(() => { isTransitioning.current = false; }, 800);
   }, [current, escopoVisiblePillars, questionAnswered]);
 
   const isNextBlocked = current === QUESTION_IDX && !questionAnswered;
@@ -810,7 +912,7 @@ function PropostaSlideshow() {
         aria-hidden="true"
       />
 
-      {/* Navigation: arrows + dots centered at bottom */}
+      {/* Navigation: arrows + dots */}
       <div className="absolute bottom-2 md:bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20">
         <button
           onClick={() => navigate(-1)}
@@ -823,7 +925,6 @@ function PropostaSlideshow() {
           </svg>
         </button>
 
-        {/* Dots */}
         <div className="flex items-center gap-1.5">
           {Array.from({ length: SLIDE_TOTAL }).map((_, i) => (
             <div
@@ -854,96 +955,8 @@ function PropostaSlideshow() {
   );
 }
 
-// ── SEÇÃO: INVESTIMENTO ───────────────────────────────────────────────────────
-function Investimento() {
-  const sectionRef = useRef(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.inv-card', {
-        opacity: 0, y: 40, stagger: 0.15, duration: 0.9, ease: 'power3.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <section ref={sectionRef} className="bg-white pt-16 pb-28 md:pt-20 md:pb-28 px-6 md:px-12 lg:px-16">
-      <div className="max-w-[1400px] mx-auto">
-
-        <div className="mb-10 md:mb-12">
-          <h2 className="font-halyard font-medium text-[#181412] text-[clamp(2.5rem,4vw,3.5rem)] leading-[1.05] tracking-tight">
-            Investimento
-          </h2>
-        </div>
-
-        <div className="space-y-5 mb-10">
-          {PROPOSTA_DATA.investimento.itens.map((item, i) => (
-            <div
-              key={i}
-              className="inv-card bg-[#F8F8F8] rounded-[24px] px-8 md:px-12 py-10 border border-black/[0.08] flex flex-col md:flex-row md:items-center gap-8 md:gap-16 transition-shadow duration-500 hover:shadow-lg"
-            >
-              <span className="font-editorial font-normal text-[#FE6942]/25 text-[4rem] md:text-[5rem] leading-none shrink-0 select-none">
-                {item.etapa}
-              </span>
-              <div className="flex-1 min-w-0">
-                <h3 className="font-halyard font-medium text-[#181412] text-[1.75rem] md:text-[2.25rem] leading-[1.1] mb-3">
-                  {item.nome}
-                </h3>
-                <p className="font-halyard font-normal text-[#181412] text-[18px] md:text-[20px] leading-[1.45] max-w-[52ch]">
-                  {item.descricao}
-                </p>
-              </div>
-              <div className="shrink-0 md:text-right">
-                <div className="font-halyard font-medium text-gradient text-[2.5rem] md:text-[3.25rem] leading-[1] mb-1">
-                  {item.valor}
-                </div>
-                <div className="font-halyard text-[12px] tracking-[0.15em] uppercase text-[#181412]/40">
-                  {item.periodo}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Formas e meios de pagamento */}
-        <div className="bg-[#F8F8F8] rounded-2xl px-8 md:px-10 py-8 border border-black/[0.08] flex flex-col md:flex-row gap-8 md:gap-16">
-          <div className="flex-1">
-            <h4 className="font-halyard font-medium text-[#181412] text-[15px] tracking-[0.12em] uppercase mb-5">
-              Formas de pagamento
-            </h4>
-            <ul className="space-y-3.5">
-              {PROPOSTA_DATA.investimento.formasDePagamento.map((f, i) => (
-                <li key={i} className="flex items-center gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0" />
-                  <span className="font-halyard font-light text-[18px] md:text-[19px] text-[#181412]">{f}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="flex-1">
-            <h4 className="font-halyard font-medium text-[#181412] text-[15px] tracking-[0.12em] uppercase mb-5">
-              Meios de pagamento
-            </h4>
-            <ul className="space-y-3.5">
-              {PROPOSTA_DATA.investimento.meiosDePagamento.map((f, i) => (
-                <li key={i} className="flex items-center gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0" />
-                  <span className="font-halyard font-light text-[18px] md:text-[19px] text-[#181412]">{f}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-      </div>
-    </section>
-  );
-}
-
 // ── PÁGINA PRINCIPAL ──────────────────────────────────────────────────────────
-export default function PropostaPage() {
+export default function PropostaL'acqua() {
   const prefersReducedMotion = usePrefersReducedMotion();
   const prefersConstrainedMotion = useConstrainedMotion();
   const shouldUseLenis = !prefersReducedMotion && !prefersConstrainedMotion;
@@ -981,8 +994,6 @@ export default function PropostaPage() {
     window.__theOneLenis = lenis;
     lenis.on('scroll', ScrollTrigger.update);
 
-    // Refresh ScrollTrigger after Lenis is running so all pinned sections
-    // and scrub triggers recalculate positions with smooth scroll active.
     let refreshId = requestAnimationFrame(() => {
       requestAnimationFrame(() => ScrollTrigger.refresh());
     });
@@ -1008,7 +1019,6 @@ export default function PropostaPage() {
     <div className="bg-[#0a0a0a] min-h-screen font-sans">
       <div className="noise-overlay" aria-hidden="true" />
 
-      {/* Intro do site — hero + storytelling + theone */}
       <div style={{ backgroundColor: '#F5EEE9' }}>
         <Hero
           showLogo={true}
@@ -1031,9 +1041,7 @@ export default function PropostaPage() {
         <Founders />
       </Suspense>
 
-      {/* Slideshow da proposta */}
       <PropostaSlideshow />
-
     </div>
   );
 }
