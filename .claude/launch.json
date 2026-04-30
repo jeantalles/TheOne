@@ -6,6 +6,12 @@
       "runtimeExecutable": "/usr/local/bin/node",
       "runtimeArgs": ["/Users/jeantalles/The One/site/node_modules/.bin/vite"],
       "port": 5173
+    },
+    {
+      "name": "tmp-pdf",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8090", "--directory", "/Users/jeantalles/The One/tmp_pdf"],
+      "port": 8090
     }
   ]
 }
