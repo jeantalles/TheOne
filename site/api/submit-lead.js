@@ -1,12 +1,16 @@
+function richText(content) {
+  return content ? [{ text: { content: String(content) } }] : [];
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
-  const { nome, email, telefone, source } = req.body;
+  const { nome, email, whatsapp, telefone, empresa, papel, contexto, desafio, faturamento, meta, source } = req.body;
 
-  if (!nome || !email || !telefone) {
-    return res.status(400).json({ error: 'Missing required fields' });
+  if (!nome) {
+    return res.status(400).json({ error: 'Missing required field: nome' });
   }
 
   const NOTION_API_KEY = process.env.NOTION_API_KEY;
@@ -16,6 +20,21 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Server configuration error' });
   }
 
+  const phone = whatsapp || telefone || null;
+
+  const properties = {
+    Nome: { title: richText(nome) },
+    ...(email && { Email: { email } }),
+    ...(phone && { Telefone: { phone_number: phone } }),
+    ...(empresa && { Empresa: { rich_text: richText(empresa) } }),
+    ...(papel && { Papel: { rich_text: richText(papel) } }),
+    ...(contexto && { Contexto: { rich_text: richText(contexto) } }),
+    ...(desafio && { Desafio: { rich_text: richText(desafio) } }),
+    ...(faturamento && { Faturamento: { rich_text: richText(faturamento) } }),
+    ...(meta && { Meta: { rich_text: richText(meta) } }),
+    ...(source && { Source: { rich_text: richText(source) } }),
+  };
+
   try {
     const notionRes = await fetch('https://api.notion.com/v1/pages', {
       method: 'POST',
@@ -24,26 +43,7 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json',
         'Notion-Version': '2022-06-28',
       },
-      body: JSON.stringify({
-        parent: { database_id: NOTION_DATABASE_ID },
-        properties: {
-          Nome: {
-            title: [
-              {
-                text: {
-                  content: nome,
-                },
-              },
-            ],
-          },
-          Email: {
-            email: email,
-          },
-          Telefone: {
-            phone_number: telefone,
-          },
-        },
-      }),
+      body: JSON.stringify({ parent: { database_id: NOTION_DATABASE_ID }, properties }),
     });
 
     if (!notionRes.ok) {

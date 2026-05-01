@@ -1,5 +1,6 @@
 import { MeshGradient } from '@paper-design/shaders-react';
 import PrimaryCTAButton from './PrimaryCTAButton';
+import { navigateToPath } from '../utils/router';
 
 export default function FinalCTA() {
   return (
@@ -53,7 +54,7 @@ export default function FinalCTA() {
 
           <div className="flex items-center justify-center">
             <PrimaryCTAButton
-              href="https://wa.me/5551997513675?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20TheOne%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es"
+              onClick={() => navigateToPath('/formulario')}
               background="#181412"
               boxShadow="0 12px 30px rgba(24,20,18,0.18)"
               hoverBoxShadow="0 18px 40px rgba(24,20,18,0.28)"

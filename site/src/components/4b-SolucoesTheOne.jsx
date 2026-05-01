@@ -6,10 +6,9 @@ import foundationImg from '../assets/products/foundation.jpeg';
 import siteBrandExpImg from '../assets/products/site-brand-experience.jpeg';
 import brandSprintImg from '../assets/products/brand-sprint.jpeg';
 import myBrandingImg from '../assets/products/mybranding.jpeg';
+import { navigateToPath } from '../utils/router';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const WHATSAPP_URL = 'https://wa.me/5551997513675';
 
 function ArrowIcon() {
   return (
@@ -261,9 +260,9 @@ function AgentOneBanner() {
             Quero ser avisado quando lançar
           </p>
           {[
-            { field: 'nome', placeholder: 'Seu nome', type: 'text' },
-            { field: 'email', placeholder: 'Seu e-mail', type: 'email' },
-            { field: 'telefone', placeholder: 'Seu telefone (WhatsApp)', type: 'tel' },
+            { field: 'nome', placeholder: 'Nome completo', type: 'text' },
+            { field: 'email', placeholder: 'Seu melhor email', type: 'email' },
+            { field: 'telefone', placeholder: 'Seu WhatsApp', type: 'tel' },
           ].map(({ field, placeholder, type }) => (
             <input
               key={field}
@@ -273,7 +272,7 @@ function AgentOneBanner() {
               onChange={set(field)}
               required
               disabled={status === 'loading'}
-              style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '14px 18px', fontFamily: 'Arial, sans-serif', fontSize: 14, color: '#fff', outline: 'none', transition: 'border-color 0.2s ease', opacity: status === 'loading' ? 0.6 : 1 }}
+              style={{ width: '100%', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '14px 18px', fontFamily: 'Arial, sans-serif', fontSize: 15, color: '#fff', outline: 'none', transition: 'border-color 0.2s ease', opacity: status === 'loading' ? 0.6 : 1 }}
               onFocus={e => { e.currentTarget.style.borderColor = 'rgba(254,105,66,0.35)'; }}
               onBlur={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'; }}
             />
@@ -392,9 +391,11 @@ export default function ProdutosTheOne() {
             </div>
           </div>
           <a
-            href={WHATSAPP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/formulario"
+            onClick={(e) => {
+              e.preventDefault();
+              navigateToPath('/formulario');
+            }}
             style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, fontWeight: 600, color: '#FE6942', whiteSpace: 'nowrap', border: '1px solid rgba(254,105,66,0.5)', padding: '11px 20px', borderRadius: 100, textDecoration: 'none', transition: 'background 0.2s ease', flexShrink: 0 }}
             onMouseEnter={e => { e.currentTarget.style.background = 'rgba(254,105,66,0.08)'; }}
             onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}

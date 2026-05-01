@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { navigateToPath } from '../utils/router';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,6 +19,8 @@ function SpotlightButton() {
   return (
     <button
       ref={btnRef}
+      type="button"
+      onClick={() => navigateToPath('/formulario')}
       onMouseMove={handleMouseMove}
       className="spotlight-btn relative font-sans font-normal capitalize text-white cursor-pointer active:scale-[0.97] transition-transform"
       style={{

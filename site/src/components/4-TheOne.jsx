@@ -93,7 +93,10 @@ export default function TheOne() {
                 Vimos o que acontece quando marketing vira linha de produção e nos recusamos a ser mais um desse modelo.
               </p>
               <p className="max-w-[760px] relative -top-px">
-                Não entregamos um PDF e sumimos. Estruturamos como você se posiciona nos principais canais para você se tornar a opção inevitável no seu mercado. Seremos seus aliados na efetivação da estratégia para consolidar o seu negócio como o número um do seu mercado.
+                Estruturamos como você se posiciona nos principais canais para você se tornar a opção inevitável no seu mercado. Seremos seus aliados na efetivação da estratégia para consolidar o seu negócio como o número um do seu mercado.
+              </p>
+              <p className="max-w-[760px] relative -top-px text-white">
+                Não entregamos um PDF e sumimos. Nosso trabalho de construção de marca é orientado para crescer os principais canais orgânicos da empresa, com foco em expansão e geração de receita.
               </p>
             </div>
           </div>

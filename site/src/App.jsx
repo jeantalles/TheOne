@@ -26,6 +26,7 @@ const DesignSystem = lazy(() => import('./components/DesignSystem'));
 const CaseDetailPage = lazy(() => import('./components/cases/CaseDetailPage'));
 const PropostaPage = lazy(() => import('./components/PropostaPage'));
 const PropostaLacqua = lazy(() => import('./components/PropostaLacqua'));
+const QualificacaoPage = lazy(() => import('./components/QualificacaoPage'));
 
 // Prevent browser from restoring scroll position on reload (must be synchronous,
 // before any useEffect, so the browser sees it before scroll restoration fires).
@@ -61,6 +62,7 @@ export default function App() {
   const isPropostaRoute = pathname === '/proposta' || pathname === '/proposta/';
   const isPropostaLacqua = pathname === '/lacqua-purificadores' || pathname === '/lacqua-purificadores/';
   const isDesignSystem = pathname === '/design-system';
+  const isQualificacao = ['/formulario', '/formulario/', '/qualificacao', '/qualificacao/'].includes(pathname);
   const caseSlug = pathname.startsWith('/cases/')
     ? pathname.replace(/^\/cases\//, '').replace(/\/$/, '')
     : null;
@@ -286,6 +288,10 @@ export default function App() {
 
   if (isDesignSystem) {
     return <Suspense fallback={null}><DesignSystem /></Suspense>;
+  }
+
+  if (isQualificacao) {
+    return <Suspense fallback={null}><QualificacaoPage /></Suspense>;
   }
 
   if (isPropostaRoute) {

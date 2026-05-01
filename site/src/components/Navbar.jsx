@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
+import { navigateToPath } from '../utils/router';
 
 const navLinks = [
   { name: 'O Contexto',    id: 'o-problema'  },
@@ -121,14 +122,14 @@ export default function Navbar() {
           return;
         }
 
+        const probeX = 56;
         const probeY = 48;
-        const lightSections = document.querySelectorAll('[data-navbar-theme="light"]');
-        let isLightBackground = false;
-        lightSections.forEach((section) => {
-          const rect = section.getBoundingClientRect();
-          if (rect.top <= probeY && rect.bottom >= probeY) isLightBackground = true;
-        });
-        setUseDarkLogo(isLightBackground);
+        const themedElement = document
+          .elementsFromPoint(probeX, probeY)
+          .map((element) => element.closest?.('[data-navbar-theme]'))
+          .find((element) => element && !navRef.current?.contains(element));
+
+        setUseDarkLogo(themedElement?.dataset.navbarTheme === 'light');
       });
     };
 
@@ -342,9 +343,11 @@ export default function Navbar() {
 
         <div className="hidden md:flex items-center gap-4 ml-auto">
           <a
-            href="https://wa.me/5551997513675?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20TheOne%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/formulario"
+            onClick={(e) => {
+              e.preventDefault();
+              navigateToPath('/formulario');
+            }}
             className="inline-flex items-center gap-3 font-sans capitalize transition-transform duration-150 active:scale-[0.98]"
             style={{
               fontSize: '18px',
@@ -420,10 +423,12 @@ export default function Navbar() {
         </div>
 
         <a
-          href="https://wa.me/5551997513675?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20TheOne%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es"
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => setMenuOpen(false)}
+          href="/formulario"
+          onClick={(e) => {
+            e.preventDefault();
+            setMenuOpen(false);
+            navigateToPath('/formulario');
+          }}
           className="mobile-link mt-10 inline-flex items-center gap-3 font-sans capitalize active:scale-[0.97]"
           style={{
             fontSize: '18px',

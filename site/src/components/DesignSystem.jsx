@@ -1,4 +1,5 @@
 import { ArrowRight } from 'lucide-react';
+import { navigateToPath } from '../utils/router';
 
 export default function DesignSystem() {
   return (
@@ -31,13 +32,21 @@ export default function DesignSystem() {
           <h2 className="text-2xl font-bold mb-6">Botões Footer</h2>
           <div className="flex flex-wrap gap-4">
             <a
-              href="https://wa.me/5551997513675?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20TheOne%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es"
+              href="/formulario"
+              onClick={(e) => {
+                e.preventDefault();
+                navigateToPath('/formulario');
+              }}
               className="inline-block bg-[#050505] text-white font-black font-sans uppercase tracking-[0.2em] text-xs px-12 py-6 hover:bg-white hover:text-[#050505] transition-colors duration-300"
             >
               → Falar no WhatsApp
             </a>
             <a
-              href="https://wa.me/5551997513675?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20TheOne%20e%20gostaria%20de%20saber%20mais%20informa%C3%A7%C3%B5es"
+              href="/formulario"
+              onClick={(e) => {
+                e.preventDefault();
+                navigateToPath('/formulario');
+              }}
               className="inline-block border border-[#050505] text-[#050505] font-black font-sans uppercase tracking-[0.2em] text-xs px-12 py-6 bg-white hover:bg-[#050505] hover:text-white transition-colors duration-300"
             >
               → Agendar um diagnóstico

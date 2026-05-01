@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 export default function PrimaryCTAButton({
   children,
   href,
+  onClick,
   className = '',
   style = {},
   background = '#FF5224',
@@ -27,6 +28,7 @@ export default function PrimaryCTAButton({
     <Comp
       ref={btnRef}
       href={href}
+      onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
