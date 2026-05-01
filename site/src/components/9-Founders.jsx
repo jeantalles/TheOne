@@ -25,20 +25,6 @@ const founders = [
     width: 1530,
     height: 2012,
   },
-  {
-    number: '02',
-    badge: 'Co-Fundador',
-    name: 'Pedro Xavier',
-    role: 'Estrategista de Marketing e Receita',
-    bullets: [
-      '7 anos de experiência em marketing, com atuação em copy, estratégia, liderança e growth.',
-      'Copy Sênior, Especialista e Head de Marketing na maior assessoria de marketing e vendas do país.',
-      'Hoje conduz diagnósticos e direcionamentos estratégicos para o crescimento de empresas.',
-    ],
-    img: '/images/Pedro.jpeg',
-    width: 1490,
-    height: 2042,
-  },
 ];
 
 export default function Founders() {
@@ -123,7 +109,7 @@ export default function Founders() {
                     }`}
                   >
                     {/* Badge */}
-                    <span className="inline-flex items-center text-[#FE6942] text-[11px] tracking-[0.25em] uppercase border border-[#FE6942]/30 px-4 py-1.5 rounded-full w-fit mb-8">
+                    <span className="inline-flex items-center bg-[#FE6942] text-white text-[13px] md:text-[14px] font-semibold tracking-[0.24em] uppercase border border-[#FE6942] px-6 py-2.5 rounded-full w-fit mb-8">
                       {f.badge}
                     </span>
 
@@ -141,11 +127,11 @@ export default function Founders() {
                     <div className="w-16 h-[1px] bg-white/10 mb-10" />
 
                     {/* Bullets */}
-                    <ul className="space-y-7 md:space-y-8">
+                    <ul className="space-y-6 md:space-y-7">
                       {f.bullets.map((b, j) => (
                         <li key={j} className="flex gap-4 items-start">
-                          <span className="text-[#FE6942] text-[1.2rem] md:text-[1.45rem] leading-none mt-1 shrink-0">→</span>
-                          <p className="text-[#E1E1E1] font-light text-[20px] md:text-[26px] leading-[1.52] max-w-[34ch]">
+                          <span className="text-[#FE6942] text-[1.05rem] md:text-[1.25rem] leading-none mt-1.5 shrink-0">→</span>
+                          <p className="text-[#E1E1E1] font-light text-[18px] md:text-[23px] leading-[1.5] max-w-[34ch]">
                             {b}
                           </p>
                         </li>

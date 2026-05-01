@@ -5,7 +5,6 @@ const navLinks = [
   { name: 'O Contexto',    id: 'o-problema'  },
   { name: 'Soluções',      id: 'a-theone'    },
   { name: 'Metodologia',   id: 'metodologia' },
-  { name: 'Como funciona', id: 'solucoes'    },
   { name: 'Cases',         id: 'cases'       },
 ];
 

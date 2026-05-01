@@ -15,7 +15,6 @@ import TheOne from './components/4-TheOne';
 import SolucoesTheOne from './components/4b-SolucoesTheOne';
 import Methodology from './components/5-Methodology';
 import Audience from './components/6-Audience';
-import Products from './components/7-Products';
 import { useConstrainedMotion, usePrefersReducedMotion } from './hooks/useMediaQuery';
 import { usePathname } from './utils/router';
 
@@ -319,7 +318,6 @@ export default function App() {
             <SolucoesTheOne />
             <Methodology />
             <Audience />
-            <Products />
             <Suspense fallback={null}>
               <Cases />
               <Founders />
@@ -329,7 +327,7 @@ export default function App() {
         )}
       </main>
       <footer className="border-t border-white/5 bg-[#212121] py-8 text-center">
-        <p className="text-white/38 text-xs font-mono font-bold tracking-[0.3em] uppercase">© 2026 THE ONE ASSESSORIA DE MARCA.</p>
+        <p className="text-white/38 text-xs font-mono font-bold tracking-[0.3em] uppercase">© 2026 THE ONE CONSULTORIA DE MARCA.</p>
       </footer>
 
       {/* Popup de seleção de persona — fixo, sem fundo, sem backdrop */}

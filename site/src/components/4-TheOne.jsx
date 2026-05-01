@@ -41,7 +41,7 @@ export default function TheOne() {
   }, []);
 
   const imageCard = (className = '') => (
-    <div className={`sol-right w-full md:w-[45%] relative h-[280px] sm:h-[380px] md:h-[650px] rounded-[32.7px] overflow-hidden border border-[#5B5B5B] bg-[#141414] shadow-2xl flex items-center justify-center group cursor-pointer ${className}`.trim()}>
+    <div className={`sol-right w-full relative h-[260px] sm:h-[340px] md:h-[410px] lg:h-[430px] rounded-[28px] overflow-hidden border border-[#5B5B5B] bg-[#141414] shadow-2xl flex items-center justify-center group cursor-pointer ${className}`.trim()}>
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(254,105,66,0.1)_0%,transparent_60%)] mix-blend-screen z-10 transition-opacity duration-700 group-hover:opacity-100 opacity-50"></div>
 
       <img
@@ -52,63 +52,67 @@ export default function TheOne() {
         loading="lazy"
         decoding="async"
         fetchPriority="low"
-        sizes="(min-width: 768px) 45vw, 100vw"
+        sizes="(min-width: 768px) 42vw, 100vw"
         className="w-full h-full object-cover opacity-90 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
       />
     </div>
   );
 
+  const bullets = [
+    {
+      title: '+8 Anos',
+      text: 'Construindo marcas que lideram, com especialistas formados nas maiores operações de marketing e comunicação do Brasil.',
+    },
+    {
+      title: 'Projetos Personalizados',
+      text: 'Nenhum negócio com ambição cabe numa solução industrializada.',
+    },
+    {
+      title: 'Projetos Selecionados',
+      text: 'Não atuamos com centenas, nem dezenas de clientes. Nós selecionamos empresas que têm visão de crescimento e propósito de gerar transformação para nos tornarmos aliados.',
+    },
+  ];
+
   return (
-    <section id="a-theone" ref={containerRef} className="bg-[#212121] text-white relative pt-20 md:pt-[164px] lg:pt-[200px] pb-12 md:pb-16 px-4 overflow-hidden">
-      <div className="w-[90%] md:w-[94%] max-w-[1600px] mx-auto flex flex-col md:flex-row items-center gap-10 md:gap-14 relative z-10">
+    <section id="a-theone" ref={containerRef} className="bg-[#212121] text-white relative pt-20 md:pt-[148px] lg:pt-[176px] pb-14 md:pb-20 px-4 overflow-hidden">
+      <div className="w-[90%] md:w-[94%] max-w-[1600px] mx-auto flex flex-col gap-12 md:gap-16 relative z-10">
 
-        {/* Esquerda: Proposta de Valor TheOne */}
-        <div className="sol-left w-full md:w-[55%] flex flex-col items-start text-left gap-8">
-          <h2 className="font-editorial font-normal leading-[1.05] text-white" style={{ fontSize: style.titulo }}>
-            Vimos o que acontece quando marketing vira linha de produção e <span className="text-gradient">nos recusamos a ser mais um desse modelo.</span>
-          </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,0.82fr)] items-start gap-10 md:gap-14">
+          {/* Esquerda: Proposta de Valor TheOne */}
+          <div className="sol-left w-full flex flex-col items-start text-left gap-8">
+            <h2 className="font-editorial font-normal text-white max-w-[850px]" style={{ fontSize: style.titulo, lineHeight: 1.12 }}>
+              Existimos para construir marcas TheOne,{' '}
+              <span className="text-gradient">a escolha número um.</span>
+            </h2>
 
-          {imageCard('md:hidden')}
-
-          <div
-            className="flex flex-col gap-6 font-halyard font-light text-[#C7C7C7] w-full text-[clamp(1.24rem,5.15vw,1.42rem)] md:text-[20px]"
-            style={{ lineHeight: style.alturaLinhaTexto }}
-          >
-            <p className="max-w-[620px] relative -top-px">
-              {"A TheOne é a consultoria de marca que nasceu para construir marcas TheOne™: a escolha número um na mente do seu público.".split(' ').map((word, i) => (
-                <span key={`second-${i}`} className="conclusion-highlight-word inline-block mr-[0.2em] whitespace-nowrap">
-                  {word}
-                </span>
-              ))}
-            </p>
-            <p className="max-w-[620px] relative -top-px">
-              Não entregamos um PDF e sumimos. Estruturamos como você se posiciona nos principais canais para você se tornar a opção inevitável no seu mercado. Seremos seus aliados na efetivação da estratégia para consolidar o seu negócio como o número um do seu mercado.
-            </p>
-            <ul className="pt-4 md:pt-6 flex flex-col gap-y-4 md:gap-y-5 text-left text-white font-light w-full text-[clamp(1.14rem,4.75vw,1.3rem)] md:text-[22px]">
-              <li className="flex items-start gap-3 min-w-0">
-                <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
-                <span>
-                  São +8 anos construindo marcas que lideram, com profissionais formados nas maiores operações de marketing e comunicação do Brasil.
-                </span>
-              </li>
-              <li className="flex items-start gap-3 min-w-0">
-                <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
-                <span>
-                  Nossos projetos são personalizados. Nenhum negócio com ambição cabe numa solução industrializada.
-                </span>
-              </li>
-              <li className="flex items-start gap-3 min-w-0">
-                <span className="mt-[0.55em] h-2 w-2 flex-shrink-0 rounded-full bg-[#FE6942]" />
-                <span>
-                  Não atuamos com centenas, nem dezenas de clientes. Nós selecionamos empresas que têm visão de crescimento e propósito de gerar transformação para nos tornarmos aliados.
-                </span>
-              </li>
-            </ul>
+            <div
+              className="flex flex-col gap-6 font-halyard font-light text-[#C7C7C7] w-full text-[clamp(1.24rem,5.15vw,1.42rem)] md:text-[20px]"
+              style={{ lineHeight: style.alturaLinhaTexto }}
+            >
+              <p className="max-w-[720px] relative -top-px">
+                Vimos o que acontece quando marketing vira linha de produção e nos recusamos a ser mais um desse modelo.
+              </p>
+              <p className="max-w-[760px] relative -top-px">
+                Não entregamos um PDF e sumimos. Estruturamos como você se posiciona nos principais canais para você se tornar a opção inevitável no seu mercado. Seremos seus aliados na efetivação da estratégia para consolidar o seu negócio como o número um do seu mercado.
+              </p>
+            </div>
           </div>
+
+          {imageCard()}
         </div>
 
-        {imageCard('hidden md:flex')}
-
+        <ul className="grid grid-cols-1 md:grid-cols-3 gap-9 md:gap-12 lg:gap-20 text-left w-full">
+          {bullets.map(item => (
+            <li key={item.title} className="theone-proof-item max-w-[430px]">
+              <strong className="block font-halyard font-medium text-[#FE6942] text-[clamp(1.42rem,5.2vw,1.75rem)] md:text-[26px] leading-none tracking-[-0.01em]">
+                {item.title}
+              </strong>
+              <span className="mt-4 block font-halyard font-light text-[#A8A8A8] text-[clamp(1rem,3.9vw,1.12rem)] md:text-[18px] leading-[1.5]">
+                {item.text}
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

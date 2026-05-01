@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "theone-site",
-      "runtimeExecutable": "/usr/local/bin/node",
-      "runtimeArgs": ["/Users/jeantalles/The One/site/node_modules/.bin/vite"],
+      "runtimeExecutable": "/usr/local/bin/npm",
+      "runtimeArgs": ["--prefix", "/Users/jeantalles/The One/site", "run", "dev"],
       "port": 5173
     },
     {
