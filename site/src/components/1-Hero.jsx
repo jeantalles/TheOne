@@ -302,7 +302,10 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
         const wordColor = blendRgb([21, 19, 17], [255, 255, 255], Math.min(1, takeover * 2.2));
 
         word.style.opacity = opacity.toFixed(3);
-        word.style.filter = 'none';
+        const initialBlur = index === 1 ? 1.8 : index >= 2 ? 7 : 0;
+        const wordBlur = lerp(initialBlur, 0, revealIn);
+
+        word.style.filter = wordBlur > 0.05 ? `blur(${wordBlur.toFixed(2)}px)` : 'none';
         word.style.transform = translateY > 0.1 ? `translate3d(0, ${translateY.toFixed(1)}px, 0)` : 'none';
         word.style.color = `rgb(${wordColor[0]}, ${wordColor[1]}, ${wordColor[2]})`;
       });
@@ -608,7 +611,7 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
             )}
             <h2
             className="max-w-[900px] text-center font-sans font-normal leading-[1.1] text-[#151311]"
-            style={{ fontSize: 'clamp(2.25rem, 4.2vw, 3.8rem)', letterSpacing: '-0.02em' }}
+            style={{ fontSize: 'clamp(2.5rem, 4.65vw, 4.2rem)', letterSpacing: '-0.02em' }}
           >
             {INTRO_WORDS.map((word, index) => (
               <span
@@ -619,7 +622,7 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
                 className="inline-block"
                 style={{
                   opacity: introPhrases.length > 0 ? 0 : 0.85,
-                  filter: 'none',
+                  filter: index === 1 ? 'blur(1.8px)' : index >= 2 ? 'blur(7px)' : 'none',
                   transform: 'translate3d(0, 6px, 0)',
                   willChange: 'transform, opacity',
                   marginRight: index === INTRO_WORDS.length - 1 ? 0 : '0.16em',
@@ -715,8 +718,8 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
             style={{ willChange: 'opacity', paddingBottom: 'clamp(2.5rem, 7vh, 4.5rem)' }}
           >
             <span
-              className="font-editorial font-normal text-[#151311]/50"
-              style={{ fontSize: '1.325rem', letterSpacing: '0.1em' }}
+              className="font-editorial font-normal"
+              style={{ color: '#FF5224', fontSize: '1.325rem', letterSpacing: '0.1em' }}
             >
               Role para ver
             </span>
@@ -726,7 +729,7 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
               viewBox="0 0 12 18"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              style={{ animation: 'scrollArrowBounce 1.8s ease-in-out infinite', color: 'rgba(21,19,17,0.4)' }}
+              style={{ animation: 'scrollArrowBounce 1.8s ease-in-out infinite', color: '#FF5224' }}
             >
               <path d="M6 1L6 17M6 17L1.5 11.5M6 17L10.5 11.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
