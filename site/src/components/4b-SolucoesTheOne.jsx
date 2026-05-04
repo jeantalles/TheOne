@@ -304,7 +304,7 @@ const GROUP_TITLE_STYLE = {
   borderTop: '1px solid rgba(255,255,255,0.08)',
 };
 
-export default function ProdutosTheOne() {
+export default function ProdutosTheOne({ showAgentOneBanner = true }) {
   const sectionRef = useRef(null);
 
   useEffect(() => {
@@ -407,9 +407,11 @@ export default function ProdutosTheOne() {
         {/* Products list */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16, marginTop: 0 }}>
 
-          <div className="agentone-banner-wrap">
-            <AgentOneBanner />
-          </div>
+          {showAgentOneBanner && (
+            <div className="agentone-banner-wrap">
+              <AgentOneBanner />
+            </div>
+          )}
 
           <h3 className="product-group-title" style={GROUP_TITLE_STYLE}>Para negócios visionários</h3>
 

@@ -96,7 +96,7 @@ export default function TheOne() {
                 Estruturamos como você se posiciona nos principais canais para você se tornar a opção inevitável no seu mercado. Seremos seus aliados na efetivação da estratégia para consolidar o seu negócio como o número um do seu mercado.
               </p>
               <p className="max-w-[760px] relative -top-px text-white">
-                Não entregamos um PDF e sumimos. Nosso trabalho de construção de marca é orientado para crescer os principais canais orgânicos da empresa, com foco em expansão e geração de receita.
+                Não entregamos um PDF e sumimos. Nosso trabalho é orientado para construir uma fundação sólida de estratégia de marca com foco em expansão e geração de receita, que permita crescer os principais canais orgânicos da empresa.
               </p>
             </div>
           </div>
