@@ -769,8 +769,30 @@ function Investimento() {
           </div>
         </div>
 
+        <div className="inv-block bg-[#F8F8F8] rounded-2xl px-8 md:px-10 py-7 border border-black/[0.08]">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-5">
+            {[
+              ['Validade da proposta', '5 dias corridos'],
+              ['Disponibilidade de início', '08/05 - Sexta'],
+              ['Vagas disponíveis para maio', '2'],
+            ].map(([label, value]) => (
+              <div key={label}>
+                <div className="font-halyard text-[12px] tracking-[0.18em] uppercase text-[#FE6942] mb-1.5">
+                  {label}
+                </div>
+                <div className="font-halyard font-medium text-[20px] md:text-[22px] leading-[1.15] text-[#181412]">
+                  {value}
+                </div>
+              </div>
+            ))}
+          </div>
+          <p className="font-halyard font-light text-[18px] md:text-[19px] leading-[1.45] text-[#181412]/80">
+            Para garantir qualidade na entrega, trabalhamos com um número limitado de projetos como esse de forma simultânea. A confirmação nesta reunião já permite reservarmos a agenda e iniciarmos o planejamento do projeto.
+          </p>
+        </div>
+
         {/* Formas e meios de pagamento */}
-        <div className="inv-block bg-[#F8F8F8] rounded-2xl px-8 md:px-10 py-8 border border-black/[0.08] flex flex-col md:flex-row gap-8 md:gap-16">
+        <div className="inv-block mt-5 bg-[#F8F8F8] rounded-2xl px-8 md:px-10 py-8 border border-black/[0.08] flex flex-col md:flex-row gap-8 md:gap-16">
           <div className="flex-1">
             <h4 className="font-halyard font-medium text-[#181412] text-[15px] tracking-[0.12em] uppercase mb-5">
               Formas de pagamento
@@ -797,12 +819,6 @@ function Investimento() {
               ))}
             </ul>
           </div>
-        </div>
-
-        <div className="inv-block mt-5 bg-[#F8F8F8] rounded-2xl px-8 md:px-10 py-6 border border-black/[0.08]">
-          <p className="font-halyard font-light text-[18px] md:text-[19px] text-[#181412]">
-            Validade da proposta: <strong>5 dias corridos</strong>.
-          </p>
         </div>
 
       </div>
