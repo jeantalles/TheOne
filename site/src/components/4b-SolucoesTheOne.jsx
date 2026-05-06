@@ -421,8 +421,8 @@ export default function ProdutosTheOne({ showAgentOneBanner = true }) {
             imageAlt="TheOne Foundation"
             name="TheOne Foundation"
             subtitle="A fundação para você se tornar número um."
-            description="Receba diagnóstico de mercado, estratégia de marca e posicionamento, narrativa e identidade visual."
-            bullets={['Construa uma marca sólida', 'Se diferencie', 'Gere mais valor, eleve seu ticket', 'Otimize sua comunicação', 'Reduza custos de mídia paga']}
+            description="Receba diagnóstico de mercado, estratégia de marca e posicionamento, narrativa, identidade visual e um agente de IA especializado no posicionamento, comunicação e produção de conteúdo da sua marca."
+            bullets={['Construa uma marca sólida', 'Se diferencie', 'Gere mais valor, eleve seu ticket', 'Otimize sua comunicação', 'Reduza custos de mídia paga', 'Mais alcance e engajamento na produção de conteúdo']}
             forWhomList={[
               'Empresas que estão expandindo ou querendo escalar, mas percebem que a marca e o posicionamento estão limitando seu crescimento.',
               'Novos negócios que querem começar com uma base sólida.',

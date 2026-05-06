@@ -17,9 +17,9 @@ Consultoria de marca fundada por Jean Talles. Está em MVP, ajustando posicionam
 ### 1. TheOne Foundation
 **O que é:** A base estratégica para se tornar número um.
 **Entregáveis:** Diagnóstico de mercado, estratégia de marca e posicionamento, narrativa e identidade visual.
-**Descrição:** A fundação para você se tornar número um. Receba diagnóstico de mercado, estratégia de marca e posicionamento, narrativa e identidade visual.
+**Descrição:** A fundação para você se tornar número um. Receba diagnóstico de mercado, estratégia de marca e posicionamento, narrativa, identidade visual e um agente de IA especializado no posicionamento, comunicação e produção de conteúdo da sua marca.
 **Para quem é indicado:** Empresas que estão expandindo ou querendo escalar, mas percebem que a marca e o posicionamento estão limitando seu crescimento.
-**Bullets:** Construa uma marca sólida / Se diferencie / Gere mais valor, eleve seu ticket / Otimize sua comunicação / Reduza custos de mídia paga
+**Bullets:** Construa uma marca sólida / Se diferencie / Gere mais valor, eleve seu ticket / Otimize sua comunicação / Reduza custos de mídia paga / Mais alcance e engajamento na produção de conteúdo
 
 ---
 
