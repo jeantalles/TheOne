@@ -61,7 +61,7 @@ function AgentOneLeadForm({ source, compact = false, onSuccess }) {
   ];
 
   return (
-    <form onSubmit={handleSubmit} className="flex w-full flex-col gap-3">
+    <form onSubmit={handleSubmit} className="flex w-full flex-col gap-2.5">
       {!compact && (
         <p className="font-halyard text-[12px] font-semibold uppercase tracking-[0.2em] text-white/58">
           Quero ser avisado quando lançar
@@ -77,14 +77,14 @@ function AgentOneLeadForm({ source, compact = false, onSuccess }) {
           onChange={setField(field)}
           required
           disabled={status === 'loading'}
-          className="h-[50px] w-full rounded-[12px] border border-white/[0.09] bg-white/[0.045] px-4 font-halyard text-[15px] text-white outline-none transition-[border-color,background,opacity] duration-200 placeholder:text-white/34 focus:border-[#FE6942]/45 focus:bg-white/[0.065] disabled:opacity-60"
+          className="h-[46px] w-full rounded-[11px] border border-white/[0.09] bg-white/[0.045] px-4 font-halyard text-[15px] text-white outline-none transition-[border-color,background,opacity] duration-200 placeholder:text-white/34 focus:border-[#FE6942]/45 focus:bg-white/[0.065] disabled:opacity-60"
         />
       ))}
 
       <button
         type="submit"
         disabled={status === 'loading'}
-        className="mt-1 inline-flex h-[52px] w-full items-center justify-center gap-2 rounded-[12px] font-halyard text-[15px] font-semibold transition-[transform,opacity,background] duration-150 active:scale-[0.98] disabled:cursor-wait disabled:opacity-80"
+        className="mt-1 inline-flex h-[48px] w-full items-center justify-center gap-2 rounded-[11px] font-halyard text-[15px] font-semibold transition-[transform,opacity,background] duration-150 active:scale-[0.98] disabled:cursor-wait disabled:opacity-80"
         style={{
           color: status === 'success' ? '#0A0A0A' : '#15110F',
           background: status === 'success'
@@ -142,9 +142,9 @@ function AgentOneHero({ leadsCount, onLeadSuccess }) {
   }, []);
 
   return (
-    <section ref={heroRef} className="relative bg-[#151515] px-3 pb-8 pt-[92px] md:px-6 md:pb-10 md:pt-[104px]">
+    <section ref={heroRef} className="relative flex min-h-svh items-center bg-[#151515] px-3 pb-8 pt-[92px] md:px-6 md:pb-10 md:pt-[104px]">
       <div
-        className="relative mx-auto min-h-[calc(100svh-132px)] w-full max-w-[1760px] overflow-hidden rounded-[28px] border border-white/[0.08] md:min-h-[calc(100vh-148px)] md:rounded-[36px]"
+        className="relative mx-auto w-full max-w-[1560px] overflow-hidden rounded-[28px] border border-white/[0.08] md:rounded-[36px]"
         style={{ boxShadow: '0 26px 90px rgba(0,0,0,0.34), inset 0 1px 0 rgba(255,255,255,0.08)' }}
       >
         <div className="pointer-events-none absolute inset-0">
@@ -160,22 +160,22 @@ function AgentOneHero({ leadsCount, onLeadSuccess }) {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_12%,rgba(255,235,225,0.18),transparent_31%),linear-gradient(120deg,rgba(0,0,0,0.72)_0%,rgba(0,0,0,0.3)_48%,rgba(0,0,0,0.76)_100%)]" />
         </div>
 
-        <div className="relative z-10 grid min-h-[inherit] grid-cols-1 items-stretch lg:grid-cols-[minmax(0,1.08fr)_minmax(380px,0.72fr)]">
-          <div className="flex flex-col justify-between px-6 py-9 md:px-12 md:py-12 lg:px-16 lg:py-16">
+        <div className="relative z-10 grid grid-cols-1 items-stretch lg:grid-cols-[minmax(0,1.12fr)_minmax(360px,0.64fr)]">
+          <div className="flex flex-col justify-start px-6 py-9 md:px-12 md:py-12 lg:px-14 lg:py-14">
             <div className="max-w-[850px]">
               <span className="agentone-hero-reveal mb-8 inline-flex w-fit items-center gap-2 rounded-full border border-[#FE6942] bg-[#FE6942] px-5 py-2 font-halyard text-[11px] font-semibold uppercase tracking-[0.2em] text-white md:mb-10">
                 <span className="h-1.5 w-1.5 rounded-full bg-white/75" />
                 Em breve
               </span>
 
-              <div className="agentone-hero-reveal mb-7 flex items-center gap-4 md:gap-5">
-                <img src="/favicon.png" alt="" className="h-[48px] w-[48px] object-contain md:h-[68px] md:w-[68px]" />
-                <h1 className="font-editorial text-[clamp(4.2rem,10vw,9.6rem)] font-normal leading-[0.84] tracking-[-0.04em] text-white">
+              <div className="agentone-hero-reveal mb-7 flex items-center gap-3 md:gap-4">
+                <img src="/favicon.png" alt="" className="h-[46px] w-[46px] object-contain md:h-[58px] md:w-[58px]" />
+                <h1 className="font-editorial text-[clamp(2.6rem,4.85vw,4.85rem)] font-normal leading-[0.88] tracking-normal text-white">
                   AgentOne
                 </h1>
               </div>
 
-              <p className="agentone-hero-reveal max-w-[13ch] font-editorial text-[clamp(2.35rem,5.35vw,6.1rem)] font-normal leading-[0.96] tracking-[-0.035em] text-white">
+              <p className="agentone-hero-reveal max-w-[18ch] font-halyard text-[clamp(2.25rem,4.4vw,4.85rem)] font-normal leading-[0.98] tracking-normal text-white">
                 Seu agente de IA para posicionamento de marca.
               </p>
 
@@ -184,22 +184,22 @@ function AgentOneHero({ leadsCount, onLeadSuccess }) {
               </p>
             </div>
 
-            <div className="agentone-hero-reveal mt-10 max-w-[620px] md:mt-14">
+            <div className="agentone-hero-reveal mt-8 max-w-[620px] md:mt-10">
               <WaitlistProgress count={leadsCount} />
             </div>
           </div>
 
-          <div className="flex items-center border-t border-white/[0.08] bg-black/24 px-6 py-8 backdrop-blur-[2px] md:px-10 lg:border-l lg:border-t-0 lg:px-12">
-            <div className="agentone-hero-reveal w-full rounded-[22px] border border-white/[0.09] bg-[#080808]/72 p-5 shadow-2xl md:p-7">
-              <div className="mb-7">
-                <div className="mb-4 inline-flex h-10 items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-4 font-halyard text-[13px] text-white/62">
+          <div className="flex items-center justify-center border-t border-white/[0.08] bg-black/20 px-6 py-7 backdrop-blur-[2px] md:px-10 lg:border-l lg:border-t-0 lg:px-8 lg:py-10">
+            <div className="agentone-hero-reveal w-full max-w-[480px] rounded-[20px] border border-white/[0.09] bg-[#080808]/70 p-5 shadow-2xl lg:max-w-[460px]">
+              <div className="mb-5">
+                <div className="mb-4 inline-flex h-9 items-center gap-2 rounded-full border border-white/10 bg-white/[0.05] px-4 font-halyard text-[12px] text-white/62">
                   <BadgeCheck size={16} strokeWidth={1.8} className="text-[#FE6942]" />
                   Lista limitada de lançamento
                 </div>
-                <h2 className="font-editorial text-[clamp(2.1rem,3.6vw,3.7rem)] leading-[1] tracking-[-0.03em] text-white">
+                <h2 className="font-editorial text-[2rem] leading-[1] tracking-normal text-white md:text-[2.65rem] xl:text-[3.05rem]">
                   Entre antes da primeira versão pública.
                 </h2>
-                <p className="mt-4 max-w-[36ch] font-halyard text-[16px] font-light leading-[1.55] text-white/48">
+                <p className="mt-4 max-w-[34ch] font-halyard text-[15px] font-light leading-[1.5] text-white/48">
                   Vamos chamar os primeiros interessados para testar, dar feedback e receber prioridade no lançamento.
                 </p>
               </div>

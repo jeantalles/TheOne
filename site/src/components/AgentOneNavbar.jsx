@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { gsap } from 'gsap';
 import { navigateToPath } from '../utils/router';
 
 const navLinks = [
-  { name: 'Para quem', id: 'agentone-para-quem' },
-  { name: 'Sobre', id: 'a-theone' },
-  { name: 'Produtos', id: 'produtos' },
-  { name: 'Lista', id: 'agentone-lista' },
+  { name: 'Home', key: 'home', path: '/' },
+  { name: 'AgentOne', key: 'agentone', path: '/agent-one' },
 ];
 
 function scrollToSection(id) {
@@ -51,43 +49,12 @@ function useNavbarTheme() {
 export default function AgentOneNavbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [hovered, setHovered] = useState(null);
-  const [active, setActive] = useState(null);
   const { navRef, useDarkLogo } = useNavbarTheme();
   const pillRef = useRef(null);
   const linksRef = useRef({});
   const menuRef = useRef(null);
+  const active = 'agentone';
   const pillTarget = hovered ?? active;
-
-  useEffect(() => {
-    let rafId = null;
-
-    const detectActive = () => {
-      if (rafId) return;
-      rafId = requestAnimationFrame(() => {
-        rafId = null;
-        const threshold = window.innerHeight * 0.44;
-        let current = null;
-
-        for (const { id } of navLinks) {
-          const el = document.getElementById(id);
-          if (!el) continue;
-          if (el.getBoundingClientRect().top <= threshold) current = id;
-        }
-
-        setActive(current);
-      });
-    };
-
-    window.addEventListener('scroll', detectActive, { passive: true });
-    window.addEventListener('resize', detectActive);
-    detectActive();
-
-    return () => {
-      window.removeEventListener('scroll', detectActive);
-      window.removeEventListener('resize', detectActive);
-      if (rafId) cancelAnimationFrame(rafId);
-    };
-  }, []);
 
   useEffect(() => {
     const target = pillTarget && linksRef.current[pillTarget];
@@ -195,24 +162,24 @@ export default function AgentOneNavbar() {
           />
           {navLinks.map((link) => (
             <li
-              key={link.id}
+              key={link.key}
               className="relative z-10"
-              onMouseEnter={() => setHovered(link.id)}
+              onMouseEnter={() => setHovered(link.key)}
               onMouseLeave={() => setHovered(null)}
             >
               <a
-                ref={(el) => { linksRef.current[link.id] = el; }}
-                href={`#${link.id}`}
+                ref={(el) => { linksRef.current[link.key] = el; }}
+                href={link.path}
                 onClick={(event) => {
                   event.preventDefault();
-                  scrollToSection(link.id);
+                  if (link.key === 'home') navigateToPath('/');
                 }}
                 className="block font-halyard transition-colors duration-150"
                 style={{
                   fontSize: 17,
-                  padding: '9px 20px',
+                  padding: '9px 24px',
                   borderRadius: 999,
-                  color: pillTarget === link.id ? navTextActive : navText,
+                  color: pillTarget === link.key ? navTextActive : navText,
                 }}
               >
                 {link.name}
@@ -222,22 +189,6 @@ export default function AgentOneNavbar() {
         </ul>
 
         <div className="ml-auto hidden items-center gap-3 md:flex">
-          <button
-            type="button"
-            onClick={() => navigateToPath('/')}
-            className="inline-flex items-center gap-2 rounded-full font-halyard transition-transform duration-150 active:scale-[0.97]"
-            style={{
-              height: 46,
-              padding: '0 18px',
-              border: useDarkLogo ? '1px solid rgba(24,20,18,0.12)' : '1px solid rgba(255,255,255,0.16)',
-              color: useDarkLogo ? 'rgba(24,20,18,0.78)' : 'rgba(255,255,255,0.74)',
-              background: useDarkLogo ? 'rgba(255,255,255,0.42)' : 'rgba(255,255,255,0.06)',
-              fontSize: 16,
-            }}
-          >
-            Site TheOne
-            <ArrowUpRight size={16} strokeWidth={1.8} />
-          </button>
           <button
             type="button"
             onClick={() => scrollToSection('agentone-lista')}
@@ -285,13 +236,14 @@ export default function AgentOneNavbar() {
         <div className="mt-8 flex flex-col gap-2">
           {navLinks.map((link) => (
             <a
-              key={link.id}
-              href={`#${link.id}`}
-              className="agentone-mobile-link border-b border-white/10 py-4 font-halyard text-[34px] leading-none text-white/60"
+              key={link.key}
+              href={link.path}
+              className="agentone-mobile-link border-b border-white/10 py-4 font-halyard text-[34px] leading-none"
+              style={{ color: link.key === active ? '#fff' : 'rgba(255,255,255,0.6)' }}
               onClick={(event) => {
                 event.preventDefault();
                 setMenuOpen(false);
-                scrollToSection(link.id);
+                if (link.key === 'home') navigateToPath('/');
               }}
             >
               {link.name}
@@ -303,11 +255,10 @@ export default function AgentOneNavbar() {
           className="agentone-mobile-link mt-10 inline-flex w-fit items-center gap-2 rounded-full border border-white/15 px-5 py-3 font-halyard text-[18px] text-white/78 active:scale-[0.97]"
           onClick={() => {
             setMenuOpen(false);
-            navigateToPath('/');
+            scrollToSection('agentone-lista');
           }}
         >
-          Site TheOne
-          <ArrowUpRight size={17} strokeWidth={1.8} />
+          Entrar na lista
         </button>
       </div>
     </>
