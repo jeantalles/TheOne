@@ -163,8 +163,8 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
 
     if (shouldUseStaticScene) {
       updateNavbarVisibility(true);
-      stickyRef.current?.setAttribute('data-navbar-theme', 'light');
-      if (stickyRef.current) stickyRef.current.style.backgroundColor = 'rgb(245, 240, 236)';
+      stickyRef.current?.setAttribute('data-navbar-theme', 'dark');
+      if (stickyRef.current) stickyRef.current.style.background = 'linear-gradient(to right, rgb(255, 182, 163), rgb(255, 84, 39))';
       if (stickyRef.current) stickyRef.current.style.clipPath = 'none';
       if (glowRef.current) glowRef.current.style.opacity = '0.18';
       if (grainRef.current) grainRef.current.style.opacity = '0.05';
