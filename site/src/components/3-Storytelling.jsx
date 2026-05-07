@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useMediaQuery, usePrefersReducedMotion } from '../hooks/useMediaQuery';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -173,15 +173,14 @@ function renderCompactTitle(title) {
 export default function Storytelling({ persona }) {
   const containerRef = useRef(null);
   const style = STORYTELLING_CONFIG.fontSize;
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const isCompactLayout = useMediaQuery('(max-width: 1023px)') || prefersReducedMotion;
+  const isCompactLayout = useMediaQuery('(max-width: 1023px)');
   const stories = STORIES[persona] || STORIES['empresario'];
 
   // ─── Desktop: pin-por-painel (arquitetura original do commit 432136a) ───────
   // Cada painel tem seu próprio ScrollTrigger + pin independente.
   // end '+=130%' por painel normal, '+=165%' para o painel com swapParagraphs.
   useEffect(() => {
-    if (isCompactLayout || prefersReducedMotion) {
+    if (isCompactLayout) {
       return undefined;
     }
 
@@ -271,11 +270,11 @@ export default function Storytelling({ persona }) {
     }, containerRef);
 
     return () => ctx.revert();
-  }, [isCompactLayout, prefersReducedMotion, stories]);
+  }, [isCompactLayout, stories]);
 
   // ─── Mobile: simple per-panel scroll reveal (no pin) ──────────────────────
   useEffect(() => {
-    if (!isCompactLayout || prefersReducedMotion) {
+    if (!isCompactLayout) {
       return undefined;
     }
 
@@ -314,7 +313,7 @@ export default function Storytelling({ persona }) {
     }, containerRef);
 
     return () => ctx.revert();
-  }, [isCompactLayout, prefersReducedMotion, stories]);
+  }, [isCompactLayout, stories]);
 
 
 

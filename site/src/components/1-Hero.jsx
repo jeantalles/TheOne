@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useConstrainedMotion, useMediaQuery, usePrefersReducedMotion } from '../hooks/useMediaQuery';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -113,10 +113,8 @@ function buildParticles(width, height) {
 }
 
 export default function Hero({ introPhrases = [], showLogo = false }) {
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const prefersConstrainedMotion = useConstrainedMotion();
   const isMobileViewport = useMediaQuery('(max-width: 767px)');
-  const shouldUseStaticScene = prefersReducedMotion || prefersConstrainedMotion;
+  const shouldUseStaticScene = false;
   const sectionRef = useRef(null);
   const stickyRef = useRef(null);
   const glowRef = useRef(null);
