@@ -70,7 +70,7 @@ const STORIES = {
       title: 'Você sabe o que precisa mudar pra atingir a visão da empresa que atua.',
       titleWidth: '820px',
       titleSizeMobile: 'clamp(2.32rem, 8vw, 3.38rem)',
-      content: 'Você está à frente de uma empresa com produto bom e visão de crescimento, mas sem uma marca bem estruturada. A mídia paga está ficando cada vez mais caro e não podem depender disso. O mercado está cheio de gente produzindo conteúdo, a IA está tornando tudo mais acessível e genérico e a atenção das pessoas está cada vez mais escassa.\n\nSente que o mercado não enxerga o valor que a empresa entrega e que cada área tem uma visão diferente da marca, porque o posicionamento não está 100% claro pra ninguém. Você não pode só entregar resultado no fim do mês. Você tem a missão de escalar a empresa para ser a referência no mercado em que atua.',
+      content: 'Você está à frente de uma empresa com produto bom e visão de crescimento, mas sem uma marca bem estruturada. [WHITE]A mídia paga está ficando cada vez mais caro e não podem depender disso.[/WHITE] O mercado está cheio de gente produzindo conteúdo, a IA está tornando tudo mais acessível e genérico e a atenção das pessoas está cada vez mais escassa.\n\nSente que o mercado não enxerga o valor que a empresa entrega e que cada área tem uma visão diferente da marca, porque o posicionamento não está 100% claro pra ninguém. [WHITE]Você não pode só entregar resultado no fim do mês. Você tem a missão de escalar a empresa para ser a referência no mercado em que atua.[/WHITE]',
     },
     PANEL_03,
     PANEL_04,
