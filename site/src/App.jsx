@@ -27,6 +27,7 @@ const CaseDetailPage = lazy(() => import('./components/cases/CaseDetailPage'));
 const PropostaPage = lazy(() => import('./components/PropostaPage'));
 const PropostaLacqua = lazy(() => import('./components/PropostaLacqua'));
 const PropostaEdifica = lazy(() => import('./components/PropostaEdifica'));
+const PropostaEike = lazy(() => import('./components/PropostaEike'));
 const QualificacaoPage = lazy(() => import('./components/QualificacaoPage'));
 const AgentOnePage = lazy(() => import('./components/AgentOnePage'));
 
@@ -64,6 +65,7 @@ export default function App() {
   const isPropostaRoute = pathname === '/proposta' || pathname === '/proposta/';
   const isPropostaLacqua = pathname === '/lacqua-purificadores' || pathname === '/lacqua-purificadores/';
   const isPropostaEdifica = pathname === '/edifica' || pathname === '/edifica/';
+  const isPropostaEike = pathname === '/eike' || pathname === '/eike/';
   const isAgentOne = ['/agent-one', '/agent-one/', '/agentone', '/agentone/'].includes(pathname);
   const isDesignSystem = pathname === '/design-system';
   const isQualificacao = ['/formulario', '/formulario/', '/qualificacao', '/qualificacao/'].includes(pathname);
@@ -312,6 +314,10 @@ export default function App() {
 
   if (isPropostaEdifica) {
     return <Suspense fallback={null}><PropostaEdifica /></Suspense>;
+  }
+
+  if (isPropostaEike) {
+    return <Suspense fallback={null}><PropostaEike /></Suspense>;
   }
 
   if (caseSlug) {
