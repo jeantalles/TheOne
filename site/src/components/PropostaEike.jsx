@@ -445,49 +445,55 @@ function Entregaveis() {
         <div className="flex flex-col gap-6 md:gap-7">
 
           {/* Card 1 — Estratégia */}
-          <div className={`${cardClass} min-h-[460px] md:min-h-[420px]`}>
-            <div className="relative z-10 px-8 md:px-16 pt-10 md:pt-16 pb-8 md:pb-14 max-w-[470px]">
-              <h3 className="font-halyard font-medium text-[#050505] text-[31px] md:text-[38px] leading-[1.08] mb-14 md:mb-16">
-                Estratégia de<br className="hidden md:block" />
-                Posicionamento e<br className="hidden md:block" />
-                Marca +Guia
+          <div className={`${cardClass} flex flex-col md:flex-row min-h-[480px] md:min-h-[560px]`}>
+            <div className="flex-1 px-8 md:px-14 pt-12 md:pt-16 pb-8 md:pb-16 flex flex-col justify-between">
+              <h3 className="font-halyard font-medium text-[#050505] text-[32px] md:text-[40px] leading-[1.08]">
+                Estratégia de<br />
+                Posicionamento e<br />
+                Marca + Guia
               </h3>
-              <p className="font-halyard font-normal text-[#181412] text-[17px] md:text-[18px] leading-[1.24] max-w-[360px] mb-7">
-                Um documento com mais de 80 slides com a fundação estratégica e caminho para sua marca se tornar TheOne
-              </p>
-              <p className="font-halyard font-normal text-[#181412] text-[16px] md:text-[17px] mb-2.5">Também inclui:</p>
-              <ul className="space-y-1.5">
-                <ArrowItem>Estratégia de Canais</ArrowItem>
-                <ArrowItem>Estratégia de Produção de Conteúdo</ArrowItem>
-              </ul>
+              <div>
+                <p className="font-halyard font-normal text-[#181412] text-[18px] md:text-[19px] leading-[1.35] max-w-[360px] mb-6">
+                  Um documento com mais de 80 slides com a fundação estratégica e caminho para sua marca se tornar TheOne
+                </p>
+                <p className="font-halyard font-normal text-[#181412] text-[15px] md:text-[16px] mb-2.5">Também inclui:</p>
+                <ul className="space-y-1.5">
+                  <ArrowItem>Estratégia de Canais</ArrowItem>
+                  <ArrowItem>Estratégia de Produção de Conteúdo</ArrowItem>
+                </ul>
+              </div>
             </div>
-            <img
-              src="/images/guia-de-estrategia.png"
-              alt="Guia de Estratégia de Posicionamento e Marca"
-              className="relative md:absolute z-0 w-[260px] md:w-[440px] lg:w-[480px] mx-auto md:mx-0 md:right-[-24px] lg:right-[-18px] md:top-7 lg:top-2 -mt-2 md:mt-0"
-            />
+            <div className="hidden md:flex shrink-0 self-center items-center justify-center px-8 md:px-12">
+              <img
+                src="/images/guia-de-estrategia.png"
+                alt="Guia de Estratégia de Posicionamento e Marca"
+                className="w-[280px] md:w-[380px] lg:w-[460px] object-contain"
+              />
+            </div>
           </div>
 
           {/* Card 2 — Naming */}
-          <div className={`${cardClass} min-h-[580px] md:min-h-[560px]`}>
-            <div className="relative z-10 px-8 md:px-16 pt-11 md:pt-16 pb-8 md:pb-14 max-w-[650px]">
-              <h3 className="font-halyard font-medium text-[#050505] text-[31px] md:text-[38px] leading-[1.08] mb-3">
+          <div className={`${cardClass} flex flex-col md:flex-row min-h-[460px] md:min-h-[500px]`}>
+            <div className="flex-1 px-8 md:px-14 pt-12 md:pt-16 pb-8 md:pb-16 flex flex-col justify-between">
+              <h3 className="font-halyard font-medium text-[#050505] text-[32px] md:text-[40px] leading-[1.08]">
                 Naming
               </h3>
-              <p className="font-halyard font-normal text-[#181412] text-[22px] md:text-[30px] leading-[1.28] max-w-[610px]">
+              <p className="font-halyard font-normal text-[#181412] text-[18px] md:text-[19px] leading-[1.35] max-w-[340px]">
                 Exploramos diferentes territórios de nomes, sonoridade e escrita até chegar a uma opção que traduza com clareza a estratégia da marca, se diferencie dos concorrentes e se conecte com o público.
               </p>
             </div>
-            <img
-              src="/images/eike-naming.png"
-              alt="Apresentação de Naming"
-              className="relative md:absolute w-[360px] md:w-[660px] lg:w-[710px] max-w-none ml-auto -mr-12 md:mr-0 md:right-1 lg:right-4 md:top-20 lg:top-[72px] -mt-10 md:mt-0"
-            />
+            <div className="hidden md:flex shrink-0 items-center justify-center px-8 md:px-10 pb-10 md:pb-0 overflow-hidden">
+              <img
+                src="/images/eike-naming.png"
+                alt="Apresentação de Naming"
+                className="w-[360px] md:w-[520px] lg:w-[620px] object-contain"
+              />
+            </div>
           </div>
 
           {/* Card 3 — Identidade Visual (bg image) */}
           <div
-            className="entregavel-block rounded-[30px] md:rounded-[34px] overflow-hidden relative min-h-[560px] md:min-h-[520px] bg-[#F4F4F5] bg-cover bg-[54%_center] md:bg-center"
+            className="entregavel-block rounded-[30px] md:rounded-[34px] overflow-hidden relative min-h-[460px] md:min-h-[500px] bg-[#F4F4F5] bg-cover bg-[54%_center] md:bg-center"
             style={{ backgroundImage: 'url(/images/eike-identidade-bg.jpg)' }}
           >
             <div className="relative z-10 px-8 md:px-16 pt-12 md:pt-20 pb-10 md:pb-16 max-w-[390px]">
@@ -496,20 +502,20 @@ function Entregaveis() {
                 de Marca +<br />
                 Guia
               </h3>
-              <p className="font-halyard font-normal text-[#181412] text-[17px] md:text-[18px] leading-[1.2] max-w-[330px]">
+              <p className="font-halyard font-normal text-[#181412] text-[18px] md:text-[19px] leading-[1.35] max-w-[330px]">
                 A partir do conceito central, desenvolvemos uma identidade que comunica a essência da marca e garante reconhecimento, coerência e diferenciação em todos os pontos de contato.
               </p>
             </div>
           </div>
 
           {/* Card 4 — Bônus TheOne Agent */}
-          <div className={`${cardClass} min-h-[460px] md:min-h-[420px] flex flex-col md:block`}>
+          <div className={`${cardClass} min-h-[460px] md:min-h-[500px] flex flex-col md:block`}>
             <div className="relative z-10 px-8 md:px-16 pt-10 md:pt-14 pb-8 md:pb-14 max-w-[445px]">
               <span className="font-halyard font-semibold text-[#FE6942] text-[13px] tracking-[0.24em] uppercase mb-3 block">Bônus:</span>
               <h3 className="font-halyard font-medium text-[#050505] text-[31px] md:text-[38px] leading-[1.08] mb-24 md:mb-28">
                 {agentName}
               </h3>
-              <p className="font-halyard font-normal text-[#181412] text-[17px] md:text-[18px] leading-[1.2] max-w-[370px]">
+              <p className="font-halyard font-normal text-[#181412] text-[18px] md:text-[19px] leading-[1.35] max-w-[370px]">
                 Agente de IA especialista no seu negócio, treinado com toda sua estratégia de marca e posicionamento para otimizar apresentações, gerar ideias de conteúdo focadas no seu público, analisar pitchs de vendas no dia a dia e muito mais.
               </p>
             </div>
