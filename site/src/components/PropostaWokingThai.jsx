@@ -1103,7 +1103,7 @@ export default function PropostaWokingThai() {
         <Hero
           showLogo={true}
           introPhrases={[
-            <>Olá, <span style={{ color: '#FE6942' }}>{PROPOSTA_DATA.cliente}</span></>,
+            <>Olá, <span style={{ color: '#FE6942' }}>Gabriel e Marcelo</span></>,
             <>Seja bem-vindo à <span style={{ color: '#FE6942' }}>TheOne</span></>,
           ]}
         />
