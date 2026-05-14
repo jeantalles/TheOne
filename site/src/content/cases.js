@@ -223,6 +223,13 @@ export const caseStudies = [
         aspectRatio: '1266 / 784',
       },
       {
+        id: 'impacto-percebido',
+        type: 'image',
+        src: '/images/cases/Thunders/impacto-percebido.png',
+        alt: 'Thunders Tecnologia - impacto percebido após o reposicionamento',
+        aspectRatio: '1600 / 900',
+      },
+      {
         id: 'image-3',
         type: 'image',
         src: '/images/cases/Thunders/imagem-3.jpg',
