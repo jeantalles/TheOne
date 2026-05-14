@@ -63,6 +63,18 @@ export const caseStudies = [
         'Antes, a marca não representava nem quem a gente era, nem onde queria chegar. Hoje, tudo faz sentido, tudo se conecta: o visual, o conceito, o símbolo, a narrativa. O “1% melhor a cada dia” resume perfeitamente o que acreditamos, e ver isso traduzido com tanta clareza na marca foi algo que realmente nos impactou.',
       avatar: '/images/cases/Zenic/cliente.png',
     },
+    beforeBlock: {
+      title: 'Antes',
+      image: '/images/cases/Zenic/antes-zenic.png',
+      alt: 'Materiais antigos da marca Zenic antes do projeto',
+      points: [
+        'Posicionamento genérico, sem diferencial de marca',
+        'Sem comunicação proprietária',
+        'Não transmitia a visão que os sócios tinham para a marca',
+        'Marca desconexa da personalidade dos sócios',
+        'Marca desconectada do público',
+      ],
+    },
     mediaBlocks: [
       {
         id: 'manifesto',
@@ -184,6 +196,17 @@ export const caseStudies = [
       quote: '',
       avatar: null,
     },
+    beforeBlock: {
+      title: 'Antes',
+      image: '/images/cases/Thunders/antes-thunders.png',
+      alt: 'Materiais antigos da marca Thunders antes do projeto',
+      points: [
+        'Não representava o tamanho da empresa',
+        'Comunicação técnica e distante do público',
+        'Marca com percepção de valor baixa',
+        'Comunicação e identidade despadronizada',
+      ],
+    },
     mediaBlocks: [
       {
         id: 'image-1',
@@ -288,7 +311,7 @@ export const caseStudies = [
     clientFeedback: {
       name: 'Camilla Toscano',
       role: 'Consultora Comercial',
-      quote: 'Ver a minha essência profissional traduzida numa marca com tanta clareza foi fundamental para a nova fase do meu negócio.',
+      quote: 'Antes do trabalho com o Jean, eu tinha uma ideia muito mais genérica de como me posicionar no mercado. O processo de imersão trouxe uma clareza enorme sobre quem é o público para quem eu realmente gero mais valor, e isso mudou completamente a forma como passei a direcionar minha comunicação. Também construímos um posicionamento único dentro do meu mercado, ocupando um território em que ninguém ainda estava se posicionando de verdade. Saí com muito mais clareza, ideias de conteúdo mais assertivas e uma marca que conversa diretamente com o público certo. Foi essencial para estruturar minha marca de forma estratégica.',
       avatar: '/images/cases/Camilla Toscano/cliente.png',
     },
     mediaBlocks: [

@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import { useMediaQuery, usePrefersReducedMotion } from '../hooks/useMediaQuery';
 
 const OPTIONS = [
-  { value: 'empresario', label: 'Empresário' },
+  { value: 'empresario', label: 'Empresário', sublabel: 'Fundador, sócio ou diretor' },
   { value: 'gestor',     label: 'Gestor de Receita', sublabel: 'Growth, marketing ou vendas' },
 ];
 

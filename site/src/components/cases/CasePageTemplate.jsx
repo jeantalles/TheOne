@@ -96,6 +96,48 @@ function CaseMediaBlock({ block }) {
   );
 }
 
+function CaseBeforeBlock({ block }) {
+  if (!block?.image) {
+    return null;
+  }
+
+  return (
+    <section className="mx-auto w-[90%] max-w-[1680px] pb-14 pt-10 md:pb-20 md:pt-16">
+      <div className="mb-14 h-px w-full bg-white/10 md:mb-20" />
+
+      <div className="mb-7 grid gap-7 md:mb-9 md:grid-cols-[minmax(0,0.7fr)_minmax(22rem,0.55fr)] md:items-end md:gap-14">
+        <div>
+          <h2 className="font-editorial text-[clamp(3rem,7vw,7rem)] font-normal leading-none tracking-normal text-white">
+            {block.title ?? 'Antes'}
+          </h2>
+        </div>
+
+        {Array.isArray(block.points) && block.points.length > 0 ? (
+          <ul className="grid gap-3 md:justify-self-end">
+            {block.points.map((point) => (
+              <li
+                key={point}
+                className="flex items-start gap-4 font-sans text-[clamp(1rem,1.18vw,1.28rem)] font-light leading-[1.35] text-white/62"
+              >
+                <span className="mt-[0.58em] h-2 w-2 shrink-0 rounded-full bg-[#FE6942]" />
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </div>
+
+      <div className="overflow-hidden rounded-[22px] md:rounded-[28px]">
+        <img
+          src={block.image}
+          alt={block.alt ?? block.title ?? 'Antes'}
+          className="block h-auto w-full object-cover"
+        />
+      </div>
+    </section>
+  );
+}
+
 export default function CasePageTemplate({ caseStudy, isFallback = false }) {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
@@ -251,6 +293,8 @@ export default function CasePageTemplate({ caseStudy, isFallback = false }) {
             </aside>
           </div>
         </section>
+
+        <CaseBeforeBlock block={caseStudy.beforeBlock} />
 
         {caseStudy.mediaBlocks.length > 0 ? (
           <section className="overflow-hidden">
