@@ -1,19 +1,6 @@
-import { useEffect, useRef, useState, useCallback, lazy, Suspense } from 'react';
-import Lenis from 'lenis';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-import { usePrefersReducedMotion, useConstrainedMotion } from '../hooks/useMediaQuery';
-import Hero from './1-Hero';
-import GradientTransition from './2-GradientTransition';
-import StorytellingIntro from './3a-StorytellingIntro';
-import PersonaTrigger from './3b-PersonaTrigger';
-import Storytelling from './3-Storytelling';
-import TheOne from './4-TheOne';
-import SolucoesTheOne from './4b-SolucoesTheOne';
-import Methodology from './5-Methodology';
-
-const Founders = lazy(() => import('./9-Founders'));
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -941,9 +928,15 @@ function PropostaSlideshow() {
   }, []);
 
   useEffect(() => {
-    setHasMoreBelow(false);
-    const id = requestAnimationFrame(() => requestAnimationFrame(checkScroll));
-    return () => cancelAnimationFrame(id);
+    let innerId = 0;
+    const id = requestAnimationFrame(() => {
+      setHasMoreBelow(false);
+      innerId = requestAnimationFrame(checkScroll);
+    });
+    return () => {
+      cancelAnimationFrame(id);
+      cancelAnimationFrame(innerId);
+    };
   }, [current, escopoVisiblePillars, checkScroll]);
 
   const navigate = useCallback((dir) => {
@@ -979,14 +972,17 @@ function PropostaSlideshow() {
   }, [navigate]);
 
   return (
-    <div className="relative overflow-hidden bg-white" style={{ height: '100svh' }}>
+    <div
+      className="relative overflow-hidden"
+      style={{ height: '100svh', background: current === 0 ? '#0a0a0a' : '#fff' }}
+    >
 
       <div
         key={current}
         ref={slideScrollRef}
         data-lenis-prevent
         onScroll={checkScroll}
-        className={`absolute inset-0 overflow-y-auto pb-20 md:pb-16 ${animDir === 'next' ? 'slide-from-right' : 'slide-from-left'}`}
+        className={`absolute inset-0 overflow-y-auto ${current === 0 ? 'pb-0' : 'pb-20 md:pb-16'} ${animDir === 'next' ? 'slide-from-right' : 'slide-from-left'}`}
       >
         {current === 0 && <Capa />}
         {current === 1 && <Contexto showDesejado={false} />}
@@ -1060,11 +1056,7 @@ function PropostaSlideshow() {
 }
 
 // ── PÁGINA ────────────────────────────────────────────────────────────────────
-export default function PropostaWokingThai() {
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const prefersConstrainedMotion = useConstrainedMotion();
-  const shouldUseLenis = !prefersReducedMotion && !prefersConstrainedMotion;
-
+export default function PropostaWokingThaiFinal() {
   useEffect(() => {
     const meta = document.createElement('meta');
     meta.name = 'robots';
@@ -1081,68 +1073,9 @@ export default function PropostaWokingThai() {
     return () => cancelAnimationFrame(rafId);
   }, []);
 
-  useEffect(() => {
-    if (!shouldUseLenis) return undefined;
-
-    const lenis = new Lenis({
-      duration: 1.5,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 0.8,
-    });
-
-    window.__theOneLenis = lenis;
-    lenis.on('scroll', ScrollTrigger.update);
-
-    const refreshId = requestAnimationFrame(() => {
-      requestAnimationFrame(() => ScrollTrigger.refresh());
-    });
-
-    let rafId = 0;
-    function raf(time) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-    rafId = requestAnimationFrame(raf);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      cancelAnimationFrame(refreshId);
-      if (window.__theOneLenis === lenis) {
-        delete window.__theOneLenis;
-      }
-      lenis.destroy();
-    };
-  }, [shouldUseLenis]);
-
   return (
     <div className="bg-[#0a0a0a] min-h-screen font-sans">
       <div className="noise-overlay" aria-hidden="true" />
-
-      <div style={{ backgroundColor: '#F5EEE9' }}>
-        <Hero
-          showLogo={true}
-          introPhrases={[
-            <>Olá, <span style={{ color: '#FE6942' }}>Gabriel e Marcelo</span></>,
-            <>Seja bem-vindo à <span style={{ color: '#FE6942' }}>TheOne</span></>,
-          ]}
-        />
-        <StorytellingIntro />
-        <PersonaTrigger onTrigger={() => {}} triggered />
-        <GradientTransition />
-      </div>
-
-      <Storytelling persona="empresario" />
-      <TheOne />
-      <SolucoesTheOne />
-      <Methodology />
-
-      <Suspense fallback={null}>
-        <Founders />
-      </Suspense>
-
       <PropostaSlideshow />
     </div>
   );

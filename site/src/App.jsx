@@ -30,6 +30,7 @@ const PropostaEdifica = lazy(() => import('./components/PropostaEdifica'));
 const PropostaEike = lazy(() => import('./components/PropostaEike'));
 const PropostaAlexandria = lazy(() => import('./components/PropostaAlexandria'));
 const PropostaWokingThai = lazy(() => import('./components/PropostaWokingThai'));
+const PropostaWokingThaiFinal = lazy(() => import('./components/PropostaWokingThaiFinal'));
 const QualificacaoPage = lazy(() => import('./components/QualificacaoPage'));
 const AgentOnePage = lazy(() => import('./components/AgentOnePage'));
 
@@ -70,6 +71,7 @@ export default function App() {
   const isPropostaEike = pathname === '/eike' || pathname === '/eike/';
   const isPropostaAlexandria = pathname === '/alexandria-proposta' || pathname === '/alexandria-proposta/';
   const isPropostaWokingThai = ['/woking-thai-food', '/woking-thai-food/', '/woking', '/woking/'].includes(pathname);
+  const isPropostaWokingThaiFinal = ['/woking-thai-food-proposta', '/woking-thai-food-proposta/', '/woking-proposta', '/woking-proposta/'].includes(pathname);
   const isAgentOne = ['/agent-one', '/agent-one/', '/agentone', '/agentone/'].includes(pathname);
   const isDesignSystem = pathname === '/design-system';
   const isQualificacao = ['/formulario', '/formulario/', '/qualificacao', '/qualificacao/'].includes(pathname);
@@ -330,6 +332,10 @@ export default function App() {
 
   if (isPropostaWokingThai) {
     return <Suspense fallback={null}><PropostaWokingThai /></Suspense>;
+  }
+
+  if (isPropostaWokingThaiFinal) {
+    return <Suspense fallback={null}><PropostaWokingThaiFinal /></Suspense>;
   }
 
   if (caseSlug) {
