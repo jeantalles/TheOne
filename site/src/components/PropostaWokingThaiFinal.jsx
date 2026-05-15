@@ -651,26 +651,6 @@ function Cronograma() {
   );
 }
 
-// ── SEÇÃO: PERGUNTA ───────────────────────────────────────────────────────────
-function PropostaQuestion() {
-  return (
-    <section className="h-full bg-white flex items-center justify-center px-6 py-20 relative overflow-hidden">
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(circle at 50% 55%, rgba(254,105,66,0.05) 0%, transparent 65%)' }}
-      />
-      <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-        <span className="font-halyard text-[15px] md:text-[17px] tracking-[0.28em] uppercase text-[#FE6942]/70 font-medium mb-8">
-          Antes de continuar
-        </span>
-        <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2rem,5vw,3.75rem)] leading-[1.1] tracking-tight max-w-[820px] mb-16">
-          Esta solução resolve o cenário atual<br />e sustenta a expansão<br />do Woking Thai Food?
-        </h2>
-      </div>
-    </section>
-  );
-}
-
 // ── SEÇÃO: INVESTIMENTO ───────────────────────────────────────────────────────
 function Investimento() {
   const sectionRef = useRef(null);
@@ -910,8 +890,8 @@ function Investimento() {
 // ── SLIDESHOW ─────────────────────────────────────────────────────────────────
 // 0: Capa  |  1: Contexto Atual  |  2: Contexto A→B  |  3: Escopo
 // 4: FoundationHouse  |  5: Entregáveis  |  6: Resultados
-// 7: Cronograma  |  8: Pergunta  |  9: Investimento
-const SLIDE_TOTAL = 10;
+// 7: Cronograma  |  8: Investimento
+const SLIDE_TOTAL = 9;
 
 function PropostaSlideshow() {
   const [current, setCurrent] = useState(0);
@@ -992,8 +972,7 @@ function PropostaSlideshow() {
         {current === 5 && <Entregaveis />}
         {current === 6 && <Resultados />}
         {current === 7 && <Cronograma />}
-        {current === 8 && <PropostaQuestion />}
-        {current === 9 && <Investimento />}
+        {current === 8 && <Investimento />}
       </div>
 
       <div
