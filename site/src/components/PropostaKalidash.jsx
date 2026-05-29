@@ -1022,19 +1022,28 @@ function CardIdentidade() {
 
 function CardMyBranding() {
   return (
-    <div className={`${cardClass} min-h-[380px] md:min-h-[420px] flex flex-col justify-between px-8 md:px-14 pt-12 md:pt-16 pb-10 md:pb-14`}>
-      <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08]">
-        myBranding
-      </h3>
-      <div>
-        <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.4] max-w-[380px] mb-6">
-          Você é seu maior ativo. O myBranding transforma quem você é em uma marca usando a metodologia BeOne para posicioná-lo como referência única no seu mercado.
-        </p>
-        <ul className="space-y-1.5">
-          <ArrowItem>Posicionamento de marca pessoal</ArrowItem>
-          <ArrowItem>Narrativa de origem e visão de mundo</ArrowItem>
-          <ArrowItem>Guia de Marca Pessoal completo</ArrowItem>
-        </ul>
+    <div className={`${cardClass} min-h-[380px] md:min-h-[420px] flex flex-col md:flex-row overflow-hidden`}>
+      <div className="flex-1 px-8 md:px-14 pt-12 md:pt-16 pb-8 md:pb-16 flex flex-col justify-between">
+        <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08]">
+          myBranding
+        </h3>
+        <div>
+          <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.4] max-w-[380px] mb-6">
+            Você é seu maior ativo. O myBranding transforma quem você é em uma marca usando a metodologia BeOne para posicioná-lo como referência única no seu mercado.
+          </p>
+          <ul className="space-y-1.5">
+            <ArrowItem>Posicionamento de marca pessoal</ArrowItem>
+            <ArrowItem>Narrativa de origem e visão de mundo</ArrowItem>
+            <ArrowItem>Guia de Marca Pessoal completo</ArrowItem>
+          </ul>
+        </div>
+      </div>
+      <div className="hidden md:block shrink-0 w-[360px] lg:w-[420px] overflow-hidden">
+        <img
+          src={myBrandingImg}
+          alt="myBranding"
+          className="w-full h-full object-cover object-center"
+        />
       </div>
     </div>
   );
