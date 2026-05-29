@@ -170,7 +170,7 @@ function renderCompactTitle(title) {
   return renderStyledWords(title.replace(/\n/g, ' '), 'title', 'story-mobile-title-word');
 }
 
-export default function Storytelling({ persona }) {
+export default function Storytelling({ persona, scroller = null }) {
   const containerRef = useRef(null);
   const style = STORYTELLING_CONFIG.fontSize;
   const isCompactLayout = useMediaQuery('(max-width: 1023px)');
@@ -199,7 +199,8 @@ export default function Storytelling({ persona }) {
             pinSpacing: true,
             start: panelIndex === 0 ? 'top top' : 'center center',
             end: swapMode ? '+=165%' : '+=130%',
-            scrub: 1.5,
+            scrub: scroller ? 0.3 : 1.5,
+            scroller: scroller || undefined,
           },
         });
 
@@ -270,7 +271,7 @@ export default function Storytelling({ persona }) {
     }, containerRef);
 
     return () => ctx.revert();
-  }, [isCompactLayout, stories]);
+  }, [isCompactLayout, stories, scroller]);
 
   // ─── Mobile: simple per-panel scroll reveal (no pin) ──────────────────────
   useEffect(() => {
@@ -290,7 +291,8 @@ export default function Storytelling({ persona }) {
             trigger: panel,
             start: 'top 85%',
             end: 'bottom 80%',
-            scrub: 1.4,
+            scrub: scroller ? 0.3 : 1.4,
+            scroller: scroller || undefined,
           },
         });
 
@@ -313,7 +315,7 @@ export default function Storytelling({ persona }) {
     }, containerRef);
 
     return () => ctx.revert();
-  }, [isCompactLayout, stories]);
+  }, [isCompactLayout, stories, scroller]);
 
 
 

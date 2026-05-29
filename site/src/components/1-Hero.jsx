@@ -112,7 +112,7 @@ function buildParticles(width, height) {
   return particles;
 }
 
-export default function Hero({ introPhrases = [], showLogo = false }) {
+export default function Hero({ introPhrases = [], showLogo = false, showTopLogo = false, scroller = null, disableNavEvents = false }) {
   const isMobileViewport = useMediaQuery('(max-width: 767px)');
   const shouldUseStaticScene = false;
   const sectionRef = useRef(null);
@@ -128,6 +128,7 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
   const finalBodyRef = useRef(null);
   const scrollHintRef = useRef(null);
   const logoRef = useRef(null);
+  const topLogoRef = useRef(null);
   const navbarVisibleRef = useRef(null);
   const mobileMenuLightRef = useRef(false);
 
@@ -140,9 +141,11 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
       }
 
       navbarVisibleRef.current = isVisible;
-      window.dispatchEvent(new CustomEvent('hero-navbar-visibility', {
-        detail: { visible: isVisible },
-      }));
+      if (!disableNavEvents) {
+        window.dispatchEvent(new CustomEvent('hero-navbar-visibility', {
+          detail: { visible: isVisible },
+        }));
+      }
     };
     const updateMobileMenuTheme = (isLight) => {
       if (mobileMenuLightRef.current === isLight) {
@@ -150,9 +153,11 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
       }
 
       mobileMenuLightRef.current = isLight;
-      window.dispatchEvent(new CustomEvent('hero-mobile-menu-theme', {
-        detail: { light: isLight },
-      }));
+      if (!disableNavEvents) {
+        window.dispatchEvent(new CustomEvent('hero-mobile-menu-theme', {
+          detail: { light: isLight },
+        }));
+      }
     };
 
     if (!section) {
@@ -184,6 +189,9 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
         logoRef.current.style.opacity = '1';
         logoRef.current.style.filter = 'none';
         logoRef.current.style.transform = 'none';
+      }
+      if (topLogoRef.current) {
+        topLogoRef.current.style.opacity = '1';
       }
       updateMobileMenuTheme(false);
       return undefined;
@@ -319,6 +327,10 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
         const logoY = titleY - 36;
         logoRef.current.style.transform = `translate3d(0, ${logoY.toFixed(1)}px, 0)`;
         logoRef.current.style.filter = 'none';
+      }
+
+      if (topLogoRef.current) {
+        topLogoRef.current.style.opacity = takeover.toFixed(3);
       }
 
       const bodyBlur = lerp(14, 0, finalBody);
@@ -501,7 +513,8 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
       trigger: sectionRef.current,
       start: 'top top',
       end: 'bottom bottom',
-      scrub: 0.85,
+      scrub: scroller ? 0.3 : 0.85,
+      scroller: scroller || undefined,
       onToggle(self) {
         canvas.style.visibility = self.isActive ? 'visible' : 'hidden';
         if (self.isActive) {
@@ -528,7 +541,7 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
       window.removeEventListener('resize', onResize);
       trigger.kill();
     };
-  }, [shouldUseStaticScene]);
+  }, [shouldUseStaticScene, scroller]);
 
   return (
     <section
@@ -553,6 +566,27 @@ export default function Hero({ introPhrases = [], showLogo = false }) {
           willChange: shouldUseStaticScene ? undefined : 'clip-path',
         }}
       >
+        {showTopLogo && (
+          <div
+            ref={topLogoRef}
+            className="pointer-events-none absolute z-45"
+            style={{
+              top: '44px',
+              left: 0,
+              right: 0,
+              display: 'flex',
+              justifyContent: 'center',
+              opacity: 0,
+              willChange: 'opacity',
+            }}
+          >
+            <img
+              src="/logo-navbar.svg"
+              alt="TheOne"
+              style={{ height: '80px', width: 'auto', display: 'block' }}
+            />
+          </div>
+        )}
         <div ref={glowRef} className="pointer-events-none absolute inset-0 z-0 opacity-20" />
 
         <div
