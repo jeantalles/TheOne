@@ -9,7 +9,6 @@ import { caseStudies } from '../content/cases';
 import HeroSection from './1-Hero';
 import StorytellingSection from './3-Storytelling';
 import NomeClienteSlide from './NomeClienteSlide';
-import ContextoEditavel from './ContextoEditavel';
 import { useProposalState } from '../hooks/useProposalState';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -23,10 +22,10 @@ const SERVICES = [
   { id: 'sitebrand',  label: 'Site BrandExperience',  price: 5000, prazo: '6 semanas' },
 ];
 
-// 0: Capa | 1: NomeCliente | 2: Contexto A | 3: Contexto B | 4: Dores | 5: SobreTheOne | 6: Jean | 7: Zenic | 8: Thunders | 9: Camilla | 10: TheOne Foundation | 11: Casa da Marca | 12: Estratégia | 13: myBranding | 14: Naming | 15: Identidade | 16: SiteBrandExperience | 17: TheOne Agent | 18: Cronograma | 19: Calculadora | 20: Consultoria
-const SLIDE_TOTAL = 21;
+// 0: Capa | 1: NomeCliente | 2: Dores | 3: SobreTheOne | 4: Jean | 5: Zenic | 6: Thunders | 7: Camilla | 8: TheOne Foundation | 9: Casa da Marca | 10: Estratégia | 11: myBranding | 12: Naming | 13: Identidade | 14: SiteBrandExperience | 15: TheOne Agent | 16: Cronograma | 17: Calculadora | 18: Consultoria
+const SLIDE_TOTAL = 19;
 
-const DARK_SLIDES = [0, 1, 6, 7, 8, 9, 10, 17];
+const DARK_SLIDES = [0, 1, 4, 5, 6, 7, 8, 15];
 
 const formatBRL = (v) => `R$ ${v.toLocaleString('pt-BR')}`;
 
@@ -1984,54 +1983,36 @@ function PropostaSlideshow() {
       >
         {current === 0  && <Capa />}
         {current === 1  && (
-          <NomeClienteSlide 
-            clientName={proposalState.clientName} 
-            setClientName={(v) => setProposalState({ clientName: v })} 
-            onGenerateLink={generateLink} 
+          <NomeClienteSlide
+            clientName={proposalState.clientName}
+            setClientName={(v) => setProposalState({ clientName: v })}
+            onGenerateLink={generateLink}
           />
         )}
-        {current === 2  && (
-          <ContextoEditavel 
-            showDesejado={false}
-            cenarioAtual={proposalState.cenarioAtual}
-            setCenarioAtual={(v) => setProposalState({ cenarioAtual: v })}
-            cenarioDesejado={proposalState.cenarioDesejado}
-            setCenarioDesejado={(v) => setProposalState({ cenarioDesejado: v })}
-          />
-        )}
-        {current === 3  && (
-          <ContextoEditavel 
-            showDesejado={true}
-            cenarioAtual={proposalState.cenarioAtual}
-            setCenarioAtual={(v) => setProposalState({ cenarioAtual: v })}
-            cenarioDesejado={proposalState.cenarioDesejado}
-            setCenarioDesejado={(v) => setProposalState({ cenarioDesejado: v })}
-          />
-        )}
-        {current === 4  && <Dores />}
-        {current === 5  && <SobreTheOne scrollerRef={slideScrollRef} />}
-        {current === 6  && <SobreJean />}
-        {current === 7  && <CaseSlide slug="zenic" />}
-        {current === 8  && <CaseSlide slug="thunders" />}
-        {current === 9  && <CaseSlide slug="camilla-toscano" />}
-        {current === 10 && <TheOneFoundation />}
-        {current === 11 && <CasaDaMarca />}
-        {current === 12 && <EstrategiaDeMarca />}
-        {current === 13 && <MyBranding />}
-        {current === 14 && <Naming />}
-        {current === 15 && <IdentidadeVisual />}
-        {current === 16 && <SiteBrandExperience />}
-        {current === 17 && <TheOneAgent />}
-        {current === 18 && <Cronograma />}
-        {current === 19 && <Calculadora clientName={proposalState.clientName} />}
-        {current === 20 && <Consultoria />}
+        {current === 2  && <Dores />}
+        {current === 3  && <SobreTheOne scrollerRef={slideScrollRef} />}
+        {current === 4  && <SobreJean />}
+        {current === 5  && <CaseSlide slug="zenic" />}
+        {current === 6  && <CaseSlide slug="thunders" />}
+        {current === 7  && <CaseSlide slug="camilla-toscano" />}
+        {current === 8  && <TheOneFoundation />}
+        {current === 9  && <CasaDaMarca />}
+        {current === 10 && <EstrategiaDeMarca />}
+        {current === 11 && <MyBranding />}
+        {current === 12 && <Naming />}
+        {current === 13 && <IdentidadeVisual />}
+        {current === 14 && <SiteBrandExperience />}
+        {current === 15 && <TheOneAgent />}
+        {current === 16 && <Cronograma />}
+        {current === 17 && <Calculadora clientName={proposalState.clientName} />}
+        {current === 18 && <Consultoria />}
       </div>
 
       <div
         className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none z-10 transition-opacity duration-300"
         style={{
           opacity: hasMoreBelow ? 1 : 0,
-          background: `linear-gradient(to top, ${current === 5 ? 'rgba(128,128,128,0.15)' : (DARK_SLIDES.includes(current) ? 'rgba(10,10,10,0.95)' : 'rgba(255,255,255,0.95)')} 0%, transparent 100%)`,
+          background: `linear-gradient(to top, ${current === 3 ? 'rgba(128,128,128,0.15)' : (DARK_SLIDES.includes(current) ? 'rgba(10,10,10,0.95)' : 'rgba(255,255,255,0.95)')} 0%, transparent 100%)`,
         }}
         aria-hidden="true"
       />
