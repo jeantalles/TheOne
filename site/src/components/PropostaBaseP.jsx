@@ -673,6 +673,8 @@ function IdentidadeVisual() {
 // ── SLIDE 5: MYBRANDING ───────────────────────────────────────────────────────
 function MyBranding() {
   const sectionRef = useRef(null);
+  const [expanded, setExpanded] = useState({});
+  const togglePilar = (num) => setExpanded(prev => ({ ...prev, [num]: !prev[num] }));
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -713,36 +715,85 @@ function MyBranding() {
           </div>
         </div>
 
-        <div className="mb-12 grid grid-cols-1 md:grid-cols-3 gap-5">
-          <div className="mb-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
-            <span className="w-10 h-10 rounded-full flex items-center justify-center bg-[#FE6942] text-white font-halyard text-[14px] font-semibold mb-5 inline-flex">01</span>
-            <h3 className="font-halyard font-semibold text-[#181412] text-[22px] md:text-[24px] leading-[1.2] mb-4">
-              A Fundação:<br/>Diagnóstico e<br/>Pesquisa
-            </h3>
-            <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.55]">
-              É aqui que nos aprofundamos e entendemos de forma completa sua jornada, mercado e público.
-            </p>
-          </div>
-
-          <div className="mb-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
-            <span className="w-10 h-10 rounded-full flex items-center justify-center bg-[#FE6942] text-white font-halyard text-[14px] font-semibold mb-5 inline-flex">02</span>
-            <h3 className="font-halyard font-semibold text-[#181412] text-[22px] md:text-[24px] leading-[1.2] mb-4">
-              A Estratégia de<br/>Posicionamento<br/>e Marca
-            </h3>
-            <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.55]">
-              Construímos uma estratégia para sua marca pessoal se tornar uma das principais referências, se diferenciar da concorrência e gerar desejo no público.
-            </p>
-          </div>
-
-          <div className="mb-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
-            <span className="w-10 h-10 rounded-full flex items-center justify-center bg-[#FE6942] text-white font-halyard text-[14px] font-semibold mb-5 inline-flex">03</span>
-            <h3 className="font-halyard font-semibold text-[#181412] text-[22px] md:text-[24px] leading-[1.2] mb-4">
-              A Efetivação
-            </h3>
-            <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.55]">
-              O plano prático para efetivar a estratégia da marca pessoal e posicionamento.
-            </p>
-          </div>
+        {/* Pilares do projeto */}
+        <div className="mb-item grid grid-cols-1 lg:grid-cols-3 gap-3 mb-10 md:mb-14">
+          {[
+            {
+              num: '01',
+              titulo: 'A Fundação: Diagnóstico e Pesquisa',
+              descricao: 'É aqui que nos aprofundamos e entendemos de forma completa sua jornada, mercado e público.',
+              itens: [
+                { titulo: 'Imersão Estratégica Pessoal', descricao: 'Mapeamento completo da sua trajetória, objetivos, impulsionadores e desafios que afetam a percepção da sua marca pessoal no mercado.' },
+                { titulo: 'Pesquisa de Mercado', descricao: 'Como outras referências do seu mercado se posicionam, onde estão os padrões repetidos e quais brechas estratégicas existem para você ocupar.' },
+                { titulo: 'Mapeamento Profundo de Público', descricao: 'Definição de público baseada não só em dados demográficos, mas nas necessidades, dores e desejos de quem se conecta com você.' },
+              ],
+            },
+            {
+              num: '02',
+              titulo: 'A Estratégia de Posicionamento e Marca',
+              descricao: 'Construímos uma estratégia para sua marca pessoal se tornar uma das principais referências, se diferenciar da concorrência e gerar desejo no público.',
+              itens: [
+                { titulo: 'Posicionamento e Diferenciação', descricao: 'Definição da sua proposta única de valor, diferenciais estratégicos e do território de marca pessoal que você vai ocupar.' },
+                { titulo: 'Personalidade da Marca', descricao: 'Propósito, valores, crenças e arquétipo que sustentam a conexão da sua marca pessoal com o público e justificam a escolha.' },
+                { titulo: 'Conceito e Narrativa', descricao: 'Criação do conceito central e da narrativa de origem que unificam toda a comunicação da sua marca pessoal nos diferentes canais.' },
+              ],
+            },
+            {
+              num: '03',
+              titulo: 'A Efetivação',
+              descricao: 'O plano prático para efetivar a estratégia da marca pessoal e posicionamento.',
+              itens: [
+                { titulo: 'Estratégia de Canais', descricao: 'Como você deve se portar em cada ponto de contato: Instagram, WhatsApp, Google, site e indicação, para ser visto, lembrado e escolhido.' },
+                { titulo: 'Estratégia de Conteúdo', descricao: 'Principais formatos, tópicos e linhas de comunicação para que sua marca pessoal construa autoridade e gere demanda orgânica.' },
+                { titulo: 'Guia de Marca Pessoal', descricao: 'Documento completo com toda a fundação estratégica da sua marca pessoal, o mapa que orienta toda decisão de comunicação, venda e crescimento.' },
+              ],
+            },
+          ].map((pilar) => (
+            <article key={pilar.num} className="bg-[#F8F8F8] rounded-2xl px-7 md:px-8 py-8 border border-black/[0.08] flex flex-col">
+              <button
+                onClick={() => togglePilar(pilar.num)}
+                className="flex items-center gap-4 mb-5 w-full text-left"
+              >
+                <span className="w-12 h-12 rounded-full flex items-center justify-center bg-[#FE6942] text-white font-halyard text-[16px] font-semibold shrink-0">
+                  {pilar.num}
+                </span>
+                <h3 className="font-halyard font-medium text-[#181412] text-[21px] md:text-[23px] leading-[1.1] flex-1">{pilar.titulo}</h3>
+                <svg
+                  className="shrink-0 transition-transform duration-300"
+                  style={{ transform: expanded[pilar.num] ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                  width="20" height="20" viewBox="0 0 20 20" fill="none"
+                >
+                  <path d="M5 7.5l5 5 5-5" stroke="#181412" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+              <p className="font-halyard font-normal text-[#181412] text-[17px] md:text-[18px] leading-[1.6] mb-4">{pilar.descricao}</p>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateRows: expanded[pilar.num] ? '1fr' : '0fr',
+                  transition: 'grid-template-rows 380ms cubic-bezier(0.23,1,0.32,1)',
+                }}
+              >
+                <div className="overflow-hidden">
+                  <div
+                    className="mt-2 divide-y divide-black/[0.08] border-t border-black/[0.08]"
+                    style={{
+                      opacity: expanded[pilar.num] ? 1 : 0,
+                      transition: 'opacity 300ms ease',
+                      transitionDelay: expanded[pilar.num] ? '80ms' : '0ms',
+                    }}
+                  >
+                    {pilar.itens.map((item) => (
+                      <div key={item.titulo} className="py-4 last:pb-0">
+                        <h4 className="font-halyard font-semibold text-[#181412] text-[16px] md:text-[17px] leading-[1.25] mb-2">{item.titulo}</h4>
+                        <p className="font-halyard font-normal text-[#181412] text-[15px] md:text-[16px] leading-[1.55]">{item.descricao}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
