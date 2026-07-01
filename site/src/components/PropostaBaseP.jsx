@@ -23,7 +23,7 @@ const SERVICES = [
   { id: 'sitebrand',  label: 'Site BrandExperience',  price: 5000, prazo: '6 semanas' },
 ];
 
-// 0: Capa | 1: NomeCliente | 2: Contexto A | 3: Contexto B | 4: Dores | 5: SobreTheOne | 6: Jean | 7: Zenic | 8: Thunders | 9: Camilla | 10: TheOne Foundation | 11: Casa da Marca | 12: Estratégia | 13: Naming | 14: Identidade | 15: myBranding | 16: SiteBrandExperience | 17: TheOne Agent | 18: Cronograma | 19: Calculadora | 20: Consultoria
+// 0: Capa | 1: NomeCliente | 2: Contexto A | 3: Contexto B | 4: Dores | 5: SobreTheOne | 6: Jean | 7: Zenic | 8: Thunders | 9: Camilla | 10: TheOne Foundation | 11: Casa da Marca | 12: Estratégia | 13: myBranding | 14: Naming | 15: Identidade | 16: SiteBrandExperience | 17: TheOne Agent | 18: Cronograma | 19: Calculadora | 20: Consultoria
 const SLIDE_TOTAL = 21;
 
 const DARK_SLIDES = [0, 1, 6, 7, 8, 9, 10, 17];
@@ -517,7 +517,7 @@ function Naming() {
       <div className="max-w-[1400px] mx-auto">
 
         <div className="nam-item mb-6">
-          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Pilar 02 · TheOne Foundation</span>
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Pilar 03 · TheOne Foundation</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
@@ -603,7 +603,7 @@ function IdentidadeVisual() {
       <div className="max-w-[1400px] mx-auto">
 
         <div className="id-item mb-6">
-          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Pilar 03 · TheOne Foundation</span>
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Pilar 04 · TheOne Foundation</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
@@ -691,7 +691,7 @@ function MyBranding() {
       <div className="max-w-[1400px] mx-auto">
 
         <div className="mb-item mb-6">
-          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Produto · myBranding</span>
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Pilar 02 · TheOne Foundation</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
@@ -800,7 +800,7 @@ function MyBranding() {
           <div className="mb-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
             <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-5">Para quem é</h3>
             <p className="font-halyard font-normal text-[#181412] text-[19px] md:text-[21px] leading-[1.5] mb-5">
-              Fundadores, experts ou líderes que querem crescer usando sua própria autoridade e influência como canal de aquisição.
+              Fundadores, experts ou mentores que querem crescer usando sua própria autoridade e influência como canal de aquisição.
             </p>
             <ul className="space-y-4">
               {[
@@ -1263,16 +1263,7 @@ function Calculadora({ clientName }) {
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
 
-          {/* Grupo myBranding */}
-          <div>
-            <div className="flex items-center gap-3 mb-3 px-1">
-              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">myBranding</span>
-              <div className="flex-1 h-px bg-black/10" />
-            </div>
-            <div className="space-y-3">
               {SERVICES.filter(s => s.id === 'mybranding').map((service) => (
                 <div
                   key={service.id}
@@ -1987,9 +1978,9 @@ function PropostaSlideshow() {
         {current === 10 && <TheOneFoundation />}
         {current === 11 && <CasaDaMarca />}
         {current === 12 && <EstrategiaDeMarca />}
-        {current === 13 && <Naming />}
-        {current === 14 && <IdentidadeVisual />}
-        {current === 15 && <MyBranding />}
+        {current === 13 && <MyBranding />}
+        {current === 14 && <Naming />}
+        {current === 15 && <IdentidadeVisual />}
         {current === 16 && <SiteBrandExperience />}
         {current === 17 && <TheOneAgent />}
         {current === 18 && <Cronograma />}
