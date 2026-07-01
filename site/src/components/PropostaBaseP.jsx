@@ -86,6 +86,10 @@ function Dores() {
       descricao: 'Quando o anúncio para, as vendas param. Você paga para aparecer, mas não consegue ser escolhido de forma consistente.',
     },
     {
+      titulo: 'Marca comoditizada',
+      descricao: 'Quando você se posiciona pelo produto ou serviço que vende, igual a todos os concorrentes, não constrói diferenciação real e não cria conexão com o público.',
+    },
+    {
       titulo: 'Comparação por preço',
       descricao: 'Sem diferenciação clara, o cliente compara só pelo preço, e você é forçado a competir com quem cobra menos, mesmo sendo melhor.',
     },
@@ -98,8 +102,8 @@ function Dores() {
       descricao: 'Sua empresa existe, mas não é lembrada. Sem identidade forte, você vive na invisibilidade enquanto concorrentes se destacam.',
     },
     {
-      titulo: 'Marca comoditizada',
-      descricao: 'Quando você se posiciona pelo produto ou serviço que vende, igual a todos os concorrentes, não constrói diferenciação real e não cria conexão com o público.',
+      titulo: 'Falta de clareza no posicionamento',
+      descricao: 'Fica perdido entre opções, não sabe como se posicionar no mercado, para quem falar, nem como comunicar sua real diferença.',
     },
     {
       titulo: 'Crescimento sem base sólida',
@@ -706,6 +710,38 @@ function MyBranding() {
               alt="myBranding"
               className="w-full h-full object-cover object-center"
             />
+          </div>
+        </div>
+
+        <div className="mb-12 grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="mb-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <span className="w-10 h-10 rounded-full flex items-center justify-center bg-[#FE6942] text-white font-halyard text-[14px] font-semibold mb-5 inline-flex">01</span>
+            <h3 className="font-halyard font-semibold text-[#181412] text-[22px] md:text-[24px] leading-[1.2] mb-4">
+              A Fundação:<br/>Diagnóstico e<br/>Pesquisa
+            </h3>
+            <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.55]">
+              É aqui que nos aprofundamos e entendemos de forma completa sua jornada, mercado e público.
+            </p>
+          </div>
+
+          <div className="mb-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <span className="w-10 h-10 rounded-full flex items-center justify-center bg-[#FE6942] text-white font-halyard text-[14px] font-semibold mb-5 inline-flex">02</span>
+            <h3 className="font-halyard font-semibold text-[#181412] text-[22px] md:text-[24px] leading-[1.2] mb-4">
+              A Estratégia de<br/>Posicionamento<br/>e Marca
+            </h3>
+            <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.55]">
+              Construímos uma estratégia para sua marca pessoal se tornar uma das principais referências, se diferenciar da concorrência e gerar desejo no público.
+            </p>
+          </div>
+
+          <div className="mb-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <span className="w-10 h-10 rounded-full flex items-center justify-center bg-[#FE6942] text-white font-halyard text-[14px] font-semibold mb-5 inline-flex">03</span>
+            <h3 className="font-halyard font-semibold text-[#181412] text-[22px] md:text-[24px] leading-[1.2] mb-4">
+              A Efetivação
+            </h3>
+            <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.55]">
+              O plano prático para efetivar a estratégia da marca pessoal e posicionamento.
+            </p>
           </div>
         </div>
 

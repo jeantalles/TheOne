@@ -24,7 +24,7 @@ export default function NomeClienteSlide({ clientName, setClientName, onGenerate
           type="text"
           value={clientName}
           onChange={(e) => setClientName(e.target.value)}
-          placeholder="Nome da empresa"
+          placeholder="Nome do projeto"
           className="w-full bg-transparent border-b border-white/20 text-center font-editorial text-white placeholder:text-white/20 focus:outline-none focus:border-[#FE6942] transition-colors"
           style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', paddingBottom: '12px', marginBottom: '60px' }}
         />
