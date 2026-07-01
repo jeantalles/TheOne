@@ -1225,7 +1225,7 @@ function Calculadora({ clientName }) {
               <div className="flex-1 h-px bg-[#FE6942]/20" />
             </div>
             <div className="space-y-3">
-              {SERVICES.filter(s => s.id !== 'mybranding' && s.id !== 'sitebrand').map((service) => (
+              {SERVICES.filter(s => s.id === 'estrategia').map((service) => (
                 <div
                   key={service.id}
                   onClick={() => setSelected((prev) => ({ ...prev, [service.id]: !prev[service.id] }))}
@@ -1304,6 +1304,45 @@ function Calculadora({ clientName }) {
                     </span>
                     <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
                       {myBrandingQty > 0 ? formatBRL(service.price * myBrandingQty) : formatBRL(service.price)}
+                    </span>
+                  </div>
+                </div>
+              ))}
+
+              {SERVICES.filter(s => s.id !== 'estrategia' && s.id !== 'mybranding' && s.id !== 'sitebrand').map((service) => (
+                <div
+                  key={service.id}
+                  onClick={() => setSelected((prev) => ({ ...prev, [service.id]: !prev[service.id] }))}
+                  className={`cursor-pointer rounded-2xl px-7 py-6 border transition-all duration-200 flex items-center justify-between gap-4 ${
+                    selected[service.id]
+                      ? 'border-[#FE6942] bg-[#FE6942]/[0.04]'
+                      : 'border-black/[0.09] bg-[#F8F8F8] hover:border-black/20'
+                  }`}
+                >
+                  <div className="flex items-center gap-5">
+                    <div
+                      className="w-6 h-6 rounded-md border flex items-center justify-center shrink-0 transition-all duration-150"
+                      style={{
+                        borderColor: selected[service.id] ? '#FE6942' : 'rgba(0,0,0,0.2)',
+                        background: selected[service.id] ? '#FE6942' : 'transparent',
+                      }}
+                    >
+                      {selected[service.id] && (
+                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                          <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </div>
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/50'}`}>
+                      {service.label}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-8 shrink-0">
+                    <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${selected[service.id] ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
+                      {service.prazo}
+                    </span>
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
+                      {formatBRL(service.price)}
                     </span>
                   </div>
                 </div>
