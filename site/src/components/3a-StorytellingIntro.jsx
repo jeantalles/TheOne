@@ -12,7 +12,7 @@ const STORYTELLING_INTRO_OVERLAP = '102svh';
 const STORY = {
   tag: '01 ⏤ 04',
   title: 'Você não pode se vender da mesma forma que o restante do seu mercado',
-  content: 'Ter um bom produto, rodar anúncio, e produzir conteúdo não é mais um diferencial. O mercado tá ficando cada vez mais competitivo e parecido.\nNum ambiente assim, só se torna a escolha número um quem constrói um posicionamento impossível de ser ignorado.',
+  content: 'Ter um bom produto, rodar anúncio, e produzir conteúdo não é mais um diferencial. O mercado tá ficando cada vez mais competitivo e parecido.\nA maioria das empresas se posiciona na mesma prateleira que seus concorrentes, com ofertas parecidas. Se a embalagem de todos na prateleira for igual, os clientes vão escolher pelo que? Preço.\nNum ambiente assim, só se torna a escolha número um quem constrói um posicionamento impossível de ser ignorado.',
 };
 
 const TOKEN_STYLES = {
