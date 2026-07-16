@@ -8,6 +8,7 @@ import CasePageTemplate from './cases/CasePageTemplate';
 import { caseStudies } from '../content/cases';
 import HeroSection from './1-Hero';
 import StorytellingSection from './3-Storytelling';
+import Methodology from './5-Methodology';
 import NomeClienteSlide from './NomeClienteSlide';
 import { useProposalState } from '../hooks/useProposalState';
 
@@ -22,10 +23,10 @@ const SERVICES = [
   { id: 'sitebrand',  label: 'Site BrandExperience',  price: 5000, prazo: '6 semanas' },
 ];
 
-// 0: Capa | 1: NomeCliente | 2: Dores | 3: SobreTheOne | 4: Jean | 5: Zenic | 6: Thunders | 7: Camilla | 8: TheOne Foundation | 9: Casa da Marca | 10: Estratégia | 11: myBranding | 12: Naming | 13: Identidade | 14: SiteBrandExperience | 15: TheOne Agent | 16: Cronograma | 17: Calculadora | 18: Consultoria
-const SLIDE_TOTAL = 19;
+// 0: Capa | 1: NomeCliente | 2: Dores | 3: SobreTheOne | 4: Jean | 5: Zenic | 6: Thunders | 7: Camilla | 8: TheOne Foundation | 9: Casa da Marca | 10: Nossa Metodologia | 11: Estratégia | 12: myBranding | 13: Naming | 14: Identidade | 15: SiteBrandExperience | 16: TheOne Agent | 17: Cronograma | 18: Calculadora | 19: Consultoria
+const SLIDE_TOTAL = 20;
 
-const DARK_SLIDES = [0, 1, 4, 5, 6, 7, 8, 15];
+const DARK_SLIDES = [0, 1, 4, 5, 6, 7, 8, 10, 16];
 
 const formatBRL = (v) => `R$ ${v.toLocaleString('pt-BR')}`;
 
@@ -1566,6 +1567,28 @@ function CasaDaMarca() {
   );
 }
 
+// ── SLIDE: NOSSA METODOLOGIA ───────────────────────────────────────────────────
+function NossaMetodologia({ scrollerRef }) {
+  const [scroller, setScroller] = useState(null);
+
+  // Mesma técnica usada em SobreTheOne: captura o DOM node do scroller da slide
+  // após o mount, para que o ScrollTrigger da pirâmide funcione dentro do
+  // container interno (overflow-y-auto) em vez do scroll da página.
+  useEffect(() => {
+    if (scrollerRef?.current) {
+      setScroller(scrollerRef.current);
+    }
+  }, [scrollerRef]);
+
+  useEffect(() => {
+    if (!scroller) return;
+    const id = setTimeout(() => ScrollTrigger.refresh(), 860);
+    return () => clearTimeout(id);
+  }, [scroller]);
+
+  return scroller ? <Methodology scroller={scroller} /> : null;
+}
+
 // ── SLIDE 7: CRONOGRAMA ───────────────────────────────────────────────────────
 const CRONOGRAMA_STEPS = [
   { etapa: '01', nome: 'Imersão', descricao: 'Diagnóstico completo do negócio, mercado e público' },
@@ -1979,7 +2002,7 @@ function PropostaSlideshow() {
         ref={slideScrollRef}
         data-lenis-prevent
         onScroll={checkScroll}
-        className={`absolute inset-0 overflow-y-auto ${DARK_SLIDES.includes(current) ? 'pb-0' : 'pb-20 md:pb-16'} ${animDir === 'next' ? 'slide-from-right' : 'slide-from-left'}`}
+        className={`absolute inset-0 overflow-y-auto overscroll-y-none ${DARK_SLIDES.includes(current) ? 'pb-0' : 'pb-20 md:pb-16'} ${animDir === 'next' ? 'slide-from-right' : 'slide-from-left'}`}
       >
         {current === 0  && <Capa />}
         {current === 1  && (
@@ -1997,15 +2020,16 @@ function PropostaSlideshow() {
         {current === 7  && <CaseSlide slug="camilla-toscano" />}
         {current === 8  && <TheOneFoundation />}
         {current === 9  && <CasaDaMarca />}
-        {current === 10 && <EstrategiaDeMarca />}
-        {current === 11 && <MyBranding />}
-        {current === 12 && <Naming />}
-        {current === 13 && <IdentidadeVisual />}
-        {current === 14 && <SiteBrandExperience />}
-        {current === 15 && <TheOneAgent />}
-        {current === 16 && <Cronograma />}
-        {current === 17 && <Calculadora clientName={proposalState.clientName} />}
-        {current === 18 && <Consultoria />}
+        {current === 10 && <NossaMetodologia scrollerRef={slideScrollRef} />}
+        {current === 11 && <EstrategiaDeMarca />}
+        {current === 12 && <MyBranding />}
+        {current === 13 && <Naming />}
+        {current === 14 && <IdentidadeVisual />}
+        {current === 15 && <SiteBrandExperience />}
+        {current === 16 && <TheOneAgent />}
+        {current === 17 && <Cronograma />}
+        {current === 18 && <Calculadora clientName={proposalState.clientName} />}
+        {current === 19 && <Consultoria />}
       </div>
 
       <div

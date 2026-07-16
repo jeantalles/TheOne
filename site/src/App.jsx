@@ -34,10 +34,12 @@ const PropostaWokingThaiFinal = lazy(() => import('./components/PropostaWokingTh
 const PropostaPadraoP = lazy(() => import('./components/PropostaPadrao-P'));
 const PropostaKalidash = lazy(() => import('./components/PropostaKalidash'));
 const PropostaBaseP = lazy(() => import('./components/PropostaBaseP'));
+const PropostaAnderson = lazy(() => import('./components/PropostaAnderson'));
 const PropostaBaseM = lazy(() => import('./components/PropostaBaseM'));
 const PropostaBaseG = lazy(() => import('./components/PropostaBaseG'));
 const QualificacaoPage = lazy(() => import('./components/QualificacaoPage'));
 const AgentOnePage = lazy(() => import('./components/AgentOnePage'));
+const ProjetoAgencia = lazy(() => import('./components/ProjetoAgencia'));
 
 // Prevent browser from restoring scroll position on reload (must be synchronous,
 // before any useEffect, so the browser sees it before scroll restoration fires).
@@ -80,10 +82,12 @@ export default function App() {
   const isPropostaPadraoP = ['/proposta-p', '/proposta-p/'].includes(pathname);
   const isPropostaKalidash = ['/kalidash', '/kalidash/'].includes(pathname);
   const isBaseP = ['/base-p', '/base-p/'].includes(pathname);
+  const isAnderson = ['/anderson-neville', '/anderson-neville/'].includes(pathname);
   const isBaseM = ['/base-m', '/base-m/'].includes(pathname);
   const isBaseG = ['/base-g', '/base-g/'].includes(pathname);
   const isAgentOne = ['/agent-one', '/agent-one/', '/agentone', '/agentone/'].includes(pathname);
   const isDesignSystem = pathname === '/design-system';
+  const isProjetoAgencia = ['/projeto-agencia', '/projeto-agencia/'].includes(pathname);
   const isQualificacao = ['/formulario', '/formulario/', '/qualificacao', '/qualificacao/'].includes(pathname);
   const caseSlug = pathname.startsWith('/cases/')
     ? pathname.replace(/^\/cases\//, '').replace(/\/$/, '')
@@ -357,11 +361,17 @@ export default function App() {
   if (isBaseP) {
     return <Suspense fallback={null}><PropostaBaseP /></Suspense>;
   }
+  if (isAnderson) {
+    return <Suspense fallback={null}><PropostaAnderson /></Suspense>;
+  }
   if (isBaseM) {
     return <Suspense fallback={null}><PropostaBaseM /></Suspense>;
   }
   if (isBaseG) {
     return <Suspense fallback={null}><PropostaBaseG /></Suspense>;
+  }
+  if (isProjetoAgencia) {
+    return <Suspense fallback={null}><ProjetoAgencia /></Suspense>;
   }
 
   if (caseSlug) {

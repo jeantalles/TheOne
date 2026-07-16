@@ -6,7 +6,7 @@ import { useMediaQuery } from '../hooks/useMediaQuery';
 // Comprimentos aproximados de cada linha no viewBox 400x400
 const LINE_LEN = [322, 312, 322];
 
-export default function Methodology() {
+export default function Methodology({ scroller = null }) {
   const containerRef = useRef(null);
   const isMobileViewport = useMediaQuery('(max-width: 767px)');
 
@@ -23,7 +23,8 @@ export default function Methodology() {
           start: 'top top',
           end: isMobileViewport ? '+=340%' : '+=420%',
           pin: true,
-          scrub: 1.2,
+          scrub: scroller ? 0.3 : 1.2,
+          scroller: scroller || undefined,
           invalidateOnRefresh: true,
         }
       });
@@ -112,13 +113,13 @@ export default function Methodology() {
       tl.to({}, { duration: 1.7 });
     }, containerRef);
     return () => ctx.revert();
-  }, [isMobileViewport]);
+  }, [isMobileViewport, scroller]);
 
   return (
     <section
       id="metodologia"
       ref={containerRef}
-      className="bg-[#212121] relative font-halyard h-screen overflow-hidden -mt-[8vh] md:-mt-[10vh]"
+      className={`bg-[#212121] relative font-halyard h-screen overflow-hidden ${scroller ? '' : '-mt-[8vh] md:-mt-[10vh]'}`}
     >
       {/* Headline */}
       <div className="meth-headline absolute inset-0 flex flex-col items-center justify-center z-50 px-6 pointer-events-none" style={{ opacity: 0 }}>

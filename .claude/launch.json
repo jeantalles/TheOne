@@ -12,6 +12,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "8090", "--directory", "/Users/jeantalles/The One/tmp_pdf"],
       "port": 8090
+    },
+    {
+      "name": "root-static",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "8091", "--directory", "/Users/jeantalles/The One"],
+      "port": 8091
     }
   ]
 }

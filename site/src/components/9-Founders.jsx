@@ -17,6 +17,7 @@ const founders = [
     name: 'Jean Talles',
     role: 'Estrategista de Marca e Comunicação',
     bullets: [
+      'Acredita que a marca tem que fazer parte da estratégia de negócio e venda de toda empresa.',
       'Especialista em branding, comunicação e marketing com 08 anos de mercado.',
       'Liderou e estruturou o setor de comunicação para key accounts B2B e B2C na maior assessoria de marketing do país.',
       'Fundador e idealizador da TheOne, consultoria que empodera empresários visionários no Brasil.',

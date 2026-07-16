@@ -34,11 +34,11 @@ const TOKEN_STYLES = {
 
 const PANEL_03 = {
   tag: '03 ⏤ 04',
-  title: 'O problema é que o marketing tradicional não foi feito para negócios visionários.',
+  title: 'O problema é que o marketing industrializado não foi feito para negócios visionários.',
   titleWidth: '1000px',
   titleSizeDesktop: 'clamp(2rem, 5vw, 3.8rem)',
   titleSizeMobile: 'clamp(2.28rem, 8.15vw, 3.34rem)',
-  content: 'Nossa história começou na linha de frente de [WHITE]uma das maiores assessorias de marketing da América Latina.[/WHITE] Vimos empresas despejando rios de dinheiro em uma solução industrializada que prometia resultado, mas não resolviam os problemas de cada negócio. [WHITE]Nós vimos o marketing ruir de dentro pra fora.[/WHITE]\n\nDo outro lado, vemos agências de branding entregando conceitos poéticos, mas abandonando o cliente na execução. Um focando só na performance, e o outro só no branding.\n\n[WHITE]E no meio desse abismo ficam empresas como a sua[/WHITE], com potencial e produto valioso, investindo e sem atingir a visão que buscam.',
+  content: 'Nossa história começou na linha de frente de [WHITE]uma das maiores assessorias de marketing da América Latina.[/WHITE] Vimos empresas despejando rios de dinheiro em uma solução industrializada que prometia resultado, mas não resolviam os problemas de cada negócio. [WHITE]Nós vimos o marketing ruir de dentro pra fora.[/WHITE]\n\nDo outro lado, vemos agências de branding entregando conceitos poéticos, mas abandonando o cliente na construção de marca com foco no crescimento do negócio. Um focando só na performance, e o outro só no branding.\n\n[WHITE]E no meio desse abismo ficam empresas como a sua[/WHITE], com potencial e produto valioso, investindo e sem atingir a visão que buscam.',
 };
 
 const PANEL_04 = {
