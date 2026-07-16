@@ -128,7 +128,7 @@ function Dores() {
                 </h3>
                 <ul className="font-halyard font-light text-[#181412] text-[18px] md:text-[19px] leading-[1.6] space-y-2">
                   <li className="flex items-start gap-2"><span className="text-red-400 mt-1">•</span> Cobram mensalidade de manutenção (R$ 200 a R$ 500).</li>
-                  <li className="flex items-start gap-2"><span className="text-red-400 mt-1">•</span> Cobram taxa de hospedagem (R$ 100 a R$ 150).</li>
+                  <li className="flex items-start gap-2"><span className="text-red-400 mt-1">•</span> Possui custo de hospedagem mensal (R$ 100 a R$ 150).</li>
                   <li className="flex items-start gap-2"><span className="text-red-400 mt-1">•</span> O site nunca é 100% seu. Você fica preso a eles.</li>
                 </ul>
               </div>
