@@ -59,7 +59,7 @@ const STORIES = {
       title: 'Sabemos que você quer construir um legado.',
       titleWidth: '700px',
       titleSizeMobile: 'clamp(2.38rem, 8.1vw, 3.42rem)',
-      content: 'Assim como nós, você é ambicioso, tem visão, mas sente que [WHITE]seu negócio vale mais do que o mercado valoriza.[/WHITE] As pessoas ao redor não entendem por que você não se acomoda, não aceita entregar o básico e [WHITE]sempre está buscando elevar o nível do seu negócio.[/WHITE]\n\nVocê não quer apenas bater metas no fim do mês, você quer gerar riqueza, transformação, ditar as regras do seu mercado e ser a referência número um. [ORANGE]Afinal, você é um visionário[/ORANGE].',
+      content: 'Assim como nós, você é ambicioso, tem visão, mas sente que [WHITE]seu negócio vale mais do que o mercado valoriza.[/WHITE] As pessoas ao redor não entendem por que você não se acomoda, não aceita entregar o básico e [WHITE]sempre está buscando elevar o nível do seu negócio.[/WHITE]\n\nVocê não quer apenas bater metas no fim do mês, você quer gerar riqueza, transformação, ditar as regras do seu mercado e ser a referência número um. [ORANGE]Afinal, você é um visionário.[/ORANGE]',
     },
     PANEL_03,
     PANEL_04,
