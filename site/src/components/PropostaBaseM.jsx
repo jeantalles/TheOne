@@ -19,7 +19,7 @@ const SERVICES = [
   { id: 'entrevistas', label: 'Entrevistas com Clientes', price: 3000, prazo: '2 semanas' },
   { id: 'naming',     label: 'Naming',                 price: 3000, prazo: '2 semanas' },
   { id: 'identidade', label: 'Identidade de Marca',   price: 6000, prazo: '4 semanas' },
-  { id: 'mybranding', label: 'myBranding',            price: 8000, prazo: '4 semanas' },
+  { id: 'mybranding', label: 'myBranding',            price: 5000, prazo: '4 semanas' },
   { id: 'sitebrand',  label: 'Site BrandExperience',  price: 10000, prazo: '6 semanas' },
 ];
 
