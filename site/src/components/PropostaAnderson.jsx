@@ -614,7 +614,7 @@ function IdentidadeVisual() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
             <h2 className="id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
-              Identidade<br />de Marca
+              Identidade de Marca<br />Essencial
             </h2>
             <div className="id-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
               R$ 4.000
@@ -637,10 +637,11 @@ function IdentidadeVisual() {
             <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">O que resolve</h3>
             <ul className="space-y-4">
               {[
-                'Visual genérico que parece igual a todo mundo no mercado',
-                'Marca que não transmite o valor real do negócio',
+                'Deixar de ter uma identidade genérica no mercado',
+                'Ajuda a aumentar a percepção de valor, transmitindo mais confiança, segurança ou desejo',
                 'Identidade inconsistente que confunde o público',
-                'Logo feito na pressa que não representa quem você é',
+                'A identidade atual está desalinhada com a proposta e o que o negócio quer de fato transmitir',
+                'Aumenta o reconhecimento e identificação da marca com o público',
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <span className="text-[#FE6942] text-[20px] leading-[1.5] shrink-0">→</span>
@@ -651,22 +652,58 @@ function IdentidadeVisual() {
           </div>
 
           <div className="id-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
-            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">O que você recebe</h3>
-            <ul className="space-y-4">
-              {[
-                'Logo e sistema de marca completo',
-                'Paleta de cores e tipografia estratégica',
-                'Padrões e elementos gráficos exclusivos',
-                'Aplicações em redes sociais e materiais',
-                'Manual de identidade visual',
-                'Arquivos finais em todos os formatos',
-              ].map((item, i) => (
-                <li key={i} className="flex items-center gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0" />
-                  <span className="font-halyard font-light text-[#181412] text-[19px] md:text-[20px] leading-[1.55]">{item}</span>
-                </li>
-              ))}
-            </ul>
+            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">Entregas</h3>
+            <div className="space-y-5">
+              <div>
+                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Identidade Visual</h4>
+                <ul className="space-y-2 pl-1">
+                  {[
+                    'Desenvolvimento do sistema de identidade visual',
+                    'Desenvolvimento do Conceito do Logotipo',
+                    'Variações do Logotipo – Símbolo, Vertical, Horizontal',
+                    'Paleta de Cores – Cores principais e secundárias',
+                    'Definição da família tipográfica',
+                    'Elementos Gráficos Proprietários',
+                    'Exemplos de Aplicação da Marca (até 7)',
+                    'Apresentação de Identidade Visual',
+                  ].map((sub, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
+                      <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">{sub}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Manual</h4>
+                <ul className="space-y-2 pl-1">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
+                    <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">
+                      Guia de Aplicação da Identidade Visual – Diretrizes para aplicação correta da identidade visual
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Identidade Verbal</h4>
+                <ul className="space-y-2 pl-1">
+                  {[
+                    'Eixo Narrativo',
+                    'Texto de narrativa da marca (storytelling)',
+                    'Manifesto',
+                    'Frases chave de comunicação da marca',
+                  ].map((sub, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
+                      <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">{sub}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 

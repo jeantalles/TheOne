@@ -18,15 +18,16 @@ const SERVICES = [
   { id: 'estrategia', label: 'Estratégia de Marca',   price: 7000, prazo: '4 semanas' },
   { id: 'entrevistas', label: 'Entrevistas com Clientes', price: 3000, prazo: '2 semanas' },
   { id: 'naming',     label: 'Naming',                 price: 3000, prazo: '2 semanas' },
-  { id: 'identidade', label: 'Identidade de Marca',   price: 6000, prazo: '4 semanas' },
+  { id: 'identidade', label: 'Identidade de Marca Essencial',   price: 6000, prazo: '4 semanas' },
+  { id: 'identidade_completa', label: 'Identidade de Marca Completa', price: 8000, prazo: '6 semanas' },
   { id: 'mybranding', label: 'myBranding',            price: 5000, prazo: '4 semanas' },
   { id: 'sitebrand',  label: 'Site BrandExperience',  price: 10000, prazo: '6 semanas' },
 ];
 
-// 0: Capa | 1: NomeCliente | 2: Contexto A | 3: Contexto B | 4: Dores | 5: SobreTheOne | 6: Jean | 7: Zenic | 8: Thunders | 9: Camilla | 10: TheOne Foundation | 11: Casa da Marca | 12: Estratégia | 13: Naming | 14: Identidade | 15: myBranding | 16: SiteBrandExperience | 17: TheOne Agent | 18: Cronograma | 19: Calculadora | 20: Consultoria
-const SLIDE_TOTAL = 21;
+// 0: Capa | 1: NomeCliente | 2: Contexto A | 3: Contexto B | 4: Dores | 5: SobreTheOne | 6: Jean | 7: Zenic | 8: Thunders | 9: Camilla | 10: TheOne Foundation | 11: Casa da Marca | 12: Estratégia | 13: Naming | 14: Identidade Essencial | 15: Identidade Completa | 16: myBranding | 17: SiteBrandExperience | 18: TheOne Agent | 19: Cronograma | 20: Calculadora | 21: Consultoria
+const SLIDE_TOTAL = 22;
 
-const DARK_SLIDES = [0, 1, 6, 7, 8, 9, 10, 17];
+const DARK_SLIDES = [0, 1, 6, 7, 8, 9, 10, 18];
 
 const formatBRL = (v) => `R$ ${v.toLocaleString('pt-BR')}`;
 
@@ -605,7 +606,7 @@ function IdentidadeVisual() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
             <h2 className="id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
-              Identidade<br />de Marca
+              Identidade de Marca<br />Essencial
             </h2>
             <div className="id-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
               R$ 6.000
@@ -628,10 +629,11 @@ function IdentidadeVisual() {
             <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">O que resolve</h3>
             <ul className="space-y-4">
               {[
-                'Visual genérico que parece igual a todo mundo no mercado',
-                'Marca que não transmite o valor real do negócio',
+                'Deixar de ter uma identidade genérica no mercado',
+                'Ajuda a aumentar a percepção de valor, transmitindo mais confiança, segurança ou desejo',
                 'Identidade inconsistente que confunde o público',
-                'Logo feito na pressa que não representa quem você é',
+                'A identidade atual está desalinhada com a proposta e o que o negócio quer de fato transmitir',
+                'Aumenta o reconhecimento e identificação da marca com o público',
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <span className="text-[#FE6942] text-[20px] leading-[1.5] shrink-0">→</span>
@@ -642,22 +644,175 @@ function IdentidadeVisual() {
           </div>
 
           <div className="id-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
-            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">O que você recebe</h3>
+            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">Entregas</h3>
+            <div className="space-y-5">
+              <div>
+                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Identidade Visual</h4>
+                <ul className="space-y-2 pl-1">
+                  {[
+                    'Desenvolvimento do sistema de identidade visual',
+                    'Desenvolvimento do Conceito do Logotipo',
+                    'Variações do Logotipo – Símbolo, Vertical, Horizontal',
+                    'Paleta de Cores – Cores principais e secundárias',
+                    'Definição da família tipográfica',
+                    'Elementos Gráficos Proprietários',
+                    'Exemplos de Aplicação da Marca (até 7)',
+                    'Apresentação de Identidade Visual',
+                  ].map((sub, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
+                      <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">{sub}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Manual</h4>
+                <ul className="space-y-2 pl-1">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
+                    <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">
+                      Guia de Aplicação da Identidade Visual – Diretrizes para aplicação correta da identidade visual
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Identidade Verbal</h4>
+                <ul className="space-y-2 pl-1">
+                  {[
+                    'Eixo Narrativo',
+                    'Texto de narrativa da marca (storytelling)',
+                    'Manifesto',
+                    'Frases chave de comunicação da marca',
+                  ].map((sub, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
+                      <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">{sub}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+// ── SLIDE 4B: IDENTIDADE VISUAL COMPLETA ──────────────────────────────────────
+function IdentidadeVisualCompleta() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.id-item', {
+        opacity: 0, y: 24, stagger: 0.08, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24">
+      <div className="max-w-[1400px] mx-auto">
+
+        <div className="id-item mb-6">
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Pilar 03 · TheOne Foundation</span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
+          <div>
+            <h2 className="id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
+              Identidade de Marca<br />Completa
+            </h2>
+            <div className="id-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
+              R$ 8.000
+            </div>
+            <p className="id-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
+              Transformamos a estratégia em uma expressão visual única. Uma identidade que o mercado reconhece, o público deseja e você tem orgulho de mostrar em qualquer contexto.
+            </p>
+          </div>
+          <div className="id-item hidden lg:block rounded-[24px] overflow-hidden" style={{ height: '400px' }}>
+            <img
+              src="/images/eike-identidade-bg.jpg"
+              alt="Identidade de Marca"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="id-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">O que resolve</h3>
             <ul className="space-y-4">
               {[
-                'Logo e sistema de marca completo',
-                'Paleta de cores e tipografia estratégica',
-                'Padrões e elementos gráficos exclusivos',
-                'Aplicações em redes sociais e materiais',
-                'Manual de identidade visual',
-                'Arquivos finais em todos os formatos',
+                'Deixar de ter uma identidade genérica no mercado',
+                'Ajuda a aumentar a percepção de valor, transmitindo mais confiança, segurança ou desejo',
+                'Identidade inconsistente que confunde o público',
+                'A identidade atual está desalinhada com a proposta e o que o negócio quer de fato transmitir',
+                'Aumenta o reconhecimento e identificação da marca com o público',
               ].map((item, i) => (
-                <li key={i} className="flex items-center gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0" />
+                <li key={i} className="flex items-start gap-3">
+                  <span className="text-[#FE6942] text-[20px] leading-[1.5] shrink-0">→</span>
                   <span className="font-halyard font-light text-[#181412] text-[19px] md:text-[20px] leading-[1.55]">{item}</span>
                 </li>
               ))}
             </ul>
+          </div>
+
+          <div className="id-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">Entregas</h3>
+            <div className="space-y-5">
+              <div>
+                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Identidade Visual</h4>
+                <ul className="space-y-2 pl-1">
+                  {[
+                    'Desenvolvimento do sistema de identidade visual',
+                    'Desenvolvimento do Conceito do Logotipo',
+                    'Variações do Logotipo – Símbolo, Vertical, Horizontal',
+                    'Paleta de Cores – Cores principais e secundárias',
+                    'Definição da família tipográfica',
+                    'Elementos Gráficos Proprietários',
+                    'Exemplos de Aplicação da Marca (até 7)',
+                    'Apresentação de Identidade Visual',
+                    'Guia de Aplicação da Identidade Visual – Diretrizes para aplicação correta da identidade visual',
+                  ].map((sub, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
+                      <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">{sub}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Identidade Verbal</h4>
+                <ul className="space-y-2 pl-1">
+                  {[
+                    'Eixo narrativo',
+                    'Texto de narrativa da marca (storytelling)',
+                    'Manifesto',
+                    'Expressões da marca – Frases e mensagens chave da marca',
+                    'Aplicações – Bio do Instagram, Bio do LinkedIn, etc',
+                    'Tom e Voz da marca',
+                    'Linguagem proprietária – Território de palavras, termos próprios, expressões características',
+                    'Slogan',
+                    'Regras de comunicação: DOs and DONTs',
+                  ].map((sub, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
+                      <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">{sub}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -991,10 +1146,28 @@ function CardIdentidade() {
     >
       <div className="relative z-10 px-8 md:px-14 pt-12 md:pt-16 pb-10 md:pb-14 max-w-[380px]">
         <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08] mb-20 md:mb-24">
-          Identidade<br />de Marca +<br />Guia
+          Identidade Essencial<br />de Marca +<br />Guia
         </h3>
         <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.4] max-w-[300px]">
           A partir do conceito central, desenvolvemos uma identidade que comunica a essência da marca e garante reconhecimento, coerência e diferenciação em todos os pontos de contato.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function CardIdentidadeCompleta() {
+  return (
+    <div
+      className={`${cardClass} min-h-[380px] md:min-h-[420px] bg-cover bg-[54%_center] md:bg-center`}
+      style={{ backgroundImage: 'url(/images/eike-identidade-bg.jpg)' }}
+    >
+      <div className="relative z-10 px-8 md:px-14 pt-12 md:pt-16 pb-10 md:pb-14 max-w-[380px]">
+        <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08] mb-20 md:mb-24">
+          Identidade Completa<br />de Marca +<br />Guia + Verbal
+        </h3>
+        <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.4] max-w-[300px]">
+          Desenvolvimento do sistema visual completo e todas as diretrizes de identidade verbal (Tom e Voz, regras de comunicação, slogans, linguagem proprietária).
         </p>
       </div>
     </div>
@@ -1103,6 +1276,7 @@ function Calculadora({ clientName }) {
     entrevistas: false,
     naming:     false,
     identidade: true,
+    identidade_completa: false,
     sitebrand:  false,
   });
   const [myBrandingQty, setMyBrandingQty] = useState(0);
@@ -1141,7 +1315,16 @@ function Calculadora({ clientName }) {
               {SERVICES.filter(s => s.id !== 'mybranding' && s.id !== 'sitebrand').map((service) => (
                 <div
                   key={service.id}
-                  onClick={() => setSelected((prev) => ({ ...prev, [service.id]: !prev[service.id] }))}
+                  onClick={() => setSelected((prev) => {
+                    const nextVal = !prev[service.id];
+                    const updated = { ...prev, [service.id]: nextVal };
+                    if (service.id === 'identidade' && nextVal) {
+                      updated.identidade_completa = false;
+                    } else if (service.id === 'identidade_completa' && nextVal) {
+                      updated.identidade = false;
+                    }
+                    return updated;
+                  })}
                   className={`cursor-pointer rounded-2xl px-7 py-6 border transition-all duration-200 flex items-center justify-between gap-4 ${
                     selected[service.id]
                       ? 'border-[#FE6942] bg-[#FE6942]/[0.04]'
@@ -1300,6 +1483,7 @@ function Calculadora({ clientName }) {
             )}
             {selected.naming     && <CardNaming />}
             {selected.identidade && <CardIdentidade />}
+            {selected.identidade_completa && <CardIdentidadeCompleta />}
             {myBrandingQty > 0   && <CardMyBranding />}
             {selected.sitebrand  && <CardSiteBrand />}
             <CardTheOneAgent />
@@ -1902,12 +2086,13 @@ function PropostaSlideshow() {
         {current === 12 && <EstrategiaDeMarca />}
         {current === 13 && <Naming />}
         {current === 14 && <IdentidadeVisual />}
-        {current === 15 && <MyBranding />}
-        {current === 16 && <SiteBrandExperience />}
-        {current === 17 && <TheOneAgent />}
-        {current === 18 && <Cronograma />}
-        {current === 19 && <Calculadora clientName={proposalState.clientName} />}
-        {current === 20 && <Consultoria />}
+        {current === 15 && <IdentidadeVisualCompleta />}
+        {current === 16 && <MyBranding />}
+        {current === 17 && <SiteBrandExperience />}
+        {current === 18 && <TheOneAgent />}
+        {current === 19 && <Cronograma />}
+        {current === 20 && <Calculadora clientName={proposalState.clientName} />}
+        {current === 21 && <Consultoria />}
       </div>
 
       <div
