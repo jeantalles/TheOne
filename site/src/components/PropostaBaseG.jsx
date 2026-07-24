@@ -667,31 +667,31 @@ function IdentidadeVisual() {
               </div>
 
               <div>
-                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Manual</h4>
-                <ul className="space-y-2 pl-1">
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
-                    <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">
-                      Guia de Aplicação da Identidade Visual – Diretrizes para aplicação correta da identidade visual
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              <div>
                 <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Identidade Verbal</h4>
                 <ul className="space-y-2 pl-1">
                   {[
                     'Eixo Narrativo',
                     'Texto de narrativa da marca (storytelling)',
                     'Manifesto',
-                    'Frases chave de comunicação da marca',
+                    'Expressões da marca – Frases e mensagens chave da marca',
                   ].map((sub, idx) => (
                     <li key={idx} className="flex items-start gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
                       <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">{sub}</span>
                     </li>
                   ))}
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Brandbook</h4>
+                <ul className="space-y-2 pl-1">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
+                    <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">
+                      Guia de marca essencial
+                    </span>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -756,6 +756,8 @@ function IdentidadeVisualCompleta() {
                 'Identidade inconsistente que confunde o público',
                 'A identidade atual está desalinhada com a proposta e o que o negócio quer de fato transmitir',
                 'Aumenta o reconhecimento e identificação da marca com o público',
+                'Precisa ter uma comunicação verbal proprietária e única no mercado',
+                'Quer ter extrema clareza do que comunicar e o que não comunicar',
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <span className="text-[#FE6942] text-[20px] leading-[1.5] shrink-0">→</span>
@@ -780,7 +782,6 @@ function IdentidadeVisualCompleta() {
                     'Elementos Gráficos Proprietários',
                     'Exemplos de Aplicação da Marca (até 7)',
                     'Apresentação de Identidade Visual',
-                    'Guia de Aplicação da Identidade Visual – Diretrizes para aplicação correta da identidade visual',
                   ].map((sub, idx) => (
                     <li key={idx} className="flex items-start gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
@@ -809,6 +810,18 @@ function IdentidadeVisualCompleta() {
                       <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">{sub}</span>
                     </li>
                   ))}
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Brandbook</h4>
+                <ul className="space-y-2 pl-1">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
+                    <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">
+                      Guia de marca completo
+                    </span>
+                  </li>
                 </ul>
               </div>
             </div>
