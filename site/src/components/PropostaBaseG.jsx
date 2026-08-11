@@ -1611,13 +1611,13 @@ function CasaDaMarca() {
         <circle cx="730" cy="186" r="3" fill="#FE6942" />
 
         <text x="720" y="270" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="22" fontWeight="700" fill="#181412">PONTOS DE CONTATO</text>
-        <text x="720" y="304" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="18" fontWeight="400" fill="#181412" fillOpacity="0.68">Anúncio, Instagram, Vendas, PDV, Evento</text>
+        <text x="720" y="304" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="18" fontWeight="400" fill="#181412" fillOpacity="0.68">Anúncio, Instagram, Tiktok, Comercial, PDV, Eventos</text>
 
         <path d="M720 462C699 462 682 481 682 481C682 481 699 500 720 500C741 500 758 481 758 481C758 481 741 462 720 462Z" stroke="#FE6942" strokeWidth="3.5" strokeLinejoin="round" />
         <circle cx="720" cy="481" r="10" stroke="#FE6942" strokeWidth="3.5" />
 
-        <text x="720" y="548" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="18" fontWeight="400" fill="#181412" fillOpacity="0.68">Narrativa, identidade visual,</text>
-        <text x="720" y="576" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="18" fontWeight="400" fill="#181412" fillOpacity="0.68">identidade sensorial, arquitetura</text>
+        <text x="720" y="548" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="18" fontWeight="400" fill="#181412" fillOpacity="0.68">Pitch de vendas, direcionamento do marketing,</text>
+        <text x="720" y="576" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="18" fontWeight="400" fill="#181412" fillOpacity="0.68">identidade visual, arquitetura do PDV</text>
 
         <text x="720" y="696" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="30" fontWeight="700" fill="white">THEONE FOUNDATION</text>
         <text x="720" y="735" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="21" fontWeight="400" fill="white" fillOpacity="0.7">Estratégia de posicionamento e marca</text>
