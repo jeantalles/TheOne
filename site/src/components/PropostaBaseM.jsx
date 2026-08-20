@@ -20,7 +20,7 @@ const SERVICES = [
   { id: 'naming',     label: 'Naming',                 price: 3000, prazo: '2 semanas' },
   { id: 'identidade', label: 'Identidade de Marca Essencial',   price: 6000, prazo: '4 semanas' },
   { id: 'identidade_completa', label: 'Identidade de Marca Completa', price: 8000, prazo: '6 semanas' },
-  { id: 'mybranding', label: 'myBranding',            price: 5000, prazo: '4 semanas' },
+  { id: 'mybranding', label: 'myBranding',            price: 6000, prazo: '4 semanas' },
   { id: 'sitebrand',  label: 'Site BrandExperience',  price: 10000, prazo: '6 semanas' },
 ];
 
@@ -1376,9 +1376,10 @@ function Calculadora({ clientName }) {
     sitebrand:  false,
   });
   const [myBrandingQty, setMyBrandingQty] = useState(0);
+  const myBrandingUnitPrice = myBrandingQty >= 2 ? 5000 : 6000;
 
   const total = SERVICES.reduce((sum, s) => {
-    if (s.id === 'mybranding') return sum + (myBrandingQty * s.price);
+    if (s.id === 'mybranding') return sum + (myBrandingQty * myBrandingUnitPrice);
     return selected[s.id] ? sum + s.price : sum;
   }, 0);
   const discountPct = total > 10000 ? 0.10 : 0.05;
@@ -1504,7 +1505,7 @@ function Calculadora({ clientName }) {
                       {service.prazo}
                     </span>
                     <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
-                      {myBrandingQty > 0 ? formatBRL(service.price * myBrandingQty) : formatBRL(service.price)}
+                      {myBrandingQty > 0 ? formatBRL(myBrandingUnitPrice * myBrandingQty) : formatBRL(service.price)}
                     </span>
                   </div>
                 </div>
