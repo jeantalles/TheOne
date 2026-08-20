@@ -859,7 +859,7 @@ function MyBranding() {
       <div className="max-w-[1400px] mx-auto">
 
         <div className="mb-item mb-6">
-          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Pilar 02 · TheOne Foundation</span>
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Produto independente · myBranding</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
@@ -1451,51 +1451,6 @@ function Calculadora({ clientName }) {
                 </div>
               ))}
 
-              {SERVICES.filter(s => s.id === 'mybranding').map((service) => (
-                <div
-                  key={service.id}
-                  className={`rounded-2xl px-7 py-6 border transition-all duration-200 flex items-center justify-between gap-4 ${
-                    myBrandingQty > 0
-                      ? 'border-[#FE6942] bg-[#FE6942]/[0.04]'
-                      : 'border-black/[0.09] bg-[#F8F8F8] hover:border-black/20'
-                  }`}
-                >
-                  <div className="flex items-center gap-5">
-                    {/* Contador de pessoas */}
-                    <div className="flex items-center gap-0 bg-[#F0F0F0] border border-black/12 rounded-xl overflow-hidden">
-                      <button
-                        onClick={(e) => { e.stopPropagation(); setMyBrandingQty(prev => Math.max(0, prev - 1)); }}
-                        className="w-10 h-10 flex items-center justify-center font-halyard font-semibold text-[20px] text-[#181412] hover:bg-black/10 transition-colors select-none"
-                        aria-label="Diminuir quantidade"
-                      >
-                        −
-                      </button>
-                      <span className="font-halyard font-bold text-[17px] w-8 text-center text-[#181412] tabular-nums">
-                        {myBrandingQty}
-                      </span>
-                      <button
-                        onClick={(e) => { e.stopPropagation(); setMyBrandingQty(prev => prev + 1); }}
-                        className="w-10 h-10 flex items-center justify-center font-halyard font-semibold text-[20px] text-[#181412] hover:bg-black/10 transition-colors select-none"
-                        aria-label="Aumentar quantidade"
-                      >
-                        +
-                      </button>
-                    </div>
-                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#181412]' : 'text-[#181412]/50'}`}>
-                      {service.label}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-8 shrink-0">
-                    <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
-                      {service.prazo}
-                    </span>
-                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
-                      {myBrandingQty > 0 ? formatBRL(service.price * myBrandingQty) : formatBRL(service.price)}
-                    </span>
-                  </div>
-                </div>
-              ))}
-
               {SERVICES.filter(s => s.id !== 'estrategia' && s.id !== 'mybranding' && s.id !== 'sitebrand').map((service) => (
                 <div
                   key={service.id}
@@ -1539,6 +1494,59 @@ function Calculadora({ clientName }) {
                     </span>
                     <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
                       {formatBRL(service.price)}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Produto independente: myBranding */}
+          <div>
+            <div className="flex items-center gap-3 mb-3 px-1">
+              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">myBranding</span>
+              <div className="flex-1 h-px bg-black/10" />
+            </div>
+            <div className="space-y-3">
+              {SERVICES.filter(s => s.id === 'mybranding').map((service) => (
+                <div
+                  key={service.id}
+                  className={`rounded-2xl px-7 py-6 border transition-all duration-200 flex items-center justify-between gap-4 ${
+                    myBrandingQty > 0
+                      ? 'border-[#FE6942] bg-[#FE6942]/[0.04]'
+                      : 'border-black/[0.09] bg-[#F8F8F8] hover:border-black/20'
+                  }`}
+                >
+                  <div className="flex items-center gap-5">
+                    <div className="flex items-center gap-0 bg-[#F0F0F0] border border-black/12 rounded-xl overflow-hidden">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setMyBrandingQty(prev => Math.max(0, prev - 1)); }}
+                        className="w-10 h-10 flex items-center justify-center font-halyard font-semibold text-[20px] text-[#181412] hover:bg-black/10 transition-colors select-none"
+                        aria-label="Diminuir quantidade"
+                      >
+                        −
+                      </button>
+                      <span className="font-halyard font-bold text-[17px] w-8 text-center text-[#181412] tabular-nums">
+                        {myBrandingQty}
+                      </span>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setMyBrandingQty(prev => prev + 1); }}
+                        className="w-10 h-10 flex items-center justify-center font-halyard font-semibold text-[20px] text-[#181412] hover:bg-black/10 transition-colors select-none"
+                        aria-label="Aumentar quantidade"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#181412]' : 'text-[#181412]/50'}`}>
+                      {service.label}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-8 shrink-0">
+                    <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
+                      {service.prazo}
+                    </span>
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
+                      {myBrandingQty > 0 ? formatBRL(service.price * myBrandingQty) : formatBRL(service.price)}
                     </span>
                   </div>
                 </div>
