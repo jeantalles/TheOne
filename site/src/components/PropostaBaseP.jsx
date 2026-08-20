@@ -15,7 +15,7 @@ import { useProposalState } from '../hooks/useProposalState';
 gsap.registerPlugin(ScrollTrigger);
 
 const SERVICES = [
-  { id: 'estrategia', label: 'Estratégia de Marca',   price: 4000, prazo: '3 semanas' },
+  { id: 'estrategia', label: 'Estratégia de Marca',   price: 5000, prazo: '3 semanas' },
   { id: 'entrevistas', label: 'Entrevistas com Clientes', price: 2000, prazo: '1 semana' },
   { id: 'naming',     label: 'Naming',                 price: 2000, prazo: '2 semanas' },
   { id: 'identidade', label: 'Identidade de Marca Essencial',   price: 4000, prazo: '4 semanas' },
@@ -357,7 +357,7 @@ function EstrategiaDeMarca() {
               Estratégia<br />de Marca
             </h2>
             <div className="est-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              R$ 4.000
+              R$ 5.000
             </div>
             <p className="est-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               Um sistema estratégico organizado por etapas: primeiro entendemos o terreno, depois definimos o posicionamento e, por fim, desenhamos como a sua marca se efetiva nos canais certos.
