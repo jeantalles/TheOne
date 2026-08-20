@@ -21,7 +21,7 @@ const SERVICES = [
   { id: 'identidade', label: 'Identidade de Marca Essencial',   price: 6000, prazo: '4 semanas' },
   { id: 'identidade_completa', label: 'Identidade de Marca Completa', price: 8000, prazo: '6 semanas' },
   { id: 'mybranding', label: 'myBranding',            price: 6000, prazo: '4 semanas' },
-  { id: 'sitebrand',  label: 'Site BrandExperience',  price: 10000, prazo: '6 semanas' },
+  { id: 'sitebrand',  label: 'Site BrandExperience',  price: 8000, prazo: '6 semanas' },
 ];
 
 // 0: Capa | 1: NomeCliente | 2: Contexto A | 3: Contexto B | 4: Dores | 5: SobreTheOne | 6: Jean | 7: Zenic | 8: Thunders | 9: Camilla | 10: TheOne Foundation | 11: Casa da Marca | 12: Estratégia | 13: Naming | 14: Identidade Essencial | 15: Identidade Completa | 16: myBranding | 17: SiteBrandExperience | 18: TheOne Agent | 19: Cronograma | 20: Calculadora | 21: Consultoria
@@ -1033,7 +1033,7 @@ function SiteBrandExperience() {
               Site BrandExperience
             </h2>
             <div className="sbe-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              R$ 10.000
+              R$ 8.000
             </div>
             <p className="sbe-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               Um site que é uma extensão do posicionamento da marca, e não um site institucional genérico. Desenvolvido em código com IA por brand designers que constroem uma experiência imersiva — fazendo seu cliente experienciar o universo da marca digitalmente e gerando impacto, conexão e memorização.
