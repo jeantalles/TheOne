@@ -12,15 +12,13 @@ const CLIENT_LOGOS = [
 
 const founders = [
   {
-    number: '01',
     badge: 'Fundador',
     name: 'Jean Talles',
     role: 'Estrategista de Marca e Comunicação',
     bullets: [
-      'Acredita que a marca tem que fazer parte da estratégia de negócio e venda de toda empresa.',
-      'Especialista em branding, comunicação e marketing com 08 anos de mercado.',
-      'Liderou e estruturou o setor de comunicação para key accounts B2B e B2C na maior assessoria de marketing do país.',
-      'Fundador e idealizador da TheOne, consultoria que empodera empresários visionários no Brasil.',
+      'Liderou e estruturou o setor de comunicação para key accounts na maior assessoria de marketing e vendas do país.',
+      'O cara de branding que veio do mundo da performance.',
+      'Fundador e idealizador da TheOne, a principal aliada de negócios visionários no Brasil.',
     ],
     img: '/images/Jean.jpeg',
     width: 1530,
@@ -97,10 +95,6 @@ export default function Founders() {
                       onError={(e) => { e.currentTarget.style.display = 'none'; }}
                       className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)] [@media(hover:hover)]:group-hover:scale-[1.04]"
                     />
-                    {/* Large decorative number */}
-                    <span className="absolute bottom-5 right-7 hidden md:block font-editorial text-[100px] leading-none text-white/[0.06] select-none pointer-events-none">
-                      {f.number}
-                    </span>
                   </div>
 
                   {/* Content */}
