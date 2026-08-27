@@ -48,8 +48,7 @@ export default function FinalCTA() {
               marginBottom: '42px',
             }}
           >
-            <span className="block">Torne-se a escolha</span>
-            <span className="block">número um.</span>
+            <span className="block">Torne-se TheOne</span>
           </h1>
 
           <div className="flex items-center justify-center">
@@ -68,7 +67,7 @@ export default function FinalCTA() {
                 maxWidth: '100%',
               }}
             >
-              Quero ser TheOne
+              Quero ser a escolha número um
             </PrimaryCTAButton>
           </div>
         </div>
