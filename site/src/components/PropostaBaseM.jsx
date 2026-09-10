@@ -25,7 +25,7 @@ const ALUDE_PROPOSAL = {
 const SERVICES = IS_ALUDE
   ? [
       { id: 'estrategia', label: 'Estratégia de Marca e Posicionamento', price: 18000, prazo: '6 semanas' },
-      { id: 'entrevistas', label: 'Entrevistas com pessoas do time, da operação e com clientes', price: 0, prazo: '2 semanas' },
+      { id: 'entrevistas', label: 'Entrevistas com pessoas da operação e com clientes', price: 0, prazo: '2 semanas' },
       { id: 'naming', label: 'Naming', price: 5000, prazo: '2 semanas' },
       { id: 'mybranding', label: 'myBranding', price: 13000, prazo: '4 semanas' },
       { id: 'identidade_completa', label: 'Identidade Visual e Verbal', price: 12000, prazo: '6 semanas' },
@@ -101,19 +101,19 @@ function Dores() {
   const dores = IS_ALUDE ? [
     {
       titulo: 'Comunicação técnica, focada em features',
-      descricao: 'O produto resolve dores concretas, mas a comunicação explica o que ele faz antes de revelar a mudança que ele viabiliza para corretores e imobiliárias.',
+      descricao: 'Produtos de tecnologia resolvem dores concretas, mas muitas vezes se comunicam pelo que fazem — não pela transformação que ajudam o cliente a construir.',
     },
     {
       titulo: 'Produto vendido como mais uma opção',
-      descricao: 'Sem uma diferença de marca clara, o mercado compara a Alude a outras soluções disponíveis e reduz a escolha a funcionalidades, preço e condições comerciais.',
+      descricao: 'Sem uma diferença de marca clara, o produto é comparado a outras soluções disponíveis e a escolha se reduz a funcionalidades, preço e condições comerciais.',
     },
     {
       titulo: 'Narrativa sem pertencimento',
-      descricao: 'A ferramenta é útil, mas falta uma ideia maior que faça corretores e imobiliárias se reconhecerem, compartilharem e defenderem a marca.',
+      descricao: 'Quando falta uma ideia maior, o público não se reconhece, não compartilha e não associa a marca ao próprio crescimento.',
     },
     {
       titulo: 'Desejo menor do que o valor entregue',
-      descricao: 'Na venda, a percepção de valor ainda não acompanha a qualidade do produto, a experiência e o tempo que clientes permanecem com a Alude.',
+      descricao: 'Na venda, a percepção de valor não acompanha a qualidade do produto e da experiência que ele entrega.',
     },
     {
       titulo: 'Dependência de tráfego pago',
@@ -1254,7 +1254,7 @@ function CardEstrategia() {
     <div className={`${cardClass} flex flex-col md:flex-row min-h-[420px] md:min-h-[480px]`}>
       <div className="flex-1 px-8 md:px-14 pt-12 md:pt-16 pb-8 md:pb-16 flex flex-col justify-between">
         <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08]">
-          Estratégia de<br />Posicionamento e<br />Marca + Guia
+          {IS_ALUDE ? <>Estratégia de Marca e<br />Posicionamento + Guia</> : <>Estratégia de<br />Posicionamento e<br />Marca + Guia</>}
         </h3>
         <div>
           <p className="font-halyard font-light text-[#181412] text-[19px] md:text-[21px] leading-[1.45] max-w-[340px] mb-6">
@@ -1375,12 +1375,23 @@ function CardSiteBrand() {
         </h3>
         <div>
           <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.4] max-w-[340px] mb-6">
-            Um site que é uma extensão do posicionamento da marca. Desenvolvido em código com IA por brand designers que constroem uma experiência imersiva, fazendo seu cliente experienciar o universo da marca digitalmente.
+            {IS_ALUDE
+              ? 'Um site que é uma extensão do posicionamento da marca. Desenvolvido com IA por brand designers que constroem uma experiência imersiva, fazendo seu cliente experienciar o universo da marca digitalmente.'
+              : 'Um site que é uma extensão do posicionamento da marca. Desenvolvido em código com IA por brand designers que constroem uma experiência imersiva, fazendo seu cliente experienciar o universo da marca digitalmente.'}
           </p>
           <ul className="space-y-1.5">
-            <ArrowItem>Copy estratégico alinhado à marca</ArrowItem>
-            <ArrowItem>Design de alta fidelidade com identidade visual</ArrowItem>
-            <ArrowItem>Desenvolvimento responsivo em código</ArrowItem>
+            {IS_ALUDE ? (
+              <>
+                <ArrowItem>Comunicação e copy focada na proposta de valor: dores, ganhos, diferenciais e prova social</ArrowItem>
+                <ArrowItem>Foco em aumentar a percepção de valor, autoridade e conexão com o público</ArrowItem>
+              </>
+            ) : (
+              <>
+                <ArrowItem>Copy estratégico alinhado à marca</ArrowItem>
+                <ArrowItem>Design de alta fidelidade com identidade visual</ArrowItem>
+                <ArrowItem>Desenvolvimento responsivo em código</ArrowItem>
+              </>
+            )}
           </ul>
         </div>
       </div>
@@ -1646,7 +1657,7 @@ function Calculadora({ clientName }) {
             {selected.entrevistas && (
               <div className="bg-[#F4F4F5] rounded-[28px] md:rounded-[32px] px-8 md:px-14 pt-12 md:pt-16 pb-10 md:pb-14">
                 <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08] mb-6">
-                  {IS_ALUDE ? 'Entrevistas com pessoas do time, da operação e com clientes' : 'Entrevistas com Clientes'}
+                  {IS_ALUDE ? 'Entrevistas com pessoas da operação e com clientes' : 'Entrevistas com Clientes'}
                 </h3>
                 <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.4] max-w-[380px]">
                   {IS_ALUDE
@@ -2055,7 +2066,7 @@ function SobreTheOne({ scrollerRef }) {
           evita dupla inicialização e flicker de reset de animações GSAP */}
       {scroller && <HeroSection disableNavEvents showTopLogo scroller={scroller} />}
       {IS_ALUDE && <ContextoDeMercado />}
-      {scroller && <StorytellingSection persona="empresario" scroller={scroller} />}
+      {scroller && <StorytellingSection persona={IS_ALUDE ? 'alude' : 'empresario'} scroller={scroller} />}
 
       {/* Seção "Existimos para construir marcas TheOne" */}
       <section ref={aboutRef} className="bg-[#212121] text-white min-h-[100svh] px-6 md:px-12 lg:px-16 py-12 md:py-16 flex flex-col justify-center">

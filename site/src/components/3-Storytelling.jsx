@@ -52,6 +52,14 @@ const PANEL_04 = {
   content: 'O tráfego te coloca na frente do cliente, mas se a sua oferta parece igual à do concorrente, você pagou pra ser visto e ignorado. E se parar de anunciar a qualquer momento pode pôr sua empresa em risco, você não está escalando, está dependente.\n\n[WHITE]Ser visto não é suficiente. Você precisa ser lembrado. E desejado.[/WHITE]\n\nE quando o mercado não enxerga o que te diferencia, ele faz o de sempre, te compara pelo preço. Não importa o quanto seu produto é superior. Sem um posicionamento inevitável, você compete de igual para igual com quem entrega menos.\n\n[QUESTION]E aí fica a pergunta: Você quer ser só mais um?[/QUESTION]',
 };
 
+const ALUDE_PANEL_02 = {
+  tag: '02 ⏤ 04',
+  title: 'Assim como a gente, você é ambicioso, tem visão, mas sente que seu negócio vale mais do que o mercado valoriza.',
+  titleWidth: '920px',
+  titleSizeMobile: 'clamp(2.32rem, 8vw, 3.38rem)',
+  content: 'Não aceita entregar o básico. Tá sempre buscando elevar o nível, mesmo sem todo mundo ao seu redor entender por quê.\n\nVocê não quer só bater meta no fim do mês. Quer gerar riqueza, transformação e ser a referência número um no seu mercado.\n\n[ORANGE]Afinal, você é um visionário.[/ORANGE]',
+};
+
 const STORIES = {
   empresario: [
     {
@@ -72,6 +80,11 @@ const STORIES = {
       titleSizeMobile: 'clamp(2.32rem, 8vw, 3.38rem)',
       content: 'Você está à frente de uma empresa com produto bom e visão de crescimento, mas sem uma marca bem estruturada. [WHITE]A mídia paga está ficando cada vez mais caro e não podem depender disso.[/WHITE] O mercado está cheio de gente produzindo conteúdo, a IA está tornando tudo mais acessível e genérico e a atenção das pessoas está cada vez mais escassa.\n\n[WHITE]Você não pode só entregar resultado no fim do mês. Você tem a missão de escalar a empresa para ser a referência no mercado em que atua.[/WHITE]',
     },
+    PANEL_03,
+    PANEL_04,
+  ],
+  alude: [
+    ALUDE_PANEL_02,
     PANEL_03,
     PANEL_04,
   ],
