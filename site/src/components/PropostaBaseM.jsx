@@ -55,7 +55,7 @@ function Capa() {
   return (
     <section
       className="relative overflow-hidden flex flex-col justify-between"
-      style={{ height: '100svh', background: '#0a0a0a', padding: '48px 56px 44px' }}
+      style={{ height: '100svh', background: IS_ALUDE ? '#202020' : '#0a0a0a', padding: '48px 56px 44px' }}
     >
       <div className="noise-overlay" aria-hidden="true" />
 

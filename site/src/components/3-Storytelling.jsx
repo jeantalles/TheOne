@@ -189,6 +189,9 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
   const isCompactLayout = useMediaQuery('(max-width: 1023px)');
   const allStories = STORIES[persona] || STORIES['empresario'];
   const stories = panelIndex === null ? allStories : [allStories[panelIndex]].filter(Boolean);
+  const background = persona === 'alude'
+    ? '#352B27'
+    : 'linear-gradient(to bottom, #010000 0%, #212121 100%)';
 
   // ─── Desktop: pin-por-painel (arquitetura original do commit 432136a) ───────
   // Cada painel tem seu próprio ScrollTrigger + pin independente.
@@ -435,7 +438,7 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
       <div
         ref={containerRef}
         className="relative"
-        style={{ background: 'linear-gradient(to bottom, #010000 0%, #212121 100%)' }}
+        style={{ background }}
       >
         {stories.map((story) => (
           <div
@@ -464,7 +467,7 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
   return (
     <div
       ref={containerRef}
-      style={{ background: 'linear-gradient(to bottom, #010000 0%, #212121 100%)' }}
+      style={{ background }}
     >
       {stories.map((story, index) => (
         <div
