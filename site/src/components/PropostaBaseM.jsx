@@ -1975,6 +1975,32 @@ function Consultoria() {
   );
 }
 
+function ContextoDeMercado() {
+  return (
+    <section className="relative min-h-[100svh] overflow-hidden bg-[#2B211D] px-6 md:px-12 lg:px-16 py-20 md:py-28 flex items-center">
+      <div className="absolute inset-0 opacity-70" style={{ background: 'radial-gradient(circle at 50% 0%, rgba(254,105,66,.12), transparent 52%)' }} />
+      <div className="relative max-w-[1180px] mx-auto text-center">
+        <h2 className="font-editorial font-normal text-[clamp(3rem,6.2vw,6.2rem)] leading-[.96] tracking-tight mb-12 md:mb-16">
+          <span className="text-[#FE6942]">Você não pode se vender<br />da mesma forma</span>{' '}
+          <span className="text-white">que o restante do seu mercado.</span>
+        </h2>
+
+        <div className="font-halyard font-light text-[#D3CFCD] text-[21px] md:text-[28px] leading-[1.42] space-y-8 md:space-y-10 max-w-[1040px] mx-auto">
+          <p>
+            Ter um bom produto, rodar anúncio e produzir conteúdo não é mais um diferencial. O mercado está ficando cada vez mais competitivo e parecido.
+          </p>
+          <p>
+            <strong className="font-semibold text-white">A maioria das empresas se posiciona na mesma prateleira que seus concorrentes</strong>, com ofertas parecidas. Se a embalagem de todos na prateleira for igual, os clientes vão escolher pelo quê? <strong className="font-semibold text-white">Preço.</strong>
+          </p>
+          <p>
+            E o pior: você pode até ser foda no que faz, referência pra quem já te conhece, e <strong className="font-semibold text-white">mesmo assim continuar invisível pro resto do mercado.</strong>
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── SLIDE 9: SOBRE A THEONE (Hero + Storytelling + seção "Existimos") ─────────
 function SobreTheOne({ scrollerRef }) {
   const aboutRef = useRef(null);
@@ -2028,6 +2054,7 @@ function SobreTheOne({ scrollerRef }) {
       {/* Hero e Storytelling só montam após scroller estar disponível —
           evita dupla inicialização e flicker de reset de animações GSAP */}
       {scroller && <HeroSection disableNavEvents showTopLogo scroller={scroller} />}
+      {IS_ALUDE && <ContextoDeMercado />}
       {scroller && <StorytellingSection persona="empresario" scroller={scroller} />}
 
       {/* Seção "Existimos para construir marcas TheOne" */}
