@@ -1326,7 +1326,7 @@ function CardIdentidadeCompleta() {
     >
       <div className="relative z-10 px-8 md:px-14 pt-12 md:pt-16 pb-10 md:pb-14 max-w-[380px]">
         <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08] mb-20 md:mb-24">
-          Identidade Completa<br />de Marca +<br />Guia + Verbal
+          Identidade Completa<br />de Marca +<br />Guia
         </h3>
         <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.4] max-w-[300px]">
           Desenvolvimento do sistema visual completo e todas as diretrizes de identidade verbal (Tom e Voz, regras de comunicação, slogans, linguagem proprietária).
