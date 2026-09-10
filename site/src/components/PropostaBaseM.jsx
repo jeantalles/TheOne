@@ -28,7 +28,7 @@ const SERVICES = IS_ALUDE
       { id: 'entrevistas', label: 'Entrevistas com pessoas do time, da operação e com clientes', price: 0, prazo: '2 semanas' },
       { id: 'naming', label: 'Naming', price: 5000, prazo: '2 semanas' },
       { id: 'mybranding', label: 'myBranding', price: 13000, prazo: '4 semanas' },
-      { id: 'identidade_completa', label: 'Identidade Visual e Verbal', price: 13000, prazo: '6 semanas' },
+      { id: 'identidade_completa', label: 'Identidade Visual e Verbal', price: 12000, prazo: '6 semanas' },
       { id: 'sitebrand', label: 'Site BrandExperience', price: 16000, prazo: '6 semanas' },
     ]
   : [
