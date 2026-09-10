@@ -1350,6 +1350,7 @@ function CardMyBranding() {
           <ul className="space-y-1.5">
             <ArrowItem>Posicionamento de marca pessoal</ArrowItem>
             <ArrowItem>Narrativa de origem e visão de mundo</ArrowItem>
+            {IS_ALUDE && <ArrowItem>Estratégia de Canais e Conteúdo</ArrowItem>}
             <ArrowItem>Guia de Marca Pessoal completo</ArrowItem>
           </ul>
         </div>
