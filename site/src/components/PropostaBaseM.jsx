@@ -2041,7 +2041,7 @@ function SobreTheOne({ scrollerRef, mode = 'all', storyPanelIndex = null }) {
   }, [scroller]);
 
   useEffect(() => {
-    if (!showAbout || !scroller || !aboutRef.current) return;
+    if (!showAbout || mode !== 'all' || !scroller || !aboutRef.current) return;
 
     const ctx = gsap.context(() => {
       gsap.fromTo('.theone-about-left > *',
@@ -2056,7 +2056,7 @@ function SobreTheOne({ scrollerRef, mode = 'all', storyPanelIndex = null }) {
       );
     }, aboutRef);
     return () => ctx.revert();
-  }, [scroller, showAbout]);
+  }, [scroller, showAbout, mode]);
 
   const bullets = [
     { title: '+8 Anos', text: 'Construindo marcas que lideram, com especialistas formados nas maiores operações de marketing e comunicação do Brasil.' },
@@ -2082,6 +2082,7 @@ function SobreTheOne({ scrollerRef, mode = 'all', storyPanelIndex = null }) {
           persona={IS_ALUDE ? 'alude' : 'empresario'}
           scroller={scroller}
           panelIndex={storyPanelIndex}
+          staticMode={mode === 'story'}
         />
       )}
 

@@ -183,7 +183,7 @@ function renderCompactTitle(title) {
   return renderStyledWords(title.replace(/\n/g, ' '), 'title', 'story-mobile-title-word');
 }
 
-export default function Storytelling({ persona, scroller = null, panelIndex = null }) {
+export default function Storytelling({ persona, scroller = null, panelIndex = null, staticMode = false }) {
   const containerRef = useRef(null);
   const style = STORYTELLING_CONFIG.fontSize;
   const isCompactLayout = useMediaQuery('(max-width: 1023px)');
@@ -194,7 +194,7 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
   // Cada painel tem seu próprio ScrollTrigger + pin independente.
   // end '+=130%' por painel normal, '+=165%' para o painel com swapParagraphs.
   useEffect(() => {
-    if (isCompactLayout) {
+    if (staticMode || isCompactLayout) {
       return undefined;
     }
 
@@ -285,11 +285,11 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
     }, containerRef);
 
     return () => ctx.revert();
-  }, [isCompactLayout, persona, panelIndex, scroller]);
+  }, [isCompactLayout, persona, panelIndex, scroller, staticMode]);
 
   // ─── Mobile: simple per-panel scroll reveal (no pin) ──────────────────────
   useEffect(() => {
-    if (!isCompactLayout) {
+    if (staticMode || !isCompactLayout) {
       return undefined;
     }
 
@@ -329,7 +329,7 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
     }, containerRef);
 
     return () => ctx.revert();
-  }, [isCompactLayout, persona, panelIndex, scroller]);
+  }, [isCompactLayout, persona, panelIndex, scroller, staticMode]);
 
 
 
