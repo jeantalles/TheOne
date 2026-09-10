@@ -100,24 +100,24 @@ function Dores() {
 
   const dores = IS_ALUDE ? [
     {
-      titulo: 'Comunicação centrada em features',
-      descricao: 'A Alude resolve dores concretas muito bem, mas ainda se apresenta principalmente pelo que o produto faz — não pelo movimento que ajuda corretores e imobiliárias a construir.',
+      titulo: 'Comunicação técnica, focada em features',
+      descricao: 'O produto resolve dores concretas, mas a comunicação explica o que ele faz antes de revelar a mudança que ele viabiliza para corretores e imobiliárias.',
     },
     {
-      titulo: 'Marca sem narrativa de pertencimento',
-      descricao: 'O mercado reconhece a utilidade da ferramenta, mas ainda não encontra uma ideia maior para defender, compartilhar e associar ao seu próprio crescimento.',
+      titulo: 'Produto vendido como mais uma opção',
+      descricao: 'Sem uma diferença de marca clara, o mercado compara a Alude a outras soluções disponíveis e reduz a escolha a funcionalidades, preço e condições comerciais.',
     },
     {
-      titulo: 'Identidade que não traduz a ambição',
-      descricao: 'A expressão atual segue o padrão técnico de SaaS e não torna visível a escala, a maturidade e o papel de referência que a Alude quer ocupar.',
+      titulo: 'Narrativa sem pertencimento',
+      descricao: 'A ferramenta é útil, mas falta uma ideia maior que faça corretores e imobiliárias se reconhecerem, compartilharem e defenderem a marca.',
     },
     {
-      titulo: 'Lideranças fora da construção de valor',
-      descricao: 'Sem as marcas pessoais dos líderes, a empresa abre mão de uma forma poderosa de humanizar sua visão, gerar autoridade e criar conexão direta com o público.',
+      titulo: 'Desejo menor do que o valor entregue',
+      descricao: 'Na venda, a percepção de valor ainda não acompanha a qualidade do produto, a experiência e o tempo que clientes permanecem com a Alude.',
     },
     {
-      titulo: 'Site com valor estratégico subaproveitado',
-      descricao: 'Provas sociais, diferenciais de retenção, narrativa e pontos de vista por público podem fazer o site sair de catálogo de soluções para instrumento de percepção de valor.',
+      titulo: 'Dependência de tráfego pago',
+      descricao: 'Quando a marca não é procurada por convicção, a aquisição depende mais da urgência e do investimento em mídia do que da preferência construída ao longo do tempo.',
     },
   ] : [
     {
@@ -164,8 +164,13 @@ function Dores() {
             Diagnóstico
           </span>
           <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.5rem,4vw,3.75rem)] leading-[1.02] tracking-tight">
-            {IS_ALUDE ? 'O que limita a percepção de valor da Alude' : 'O que impede marcas como a sua de crescerem'}
+            {IS_ALUDE ? 'Produtos de tecnologia' : 'O que impede marcas como a sua de crescerem'}
           </h2>
+          {IS_ALUDE && (
+            <p className="font-halyard font-light text-[#181412] text-[20px] md:text-[23px] leading-[1.45] max-w-[52ch] mt-6">
+              A TheOne é especializada em marcas de tecnologia e conhece os desafios que fazem bons produtos parecerem apenas mais uma ferramenta no mercado.
+            </p>
+          )}
         </div>
 
         <div className="flex flex-col gap-4">
@@ -185,14 +190,16 @@ function Dores() {
             </div>
           ))}
 
-          <div className="dore-item bg-[#0a0a0a] rounded-2xl px-10 py-10 flex flex-col">
-            <p className="font-editorial font-normal text-white text-[28px] md:text-[32px] leading-[1.2] tracking-tight mb-4">
-              {IS_ALUDE ? 'A Alude já tem produto e experiência. O próximo salto é fazer o mercado perceber isso.' : 'A raiz de tudo isso é uma marca sem fundação estratégica.'}
-            </p>
-            <p className="font-halyard font-light text-white/65 text-[19px] md:text-[20px] leading-[1.5]">
-              {IS_ALUDE ? 'O projeto organiza uma narrativa, uma expressão e uma presença capazes de tornar a empresa uma referência para quem faz o mercado imobiliário acontecer.' : 'Não é sobre logo ou cores. É sobre o que você representa no mercado, e por que alguém deveria te escolher.'}
-            </p>
-          </div>
+          {!IS_ALUDE && (
+            <div className="dore-item bg-[#0a0a0a] rounded-2xl px-10 py-10 flex flex-col">
+              <p className="font-editorial font-normal text-white text-[28px] md:text-[32px] leading-[1.2] tracking-tight mb-4">
+                A raiz de tudo isso é uma marca sem fundação estratégica.
+              </p>
+              <p className="font-halyard font-light text-white/65 text-[19px] md:text-[20px] leading-[1.5]">
+                Não é sobre logo ou cores. É sobre o que você representa no mercado, e por que alguém deveria te escolher.
+              </p>
+            </div>
+          )}
         </div>
       </div>
     </section>
