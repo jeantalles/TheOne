@@ -1263,7 +1263,7 @@ function CardEstrategia() {
           <p className="font-halyard font-light text-[#181412] text-[17px] mb-3">Também inclui:</p>
           <ul className="space-y-1.5">
             <ArrowItem>Estratégia de Canais</ArrowItem>
-            <ArrowItem>Estratégia de Produção de Conteúdo</ArrowItem>
+            <ArrowItem>{IS_ALUDE ? 'Direcionamento de Conteúdo' : 'Estratégia de Produção de Conteúdo'}</ArrowItem>
           </ul>
         </div>
       </div>
