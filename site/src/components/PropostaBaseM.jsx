@@ -27,7 +27,7 @@ const SERVICES = IS_ALUDE
       { id: 'estrategia', label: 'Estratégia de Marca e Posicionamento', price: 20000, prazo: '2–4 meses' },
       { id: 'naming', label: 'Naming', price: 3000, prazo: '2 semanas' },
       { id: 'mybranding', label: 'Marca pessoal · 2 líderes', price: 15000, prazo: 'em paralelo' },
-      { id: 'identidade_completa', label: 'Identidade Visual e Verbal', price: 20000, prazo: 'em paralelo' },
+      { id: 'identidade_completa', label: 'Identidade Visual e Verbal', price: 15000, prazo: 'em paralelo' },
       { id: 'sitebrand', label: 'Site BrandExperience', price: 20000, prazo: 'em paralelo' },
     ]
   : [
