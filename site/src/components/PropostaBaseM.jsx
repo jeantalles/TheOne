@@ -1513,9 +1513,11 @@ function Calculadora({ clientName }) {
                     </span>
                   </div>
                   <div className="flex items-center gap-8 shrink-0">
-                    <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${selected[service.id] ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
-                      {service.prazo}
-                    </span>
+                    {!IS_ALUDE && (
+                      <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${selected[service.id] ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
+                        {service.prazo}
+                      </span>
+                    )}
                     {!(IS_ALUDE && service.id === 'entrevistas') && (
                       <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
                         {formatBRL(service.price)}
@@ -1569,9 +1571,11 @@ function Calculadora({ clientName }) {
                     </span>
                   </div>
                   <div className="flex items-center gap-8 shrink-0">
-                    <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
-                      {service.prazo}
-                    </span>
+                    {!IS_ALUDE && (
+                      <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
+                        {service.prazo}
+                      </span>
+                    )}
                     <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
                       {myBrandingQty > 0 ? formatBRL(myBrandingUnitPrice * myBrandingQty) : formatBRL(service.price)}
                     </span>
@@ -1617,9 +1621,11 @@ function Calculadora({ clientName }) {
                     </span>
                   </div>
                   <div className="flex items-center gap-8 shrink-0">
-                    <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${selected[service.id] ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
-                      {service.prazo}
-                    </span>
+                    {!IS_ALUDE && (
+                      <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${selected[service.id] ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
+                        {service.prazo}
+                      </span>
+                    )}
                     <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
                       {formatBRL(service.price)}
                     </span>
