@@ -25,8 +25,9 @@ const ALUDE_PROPOSAL = {
 const SERVICES = IS_ALUDE
   ? [
       { id: 'estrategia', label: 'Estratégia de Marca e Posicionamento', price: 20000, prazo: '2–4 meses' },
+      { id: 'entrevistas', label: 'Entrevistas com pessoas do time, da operação e com clientes', price: 0, prazo: 'Incluso' },
       { id: 'naming', label: 'Naming', price: 5000, prazo: '2 semanas' },
-      { id: 'mybranding', label: 'Marca pessoal · 2 líderes', price: 15000, prazo: 'em paralelo' },
+      { id: 'mybranding', label: 'myBranding', price: 15000, prazo: 'em paralelo' },
       { id: 'identidade_completa', label: 'Identidade Visual e Verbal', price: 15000, prazo: 'em paralelo' },
       { id: 'sitebrand', label: 'Site BrandExperience', price: 20000, prazo: 'em paralelo' },
     ]
@@ -1084,7 +1085,7 @@ function SiteBrandExperience() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
             <h2 className={`sbe-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight ${IS_ALUDE ? 'mb-10' : 'mb-3'}`}>
-              {IS_ALUDE ? <>Site de<br />Marca</> : 'Site BrandExperience'}
+              Site BrandExperience
             </h2>
             {!IS_ALUDE && (
               <div className="sbe-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
@@ -1427,7 +1428,7 @@ function CardTheOneAgent() {
 function Calculadora({ clientName }) {
   const [selected, setSelected] = useState({
     estrategia: true,
-    entrevistas: false,
+    entrevistas: IS_ALUDE,
     naming:     false,
     identidade: !IS_ALUDE,
     identidade_completa: IS_ALUDE,
@@ -1467,7 +1468,7 @@ function Calculadora({ clientName }) {
               <div className="flex-1 h-px bg-[#FE6942]/20" />
             </div>
             <div className="space-y-3">
-              {SERVICES.filter(s => s.id !== 'mybranding' && s.id !== 'sitebrand' && (!IS_ALUDE || s.id !== 'identidade_completa')).map((service) => (
+              {SERVICES.filter(s => s.id !== 'mybranding' && s.id !== 'sitebrand').map((service) => (
                 <div
                   key={service.id}
                   onClick={() => setSelected((prev) => {
@@ -1508,9 +1509,11 @@ function Calculadora({ clientName }) {
                     <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${selected[service.id] ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
                       {service.prazo}
                     </span>
-                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
-                      {formatBRL(service.price)}
-                    </span>
+                    {!(IS_ALUDE && service.id === 'entrevistas') && (
+                      <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
+                        {formatBRL(service.price)}
+                      </span>
+                    )}
                   </div>
                 </div>
               ))}
@@ -1520,7 +1523,7 @@ function Calculadora({ clientName }) {
           {/* Grupo myBranding */}
           <div>
             <div className="flex items-center gap-3 mb-3 px-1">
-              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">{IS_ALUDE ? 'Marca pessoal' : 'myBranding'}</span>
+              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">myBranding</span>
               <div className="flex-1 h-px bg-black/10" />
             </div>
             <div className="space-y-3">
@@ -1571,59 +1574,10 @@ function Calculadora({ clientName }) {
             </div>
           </div>
 
-          {IS_ALUDE && (
-            <div>
-              <div className="flex items-center gap-3 mb-3 px-1">
-                <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">Identidade de Marca</span>
-                <div className="flex-1 h-px bg-black/10" />
-              </div>
-              <div className="space-y-3">
-                {SERVICES.filter((service) => service.id === 'identidade_completa').map((service) => (
-                  <div
-                    key={service.id}
-                    onClick={() => setSelected((prev) => ({ ...prev, [service.id]: !prev[service.id] }))}
-                    className={`cursor-pointer rounded-2xl px-7 py-6 border transition-all duration-200 flex items-center justify-between gap-4 ${
-                      selected[service.id]
-                        ? 'border-[#FE6942] bg-[#FE6942]/[0.04]'
-                        : 'border-black/[0.09] bg-[#F8F8F8] hover:border-black/20'
-                    }`}
-                  >
-                    <div className="flex items-center gap-5">
-                      <div
-                        className="w-6 h-6 rounded-md border flex items-center justify-center shrink-0 transition-all duration-150"
-                        style={{
-                          borderColor: selected[service.id] ? '#FE6942' : 'rgba(0,0,0,0.2)',
-                          background: selected[service.id] ? '#FE6942' : 'transparent',
-                        }}
-                      >
-                        {selected[service.id] && (
-                          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
-                            <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                          </svg>
-                        )}
-                      </div>
-                      <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/50'}`}>
-                        {service.label}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-8 shrink-0">
-                      <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${selected[service.id] ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
-                        {service.prazo}
-                      </span>
-                      <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
-                        {formatBRL(service.price)}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
           {/* Grupo Site BrandExperience */}
           <div>
             <div className="flex items-center gap-3 mb-3 px-1">
-              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">{IS_ALUDE ? 'Site de marca' : 'Site BrandExperience'}</span>
+              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">Site BrandExperience</span>
               <div className="flex-1 h-px bg-black/10" />
             </div>
             <div className="space-y-3">
@@ -1678,10 +1632,12 @@ function Calculadora({ clientName }) {
             {selected.entrevistas && (
               <div className="bg-[#F4F4F5] rounded-[28px] md:rounded-[32px] px-8 md:px-14 pt-12 md:pt-16 pb-10 md:pb-14">
                 <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08] mb-6">
-                  Entrevistas com Clientes
+                  {IS_ALUDE ? 'Entrevistas com pessoas do time, da operação e com clientes' : 'Entrevistas com Clientes'}
                 </h3>
                 <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.4] max-w-[380px]">
-                  Pesquisa em profundidade diretamente com os clientes da marca para mapear dores, desejos e diferenciais percebidos.
+                  {IS_ALUDE
+                    ? 'Conversas em profundidade para entender a marca por dentro e por fora: cultura, operação, percepção, dores, desejos e diferenciais reconhecidos pelo mercado.'
+                    : 'Pesquisa em profundidade diretamente com os clientes da marca para mapear dores, desejos e diferenciais percebidos.'}
                 </p>
               </div>
             )}
