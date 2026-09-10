@@ -112,7 +112,7 @@ function buildParticles(width, height) {
   return particles;
 }
 
-export default function Hero({ introPhrases = [], showLogo = false, showTopLogo = false, scroller = null, disableNavEvents = false }) {
+export default function Hero({ introPhrases = [], showLogo = false, showTopLogo = false, scroller = null, disableNavEvents = false, hideFinalScrollHint = false }) {
   const isMobileViewport = useMediaQuery('(max-width: 767px)');
   const shouldUseStaticScene = false;
   const sectionRef = useRef(null);
@@ -724,22 +724,24 @@ export default function Hero({ introPhrases = [], showLogo = false, showTopLogo 
                 Para negócios visionários que não querem ser só mais uma opção e querem se tornar a marca número um e alternativa inevitável em seu mercado.
               </p>
 
-              <div className="mt-12 flex flex-col items-center gap-3 text-white/80">
-                <span className="font-halyard text-[13px] md:text-[15px] font-medium uppercase tracking-[0.18em]">
-                  Role para baixo
-                </span>
-                <svg
-                  width="16"
-                  height="24"
-                  viewBox="0 0 16 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                  style={{ animation: 'scrollArrowBounce 1.8s ease-in-out infinite' }}
-                >
-                  <path d="M8 2L8 22M8 22L2.5 15.5M8 22L13.5 15.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
+              {!hideFinalScrollHint && (
+                <div className="mt-12 flex flex-col items-center gap-3 text-white/80">
+                  <span className="font-halyard text-[13px] md:text-[15px] font-medium uppercase tracking-[0.18em]">
+                    Role para baixo
+                  </span>
+                  <svg
+                    width="16"
+                    height="24"
+                    viewBox="0 0 16 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden="true"
+                    style={{ animation: 'scrollArrowBounce 1.8s ease-in-out infinite' }}
+                  >
+                    <path d="M8 2L8 22M8 22L2.5 15.5M8 22L13.5 15.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+              )}
             </div>
           </div>
         </div>

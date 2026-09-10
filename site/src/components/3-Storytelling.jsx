@@ -183,11 +183,12 @@ function renderCompactTitle(title) {
   return renderStyledWords(title.replace(/\n/g, ' '), 'title', 'story-mobile-title-word');
 }
 
-export default function Storytelling({ persona, scroller = null }) {
+export default function Storytelling({ persona, scroller = null, panelIndex = null }) {
   const containerRef = useRef(null);
   const style = STORYTELLING_CONFIG.fontSize;
   const isCompactLayout = useMediaQuery('(max-width: 1023px)');
-  const stories = STORIES[persona] || STORIES['empresario'];
+  const allStories = STORIES[persona] || STORIES['empresario'];
+  const stories = panelIndex === null ? allStories : [allStories[panelIndex]].filter(Boolean);
 
   // ─── Desktop: pin-por-painel (arquitetura original do commit 432136a) ───────
   // Cada painel tem seu próprio ScrollTrigger + pin independente.
@@ -284,7 +285,7 @@ export default function Storytelling({ persona, scroller = null }) {
     }, containerRef);
 
     return () => ctx.revert();
-  }, [isCompactLayout, stories, scroller]);
+  }, [isCompactLayout, persona, panelIndex, scroller]);
 
   // ─── Mobile: simple per-panel scroll reveal (no pin) ──────────────────────
   useEffect(() => {
@@ -328,7 +329,7 @@ export default function Storytelling({ persona, scroller = null }) {
     }, containerRef);
 
     return () => ctx.revert();
-  }, [isCompactLayout, stories, scroller]);
+  }, [isCompactLayout, persona, panelIndex, scroller]);
 
 
 

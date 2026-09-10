@@ -41,10 +41,10 @@ const SERVICES = IS_ALUDE
       { id: 'sitebrand', label: 'Site BrandExperience', price: 8000, prazo: '6 semanas' },
     ];
 
-// Alude: 0–19 sem slide exclusivo de Naming. Proposta base: 0–21 com Naming.
-const SLIDE_TOTAL = IS_ALUDE ? 20 : 22;
+// Alude: narrativa TheOne distribuída em telas individuais; proposta base preserva a sequência original.
+const SLIDE_TOTAL = IS_ALUDE ? 25 : 22;
 
-const DARK_SLIDES = IS_ALUDE ? [0, 1, 6, 7, 8, 9, 10, 16] : [0, 1, 6, 7, 8, 9, 10, 18];
+const DARK_SLIDES = IS_ALUDE ? [0, 1, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 21] : [0, 1, 6, 7, 8, 9, 10, 18];
 
 const formatBRL = (v) => `R$ ${v.toLocaleString('pt-BR')}`;
 
@@ -2013,8 +2013,12 @@ function ContextoDeMercado() {
 }
 
 // ── SLIDE 9: SOBRE A THEONE (Hero + Storytelling + seção "Existimos") ─────────
-function SobreTheOne({ scrollerRef }) {
+function SobreTheOne({ scrollerRef, mode = 'all', storyPanelIndex = null }) {
   const aboutRef = useRef(null);
+  const showHero = mode === 'all' || mode === 'hero';
+  const showMarket = mode === 'all' || mode === 'market';
+  const showStory = mode === 'all' || mode === 'story';
+  const showAbout = mode === 'all' || mode === 'about';
   // Força re-render após mount para capturar o DOM node do scroller
   const [scroller, setScroller] = useState(null);
 
@@ -2037,7 +2041,7 @@ function SobreTheOne({ scrollerRef }) {
   }, [scroller]);
 
   useEffect(() => {
-    if (!scroller || !aboutRef.current) return;
+    if (!showAbout || !scroller || !aboutRef.current) return;
 
     const ctx = gsap.context(() => {
       gsap.fromTo('.theone-about-left > *',
@@ -2052,7 +2056,7 @@ function SobreTheOne({ scrollerRef }) {
       );
     }, aboutRef);
     return () => ctx.revert();
-  }, [scroller]);
+  }, [scroller, showAbout]);
 
   const bullets = [
     { title: '+8 Anos', text: 'Construindo marcas que lideram, com especialistas formados nas maiores operações de marketing e comunicação do Brasil.' },
@@ -2064,12 +2068,25 @@ function SobreTheOne({ scrollerRef }) {
     <div>
       {/* Hero e Storytelling só montam após scroller estar disponível —
           evita dupla inicialização e flicker de reset de animações GSAP */}
-      {scroller && <HeroSection disableNavEvents showTopLogo scroller={scroller} />}
-      {IS_ALUDE && <ContextoDeMercado />}
-      {scroller && <StorytellingSection persona={IS_ALUDE ? 'alude' : 'empresario'} scroller={scroller} />}
+      {showHero && scroller && (
+        <HeroSection
+          disableNavEvents
+          showTopLogo
+          scroller={scroller}
+          hideFinalScrollHint={IS_ALUDE}
+        />
+      )}
+      {showMarket && IS_ALUDE && <ContextoDeMercado />}
+      {showStory && scroller && (
+        <StorytellingSection
+          persona={IS_ALUDE ? 'alude' : 'empresario'}
+          scroller={scroller}
+          panelIndex={storyPanelIndex}
+        />
+      )}
 
       {/* Seção "Existimos para construir marcas TheOne" */}
-      <section ref={aboutRef} className="bg-[#212121] text-white min-h-[100svh] px-6 md:px-12 lg:px-16 py-12 md:py-16 flex flex-col justify-center">
+      {showAbout && <section ref={aboutRef} className="bg-[#212121] text-white min-h-[100svh] px-6 md:px-12 lg:px-16 py-12 md:py-16 flex flex-col justify-center">
         <div className="max-w-[1400px] w-full mx-auto flex flex-col gap-10 md:gap-12">
 
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_460px] gap-10 lg:gap-16 items-start">
@@ -2106,7 +2123,7 @@ function SobreTheOne({ scrollerRef }) {
           </ul>
 
         </div>
-      </section>
+      </section>}
     </div>
   );
 }
@@ -2287,23 +2304,29 @@ function PropostaSlideshow() {
           />
         )}
         {current === 4  && <Dores />}
-        {current === 5  && <SobreTheOne scrollerRef={slideScrollRef} />}
-        {current === 6  && <SobreJean />}
-        {current === 7  && <CaseSlide slug="zenic" />}
-        {current === 8  && <CaseSlide slug="thunders" />}
-        {current === 9  && <CaseSlide slug="camilla-toscano" />}
-        {current === 10 && <TheOneFoundation />}
-        {current === 11 && <CasaDaMarca />}
-        {current === 12 && <EstrategiaDeMarca />}
-        {current === 13 && (IS_ALUDE ? <MyBranding /> : <Naming />)}
-        {current === 14 && (IS_ALUDE ? <IdentidadeVisualCompleta /> : <IdentidadeVisual />)}
-        {current === 15 && (IS_ALUDE ? <SiteBrandExperience /> : <IdentidadeVisualCompleta />)}
-        {current === 16 && (IS_ALUDE ? <TheOneAgent /> : <MyBranding />)}
-        {current === 17 && (IS_ALUDE ? <Cronograma /> : <SiteBrandExperience />)}
-        {current === 18 && (IS_ALUDE ? <Calculadora clientName={proposalState.clientName} /> : <TheOneAgent />)}
-        {current === 19 && (IS_ALUDE ? <Consultoria /> : <Cronograma />)}
-        {current === 20 && !IS_ALUDE && <Calculadora clientName={proposalState.clientName} />}
-        {current === 21 && !IS_ALUDE && <Consultoria />}
+        {current === 5  && (IS_ALUDE
+          ? <SobreTheOne scrollerRef={slideScrollRef} mode="hero" />
+          : <SobreTheOne scrollerRef={slideScrollRef} />
+        )}
+        {current === 6  && (IS_ALUDE ? <SobreTheOne scrollerRef={slideScrollRef} mode="market" /> : <SobreJean />)}
+        {current === 7  && (IS_ALUDE ? <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={0} /> : <CaseSlide slug="zenic" />)}
+        {current === 8  && (IS_ALUDE ? <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={1} /> : <CaseSlide slug="thunders" />)}
+        {current === 9  && (IS_ALUDE ? <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={2} /> : <CaseSlide slug="camilla-toscano" />)}
+        {current === 10 && (IS_ALUDE ? <SobreTheOne scrollerRef={slideScrollRef} mode="about" /> : <TheOneFoundation />)}
+        {current === 11 && (IS_ALUDE ? <SobreJean /> : <CasaDaMarca />)}
+        {current === 12 && (IS_ALUDE ? <CaseSlide slug="zenic" /> : <EstrategiaDeMarca />)}
+        {current === 13 && (IS_ALUDE ? <CaseSlide slug="thunders" /> : <Naming />)}
+        {current === 14 && (IS_ALUDE ? <CaseSlide slug="camilla-toscano" /> : <IdentidadeVisual />)}
+        {current === 15 && (IS_ALUDE ? <TheOneFoundation /> : <IdentidadeVisualCompleta />)}
+        {current === 16 && (IS_ALUDE ? <CasaDaMarca /> : <MyBranding />)}
+        {current === 17 && (IS_ALUDE ? <EstrategiaDeMarca /> : <SiteBrandExperience />)}
+        {current === 18 && (IS_ALUDE ? <MyBranding /> : <TheOneAgent />)}
+        {current === 19 && (IS_ALUDE ? <IdentidadeVisualCompleta /> : <Cronograma />)}
+        {current === 20 && (IS_ALUDE ? <SiteBrandExperience /> : <Calculadora clientName={proposalState.clientName} />)}
+        {current === 21 && (IS_ALUDE ? <TheOneAgent /> : <Consultoria />)}
+        {current === 22 && IS_ALUDE && <Cronograma />}
+        {current === 23 && IS_ALUDE && <Calculadora clientName={proposalState.clientName} />}
+        {current === 24 && IS_ALUDE && <Consultoria />}
       </div>
 
       <div
