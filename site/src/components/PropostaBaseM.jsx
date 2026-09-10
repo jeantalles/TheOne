@@ -2131,7 +2131,6 @@ function SobreJean() {
                 alt="Jean Talles"
                 className="absolute inset-0 w-full h-full object-cover object-center"
               />
-              <span className="absolute bottom-5 right-7 hidden md:block font-editorial text-[100px] leading-none text-white/[0.06] select-none pointer-events-none">01</span>
             </div>
 
             {/* Conteúdo */}
