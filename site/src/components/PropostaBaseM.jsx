@@ -2143,9 +2143,9 @@ function SobreJean() {
               <div className="jean-item w-16 h-px bg-white/10 mb-8" />
               <ul className="space-y-5 mb-10">
                 {[
-                  'Especialista em branding, comunicação e marketing com 08 anos de mercado.',
-                  'Liderou e estruturou o setor de comunicação para key accounts B2B e B2C na maior assessoria de marketing do país.',
-                  'Fundador e idealizador da TheOne, consultoria que empodera empresários visionários no Brasil.',
+                  'Liderou e estruturou o setor de comunicação para key accounts na maior assessoria de marketing e vendas do país.',
+                  'O cara de branding que veio do mundo da performance.',
+                  'Fundador e idealizador da TheOne, a principal aliada de negócios visionários no Brasil.',
                 ].map((b, i) => (
                   <li key={i} className="jean-item flex gap-4 items-start">
                     <span className="text-[#FE6942] text-[1.1rem] leading-none mt-1.5 shrink-0">→</span>
