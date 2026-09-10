@@ -14,20 +14,36 @@ import { useProposalState } from '../hooks/useProposalState';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const SERVICES = [
-  { id: 'estrategia', label: 'Estratégia de Marca',   price: 7000, prazo: '6 semanas' },
-  { id: 'entrevistas', label: 'Entrevistas com Clientes', price: 3000, prazo: '2 semanas' },
-  { id: 'naming',     label: 'Naming',                 price: 3000, prazo: '2 semanas' },
-  { id: 'identidade', label: 'Identidade de Marca Essencial',   price: 6000, prazo: '4 semanas' },
-  { id: 'identidade_completa', label: 'Identidade de Marca Completa', price: 8000, prazo: '6 semanas' },
-  { id: 'mybranding', label: 'myBranding',            price: 6000, prazo: '4 semanas' },
-  { id: 'sitebrand',  label: 'Site BrandExperience',  price: 8000, prazo: '6 semanas' },
-];
+const IS_ALUDE = typeof window !== 'undefined' && /^\/alude\/?$/.test(window.location.pathname);
+
+const ALUDE_PROPOSAL = {
+  clientName: 'Alude',
+  cenarioAtual: `- Produto e experiência consistentes, mas comunicação predominantemente técnica, centrada em funcionalidades e necessidades imediatas.\n\n- Marca com pouca narrativa, pertencimento e comunidade para um público muito específico: corretores e imobiliárias.\n\n- Identidade visual genérica, próxima ao padrão SaaS, que ainda não traduz a ambição e a relevância da empresa.\n\n- Fundadores e lideranças ainda não atuam como ativos de marca e humanização.\n\n- Site subutiliza provas sociais, diferenciais, retenção e o valor gerado para o ecossistema imobiliário.`,
+  cenarioDesejado: `- Marca que potencializa todo o sistema de crescimento: marketing, vendas, conversão, retenção e expansão de canais.\n\n- Narrativa proprietária que transforma uma plataforma de features em referência para quem quer evoluir o mercado imobiliário.\n\n- Comunicação capaz de gerar valor funcional, emocional, simbólico e de pertencimento.\n\n- Duas lideranças associadas à marca, tornando a visão da Alude mais humana, reconhecida e distribuída.\n\n- Site que traduz a nova percepção de valor, com prova social, diferenciais claros e POVs relevantes por público.`,
+};
+
+const SERVICES = IS_ALUDE
+  ? [
+      { id: 'estrategia', label: 'Estratégia de Marca e Posicionamento', price: 20000, prazo: '2–4 meses' },
+      { id: 'naming', label: 'Naming', price: 3000, prazo: '2 semanas' },
+      { id: 'mybranding', label: 'Marca pessoal · 2 líderes', price: 15000, prazo: 'em paralelo' },
+      { id: 'identidade_completa', label: 'Identidade Visual e Verbal', price: 20000, prazo: 'em paralelo' },
+      { id: 'sitebrand', label: 'Site BrandExperience', price: 20000, prazo: 'em paralelo' },
+    ]
+  : [
+      { id: 'estrategia', label: 'Estratégia de Marca', price: 9000, prazo: '6 semanas' },
+      { id: 'entrevistas', label: 'Entrevistas com Clientes', price: 3000, prazo: '2 semanas' },
+      { id: 'naming', label: 'Naming', price: 3000, prazo: '2 semanas' },
+      { id: 'identidade', label: 'Identidade de Marca Essencial', price: 6000, prazo: '4 semanas' },
+      { id: 'identidade_completa', label: 'Identidade de Marca Completa', price: 8000, prazo: '6 semanas' },
+      { id: 'mybranding', label: 'myBranding', price: 6000, prazo: '4 semanas' },
+      { id: 'sitebrand', label: 'Site BrandExperience', price: 8000, prazo: '6 semanas' },
+    ];
 
 // 0: Capa | 1: NomeCliente | 2: Contexto A | 3: Contexto B | 4: Dores | 5: SobreTheOne | 6: Jean | 7: Zenic | 8: Thunders | 9: Camilla | 10: TheOne Foundation | 11: Casa da Marca | 12: Estratégia | 13: Naming | 14: Identidade Essencial | 15: Identidade Completa | 16: myBranding | 17: SiteBrandExperience | 18: TheOne Agent | 19: Cronograma | 20: Calculadora | 21: Consultoria
-const SLIDE_TOTAL = 22;
+const SLIDE_TOTAL = IS_ALUDE ? 21 : 22;
 
-const DARK_SLIDES = [0, 1, 6, 7, 8, 9, 10, 18];
+const DARK_SLIDES = IS_ALUDE ? [0, 1, 6, 7, 8, 9, 10, 17] : [0, 1, 6, 7, 8, 9, 10, 18];
 
 const formatBRL = (v) => `R$ ${v.toLocaleString('pt-BR')}`;
 
@@ -81,7 +97,28 @@ function Capa() {
 function Dores() {
   const sectionRef = useRef(null);
 
-  const dores = [
+  const dores = IS_ALUDE ? [
+    {
+      titulo: 'Comunicação centrada em features',
+      descricao: 'A Alude resolve dores concretas muito bem, mas ainda se apresenta principalmente pelo que o produto faz — não pelo movimento que ajuda corretores e imobiliárias a construir.',
+    },
+    {
+      titulo: 'Marca sem narrativa de pertencimento',
+      descricao: 'O mercado reconhece a utilidade da ferramenta, mas ainda não encontra uma ideia maior para defender, compartilhar e associar ao seu próprio crescimento.',
+    },
+    {
+      titulo: 'Identidade que não traduz a ambição',
+      descricao: 'A expressão atual segue o padrão técnico de SaaS e não torna visível a escala, a maturidade e o papel de referência que a Alude quer ocupar.',
+    },
+    {
+      titulo: 'Lideranças fora da construção de valor',
+      descricao: 'Sem as marcas pessoais dos líderes, a empresa abre mão de uma forma poderosa de humanizar sua visão, gerar autoridade e criar conexão direta com o público.',
+    },
+    {
+      titulo: 'Site com valor estratégico subaproveitado',
+      descricao: 'Provas sociais, diferenciais de retenção, narrativa e pontos de vista por público podem fazer o site sair de catálogo de soluções para instrumento de percepção de valor.',
+    },
+  ] : [
     {
       titulo: 'Dependência de tráfego pago',
       descricao: 'Quando o anúncio para, as vendas param. Você paga para aparecer, mas não consegue ser escolhido de forma consistente.',
@@ -126,7 +163,7 @@ function Dores() {
             Diagnóstico
           </span>
           <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.5rem,4vw,3.75rem)] leading-[1.02] tracking-tight">
-            O que impede marcas como a sua de crescerem
+            {IS_ALUDE ? 'O que limita a percepção de valor da Alude' : 'O que impede marcas como a sua de crescerem'}
           </h2>
         </div>
 
@@ -149,10 +186,10 @@ function Dores() {
 
           <div className="dore-item bg-[#0a0a0a] rounded-2xl px-10 py-10 flex flex-col">
             <p className="font-editorial font-normal text-white text-[28px] md:text-[32px] leading-[1.2] tracking-tight mb-4">
-              A raiz de tudo isso é uma marca sem fundação estratégica.
+              {IS_ALUDE ? 'A Alude já tem produto e experiência. O próximo salto é fazer o mercado perceber isso.' : 'A raiz de tudo isso é uma marca sem fundação estratégica.'}
             </p>
             <p className="font-halyard font-light text-white/65 text-[19px] md:text-[20px] leading-[1.5]">
-              Não é sobre logo ou cores. É sobre o que você representa no mercado, e por que alguém deveria te escolher.
+              {IS_ALUDE ? 'O projeto organiza uma narrativa, uma expressão e uma presença capazes de tornar a empresa uma referência para quem faz o mercado imobiliário acontecer.' : 'Não é sobre logo ou cores. É sobre o que você representa no mercado, e por que alguém deveria te escolher.'}
             </p>
           </div>
         </div>
@@ -350,13 +387,15 @@ function EstrategiaDeMarca() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
             <h2 className="est-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
-              Estratégia<br />de Marca
+              {IS_ALUDE ? <>Estratégia de<br />Marca e<br />Posicionamento</> : <>Estratégia<br />de Marca</>}
             </h2>
             <div className="est-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              R$ 7.000
+              {formatBRL(SERVICES.find((service) => service.id === 'estrategia').price)}
             </div>
             <p className="est-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
-              Um sistema estratégico organizado por etapas: primeiro entendemos o terreno, depois definimos o posicionamento e, por fim, desenhamos como a sua marca se efetiva nos canais certos.
+              {IS_ALUDE
+                ? 'Uma fundação para transformar a experiência que a Alude já entrega em uma marca percebida como inevitável pelos profissionais que movem o mercado imobiliário.'
+                : 'Um sistema estratégico organizado por etapas: primeiro entendemos o terreno, depois definimos o posicionamento e, por fim, desenhamos como a sua marca se efetiva nos canais certos.'}
             </p>
           </div>
           <div className="est-item hidden lg:flex items-center justify-center self-center">
@@ -454,10 +493,17 @@ function EstrategiaDeMarca() {
             <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">O que resolve</h3>
             <ul className="space-y-5">
               {[
-                'Marca sem posicionamento que compete só por preço',
-                'Comunicação genérica que não conecta com o público',
-                'Dependência de tráfego pago para gerar vendas',
-                'Dificuldade de cobrar mais pelo que entrega',
+                ...(IS_ALUDE ? [
+                  'Comunicação técnica que ainda não traduz a ambição da marca',
+                  'Baixa diferenciação percebida fora das funcionalidades do produto',
+                  'Dificuldade de construir pertencimento e comunidade no mercado',
+                  'Crescimento dependente de canais sem uma narrativa unificadora',
+                ] : [
+                  'Marca sem posicionamento que compete só por preço',
+                  'Comunicação genérica que não conecta com o público',
+                  'Dependência de tráfego pago para gerar vendas',
+                  'Dificuldade de cobrar mais pelo que entrega',
+                ]),
               ].map((item, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <span className="text-[#FE6942] text-[20px] leading-[1.5] shrink-0">→</span>
@@ -729,10 +775,10 @@ function IdentidadeVisualCompleta() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
             <h2 className="id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
-              Identidade de Marca<br />Completa
+              {IS_ALUDE ? <>Identidade Visual<br />e Verbal</> : <>Identidade de Marca<br />Completa</>}
             </h2>
             <div className="id-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              R$ 8.000
+              {formatBRL(SERVICES.find((service) => service.id === 'identidade_completa').price)}
             </div>
             <p className="id-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               Transformamos a estratégia em uma expressão visual única. Uma identidade que o mercado reconhece, o público deseja e você tem orgulho de mostrar em qualquer contexto.
@@ -861,13 +907,15 @@ function MyBranding() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
             <h2 className="mb-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
-              myBranding
+              {IS_ALUDE ? <>Marca pessoal<br />para duas lideranças</> : 'myBranding'}
             </h2>
             <div className="mb-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              R$ 8.000
+              {IS_ALUDE ? formatBRL(SERVICES.find((service) => service.id === 'mybranding').price) : 'R$ 8.000'}
             </div>
             <p className="mb-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
-              Você é seu maior ativo. O myBranding transforma quem você é em uma marca usando a metodologia BeOne para posicioná-lo como referência única no seu mercado.
+              {IS_ALUDE
+                ? 'Duas lideranças com presença, ponto de vista e narrativas conectadas à visão da Alude, para humanizar a marca e ampliar sua capacidade de gerar autoridade e comunidade.'
+                : 'Você é seu maior ativo. O myBranding transforma quem você é em uma marca usando a metodologia BeOne para posicioná-lo como referência única no seu mercado.'}
             </p>
           </div>
           <div className="mb-item hidden lg:block rounded-[24px] overflow-hidden" style={{ height: '400px' }}>
@@ -1030,13 +1078,15 @@ function SiteBrandExperience() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
             <h2 className="sbe-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
-              Site BrandExperience
+              {IS_ALUDE ? <>Site de<br />Marca</> : 'Site BrandExperience'}
             </h2>
             <div className="sbe-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              R$ 8.000
+              {formatBRL(SERVICES.find((service) => service.id === 'sitebrand').price)}
             </div>
             <p className="sbe-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
-              Um site que é uma extensão do posicionamento da marca, e não um site institucional genérico. Desenvolvido em código com IA por brand designers que constroem uma experiência imersiva — fazendo seu cliente experienciar o universo da marca digitalmente e gerando impacto, conexão e memorização.
+              {IS_ALUDE
+                ? 'O ponto de contato que torna a nova percepção de valor visível: uma experiência de marca com prova social, diferenciais claros e mensagens relevantes para cada público da Alude.'
+                : 'Um site que é uma extensão do posicionamento da marca, e não um site institucional genérico. Desenvolvido em código com IA por brand designers que constroem uma experiência imersiva — fazendo seu cliente experienciar o universo da marca digitalmente e gerando impacto, conexão e memorização.'}
             </p>
           </div>
           <div className="sbe-item hidden lg:block rounded-[24px] overflow-hidden" style={{ height: '400px' }}>
@@ -1371,18 +1421,18 @@ function Calculadora({ clientName }) {
     estrategia: true,
     entrevistas: false,
     naming:     false,
-    identidade: true,
-    identidade_completa: false,
-    sitebrand:  false,
+    identidade: !IS_ALUDE,
+    identidade_completa: IS_ALUDE,
+    sitebrand: IS_ALUDE,
   });
-  const [myBrandingQty, setMyBrandingQty] = useState(0);
-  const myBrandingUnitPrice = myBrandingQty >= 2 ? 5000 : 6000;
+  const [myBrandingQty, setMyBrandingQty] = useState(IS_ALUDE ? 2 : 0);
+  const myBrandingUnitPrice = IS_ALUDE ? 7500 : (myBrandingQty >= 2 ? 5000 : 6000);
 
   const total = SERVICES.reduce((sum, s) => {
     if (s.id === 'mybranding') return sum + (myBrandingQty * myBrandingUnitPrice);
     return selected[s.id] ? sum + s.price : sum;
   }, 0);
-  const discountPct = total > 10000 ? 0.10 : 0.05;
+  const discountPct = IS_ALUDE ? 0.10 : (total > 10000 ? 0.10 : 0.05);
   const discountLabel = total > 10000 ? '10%' : '5%';
   const totalDesconto = Math.round(total * (1 - discountPct));
   const metade = Math.round(total / 2);
@@ -1409,7 +1459,7 @@ function Calculadora({ clientName }) {
               <div className="flex-1 h-px bg-[#FE6942]/20" />
             </div>
             <div className="space-y-3">
-              {SERVICES.filter(s => s.id !== 'mybranding' && s.id !== 'sitebrand').map((service) => (
+              {SERVICES.filter(s => s.id !== 'mybranding' && s.id !== 'sitebrand' && (!IS_ALUDE || s.id !== 'identidade_completa')).map((service) => (
                 <div
                   key={service.id}
                   onClick={() => setSelected((prev) => {
@@ -1462,7 +1512,7 @@ function Calculadora({ clientName }) {
           {/* Grupo myBranding */}
           <div>
             <div className="flex items-center gap-3 mb-3 px-1">
-              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">myBranding</span>
+              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">{IS_ALUDE ? 'Marca pessoal' : 'myBranding'}</span>
               <div className="flex-1 h-px bg-black/10" />
             </div>
             <div className="space-y-3">
@@ -1513,10 +1563,59 @@ function Calculadora({ clientName }) {
             </div>
           </div>
 
+          {IS_ALUDE && (
+            <div>
+              <div className="flex items-center gap-3 mb-3 px-1">
+                <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">Identidade de Marca</span>
+                <div className="flex-1 h-px bg-black/10" />
+              </div>
+              <div className="space-y-3">
+                {SERVICES.filter((service) => service.id === 'identidade_completa').map((service) => (
+                  <div
+                    key={service.id}
+                    onClick={() => setSelected((prev) => ({ ...prev, [service.id]: !prev[service.id] }))}
+                    className={`cursor-pointer rounded-2xl px-7 py-6 border transition-all duration-200 flex items-center justify-between gap-4 ${
+                      selected[service.id]
+                        ? 'border-[#FE6942] bg-[#FE6942]/[0.04]'
+                        : 'border-black/[0.09] bg-[#F8F8F8] hover:border-black/20'
+                    }`}
+                  >
+                    <div className="flex items-center gap-5">
+                      <div
+                        className="w-6 h-6 rounded-md border flex items-center justify-center shrink-0 transition-all duration-150"
+                        style={{
+                          borderColor: selected[service.id] ? '#FE6942' : 'rgba(0,0,0,0.2)',
+                          background: selected[service.id] ? '#FE6942' : 'transparent',
+                        }}
+                      >
+                        {selected[service.id] && (
+                          <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                            <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
+                        )}
+                      </div>
+                      <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/50'}`}>
+                        {service.label}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-8 shrink-0">
+                      <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${selected[service.id] ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
+                        {service.prazo}
+                      </span>
+                      <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
+                        {formatBRL(service.price)}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Grupo Site BrandExperience */}
           <div>
             <div className="flex items-center gap-3 mb-3 px-1">
-              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">Site BrandExperience</span>
+              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">{IS_ALUDE ? 'Site de marca' : 'Site BrandExperience'}</span>
               <div className="flex-1 h-px bg-black/10" />
             </div>
             <div className="space-y-3">
@@ -1579,9 +1678,9 @@ function Calculadora({ clientName }) {
               </div>
             )}
             {selected.naming     && <CardNaming />}
+            {myBrandingQty > 0   && <CardMyBranding />}
             {selected.identidade && <CardIdentidade />}
             {selected.identidade_completa && <CardIdentidadeCompleta />}
-            {myBrandingQty > 0   && <CardMyBranding />}
             {selected.sitebrand  && <CardSiteBrand />}
             <CardTheOneAgent />
           </div>
@@ -1627,7 +1726,7 @@ function Calculadora({ clientName }) {
                 <li className="flex items-start gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
                   <span className="font-halyard font-light text-[#181412] text-[18px] leading-[1.5]">
-                    <span className="font-medium">50/50:</span> {formatBRL(metade)} no início + {formatBRL(total - metade)} após 30 dias
+                    {IS_ALUDE ? <><span className="font-medium">4 parcelas:</span> {formatBRL(Math.round(total / 4))} por mês</> : <><span className="font-medium">50/50:</span> {formatBRL(metade)} no início + {formatBRL(total - metade)} após 30 dias</>}
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -1639,7 +1738,7 @@ function Calculadora({ clientName }) {
                 <li className="flex items-start gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
                   <span className="font-halyard font-light text-[#181412] text-[18px] leading-[1.5]">
-                    <span className="font-medium">Cartão:</span> em até 12x com taxa da operadora
+                    {IS_ALUDE ? <><span className="font-medium">Prazo:</span> de 2 a 4 meses, de acordo com o escopo contratado.</> : <><span className="font-medium">Cartão:</span> em até 12x com taxa da operadora</>}
                   </span>
                 </li>
               </ul>
@@ -1785,7 +1884,7 @@ function Cronograma() {
             </h2>
           </div>
           <p className="font-halyard font-light text-black text-[20px] md:text-[24px] leading-[1.45] max-w-[36ch] lg:justify-self-end lg:text-right">
-            Prazo médio de 4 a 12 semanas, de acordo com os serviços contratados.
+            {IS_ALUDE ? 'Prazo de 2 a 4 meses, de acordo com os serviços contratados e a cadência de validações.' : 'Prazo médio de 4 a 12 semanas, de acordo com os serviços contratados.'}
           </p>
         </div>
 
@@ -2086,9 +2185,9 @@ function CaseSlide({ slug }) {
 // ── SLIDESHOW ─────────────────────────────────────────────────────────────────
 function PropostaSlideshow() {
   const [proposalState, setProposalState, generateLink] = useProposalState({
-    clientName: '',
-    cenarioAtual: '',
-    cenarioDesejado: ''
+    clientName: IS_ALUDE ? ALUDE_PROPOSAL.clientName : '',
+    cenarioAtual: IS_ALUDE ? ALUDE_PROPOSAL.cenarioAtual : '',
+    cenarioDesejado: IS_ALUDE ? ALUDE_PROPOSAL.cenarioDesejado : '',
   });
   const [current, setCurrent] = useState(0);
   const [animDir, setAnimDir] = useState('next');
@@ -2182,14 +2281,14 @@ function PropostaSlideshow() {
         {current === 11 && <CasaDaMarca />}
         {current === 12 && <EstrategiaDeMarca />}
         {current === 13 && <Naming />}
-        {current === 14 && <IdentidadeVisual />}
+        {current === 14 && (IS_ALUDE ? <MyBranding /> : <IdentidadeVisual />)}
         {current === 15 && <IdentidadeVisualCompleta />}
-        {current === 16 && <MyBranding />}
-        {current === 17 && <SiteBrandExperience />}
-        {current === 18 && <TheOneAgent />}
-        {current === 19 && <Cronograma />}
-        {current === 20 && <Calculadora clientName={proposalState.clientName} />}
-        {current === 21 && <Consultoria />}
+        {current === 16 && (IS_ALUDE ? <SiteBrandExperience /> : <MyBranding />)}
+        {current === 17 && (IS_ALUDE ? <TheOneAgent /> : <SiteBrandExperience />)}
+        {current === 18 && (IS_ALUDE ? <Cronograma /> : <TheOneAgent />)}
+        {current === 19 && (IS_ALUDE ? <Calculadora clientName={proposalState.clientName} /> : <Cronograma />)}
+        {current === 20 && (IS_ALUDE ? <Consultoria /> : <Calculadora clientName={proposalState.clientName} />)}
+        {current === 21 && !IS_ALUDE && <Consultoria />}
       </div>
 
       <div

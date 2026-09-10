@@ -84,6 +84,7 @@ export default function App() {
   const isBaseP = ['/base-p', '/base-p/'].includes(pathname);
   const isAnderson = ['/anderson-neville', '/anderson-neville/'].includes(pathname);
   const isBaseM = ['/base-m', '/base-m/'].includes(pathname);
+  const isAlude = ['/alude', '/alude/'].includes(pathname);
   const isBaseG = ['/base-g', '/base-g/'].includes(pathname);
   const isAgentOne = ['/agent-one', '/agent-one/', '/agentone', '/agentone/'].includes(pathname);
   const isDesignSystem = pathname === '/design-system';
@@ -364,7 +365,7 @@ export default function App() {
   if (isAnderson) {
     return <Suspense fallback={null}><PropostaAnderson /></Suspense>;
   }
-  if (isBaseM) {
+  if (isBaseM || isAlude) {
     return <Suspense fallback={null}><PropostaBaseM /></Suspense>;
   }
   if (isBaseG) {
