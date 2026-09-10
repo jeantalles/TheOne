@@ -25,7 +25,7 @@ const ALUDE_PROPOSAL = {
 const SERVICES = IS_ALUDE
   ? [
       { id: 'estrategia', label: 'Estratégia de Marca e Posicionamento', price: 20000, prazo: '2–4 meses' },
-      { id: 'naming', label: 'Naming', price: 3000, prazo: '2 semanas' },
+      { id: 'naming', label: 'Naming', price: 5000, prazo: '2 semanas' },
       { id: 'mybranding', label: 'Marca pessoal · 2 líderes', price: 15000, prazo: 'em paralelo' },
       { id: 'identidade_completa', label: 'Identidade Visual e Verbal', price: 15000, prazo: 'em paralelo' },
       { id: 'sitebrand', label: 'Site BrandExperience', price: 20000, prazo: 'em paralelo' },
@@ -40,10 +40,10 @@ const SERVICES = IS_ALUDE
       { id: 'sitebrand', label: 'Site BrandExperience', price: 8000, prazo: '6 semanas' },
     ];
 
-// 0: Capa | 1: NomeCliente | 2: Contexto A | 3: Contexto B | 4: Dores | 5: SobreTheOne | 6: Jean | 7: Zenic | 8: Thunders | 9: Camilla | 10: TheOne Foundation | 11: Casa da Marca | 12: Estratégia | 13: Naming | 14: Identidade Essencial | 15: Identidade Completa | 16: myBranding | 17: SiteBrandExperience | 18: TheOne Agent | 19: Cronograma | 20: Calculadora | 21: Consultoria
-const SLIDE_TOTAL = IS_ALUDE ? 21 : 22;
+// Alude: 0–19 sem slide exclusivo de Naming. Proposta base: 0–21 com Naming.
+const SLIDE_TOTAL = IS_ALUDE ? 20 : 22;
 
-const DARK_SLIDES = IS_ALUDE ? [0, 1, 6, 7, 8, 9, 10, 17] : [0, 1, 6, 7, 8, 9, 10, 18];
+const DARK_SLIDES = IS_ALUDE ? [0, 1, 6, 7, 8, 9, 10, 16] : [0, 1, 6, 7, 8, 9, 10, 18];
 
 const formatBRL = (v) => `R$ ${v.toLocaleString('pt-BR')}`;
 
@@ -386,12 +386,14 @@ function EstrategiaDeMarca() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
-            <h2 className="est-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
+            <h2 className={`est-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight ${IS_ALUDE ? 'mb-10' : 'mb-3'}`}>
               {IS_ALUDE ? <>Estratégia de<br />Marca e<br />Posicionamento</> : <>Estratégia<br />de Marca</>}
             </h2>
-            <div className="est-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              {formatBRL(SERVICES.find((service) => service.id === 'estrategia').price)}
-            </div>
+            {!IS_ALUDE && (
+              <div className="est-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
+                {formatBRL(SERVICES.find((service) => service.id === 'estrategia').price)}
+              </div>
+            )}
             <p className="est-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               {IS_ALUDE
                 ? 'Uma fundação para transformar a experiência que a Alude já entrega em uma marca percebida como inevitável pelos profissionais que movem o mercado imobiliário.'
@@ -774,12 +776,14 @@ function IdentidadeVisualCompleta() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
-            <h2 className="id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
+            <h2 className={`id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight ${IS_ALUDE ? 'mb-10' : 'mb-3'}`}>
               {IS_ALUDE ? <>Identidade Visual<br />e Verbal</> : <>Identidade de Marca<br />Completa</>}
             </h2>
-            <div className="id-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              {formatBRL(SERVICES.find((service) => service.id === 'identidade_completa').price)}
-            </div>
+            {!IS_ALUDE && (
+              <div className="id-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
+                {formatBRL(SERVICES.find((service) => service.id === 'identidade_completa').price)}
+              </div>
+            )}
             <p className="id-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               Transformamos a estratégia em uma expressão visual única. Uma identidade que o mercado reconhece, o público deseja e você tem orgulho de mostrar em qualquer contexto.
             </p>
@@ -906,12 +910,14 @@ function MyBranding() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
-            <h2 className="mb-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
+            <h2 className={`mb-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight ${IS_ALUDE ? 'mb-10' : 'mb-3'}`}>
               {IS_ALUDE ? <>Marca pessoal<br />para duas lideranças</> : 'myBranding'}
             </h2>
-            <div className="mb-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              {IS_ALUDE ? formatBRL(SERVICES.find((service) => service.id === 'mybranding').price) : 'R$ 8.000'}
-            </div>
+            {!IS_ALUDE && (
+              <div className="mb-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
+                R$ 8.000
+              </div>
+            )}
             <p className="mb-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               {IS_ALUDE
                 ? 'Duas lideranças com presença, ponto de vista e narrativas conectadas à visão da Alude, para humanizar a marca e ampliar sua capacidade de gerar autoridade e comunidade.'
@@ -1077,12 +1083,14 @@ function SiteBrandExperience() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
-            <h2 className="sbe-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
+            <h2 className={`sbe-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight ${IS_ALUDE ? 'mb-10' : 'mb-3'}`}>
               {IS_ALUDE ? <>Site de<br />Marca</> : 'Site BrandExperience'}
             </h2>
-            <div className="sbe-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              {formatBRL(SERVICES.find((service) => service.id === 'sitebrand').price)}
-            </div>
+            {!IS_ALUDE && (
+              <div className="sbe-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
+                {formatBRL(SERVICES.find((service) => service.id === 'sitebrand').price)}
+              </div>
+            )}
             <p className="sbe-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               {IS_ALUDE
                 ? 'O ponto de contato que torna a nova percepção de valor visível: uma experiência de marca com prova social, diferenciais claros e mensagens relevantes para cada público da Alude.'
@@ -2279,14 +2287,14 @@ function PropostaSlideshow() {
         {current === 10 && <TheOneFoundation />}
         {current === 11 && <CasaDaMarca />}
         {current === 12 && <EstrategiaDeMarca />}
-        {current === 13 && <Naming />}
-        {current === 14 && (IS_ALUDE ? <MyBranding /> : <IdentidadeVisual />)}
-        {current === 15 && <IdentidadeVisualCompleta />}
-        {current === 16 && (IS_ALUDE ? <SiteBrandExperience /> : <MyBranding />)}
-        {current === 17 && (IS_ALUDE ? <TheOneAgent /> : <SiteBrandExperience />)}
-        {current === 18 && (IS_ALUDE ? <Cronograma /> : <TheOneAgent />)}
-        {current === 19 && (IS_ALUDE ? <Calculadora clientName={proposalState.clientName} /> : <Cronograma />)}
-        {current === 20 && (IS_ALUDE ? <Consultoria /> : <Calculadora clientName={proposalState.clientName} />)}
+        {current === 13 && (IS_ALUDE ? <MyBranding /> : <Naming />)}
+        {current === 14 && (IS_ALUDE ? <IdentidadeVisualCompleta /> : <IdentidadeVisual />)}
+        {current === 15 && (IS_ALUDE ? <SiteBrandExperience /> : <IdentidadeVisualCompleta />)}
+        {current === 16 && (IS_ALUDE ? <TheOneAgent /> : <MyBranding />)}
+        {current === 17 && (IS_ALUDE ? <Cronograma /> : <SiteBrandExperience />)}
+        {current === 18 && (IS_ALUDE ? <Calculadora clientName={proposalState.clientName} /> : <TheOneAgent />)}
+        {current === 19 && (IS_ALUDE ? <Consultoria /> : <Cronograma />)}
+        {current === 20 && !IS_ALUDE && <Calculadora clientName={proposalState.clientName} />}
         {current === 21 && !IS_ALUDE && <Consultoria />}
       </div>
 
