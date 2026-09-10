@@ -1451,7 +1451,7 @@ function Calculadora({ clientName }) {
     naming:     false,
     identidade: !IS_ALUDE,
     identidade_completa: IS_ALUDE,
-    sitebrand: IS_ALUDE,
+    sitebrand: false,
   });
   const [myBrandingQty, setMyBrandingQty] = useState(IS_ALUDE ? 2 : 0);
   const myBrandingUnitPrice = IS_ALUDE ? 6500 : (myBrandingQty >= 2 ? 5000 : 6000);
