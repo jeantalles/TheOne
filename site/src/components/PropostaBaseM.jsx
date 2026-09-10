@@ -1805,7 +1805,7 @@ function CasaDaMarca() {
         <text x="720" y="576" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="18" fontWeight="400" fill="#181412" fillOpacity="0.68">identidade visual, arquitetura do PDV</text>
 
         <text x="720" y="696" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="30" fontWeight="700" fill="white">THEONE FOUNDATION</text>
-        <text x="720" y="735" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="21" fontWeight="400" fill="white" fillOpacity="0.7">Estratégia de posicionamento e marca</text>
+        <text x="720" y="735" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="21" fontWeight="400" fill="white" fillOpacity="0.7">Estratégia de Marca e Posicionamento</text>
 
         <path d="M916 210H1080" stroke="#181412" strokeWidth="1.3" />
         <path d="M916 210L902 230" stroke="#181412" strokeWidth="1.3" />
