@@ -1876,7 +1876,7 @@ function G4CaseStudy() {
               </p>
             </div>
 
-            <div className="flex flex-col items-center">
+            <div className="flex flex-col">
               <aside className="w-full overflow-hidden rounded-[28px] border border-[#181412]/10 bg-[#E7E4E0] aspect-[1.635]">
                 <img
                   src="/images/g4-founders.jpg"
@@ -1884,8 +1884,8 @@ function G4CaseStudy() {
                   className="h-full w-full object-cover object-center"
                 />
               </aside>
-              <svg className="mt-4 animate-bounce text-[#FE6942]" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M12 3v16M5.5 12.5 12 19l6.5-6.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              <svg className="mt-5 ml-5 animate-bounce text-[#FE6942]" width="38" height="38" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 2.5v17M4.75 12.25 12 19.5l7.25-7.25" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </div>
           </div>
