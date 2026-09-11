@@ -42,9 +42,9 @@ const SERVICES = IS_ALUDE
     ];
 
 // Alude: narrativa TheOne distribuída em telas individuais; proposta base preserva a sequência original.
-const SLIDE_TOTAL = IS_ALUDE ? 24 : 22;
+const SLIDE_TOTAL = IS_ALUDE ? 25 : 22;
 
-const DARK_SLIDES = IS_ALUDE ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 20] : [0, 1, 6, 7, 8, 9, 10, 18];
+const DARK_SLIDES = IS_ALUDE ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 21] : [0, 1, 6, 7, 8, 9, 10, 18];
 
 const formatBRL = (v) => `R$ ${v.toLocaleString('pt-BR')}`;
 
@@ -1819,6 +1819,114 @@ function CasaDaMarca() {
   );
 }
 
+// ── CASE: G4 ─────────────────────────────────────────────────────────────────
+function G4CaseStudy() {
+  const fundamentos = [
+    {
+      title: 'Narrativa em defesa do empresário',
+      text: 'O G4 apresenta o empresário como alguém que cria riqueza, empregos e crescimento. A marca confronta burocracia, o estigma do empresário como vilão e formas mais lentas de gerir negócios; defende uma gestão prática, digital e voltada à execução.',
+    },
+    {
+      title: 'Distribuição orgânica em escala',
+      text: 'Marca institucional, fundadores, mentores e unidades de negócio mantêm presença recorrente em diferentes redes e formatos.',
+    },
+    {
+      title: 'Conteúdo centrado na atenção do público',
+      text: 'Pautas sobre dores de empresários, assuntos do mercado, empresas, pessoas e decisões que interessam à audiência.',
+    },
+    {
+      title: 'Consistência de posicionamento',
+      text: 'As diferentes frentes reforçam a mesma visão de negócio e ajudam o G4 a ocupar um território claro na mente de quem empreende.',
+    },
+    {
+      title: 'Marcas pessoais que ampliam valor percebido',
+      text: 'As marcas pessoais de Tallis, Alfredo e Nardon fortalecem a conexão do público com o G4 e elevam a percepção de valor da marca.',
+    },
+    {
+      title: 'Associação e pertencimento',
+      text: 'Mentores, empresários convidados, eventos, comunidade e alunos colocam a marca ao lado de pessoas e contextos valorizados pelo público.',
+    },
+  ];
+
+  const faturamento = [
+    { value: 'R$ 11 mi', year: '2019' },
+    { value: 'R$ 204 mi', year: '2023' },
+    { value: 'R$ 508 mi', year: '2025' },
+  ];
+
+  return (
+    <section className="min-h-[100svh] bg-[#F6F2EE] text-[#181412] px-6 md:px-12 lg:px-16 py-16 md:py-20">
+      <article className="mx-auto max-w-[1280px]">
+        <header className="border-b border-[#181412]/15 pb-12 md:pb-16">
+          <div className="flex items-center justify-between gap-6 mb-8">
+            <span className="font-halyard text-[12px] md:text-[14px] tracking-[.22em] uppercase font-semibold text-[#FE6942]">Case de marca · G4</span>
+            <span className="font-halyard text-[12px] md:text-[14px] tracking-[.16em] uppercase text-[#181412]/45">Conteúdo, comunidade e aquisição</span>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_330px] gap-10 lg:gap-16 items-end">
+            <div>
+              <h2 className="font-editorial font-normal text-[clamp(3rem,6.4vw,6.4rem)] leading-[.9] tracking-[-.04em] max-w-[930px]">
+                Em 2023, os perfis sociais do G4 respondiam por mais de <span className="text-[#FE6942]">60%</span> da geração de leads orgânicos.
+              </h2>
+              <p className="font-halyard font-light text-[21px] md:text-[27px] leading-[1.35] text-[#181412]/70 mt-8 max-w-[760px]">
+                O dado mostra o peso que a construção de marca passou a ter na aquisição da empresa.
+              </p>
+            </div>
+
+            <aside className="relative overflow-hidden rounded-[28px] min-h-[250px] p-8 flex flex-col justify-between bg-[#352B27] text-white">
+              <div className="absolute inset-0 opacity-80" style={{ background: 'radial-gradient(circle at 100% 0%, rgba(254,105,66,.8), transparent 48%)' }} />
+              <span className="relative font-halyard text-[12px] tracking-[.2em] uppercase text-white/65">Marca como canal</span>
+              <div className="relative">
+                <div className="font-editorial text-[clamp(4.5rem,8vw,7rem)] leading-none">G4</div>
+                <div className="font-halyard text-[15px] tracking-[.12em] uppercase text-white/65 mt-3">Um case de distribuição</div>
+              </div>
+            </aside>
+          </div>
+        </header>
+
+        <section className="grid grid-cols-1 lg:grid-cols-[260px_minmax(0,1fr)] gap-8 lg:gap-16 py-12 md:py-16 border-b border-[#181412]/15">
+          <h3 className="font-halyard font-semibold text-[13px] tracking-[.2em] uppercase text-[#181412]/45">Contexto</h3>
+          <p className="font-halyard font-light text-[22px] md:text-[28px] leading-[1.42] max-w-[920px]">
+            Fundado em 2019, o G4 entrou em uma categoria onde FGV, Fundação Dom Cabral e Insper já reuniam décadas de reconhecimento. A empresa construiu presença junto a empresários a partir de uma narrativa própria, distribuição frequente de conteúdo e associações que reforçam seu valor percebido.
+          </p>
+        </section>
+
+        <section className="py-12 md:py-16 border-b border-[#181412]/15">
+          <h3 className="font-editorial text-[clamp(2.45rem,4.4vw,4.5rem)] leading-[.95] tracking-[-.035em] max-w-[780px] mb-10 md:mb-14">
+            O que sustentou essa construção de marca
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-9">
+            {fundamentos.map((item, index) => (
+              <div key={item.title} className="grid grid-cols-[34px_minmax(0,1fr)] gap-4">
+                <span className="font-halyard font-semibold text-[#FE6942] text-[14px] pt-1">0{index + 1}</span>
+                <div>
+                  <h4 className="font-halyard font-semibold text-[21px] md:text-[24px] leading-[1.1] mb-2">{item.title}</h4>
+                  <p className="font-halyard font-light text-[17px] md:text-[19px] leading-[1.45] text-[#181412]/65">{item.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <footer className="pt-12 md:pt-16 pb-6">
+          <div className="flex items-end justify-between gap-6 mb-8">
+            <h3 className="font-halyard font-semibold text-[13px] tracking-[.2em] uppercase text-[#181412]/45">Faturamento divulgado pelo G4</h3>
+            <span className="font-halyard text-[13px] text-[#181412]/45">2019 — 2025</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 border-t border-[#181412]/20">
+            {faturamento.map((item, index) => (
+              <div key={item.year} className={`pt-6 md:pt-8 ${index ? 'md:border-l md:border-[#181412]/20 md:pl-8' : ''}`}>
+                <div className="font-editorial text-[clamp(2.9rem,4.8vw,4.8rem)] leading-none tracking-[-.04em]">{item.value}</div>
+                <div className="font-halyard text-[16px] text-[#181412]/55 mt-2">{item.year}</div>
+              </div>
+            ))}
+          </div>
+        </footer>
+      </article>
+    </section>
+  );
+}
+
 // ── SLIDE 7: CRONOGRAMA ───────────────────────────────────────────────────────
 const CRONOGRAMA_STEPS = [
   { etapa: '01', nome: 'Imersão', descricao: 'Diagnóstico completo do negócio, mercado e público' },
@@ -2337,14 +2445,15 @@ function PropostaSlideshow() {
         {current === 13 && IS_ALUDE && <CaseSlide slug="camilla-toscano" />}
         {current === 14 && IS_ALUDE && <TheOneFoundation />}
         {current === 15 && IS_ALUDE && <CasaDaMarca />}
-        {current === 16 && IS_ALUDE && <EstrategiaDeMarca />}
-        {current === 17 && IS_ALUDE && <MyBranding />}
-        {current === 18 && IS_ALUDE && <IdentidadeVisualCompleta />}
-        {current === 19 && IS_ALUDE && <SiteBrandExperience />}
-        {current === 20 && IS_ALUDE && <TheOneAgent />}
-        {current === 21 && IS_ALUDE && <Cronograma />}
-        {current === 22 && IS_ALUDE && <Calculadora clientName={proposalState.clientName} />}
-        {current === 23 && IS_ALUDE && <Consultoria />}
+        {current === 16 && IS_ALUDE && <G4CaseStudy />}
+        {current === 17 && IS_ALUDE && <EstrategiaDeMarca />}
+        {current === 18 && IS_ALUDE && <MyBranding />}
+        {current === 19 && IS_ALUDE && <IdentidadeVisualCompleta />}
+        {current === 20 && IS_ALUDE && <SiteBrandExperience />}
+        {current === 21 && IS_ALUDE && <TheOneAgent />}
+        {current === 22 && IS_ALUDE && <Cronograma />}
+        {current === 23 && IS_ALUDE && <Calculadora clientName={proposalState.clientName} />}
+        {current === 24 && IS_ALUDE && <Consultoria />}
       </div>
 
       <div
