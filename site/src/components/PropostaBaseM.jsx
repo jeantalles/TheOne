@@ -1831,7 +1831,7 @@ function G4CaseStudy() {
       text: 'Marca institucional, fundadores, mentores e unidades de negócio mantêm presença recorrente em diferentes redes e formatos.',
     },
     {
-      title: 'Conteúdo centrado na atenção do público',
+      title: 'Conteúdo centrado no interesse do público',
       text: 'Pautas sobre dores de empresários, assuntos do mercado, empresas, pessoas e decisões que interessam à audiência.',
     },
     {
@@ -2470,6 +2470,15 @@ function PropostaSlideshow() {
         }}
         aria-hidden="true"
       />
+
+      {IS_ALUDE && current === 16 && hasMoreBelow && (
+        <div className="absolute bottom-[3.9rem] left-1/2 -translate-x-1/2 z-20 pointer-events-none flex flex-col items-center gap-1 text-[#181412]/60">
+          <span className="font-halyard text-[11px] tracking-[.16em] uppercase">Role para continuar</span>
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      )}
 
       <div className="absolute bottom-2 md:bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20">
         <button
