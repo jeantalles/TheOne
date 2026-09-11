@@ -402,7 +402,7 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
 
     return (
       <p
-        className={`story-copy-container font-halyard font-light text-[#C7C7C7] mt-6 ${staticMode ? 'max-w-[44rem]' : 'max-w-4xl'}`}
+        className={`story-copy-container font-halyard font-light text-[#C7C7C7] mt-6 ${staticMode ? (panelIndex === 0 ? 'max-w-[44rem]' : 'max-w-[56rem]') : 'max-w-4xl'}`}
         style={{ fontSize, lineHeight: staticMode ? '1.42' : STORYTELLING_CONFIG.lineHeight.texto }}
       >
         {renderWordsWithParagraphs(story.content)}
@@ -420,7 +420,7 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
 
     return (
       <div
-        className={`story-mobile-body mt-6 font-halyard font-light text-[#C7C7C7] ${staticMode ? 'max-w-[33rem]' : 'max-w-4xl'}`}
+        className={`story-mobile-body mt-6 font-halyard font-light text-[#C7C7C7] ${staticMode ? (panelIndex === 0 ? 'max-w-[33rem]' : 'max-w-[38rem]') : 'max-w-4xl'}`}
         style={{ fontSize, lineHeight: staticMode ? '1.42' : STORYTELLING_CONFIG.lineHeight.texto }}
       >
         {renderCompactParagraphs(paragraphs)}
