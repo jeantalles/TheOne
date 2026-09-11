@@ -2107,15 +2107,18 @@ function Consultoria() {
 
 function ContextoDeMercado() {
   return (
-    <section className="relative min-h-[100svh] overflow-hidden bg-[#2B211D] px-6 md:px-12 lg:px-16 py-20 md:py-28 flex items-center">
+    <section className="relative h-[100svh] overflow-hidden bg-[#352B27] px-6 md:px-12 lg:px-16 py-8 flex items-center">
       <div className="absolute inset-0 opacity-70" style={{ background: 'radial-gradient(circle at 50% 0%, rgba(254,105,66,.12), transparent 52%)' }} />
-      <div className="relative max-w-[1180px] mx-auto text-center">
-        <h2 className="font-editorial font-normal text-[clamp(3rem,6.2vw,6.2rem)] leading-[.96] tracking-tight mb-12 md:mb-16">
+      <div className="relative max-w-5xl mx-auto text-center flex flex-col items-center gap-5 py-8">
+        <span className="text-[#FE6942] font-halyard tracking-widest uppercase text-[23px]">
+          01 ⏤ 04
+        </span>
+        <h2 className="font-editorial font-normal text-[clamp(2.2rem,4.35vw,3.8rem)] leading-[1.1] tracking-tight max-w-[920px]">
           <span className="text-[#FE6942]">Você não pode se vender<br />da mesma forma</span>{' '}
           <span className="text-white">que o restante do seu mercado.</span>
         </h2>
 
-        <div className="font-halyard font-light text-[#D3CFCD] text-[21px] md:text-[28px] leading-[1.42] space-y-8 md:space-y-10 max-w-[1040px] mx-auto">
+        <div className="font-halyard font-light text-[#C7C7C7] text-[clamp(1.1rem,1.65vw,1.45rem)] leading-[1.42] space-y-5 max-w-[44rem] mx-auto">
           <p>
             Ter um bom produto, rodar anúncio e produzir conteúdo não é mais um diferencial. O mercado está ficando cada vez mais competitivo e parecido.
           </p>
