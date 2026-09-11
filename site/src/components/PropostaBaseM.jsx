@@ -42,9 +42,9 @@ const SERVICES = IS_ALUDE
     ];
 
 // Alude: narrativa TheOne distribuída em telas individuais; proposta base preserva a sequência original.
-const SLIDE_TOTAL = IS_ALUDE ? 25 : 22;
+const SLIDE_TOTAL = IS_ALUDE ? 24 : 22;
 
-const DARK_SLIDES = IS_ALUDE ? [0, 1, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 21] : [0, 1, 6, 7, 8, 9, 10, 18];
+const DARK_SLIDES = IS_ALUDE ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 20] : [0, 1, 6, 7, 8, 9, 10, 18];
 
 const formatBRL = (v) => `R$ ${v.toLocaleString('pt-BR')}`;
 
@@ -2279,14 +2279,14 @@ function PropostaSlideshow() {
         className={`absolute inset-0 overflow-y-auto ${DARK_SLIDES.includes(current) ? 'pb-0' : 'pb-20 md:pb-16'} ${animDir === 'next' ? 'slide-from-right' : 'slide-from-left'}`}
       >
         {current === 0  && <Capa />}
-        {current === 1  && (
+        {current === 1 && !IS_ALUDE && (
           <NomeClienteSlide 
             clientName={proposalState.clientName} 
             setClientName={(v) => setProposalState({ clientName: v })} 
             onGenerateLink={generateLink} 
           />
         )}
-        {current === 2  && (
+        {current === (IS_ALUDE ? 1 : 2) && (
           <ContextoEditavel 
             showDesejado={false}
             cenarioAtual={proposalState.cenarioAtual}
@@ -2295,7 +2295,7 @@ function PropostaSlideshow() {
             setCenarioDesejado={(v) => setProposalState({ cenarioDesejado: v })}
           />
         )}
-        {current === 3  && (
+        {current === (IS_ALUDE ? 2 : 3) && (
           <ContextoEditavel 
             showDesejado={true}
             cenarioAtual={proposalState.cenarioAtual}
@@ -2304,30 +2304,47 @@ function PropostaSlideshow() {
             setCenarioDesejado={(v) => setProposalState({ cenarioDesejado: v })}
           />
         )}
-        {current === 4  && <Dores />}
-        {current === 5  && (IS_ALUDE
+        {current === (IS_ALUDE ? 3 : 4) && <Dores />}
+        {current === (IS_ALUDE ? 4 : 5) && (IS_ALUDE
           ? <SobreTheOne scrollerRef={slideScrollRef} mode="hero" />
           : <SobreTheOne scrollerRef={slideScrollRef} />
         )}
-        {current === 6  && (IS_ALUDE ? <SobreTheOne scrollerRef={slideScrollRef} mode="market" /> : <SobreJean />)}
-        {current === 7  && (IS_ALUDE ? <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={0} /> : <CaseSlide slug="zenic" />)}
-        {current === 8  && (IS_ALUDE ? <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={1} /> : <CaseSlide slug="thunders" />)}
-        {current === 9  && (IS_ALUDE ? <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={2} /> : <CaseSlide slug="camilla-toscano" />)}
-        {current === 10 && (IS_ALUDE ? <SobreTheOne scrollerRef={slideScrollRef} mode="about" /> : <TheOneFoundation />)}
-        {current === 11 && (IS_ALUDE ? <SobreJean /> : <CasaDaMarca />)}
-        {current === 12 && (IS_ALUDE ? <CaseSlide slug="zenic" /> : <EstrategiaDeMarca />)}
-        {current === 13 && (IS_ALUDE ? <CaseSlide slug="thunders" /> : <Naming />)}
-        {current === 14 && (IS_ALUDE ? <CaseSlide slug="camilla-toscano" /> : <IdentidadeVisual />)}
-        {current === 15 && (IS_ALUDE ? <TheOneFoundation /> : <IdentidadeVisualCompleta />)}
-        {current === 16 && (IS_ALUDE ? <CasaDaMarca /> : <MyBranding />)}
-        {current === 17 && (IS_ALUDE ? <EstrategiaDeMarca /> : <SiteBrandExperience />)}
-        {current === 18 && (IS_ALUDE ? <MyBranding /> : <TheOneAgent />)}
-        {current === 19 && (IS_ALUDE ? <IdentidadeVisualCompleta /> : <Cronograma />)}
-        {current === 20 && (IS_ALUDE ? <SiteBrandExperience /> : <Calculadora clientName={proposalState.clientName} />)}
-        {current === 21 && (IS_ALUDE ? <TheOneAgent /> : <Consultoria />)}
-        {current === 22 && IS_ALUDE && <Cronograma />}
-        {current === 23 && IS_ALUDE && <Calculadora clientName={proposalState.clientName} />}
-        {current === 24 && IS_ALUDE && <Consultoria />}
+        {current === 6  && !IS_ALUDE && <SobreJean />}
+        {current === 7  && !IS_ALUDE && <CaseSlide slug="zenic" />}
+        {current === 8  && !IS_ALUDE && <CaseSlide slug="thunders" />}
+        {current === 9  && !IS_ALUDE && <CaseSlide slug="camilla-toscano" />}
+        {current === 10 && !IS_ALUDE && <TheOneFoundation />}
+        {current === 11 && !IS_ALUDE && <CasaDaMarca />}
+        {current === 12 && !IS_ALUDE && <EstrategiaDeMarca />}
+        {current === 13 && !IS_ALUDE && <Naming />}
+        {current === 14 && !IS_ALUDE && <IdentidadeVisual />}
+        {current === 15 && !IS_ALUDE && <IdentidadeVisualCompleta />}
+        {current === 16 && !IS_ALUDE && <MyBranding />}
+        {current === 17 && !IS_ALUDE && <SiteBrandExperience />}
+        {current === 18 && !IS_ALUDE && <TheOneAgent />}
+        {current === 19 && !IS_ALUDE && <Cronograma />}
+        {current === 20 && !IS_ALUDE && <Calculadora clientName={proposalState.clientName} />}
+        {current === 21 && !IS_ALUDE && <Consultoria />}
+
+        {current === 5  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="market" />}
+        {current === 6  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={0} />}
+        {current === 7  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={1} />}
+        {current === 8  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={2} />}
+        {current === 9  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="about" />}
+        {current === 10 && IS_ALUDE && <SobreJean />}
+        {current === 11 && IS_ALUDE && <CaseSlide slug="zenic" />}
+        {current === 12 && IS_ALUDE && <CaseSlide slug="thunders" />}
+        {current === 13 && IS_ALUDE && <CaseSlide slug="camilla-toscano" />}
+        {current === 14 && IS_ALUDE && <TheOneFoundation />}
+        {current === 15 && IS_ALUDE && <CasaDaMarca />}
+        {current === 16 && IS_ALUDE && <EstrategiaDeMarca />}
+        {current === 17 && IS_ALUDE && <MyBranding />}
+        {current === 18 && IS_ALUDE && <IdentidadeVisualCompleta />}
+        {current === 19 && IS_ALUDE && <SiteBrandExperience />}
+        {current === 20 && IS_ALUDE && <TheOneAgent />}
+        {current === 21 && IS_ALUDE && <Cronograma />}
+        {current === 22 && IS_ALUDE && <Calculadora clientName={proposalState.clientName} />}
+        {current === 23 && IS_ALUDE && <Consultoria />}
       </div>
 
       <div
