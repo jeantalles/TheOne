@@ -1876,13 +1876,18 @@ function G4CaseStudy() {
               </p>
             </div>
 
-            <aside className="overflow-hidden rounded-[28px] border border-[#181412]/10 bg-[#E7E4E0] aspect-[1.635]">
-              <img
-                src="/images/g4-founders.jpg"
-                alt="Fundadores do G4 Educação"
-                className="h-full w-full object-cover object-center"
-              />
-            </aside>
+            <div className="flex flex-col items-center">
+              <aside className="w-full overflow-hidden rounded-[28px] border border-[#181412]/10 bg-[#E7E4E0] aspect-[1.635]">
+                <img
+                  src="/images/g4-founders.jpg"
+                  alt="Fundadores do G4 Educação"
+                  className="h-full w-full object-cover object-center"
+                />
+              </aside>
+              <svg className="mt-4 animate-bounce text-[#FE6942]" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v16M5.5 12.5 12 19l6.5-6.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
           </div>
         </header>
 
@@ -2470,15 +2475,6 @@ function PropostaSlideshow() {
         }}
         aria-hidden="true"
       />
-
-      {IS_ALUDE && current === 16 && hasMoreBelow && (
-        <div className="absolute bottom-[3.9rem] left-1/2 -translate-x-1/2 z-20 pointer-events-none flex flex-col items-center gap-1 text-[#181412]/60">
-          <span className="font-halyard text-[11px] tracking-[.16em] uppercase">Role para continuar</span>
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-      )}
 
       <div className="absolute bottom-2 md:bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20">
         <button
