@@ -1856,16 +1856,16 @@ function G4CaseStudy() {
 
   return (
     <section className="min-h-[100svh] bg-[#F6F2EE] text-[#181412] px-6 md:px-12 lg:px-16 py-16 md:py-20">
-      <article className="mx-auto max-w-[1280px]">
+      <article className="mx-auto max-w-[1440px]">
         <header className="pb-12 md:pb-16">
           <div className="flex items-center justify-between gap-6 mb-8">
             <span className="font-halyard text-[12px] md:text-[14px] tracking-[.22em] uppercase font-semibold text-[#FE6942]">Case de marca · G4</span>
             <span className="font-halyard text-[12px] md:text-[14px] tracking-[.16em] uppercase text-[#181412]/45">Conteúdo, comunidade e aquisição</span>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_440px] gap-10 lg:gap-14 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(500px,560px)] gap-10 lg:gap-14 items-center">
             <div>
-              <h2 className="font-editorial font-normal text-[clamp(2.8rem,5.35vw,5.35rem)] leading-[1.02] tracking-[-.035em] max-w-[930px]">
+              <h2 className="font-editorial font-normal text-[clamp(2.55rem,4.2vw,4.25rem)] leading-[1.06] tracking-[-.035em] max-w-[820px]">
                 Em 2023, as redes do G4 respondiam por mais de <span className="text-[#FE6942]">60%</span> da geração de leads orgânicos.
               </h2>
               <p className="font-halyard font-normal text-[17px] md:text-[19px] leading-[1.5] text-[#181412]/65 mt-6 max-w-[860px]">
