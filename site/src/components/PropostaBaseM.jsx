@@ -1917,7 +1917,7 @@ function G4CaseStudy() {
               <div key={item.title} className="grid grid-cols-[34px_minmax(0,1fr)] gap-4">
                 <span className="font-halyard font-semibold text-[#FE6942] text-[14px] pt-1">0{index + 1}</span>
                 <div>
-                  <h4 className="font-halyard font-semibold text-[21px] md:text-[24px] leading-[1.1] mb-2">{item.title}</h4>
+                  <h4 className="font-halyard font-semibold text-[25px] md:text-[30px] leading-[1.05] tracking-[-.02em] mb-3">{item.title}</h4>
                   <p className="font-halyard font-normal text-[19px] md:text-[21px] leading-[1.48] text-[#181412]/75">{item.text}</p>
                 </div>
               </div>
