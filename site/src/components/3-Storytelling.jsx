@@ -373,7 +373,7 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
     ));
 
   const renderDesktopBody = (story) => {
-    const fontSize = story.textSizeDesktop || style.texto;
+    const fontSize = story.textSizeDesktop || (staticMode ? 'clamp(1.08rem, 1.65vw, 1.35rem)' : style.texto);
 
     if (story.transitionMode === 'swapParagraphs') {
       return (
@@ -443,10 +443,10 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
         {stories.map((story) => (
           <div
             key={story.tag}
-            className="story-panel-mobile relative flex flex-col items-center justify-center px-6 py-24"
+            className={`story-panel-mobile relative flex flex-col items-center justify-center px-6 ${staticMode ? 'h-[100svh] overflow-hidden py-6' : 'py-24'}`}
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,82,36,0.06)_0%,transparent_60%)] pointer-events-none z-0" />
-            <div className="relative z-10 max-w-5xl w-full text-center flex flex-col items-center gap-8 py-16">
+            <div className={`relative z-10 max-w-5xl w-full text-center flex flex-col items-center ${staticMode ? 'gap-5 py-0' : 'gap-8 py-16'}`}>
               <span className="text-[#FE6942] font-halyard tracking-widest uppercase" style={{ fontSize: style.tag }}>
                 {story.tag}
               </span>
@@ -472,13 +472,13 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
       {stories.map((story, index) => (
         <div
           key={story.tag}
-          className={`story-panel min-h-[100svh] relative flex flex-col items-center px-6 overflow-hidden ${index === 0 ? 'justify-start' : 'justify-center'}`}
+          className={`story-panel ${staticMode ? 'h-[100svh]' : 'min-h-[100svh]'} relative flex flex-col items-center px-6 overflow-hidden ${staticMode || index !== 0 ? 'justify-center' : 'justify-start'}`}
           data-transition={story.transitionMode}
         >
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,82,36,0.06)_0%,transparent_60%)] pointer-events-none z-0" />
           <div
-            className="relative z-10 max-w-5xl w-full text-center flex flex-col items-center gap-8 py-16"
-            style={index === 0 ? { paddingTop: 'clamp(6rem, 18vh, 11rem)' } : undefined}
+            className={`relative z-10 max-w-5xl w-full text-center flex flex-col items-center ${staticMode ? 'gap-5 py-8' : 'gap-8 py-16'}`}
+            style={!staticMode && index === 0 ? { paddingTop: 'clamp(6rem, 18vh, 11rem)' } : undefined}
           >
             <span className="text-[#FE6942] font-halyard tracking-widest uppercase" style={{ fontSize: style.tag }}>
               {story.tag}
@@ -486,7 +486,7 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
             <h2
               className="story-title-container font-editorial font-normal leading-[1.1] text-white"
               style={{
-                fontSize: story.titleSizeDesktop || style.titulo,
+                fontSize: story.titleSizeDesktop || (staticMode ? 'clamp(2.2rem, 4.35vw, 3.8rem)' : style.titulo),
                 maxWidth: story.titleWidth,
               }}
             >
