@@ -1857,7 +1857,7 @@ function G4CaseStudy() {
   return (
     <section className="min-h-[100svh] bg-[#F6F2EE] text-[#181412] px-6 md:px-12 lg:px-16 py-16 md:py-20">
       <article className="mx-auto max-w-[1280px]">
-        <header className="border-b border-[#181412]/15 pb-12 md:pb-16">
+        <header className="pb-12 md:pb-16">
           <div className="flex items-center justify-between gap-6 mb-8">
             <span className="font-halyard text-[12px] md:text-[14px] tracking-[.22em] uppercase font-semibold text-[#FE6942]">Case de marca · G4</span>
             <span className="font-halyard text-[12px] md:text-[14px] tracking-[.16em] uppercase text-[#181412]/45">Conteúdo, comunidade e aquisição</span>
@@ -1865,24 +1865,49 @@ function G4CaseStudy() {
 
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_330px] gap-10 lg:gap-16 items-end">
             <div>
-              <h2 className="font-editorial font-normal text-[clamp(3rem,6.4vw,6.4rem)] leading-[.9] tracking-[-.04em] max-w-[930px]">
+              <h2 className="font-editorial font-normal text-[clamp(2.8rem,5.35vw,5.35rem)] leading-[1.02] tracking-[-.035em] max-w-[930px]">
                 Em 2023, os perfis sociais do G4 respondiam por mais de <span className="text-[#FE6942]">60%</span> da geração de leads orgânicos.
               </h2>
-              <p className="font-halyard font-light text-[21px] md:text-[27px] leading-[1.35] text-[#181412]/70 mt-8 max-w-[760px]">
+              <p className="font-halyard font-light text-[21px] md:text-[26px] leading-[1.42] text-[#181412]/70 mt-8 max-w-[760px]">
                 O dado mostra o peso que a construção de marca passou a ter na aquisição da empresa.
+              </p>
+              <p className="font-halyard font-normal text-[14px] md:text-[16px] leading-[1.45] text-[#181412]/55 mt-6 max-w-[780px]">
+                Fonte: entrevista com liderança interna de Marketing do G4, <em>Papo Social Media</em> / mLabs, 2023; G4; Exame; InfoMoney; VEJA.
               </p>
             </div>
 
-            <aside className="relative overflow-hidden rounded-[28px] min-h-[250px] p-8 flex flex-col justify-between bg-[#352B27] text-white">
-              <div className="absolute inset-0 opacity-80" style={{ background: 'radial-gradient(circle at 100% 0%, rgba(254,105,66,.8), transparent 48%)' }} />
-              <span className="relative font-halyard text-[12px] tracking-[.2em] uppercase text-white/65">Marca como canal</span>
-              <div className="relative">
-                <div className="font-editorial text-[clamp(4.5rem,8vw,7rem)] leading-none">G4</div>
-                <div className="font-halyard text-[15px] tracking-[.12em] uppercase text-white/65 mt-3">Um case de distribuição</div>
+            <aside className="relative overflow-hidden rounded-[28px] min-h-[250px] bg-[#352B27] text-white">
+              <img
+                src="/images/g4-tallis.webp"
+                alt="Tallis Gomes, fundador do G4"
+                className="absolute inset-0 h-full w-full object-cover object-center"
+              />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,20,18,.12)_0%,rgba(24,20,18,.82)_100%)]" />
+              <div className="relative h-full min-h-[250px] p-8 flex flex-col justify-between">
+                <span className="font-halyard text-[12px] tracking-[.2em] uppercase text-white/75">Marca como canal</span>
+                <div>
+                  <div className="font-editorial text-[clamp(4.5rem,8vw,7rem)] leading-none">G4</div>
+                  <div className="font-halyard text-[15px] tracking-[.12em] uppercase text-white/75 mt-3">Um case de distribuição</div>
+                </div>
               </div>
             </aside>
           </div>
         </header>
+
+        <section className="pt-12 md:pt-16 pb-12 md:pb-16 border-y border-[#181412]/15">
+          <div className="flex items-end justify-between gap-6 mb-8">
+            <h3 className="font-halyard font-semibold text-[13px] tracking-[.2em] uppercase text-[#181412]/45">Faturamento divulgado pelo G4</h3>
+            <span className="font-halyard text-[13px] text-[#181412]/45">2019 — 2025</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 border-t border-[#181412]/20">
+            {faturamento.map((item, index) => (
+              <div key={item.year} className={`pt-6 md:pt-8 ${index ? 'md:border-l md:border-[#181412]/20 md:pl-8' : ''}`}>
+                <div className="font-editorial text-[#FE6942] text-[clamp(2.9rem,4.8vw,4.8rem)] leading-none tracking-[-.04em]">{item.value}</div>
+                <div className="font-halyard text-[16px] text-[#181412]/55 mt-2">{item.year}</div>
+              </div>
+            ))}
+          </div>
+        </section>
 
         <section className="grid grid-cols-1 lg:grid-cols-[260px_minmax(0,1fr)] gap-8 lg:gap-16 py-12 md:py-16 border-b border-[#181412]/15">
           <h3 className="font-halyard font-semibold text-[13px] tracking-[.2em] uppercase text-[#181412]/45">Contexto</h3>
@@ -1901,27 +1926,13 @@ function G4CaseStudy() {
                 <span className="font-halyard font-semibold text-[#FE6942] text-[14px] pt-1">0{index + 1}</span>
                 <div>
                   <h4 className="font-halyard font-semibold text-[21px] md:text-[24px] leading-[1.1] mb-2">{item.title}</h4>
-                  <p className="font-halyard font-light text-[17px] md:text-[19px] leading-[1.45] text-[#181412]/65">{item.text}</p>
+                  <p className="font-halyard font-normal text-[19px] md:text-[21px] leading-[1.48] text-[#181412]/75">{item.text}</p>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        <footer className="pt-12 md:pt-16 pb-6">
-          <div className="flex items-end justify-between gap-6 mb-8">
-            <h3 className="font-halyard font-semibold text-[13px] tracking-[.2em] uppercase text-[#181412]/45">Faturamento divulgado pelo G4</h3>
-            <span className="font-halyard text-[13px] text-[#181412]/45">2019 — 2025</span>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 border-t border-[#181412]/20">
-            {faturamento.map((item, index) => (
-              <div key={item.year} className={`pt-6 md:pt-8 ${index ? 'md:border-l md:border-[#181412]/20 md:pl-8' : ''}`}>
-                <div className="font-editorial text-[clamp(2.9rem,4.8vw,4.8rem)] leading-none tracking-[-.04em]">{item.value}</div>
-                <div className="font-halyard text-[16px] text-[#181412]/55 mt-2">{item.year}</div>
-              </div>
-            ))}
-          </div>
-        </footer>
       </article>
     </section>
   );
