@@ -373,7 +373,9 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
     ));
 
   const renderDesktopBody = (story) => {
-    const fontSize = story.textSizeDesktop || (staticMode ? 'clamp(1.08rem, 1.65vw, 1.35rem)' : style.texto);
+    const fontSize = staticMode
+      ? 'clamp(1.35rem, 2.05vw, 1.9rem)'
+      : (story.textSizeDesktop || style.texto);
 
     if (story.transitionMode === 'swapParagraphs') {
       return (
@@ -400,8 +402,8 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
 
     return (
       <p
-        className="story-copy-container font-halyard font-light text-[#C7C7C7] max-w-4xl mt-6"
-        style={{ fontSize, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
+        className={`story-copy-container font-halyard font-light text-[#C7C7C7] mt-6 ${staticMode ? 'max-w-[44rem]' : 'max-w-4xl'}`}
+        style={{ fontSize, lineHeight: staticMode ? '1.42' : STORYTELLING_CONFIG.lineHeight.texto }}
       >
         {renderWordsWithParagraphs(story.content)}
       </p>
@@ -409,15 +411,17 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
   };
 
   const renderCompactBody = (story) => {
-    const fontSize = story.textSizeMobile || 'clamp(1.35rem, 5.2vw, 1.65rem)';
+    const fontSize = staticMode
+      ? 'clamp(1.18rem, 5vw, 1.55rem)'
+      : (story.textSizeMobile || 'clamp(1.35rem, 5.2vw, 1.65rem)');
     const paragraphs = story.transitionMode === 'swapParagraphs'
       ? story.paragraphs
       : story.content.split('\n').filter(Boolean);
 
     return (
       <div
-        className="story-mobile-body mt-6 max-w-4xl font-halyard font-light text-[#C7C7C7]"
-        style={{ fontSize, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
+        className={`story-mobile-body mt-6 font-halyard font-light text-[#C7C7C7] ${staticMode ? 'max-w-[33rem]' : 'max-w-4xl'}`}
+        style={{ fontSize, lineHeight: staticMode ? '1.42' : STORYTELLING_CONFIG.lineHeight.texto }}
       >
         {renderCompactParagraphs(paragraphs)}
       </div>
