@@ -1863,33 +1863,25 @@ function G4CaseStudy() {
             <span className="font-halyard text-[12px] md:text-[14px] tracking-[.16em] uppercase text-[#181412]/45">Conteúdo, comunidade e aquisição</span>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_330px] gap-10 lg:gap-16 items-end">
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_440px] gap-10 lg:gap-14 items-end">
             <div>
               <h2 className="font-editorial font-normal text-[clamp(2.8rem,5.35vw,5.35rem)] leading-[1.02] tracking-[-.035em] max-w-[930px]">
-                Em 2023, os perfis sociais do G4 respondiam por mais de <span className="text-[#FE6942]">60%</span> da geração de leads orgânicos.
+                Em 2023, as redes do G4 respondiam por mais de <span className="text-[#FE6942]">60%</span> da geração de leads orgânicos.
               </h2>
+              <p className="font-halyard font-normal text-[17px] md:text-[19px] leading-[1.5] text-[#181412]/65 mt-6 max-w-[860px]">
+                Fonte: entrevista com liderança interna de Marketing do G4, <em>Papo Social Media</em> / mLabs, 2023; G4; Exame; InfoMoney; VEJA.
+              </p>
               <p className="font-halyard font-light text-[21px] md:text-[26px] leading-[1.42] text-[#181412]/70 mt-8 max-w-[760px]">
                 O dado mostra o peso que a construção de marca passou a ter na aquisição da empresa.
               </p>
-              <p className="font-halyard font-normal text-[14px] md:text-[16px] leading-[1.45] text-[#181412]/55 mt-6 max-w-[780px]">
-                Fonte: entrevista com liderança interna de Marketing do G4, <em>Papo Social Media</em> / mLabs, 2023; G4; Exame; InfoMoney; VEJA.
-              </p>
             </div>
 
-            <aside className="relative overflow-hidden rounded-[28px] min-h-[250px] bg-[#352B27] text-white">
+            <aside className="overflow-hidden rounded-[28px] border border-[#181412]/10 bg-[#E7E4E0] aspect-[1.635]">
               <img
-                src="/images/g4-tallis.webp"
-                alt="Tallis Gomes, fundador do G4"
-                className="absolute inset-0 h-full w-full object-cover object-center"
+                src="/images/g4-founders.jpg"
+                alt="Fundadores do G4 Educação"
+                className="h-full w-full object-cover object-center"
               />
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(24,20,18,.12)_0%,rgba(24,20,18,.82)_100%)]" />
-              <div className="relative h-full min-h-[250px] p-8 flex flex-col justify-between">
-                <span className="font-halyard text-[12px] tracking-[.2em] uppercase text-white/75">Marca como canal</span>
-                <div>
-                  <div className="font-editorial text-[clamp(4.5rem,8vw,7rem)] leading-none">G4</div>
-                  <div className="font-halyard text-[15px] tracking-[.12em] uppercase text-white/75 mt-3">Um case de distribuição</div>
-                </div>
-              </div>
             </aside>
           </div>
         </header>
