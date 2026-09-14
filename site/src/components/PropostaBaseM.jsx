@@ -1831,7 +1831,7 @@ function G4CaseStudy() {
       text: 'Marca institucional, fundadores, mentores e unidades de negócio mantêm presença recorrente em diferentes redes e formatos.',
     },
     {
-      title: 'Conteúdo centrado no interesse do público',
+      title: 'Conteúdo focado em servir o público',
       text: 'Pautas sobre dores de empresários, assuntos do mercado, empresas, pessoas e decisões que interessam à audiência.',
     },
     {
