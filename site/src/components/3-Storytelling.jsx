@@ -374,7 +374,7 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
 
   const renderDesktopBody = (story) => {
     const fontSize = staticMode
-      ? 'clamp(1.35rem, 2.05vw, 1.9rem)'
+      ? 'clamp(1.1rem, 1.55vw, 1.5rem)'
       : (story.textSizeDesktop || style.texto);
 
     if (story.transitionMode === 'swapParagraphs') {
@@ -412,7 +412,7 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
 
   const renderCompactBody = (story) => {
     const fontSize = staticMode
-      ? 'clamp(1.18rem, 5vw, 1.55rem)'
+      ? 'clamp(1.05rem, 4.2vw, 1.32rem)'
       : (story.textSizeMobile || 'clamp(1.35rem, 5.2vw, 1.65rem)');
     const paragraphs = story.transitionMode === 'swapParagraphs'
       ? story.paragraphs
