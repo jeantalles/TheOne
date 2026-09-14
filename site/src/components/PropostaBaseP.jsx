@@ -16,7 +16,7 @@ import { useProposalState } from '../hooks/useProposalState';
 gsap.registerPlugin(ScrollTrigger);
 
 const SERVICES = [
-  { id: 'estrategia', label: 'Estratégia de Marca',   price: 5000, prazo: '5 semanas' },
+  { id: 'estrategia', label: 'Estratégia de Marca',   price: 7000, prazo: '5 semanas' },
   { id: 'entrevistas', label: 'Entrevistas com Clientes', price: 2000, prazo: '1 semana' },
   { id: 'naming',     label: 'Naming',                 price: 2000, prazo: '2 semanas' },
   { id: 'identidade', label: 'Identidade de Marca Essencial',   price: 4000, prazo: '4 semanas' },

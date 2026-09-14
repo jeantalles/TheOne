@@ -38,7 +38,7 @@ const SERVICES = IS_ALUDE
       { id: 'identidade', label: 'Identidade de Marca Essencial', price: 6000, prazo: '4 semanas' },
       { id: 'identidade_completa', label: 'Identidade de Marca Completa', price: 8000, prazo: '6 semanas' },
       { id: 'mybranding', label: 'myBranding', price: 6000, prazo: '4 semanas' },
-      { id: 'sitebrand', label: 'Site BrandExperience', price: 8000, prazo: '6 semanas' },
+      { id: 'sitebrand', label: 'Site BrandExperience', price: 6000, prazo: '6 semanas' },
     ];
 
 // Alude: narrativa TheOne distribuída em telas individuais; proposta base preserva a sequência original.
