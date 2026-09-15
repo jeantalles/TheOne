@@ -1564,11 +1564,9 @@ function Calculadora({ clientName }) {
                         {service.prazo}
                       </span>
                     )}
-                    {!(IS_ALUDE && service.id === 'entrevistas') && (
-                      <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
-                        {formatBRL(service.price)}
-                      </span>
-                    )}
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
+                      {formatBRL(service.price)}
+                    </span>
                   </div>
                 </div>
               ))}
