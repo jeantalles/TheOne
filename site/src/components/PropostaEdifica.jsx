@@ -1578,8 +1578,8 @@ function Calculadora({ clientName }) {
           {/* Grupo myBranding */}
           <div>
             <div className="flex items-center gap-3 mb-3 px-1">
-              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">myBranding</span>
-              <div className="flex-1 h-px bg-black/10" />
+              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#FE6942]">myBranding</span>
+              <div className="flex-1 h-px bg-[#FE6942]/20" />
             </div>
             <div className="space-y-3">
               {SERVICES.filter(s => s.id === 'mybranding').map((service) => (
@@ -1634,8 +1634,8 @@ function Calculadora({ clientName }) {
           {/* Grupo Site BrandExperience */}
           <div>
             <div className="flex items-center gap-3 mb-3 px-1">
-              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">Site BrandExperience</span>
-              <div className="flex-1 h-px bg-black/10" />
+              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#FE6942]">Site BrandExperience</span>
+              <div className="flex-1 h-px bg-[#FE6942]/20" />
             </div>
             <div className="space-y-3">
               {SERVICES.filter(s => s.id === 'sitebrand').map((service) => (
