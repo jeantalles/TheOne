@@ -62,14 +62,18 @@ const EDIFICA_PROPOSAL = {
 
 const SERVICES = [
   { id: 'estrategia', label: 'Estratégia de Marca e Posicionamento', price: 9000, prazo: '6 semanas' },
+  { id: 'entrevistas', label: 'Entrevistas com Clientes', price: 3000, prazo: '2 semanas' },
+  { id: 'naming', label: 'Naming', price: 3000, prazo: '2 semanas' },
   { id: 'identidade', label: 'Identidade de Marca Essencial', price: 6000, prazo: '4 semanas' },
-  { id: 'mybranding', label: 'myBranding (Pedro + Léo)', price: 6000, prazo: '4 semanas' }
+  { id: 'identidade_completa', label: 'Identidade de Marca Completa', price: 8000, prazo: '6 semanas' },
+  { id: 'mybranding', label: 'myBranding (Pedro + Léo)', price: 6000, prazo: '4 semanas' },
+  { id: 'sitebrand', label: 'Site BrandExperience', price: 8000, prazo: '6 semanas' },
 ];
 
 // Alude: narrativa TheOne distribuída em telas individuais; proposta base preserva a sequência original.
-const SLIDE_TOTAL = IS_ALUDE ? 25 : 22;
+const SLIDE_TOTAL = IS_ALUDE ? 27 : 22;
 
-const DARK_SLIDES = IS_ALUDE ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 21] : [0, 1, 6, 7, 8, 9, 10, 18];
+const DARK_SLIDES = IS_ALUDE ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 23] : [0, 1, 6, 7, 8, 9, 10, 18];
 
 const formatBRL = (v) => `R$ ${v.toLocaleString('pt-BR')}`;
 
@@ -1489,6 +1493,7 @@ function Calculadora({ clientName }) {
   const discountLabel = total > 10000 ? '10%' : '5%';
   const totalDesconto = Math.round(total * (1 - discountPct));
   const metade = Math.round(total / 2);
+  const parcela = Math.round(total / 3);
 
   return (
     <section className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24">
@@ -1740,7 +1745,7 @@ function Calculadora({ clientName }) {
                 <li className="flex items-start gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
                   <span className="font-halyard font-light text-[#181412] text-[18px] leading-[1.5]">
-                    {IS_ALUDE ? <><span className="font-medium">4 parcelas:</span> {formatBRL(Math.round(total / 4))} por mês</> : <><span className="font-medium">50/50:</span> {formatBRL(metade)} no início + {formatBRL(total - metade)} após 30 dias</>}
+                    {IS_ALUDE ? <><span className="font-medium">3 parcelas:</span> {formatBRL(parcela)} cada, em D+0 para iniciarmos o projeto, D+30 e D+60</> : <><span className="font-medium">50/50:</span> {formatBRL(metade)} no início + {formatBRL(total - metade)} após 30 dias</>}
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -2232,13 +2237,15 @@ function PropostaSlideshow() {
         {current === 15 && IS_ALUDE && <CasaDaMarca />}
         {current === 16 && IS_ALUDE && <G4CaseStudy />}
         {current === 17 && IS_ALUDE && <EstrategiaDeMarca />}
-        {current === 18 && IS_ALUDE && <MyBranding />}
-        {current === 19 && IS_ALUDE && <IdentidadeVisualCompleta />}
-        {current === 20 && IS_ALUDE && <SiteBrandExperience />}
-        {current === 21 && IS_ALUDE && <TheOneAgent />}
-        {current === 22 && IS_ALUDE && <Cronograma />}
-        {current === 23 && IS_ALUDE && <Calculadora clientName={proposalState.clientName} />}
-        {current === 24 && IS_ALUDE && <Consultoria />}
+        {current === 18 && IS_ALUDE && <Naming />}
+        {current === 19 && IS_ALUDE && <IdentidadeVisual />}
+        {current === 20 && IS_ALUDE && <MyBranding />}
+        {current === 21 && IS_ALUDE && <IdentidadeVisualCompleta />}
+        {current === 22 && IS_ALUDE && <SiteBrandExperience />}
+        {current === 23 && IS_ALUDE && <TheOneAgent />}
+        {current === 24 && IS_ALUDE && <Cronograma />}
+        {current === 25 && IS_ALUDE && <Calculadora clientName={proposalState.clientName} />}
+        {current === 26 && IS_ALUDE && <Consultoria />}
       </div>
 
       <div
