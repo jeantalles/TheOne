@@ -1,138 +1,209 @@
-import { useEffect, useRef, useState, useCallback, lazy, Suspense } from 'react';
-import Lenis from 'lenis';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-import { usePrefersReducedMotion, useConstrainedMotion } from '../hooks/useMediaQuery';
-import Hero from './1-Hero';
-import GradientTransition from './2-GradientTransition';
-import StorytellingIntro from './3a-StorytellingIntro';
-import PersonaTrigger from './3b-PersonaTrigger';
-import Storytelling from './3-Storytelling';
-import TheOne from './4-TheOne';
-import SolucoesTheOne from './4b-SolucoesTheOne';
-import Methodology from './5-Methodology';
-
-const Founders = lazy(() => import('./9-Founders'));
+import foundationImg from '../assets/products/foundation.jpeg';
+import myBrandingImg from '../assets/products/mybranding.jpeg';
+import siteBrandExpImg from '../assets/products/site-brand-experience.jpeg';
+import CasePageTemplate from './cases/CasePageTemplate';
+import { caseStudies } from '../content/cases';
+import HeroSection from './1-Hero';
+import StorytellingSection from './3-Storytelling';
+import NomeClienteSlide from './NomeClienteSlide';
+import ContextoEditavel from './ContextoEditavel';
+import { useProposalState } from '../hooks/useProposalState';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ── DADOS DA PROPOSTA — EDIFICA ───────────────────────────────────────────────
-const PROPOSTA_DATA = {
-  cliente: 'Pedro',
-  empresa: 'Edifica',
-  data: 'Maio 2026',
+const IS_ALUDE = true;
 
-  contextoA: {
-    pontos: [
-      'Ticket travado em R$1.800–R$2.500, leads do tráfego questionam preço, negociam e pedem desconto no primeiro mês',
-      'Dependência total de tráfego pago, o lead não passa por nenhuma jornada de marca antes de entrar na call de vendas',
-      'Concorrência tem vende uma solução muito parecida, o mar azul ficou cheio',
-      'Closer fazendo esforço dobrado para construir autoridade dentro da call com lead que não conhece a marca',
-      'O tamanho real da operação, equipe completa, clientes fechando 80–90 contratos por mês, não aparece para o mercado antes da reunião',
-      'Instagram sem estratégia ou consistência, canal orgânico que poderia gerar demanda qualificada praticamente inexistente',
-    ],
-  },
+const EDIFICA_PROPOSAL = {
+  clientName: 'Edifica',
+  cenarioAtual: `- Faturamento rodando muito bem (R$ 200k/mês) e operação real robusta, mas que não transparece pro mercado antes da call de vendas (postzinhos sem narrativa forte).
 
-  contextoB: {
-    pontos: [
-      'Marca que sustente ticket de R$5.000–R$6.000+ sem precisar justificar o preço dentro da call de vendas',
-      'Leads chegando como os do Instagram: já sabem o preço, já têm metade das dúvidas sanadas, já percebem que a Edifica não é barata',
-      'O tamanho real da operação visível antes da primeira reunião, resultados, equipe, clientes e cases expostos ao mercado',
-      'Posicionamento, proposta de valor e percepção de marca que diferencie a Edifica da concorrência que tem produtos parecidos, mas não tem a marca por trás',
-      'Marca corporativa e pessoal do Pedro trabalhando juntas, como G4 e Alfredo Soares, sem interferir no posicionamento de mentoria',
-      'Base estratégica sólida para a jornada de se tornar top 1 do marketing jurídico no Brasil',
-    ],
-  },
+- Dependência 100% de tráfego pago, sem prospecção ativa, com CPL (Custo Por Lead) ficando cada vez mais alto pela concorrência absurda.
 
-  escopo: {
-    entrega: 'TheOne Foundation',
-    pilares: [
-      {
-        label: 'Pilar 1',
-        titulo: 'A Fundação: Diagnóstico e Pesquisa',
-        descricao: 'É aqui que nos aprofundamos e entendemos de forma completa seu negócio, mercado e público.',
-        itens: [
-          {
-            titulo: 'Imersão Estratégica',
-            descricao: 'Mapeamento completo do contexto do negócio, objetivos, impulsionadores, detratores e desafios que afetam a percepção da Edifica no mercado.',
-          },
-          {
-            titulo: 'Pesquisa de Mercado',
-            descricao: 'Como os concorrentes se posicionam, onde estão os padrões repetidos e quais brechas estratégicas existem para a Edifica ocupar.',
-          },
-          {
-            titulo: 'Mapeamento Profundo de Público',
-            descricao: 'Definição de público baseada não só em dados demográficos, mas nas necessidades, dores e desejos de quem compra marketing jurídico na sua região.',
-          },
-        ],
-      },
-      {
-        label: 'Pilar 2',
-        titulo: 'A Estratégia de Posicionamento e Marca',
-        descricao: 'Baseado no diagnóstico e pesquisa, construímos uma estratégia para sua marca se tornar uma das principais referências, se diferenciar da concorrência e gerar desejo no público.',
-        itens: [
-          {
-            titulo: 'Posicionamento e Diferenciação',
-            descricao: 'Definição da proposta única de valor, diferenciais estratégicos e do território de marca que a Edifica vai ocupar.',
-          },
-          {
-            titulo: 'Personalidade da Marca',
-            descricao: 'Propósito, valores, crenças e arquétipos que sustentam a conexão da Edifica com seu público e justificam a escolha.',
-          },
-          {
-            titulo: 'Conceito e Narrativa',
-            descricao: 'Criação do conceito central e da narrativa que unifica toda a comunicação da marca nos diferentes canais.',
-          },
-        ],
-      },
-      {
-        label: 'Pilar 3',
-        titulo: 'A Efetivação',
-        descricao: 'O plano prático para efetivar a estratégia da marca e posicionamento.',
-        itens: [
-          {
-            titulo: 'Estratégia de Canais',
-            descricao: 'Como a Edifica deve se portar em cada ponto de contato — Instagram, LinkedIn, WhatsApp e tráfego pago — para ser vista, lembrada e escolhida.',
-          },
-          {
-            titulo: 'Estratégia de Conteúdo',
-            descricao: 'Principais formatos, tópicos e linhas de comunicação para que a marca construa autoridade no nicho e gere demanda orgânica.',
-          },
-          {
-            titulo: 'Guia de Estratégia de Posicionamento',
-            descricao: 'Documento completo com toda a fundação estratégica da marca — o mapa que orienta toda decisão de comunicação, venda e crescimento.',
-          },
-        ],
-      },
-    ],
-    bonus: {
-      titulo: 'Agent',
-      descricao: 'Agente de IA especialista no seu negócio, treinado com toda sua estratégia de marca e posicionamento para otimizar apresentações, gerar ideias de conteúdo focadas no seu público, analisar pitchs de vendas no dia a dia e muito mais.',
-    },
-  },
+- Ticket travado (R$ 1.800 – R$ 2.600) e leads que já entram nas reuniões negociando preço e pedindo descontos pois não percebem valor.
 
-  resultados: [
-    'Estratégia de construção de marca clara para sustentar o novo patamar de ticket',
-    'Produção de conteúdo rodando de forma estratégica, não postar por postar, mas com direcionamento de marca',
-    'Leads chegando mais aquecidos pelo Instagram, reduzindo esforço do closer e aumentando taxa de fechamento',
-    'Diferenciação da concorrência que tem produtos parecidos, mas não tem a marca por trás',
-    'Aumento da percepção de valor do público, potencializando o crescimento do ticket médio',
-    'Percepção do tamanho real da Edifica antes da primeira reunião de vendas',
-    'Marca corporativa e pessoal do Pedro trabalhando juntas como alavanca de crescimento',
-    'Base estratégica de longo prazo para a jornada de se tornar top 1 do marketing jurídico no Brasil',
-  ],
+- Concorrência feroz no setor (278 agências oferecendo a "mesma coisa" por valores menores), tornando o mar azul um oceano vermelho onde a diferenciação está difícil.`,
+  cenarioDesejado: `- Construir uma narrativa forte e um posicionamento de marca que diferencie a Edifica da concorrência, criando um verdadeiro "movimento" (storytelling, inimigo em comum, comunidade e pertencimento).
 
-  cronograma: [
-    { etapa: '01', nome: 'Imersão', descricao: 'Diagnóstico completo do negócio, mercado e público' },
-    { etapa: '02', nome: 'Pesquisa', descricao: 'Análise de concorrência e oportunidades de posicionamento' },
-    { etapa: '03', nome: 'Estratégia', descricao: 'Posicionamento, marca e diferenciação' },
-    { etapa: '04', nome: 'Efetivação', descricao: 'Estratégia de canais e conteúdo para colocar a marca para funcionar' },
-    { etapa: '05', nome: 'Entrega', descricao: 'Guia de Estratégia de Posicionamento e Marca' },
-  ],
+- Elevar o ticket para R$ 5.000 – R$ 6.000+, com autoridade pré-construída para que o lead não questione o preço na call de vendas.
+
+- Estruturar a arquitetura da marca onde a Edifica se posiciona como corporativa forte, e as marcas pessoais (Pedro e Léo) funcionam como conselheiros e catalisadores dessa autoridade.
+
+- Ter clareza do direcionamento estratégico para guiar o novo estrategista de conteúdo (social media) na produção contínua.`,
 };
-// ─────────────────────────────────────────────────────────────────────────────
 
+const SERVICES = [
+  { id: 'estrategia', label: 'Estratégia de Marca e Posicionamento', price: 9000, prazo: '6 semanas' },
+  { id: 'identidade', label: 'Identidade de Marca Essencial', price: 6000, prazo: '4 semanas' },
+  { id: 'mybranding', label: 'myBranding (Pedro + Léo)', price: 6000, prazo: '4 semanas' }
+];
+
+// Alude: narrativa TheOne distribuída em telas individuais; proposta base preserva a sequência original.
+const SLIDE_TOTAL = IS_ALUDE ? 25 : 22;
+
+const DARK_SLIDES = IS_ALUDE ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 21] : [0, 1, 6, 7, 8, 9, 10, 18];
+
+const formatBRL = (v) => `R$ ${v.toLocaleString('pt-BR')}`;
+
+
+
+// ── SLIDE 0: CAPA ─────────────────────────────────────────────────────────────
+function Capa() {
+  return (
+    <section
+      className="relative overflow-hidden flex flex-col justify-between"
+      style={{ height: '100svh', background: IS_ALUDE ? '#202020' : '#0a0a0a', padding: '48px 56px 44px' }}
+    >
+      <div className="noise-overlay" aria-hidden="true" />
+
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute', bottom: '-120px', left: '50%', transform: 'translateX(-50%)',
+          width: '700px', height: '400px', borderRadius: '50%',
+          background: 'radial-gradient(ellipse, rgba(254,105,66,.18) 0%, transparent 70%)',
+          pointerEvents: 'none',
+        }}
+      />
+
+      <div style={{ position: 'relative', zIndex: 1 }}>
+        <img src="/logo-navbar.svg" alt="TheOne" style={{ height: '72px', width: 'auto', display: 'block', margin: '0 auto' }} />
+      </div>
+
+      <div style={{ position: 'relative', zIndex: 1, flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', marginTop: '-100px' }}>
+        <h1
+          className="font-editorial"
+          style={{ fontWeight: 400, fontSize: 'clamp(2rem,4.5vw,5rem)', lineHeight: 1.05, letterSpacing: '-.03em', color: '#fff', marginBottom: '32px' }}
+        >
+          Bem-vindo à TheOne
+        </h1>
+
+        <div style={{ width: '48px', height: '2px', background: 'linear-gradient(90deg,#FE6942,#FF5224)', borderRadius: '2px', margin: '0 auto 28px' }} />
+
+        <p
+          className="font-halyard"
+          style={{ fontWeight: 300, fontSize: 'clamp(1.1rem,1.8vw,1.45rem)', color: 'rgba(255,255,255,.45)', letterSpacing: '.08em', textTransform: 'uppercase' }}
+        >
+          Construindo um posicionamento inevitável
+        </p>
+      </div>
+    </section>
+  );
+}
+
+// ── SLIDE 1: DORES ────────────────────────────────────────────────────────────
+function Dores() {
+  const sectionRef = useRef(null);
+
+  const dores = IS_ALUDE ? [
+    {
+      titulo: 'Comunicação técnica, focada em features',
+      descricao: 'Produtos de tecnologia resolvem dores concretas, mas muitas vezes se comunicam pelo que fazem — não pela transformação que ajudam o cliente a construir.',
+    },
+    {
+      titulo: 'Produto vendido como mais uma opção',
+      descricao: 'Sem uma diferença de marca clara, o produto é comparado a outras soluções disponíveis e a escolha se reduz a funcionalidades, preço e condições comerciais.',
+    },
+    {
+      titulo: 'Narrativa sem pertencimento',
+      descricao: 'Quando falta uma ideia maior, o público não se reconhece, não compartilha e não associa a marca ao próprio crescimento.',
+    },
+    {
+      titulo: 'Desejo menor do que o valor entregue',
+      descricao: 'Na venda, a percepção de valor não acompanha a qualidade do produto e da experiência que ele entrega.',
+    },
+    {
+      titulo: 'Dependência de tráfego pago',
+      descricao: 'Quando a marca não é procurada por convicção, a aquisição depende mais da urgência e do investimento em mídia do que da preferência construída ao longo do tempo.',
+    },
+  ] : [
+    {
+      titulo: 'Dependência de tráfego pago',
+      descricao: 'Quando o anúncio para, as vendas param. Você paga para aparecer, mas não consegue ser escolhido de forma consistente.',
+    },
+    {
+      titulo: 'Comparação por preço',
+      descricao: 'Sem diferenciação clara, o cliente compara só pelo preço, e você é forçado a competir com quem cobra menos, mesmo sendo melhor.',
+    },
+    {
+      titulo: 'Ticket médio baixo',
+      descricao: 'O mercado não enxerga o real valor do que você entrega. A percepção de valor baixa força descontos que corroem sua margem.',
+    },
+    {
+      titulo: 'Marca que não gera desejo',
+      descricao: 'Sua empresa existe, mas não é lembrada. Sem identidade forte, você vive na invisibilidade enquanto concorrentes se destacam.',
+    },
+    {
+      titulo: 'Marca comoditizada',
+      descricao: 'Quando você se posiciona pelo produto ou serviço que vende, igual a todos os concorrentes, não constrói diferenciação real e não cria conexão com o público.',
+    },
+    {
+      titulo: 'Crescimento sem base sólida',
+      descricao: 'Escalar sem posicionamento claro é construir em areia movediça. Quanto mais cresce, mais difícil é manter consistência e atrair os clientes certos.',
+    },
+  ];
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.dore-item', {
+        opacity: 0, y: 32, stagger: 0.09, duration: 0.85, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24">
+      <div className="max-w-[1400px] mx-auto">
+        <div className="mb-12 md:mb-14">
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold block mb-4">
+            Diagnóstico
+          </span>
+          <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.5rem,4vw,3.75rem)] leading-[1.02] tracking-tight">
+            {IS_ALUDE ? 'Produtos de tecnologia' : 'O que impede marcas como a sua de crescerem'}
+          </h2>
+          {IS_ALUDE && (
+            <p className="font-halyard font-light text-[#181412] text-[20px] md:text-[23px] leading-[1.45] max-w-[52ch] mt-6">
+              A TheOne é especializada em marcas de tecnologia e conhece os desafios que fazem bons produtos parecerem apenas mais uma ferramenta no mercado.
+            </p>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-4">
+          {dores.map((dore, i) => (
+            <div key={i} className="dore-item bg-[#F8F8F8] rounded-2xl px-8 py-7 border border-black/[0.07] flex items-center gap-8">
+              <div className="w-12 h-12 shrink-0 rounded-full bg-[#FE6942]/10 flex items-center justify-center">
+                <span className="font-halyard font-semibold text-[#FE6942] text-[16px]">{String(i + 1).padStart(2, '0')}</span>
+              </div>
+              <div className="min-w-0">
+                <h3 className="font-halyard font-semibold text-[#181412] text-[22px] md:text-[24px] leading-[1.2]">
+                  {dore.titulo}
+                </h3>
+                <p className="font-halyard font-light text-[#181412] text-[18px] md:text-[20px] leading-[1.5] mt-1.5">
+                  {dore.descricao}
+                </p>
+              </div>
+            </div>
+          ))}
+
+          {!IS_ALUDE && (
+            <div className="dore-item bg-[#0a0a0a] rounded-2xl px-10 py-10 flex flex-col">
+              <p className="font-editorial font-normal text-white text-[28px] md:text-[32px] leading-[1.2] tracking-tight mb-4">
+                A raiz de tudo isso é uma marca sem fundação estratégica.
+              </p>
+              <p className="font-halyard font-light text-white/65 text-[19px] md:text-[20px] leading-[1.5]">
+                Não é sobre logo ou cores. É sobre o que você representa no mercado, e por que alguém deveria te escolher.
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
 
 // ── SEÇÃO: CONTEXTO A→B ───────────────────────────────────────────────────────
 function Contexto({ showDesejado = true }) {
@@ -149,7 +220,7 @@ function Contexto({ showDesejado = true }) {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-white pt-24 pb-28 md:py-36 px-6 md:px-12 lg:px-16">
+    <section ref={sectionRef} className="bg-white pt-16 md:pt-20 pb-28 md:pb-36 px-6 md:px-12 lg:px-16">
       <div className="max-w-[1400px] mx-auto">
 
         <div className="mb-16 md:mb-20">
@@ -216,79 +287,79 @@ function Contexto({ showDesejado = true }) {
   );
 }
 
-// ── SEÇÃO: ESCOPO ─────────────────────────────────────────────────────────────
-function Escopo({ visiblePillars = 3 }) {
+// ── SLIDE: THEONE FOUNDATION ──────────────────────────────────────────────────
+function TheOneFoundation() {
   const sectionRef = useRef(null);
-  const scope = PROPOSTA_DATA.escopo;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.escopo-block', {
-        opacity: 0, y: 22, stagger: 0.07, duration: 0.72, ease: 'power3.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 72%' },
+      gsap.from('.tf-item', {
+        opacity: 0, y: 28, stagger: 0.1, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
       });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
 
-  return (
-    <section ref={sectionRef} className="bg-white px-6 md:px-12 lg:px-16 py-10 md:py-12 lg:py-14 min-h-full flex flex-col justify-center">
-      <div className="max-w-[1440px] mx-auto w-full">
+  const bullets = [
+    'Construa uma marca sólida',
+    'Se diferencie',
+    'Gere mais valor, eleve seu ticket',
+    'Otimize sua comunicação',
+    'Reduza custos de mídia paga',
+    'Mais alcance e engajamento na produção de conteúdo',
+  ];
 
-        <div className="escopo-block grid grid-cols-1 lg:grid-cols-[minmax(620px,0.95fr)_1fr] gap-8 lg:gap-14 mb-8 md:mb-10 items-start">
-          <div>
-            <span className="font-halyard text-[13px] tracking-[0.24em] uppercase text-[#FE6942] font-semibold block mb-4">
-              Escopo do Projeto
-            </span>
-            <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.5rem,3.5vw,3.35rem)] leading-[1.02] tracking-tight max-w-none">
-              TheOne Foundation
-            </h2>
-            <p className="font-halyard font-light text-[#181412]/60 text-[clamp(1.15rem,1.65vw,1.45rem)] leading-[1.3] mt-2">
-              Estratégia de Posicionamento e Marca
-            </p>
-          </div>
-          <div className="lg:justify-self-end lg:pt-9">
-            <p className="font-halyard font-light text-[#181412] text-[18px] md:text-[22px] leading-[1.55] max-w-[620px] lg:text-right">
-              Um sistema estratégico organizado por etapas: primeiro entendemos o terreno, depois definimos o posicionamento e, por fim, desenhamos como a Edifica se efetiva nos canais certos.
-            </p>
-          </div>
+  return (
+    <section ref={sectionRef} className="relative overflow-hidden bg-[#212121] px-6 md:px-12 lg:px-16 py-16 flex flex-col justify-center" style={{ minHeight: '100svh' }}>
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute', top: '-100px', right: '-80px',
+          width: '700px', height: '600px', borderRadius: '50%',
+          background: 'radial-gradient(ellipse, rgba(254,105,66,.10) 0%, transparent 65%)',
+          pointerEvents: 'none',
+        }}
+      />
+      <div className="max-w-[1400px] mx-auto w-full relative z-10">
+
+        <div className="tf-item mb-6">
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Produto Principal</span>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-          {scope.pilares.slice(0, visiblePillars).map((pilar, i) => (
-            <article
-              key={pilar.label}
-              className="escopo-block bg-[#F8F8F8] rounded-lg px-5 md:px-6 py-6 border border-black/[0.08] flex flex-col"
-            >
-              <div className="flex items-center gap-4 mb-5">
-                <span className="w-11 h-11 rounded-full flex items-center justify-center bg-[#FE6942] text-white font-halyard text-[15px] font-semibold shrink-0">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <div>
-                  <h3 className="font-halyard font-medium text-[#181412] text-[21px] md:text-[23px] leading-[1.1]">
-                    {pilar.titulo}
-                  </h3>
-                </div>
-              </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_560px] xl:grid-cols-[1fr_600px] gap-10 lg:gap-16 items-start">
+          <div>
+            <h2 className="tf-item font-editorial font-normal text-white text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-6">
+              TheOne<br />Foundation
+            </h2>
+            <p className="tf-item font-halyard font-light text-white/60 text-[22px] md:text-[25px] leading-[1.45] max-w-[52ch] mb-8">
+              Receba diagnóstico de mercado, estratégia de marca e posicionamento, narrativa, identidade visual e um agente de IA especializado no posicionamento, comunicação e produção de conteúdo da sua marca.
+            </p>
 
-              <p className="font-halyard font-light text-black text-[17px] md:text-[19px] leading-[1.55] mb-4">
-                {pilar.descricao}
-              </p>
-
-              <div className="mt-auto divide-y divide-black/[0.08]">
-                {pilar.itens.map((item) => (
-                  <div key={item.titulo} className="py-3.5 first:pt-0 last:pb-0">
-                    <h4 className="font-halyard font-medium text-[#181412] text-[17px] md:text-[18px] leading-[1.25] mb-2">
-                      {item.titulo}
-                    </h4>
-                    <p className="font-halyard font-light text-black text-[17px] md:text-[18px] leading-[1.52]">
-                      {item.descricao}
-                    </p>
-                  </div>
+            {/* Bullets em 2 colunas logo abaixo da descrição */}
+            <div className="tf-item">
+              <p className="font-halyard font-semibold text-[#FE6942] text-[13px] tracking-[0.22em] uppercase mb-6">O que você conquista</p>
+              <ul className="grid grid-cols-2 gap-x-8 gap-y-5">
+                {bullets.map((b, i) => (
+                  <li key={i} className="flex items-center gap-3.5">
+                    <span className="w-2 h-2 rounded-full bg-[#FE6942] shrink-0" />
+                    <span className="font-halyard font-light text-white/70 text-[20px] md:text-[22px] leading-[1.4]">{b}</span>
+                  </li>
                 ))}
-              </div>
-            </article>
-          ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Imagem */}
+          <div className="tf-item relative rounded-[28px] overflow-hidden border border-white/[0.07] bg-[#141414] shadow-2xl" style={{ minHeight: '320px' }}>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(254,105,66,0.1)_0%,transparent_60%)] mix-blend-screen z-10" />
+            <img
+              src={foundationImg}
+              alt="TheOne Foundation"
+              className="w-full h-full object-cover opacity-80"
+              style={{ minHeight: '320px' }}
+            />
+          </div>
         </div>
 
       </div>
@@ -296,8 +367,1380 @@ function Escopo({ visiblePillars = 3 }) {
   );
 }
 
-// ── SEÇÃO: CASA DA MARCA ─────────────────────────────────────────────────────
-function FoundationHouse() {
+// ── SLIDE 4: ESTRATÉGIA DE MARCA ──────────────────────────────────────────────
+function EstrategiaDeMarca() {
+  const sectionRef = useRef(null);
+  const [expanded, setExpanded] = useState({});
+  const togglePilar = (num) => setExpanded(prev => ({ ...prev, [num]: !prev[num] }));
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.est-item', {
+        opacity: 0, y: 24, stagger: 0.08, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24">
+      <div className="max-w-[1400px] mx-auto">
+
+        <div className="est-item mb-6">
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Pilar 01 · TheOne Foundation</span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
+          <div>
+            <h2 className={`est-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight ${IS_ALUDE ? 'mb-10' : 'mb-3'}`}>
+              {IS_ALUDE ? <>Estratégia de<br />Marca e<br />Posicionamento</> : <>Estratégia<br />de Marca</>}
+            </h2>
+            {!IS_ALUDE && (
+              <div className="est-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
+                {formatBRL(SERVICES.find((service) => service.id === 'estrategia').price)}
+              </div>
+            )}
+            <p className="est-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
+              {IS_ALUDE
+                ? 'Uma fundação para transformar a experiência que a Alude já entrega em uma marca percebida como inevitável pelos profissionais que movem o mercado imobiliário.'
+                : 'Um sistema estratégico organizado por etapas: primeiro entendemos o terreno, depois definimos o posicionamento e, por fim, desenhamos como a sua marca se efetiva nos canais certos.'}
+            </p>
+          </div>
+          <div className="est-item hidden lg:flex items-center justify-center self-center">
+            <img
+              src="/images/guia-de-estrategia.png"
+              alt="Guia de Estratégia de Posicionamento e Marca"
+              className="w-full max-w-[420px] object-contain"
+            />
+          </div>
+        </div>
+
+        {/* Pilares do projeto */}
+        <div className="est-item grid grid-cols-1 lg:grid-cols-3 gap-3 mb-10 md:mb-14">
+          {[
+            {
+              num: '01',
+              titulo: 'A Fundação: Diagnóstico e Pesquisa',
+              descricao: 'É aqui que nos aprofundamos e entendemos de forma completa seu negócio, mercado e público.',
+              itens: [
+                { titulo: 'Imersão Estratégica', descricao: 'Mapeamento completo do contexto do negócio, objetivos, impulsionadores, detratores e desafios que afetam a percepção da marca no mercado.' },
+                { titulo: 'Pesquisa de Mercado', descricao: 'Como os concorrentes se posicionam, onde estão os padrões repetidos e quais brechas estratégicas existem para você ocupar.' },
+                { titulo: 'Mapeamento Profundo de Público', descricao: 'Definição de público baseada não só em dados demográficos, mas nas necessidades, dores e desejos de quem compra de você.' },
+              ],
+            },
+            {
+              num: '02',
+              titulo: 'A Estratégia de Posicionamento e Marca',
+              descricao: 'Construímos uma estratégia para sua marca se tornar uma das principais referências, se diferenciar da concorrência e gerar desejo no público.',
+              itens: [
+                { titulo: 'Posicionamento e Diferenciação', descricao: 'Definição da proposta única de valor, diferenciais estratégicos e do território de marca que você vai ocupar.' },
+                { titulo: 'Personalidade da Marca', descricao: 'Propósito, valores, crenças e arquétipos que sustentam a conexão da marca com seu público e justificam a escolha.' },
+                { titulo: 'Conceito e Narrativa', descricao: 'Criação do conceito central e da narrativa que unifica toda a comunicação da marca nos diferentes canais.' },
+              ],
+            },
+            {
+              num: '03',
+              titulo: 'A Efetivação',
+              descricao: 'O plano prático para efetivar a estratégia da marca e posicionamento.',
+              itens: [
+                { titulo: 'Estratégia de Canais', descricao: 'Como a marca deve se portar em cada ponto de contato: Instagram, WhatsApp, Google, site e indicação, para ser vista, lembrada e escolhida.' },
+                { titulo: 'Estratégia de Conteúdo', descricao: 'Principais formatos, tópicos e linhas de comunicação para que a marca construa autoridade e gere demanda orgânica.' },
+                { titulo: 'Guia de Estratégia de Posicionamento', descricao: 'Documento completo com toda a fundação estratégica da marca, o mapa que orienta toda decisão de comunicação, venda e crescimento.' },
+              ],
+            },
+          ].map((pilar) => (
+            <article key={pilar.num} className="bg-[#F8F8F8] rounded-2xl px-7 md:px-8 py-8 border border-black/[0.08] flex flex-col">
+              <button
+                onClick={() => togglePilar(pilar.num)}
+                className="flex items-center gap-4 mb-5 w-full text-left"
+              >
+                <span className="w-12 h-12 rounded-full flex items-center justify-center bg-[#FE6942] text-white font-halyard text-[16px] font-semibold shrink-0">
+                  {pilar.num}
+                </span>
+                <h3 className="font-halyard font-medium text-[#181412] text-[21px] md:text-[23px] leading-[1.1] flex-1">{pilar.titulo}</h3>
+                <svg
+                  className="shrink-0 transition-transform duration-300"
+                  style={{ transform: expanded[pilar.num] ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                  width="20" height="20" viewBox="0 0 20 20" fill="none"
+                >
+                  <path d="M5 7.5l5 5 5-5" stroke="#181412" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+              <p className="font-halyard font-normal text-[#181412] text-[17px] md:text-[18px] leading-[1.6] mb-4">{pilar.descricao}</p>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateRows: expanded[pilar.num] ? '1fr' : '0fr',
+                  transition: 'grid-template-rows 380ms cubic-bezier(0.23,1,0.32,1)',
+                }}
+              >
+                <div className="overflow-hidden">
+                  <div
+                    className="mt-2 divide-y divide-black/[0.08] border-t border-black/[0.08]"
+                    style={{
+                      opacity: expanded[pilar.num] ? 1 : 0,
+                      transition: 'opacity 300ms ease',
+                      transitionDelay: expanded[pilar.num] ? '80ms' : '0ms',
+                    }}
+                  >
+                    {pilar.itens.map((item) => (
+                      <div key={item.titulo} className="py-4 last:pb-0">
+                        <h4 className="font-halyard font-semibold text-[#181412] text-[16px] md:text-[17px] leading-[1.25] mb-2">{item.titulo}</h4>
+                        <p className="font-halyard font-normal text-[#181412] text-[15px] md:text-[16px] leading-[1.55]">{item.descricao}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="est-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">O que resolve</h3>
+            <ul className="space-y-5">
+              {[
+                ...(IS_ALUDE ? [
+                  'Comunicação técnica que ainda não traduz a ambição da marca',
+                  'Baixa diferenciação percebida fora das funcionalidades do produto',
+                  'Dificuldade de construir pertencimento e comunidade no mercado',
+                  'Crescimento dependente de canais sem uma narrativa unificadora',
+                ] : [
+                  'Marca sem posicionamento que compete só por preço',
+                  'Comunicação genérica que não conecta com o público',
+                  'Dependência de tráfego pago para gerar vendas',
+                  'Dificuldade de cobrar mais pelo que entrega',
+                ]),
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="text-[#FE6942] text-[20px] leading-[1.5] shrink-0">→</span>
+                  <span className="font-halyard font-light text-[#181412] text-[19px] md:text-[20px] leading-[1.55]">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="est-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">O que você recebe</h3>
+            <ul className="space-y-4">
+              {[
+                'Imersão estratégica com os fundadores do negócio',
+                'Pesquisa de mercado e análise competitiva',
+                'Mapeamento de público e personas',
+                'Posicionamento e proposta única de valor',
+                'Personalidade, propósito e arquétipos de marca',
+                'Narrativa central e conceito de comunicação',
+                'Estratégia de Canais',
+                'Estratégia de Conteúdo',
+                'Guia de Estratégia de Posicionamento e Marca',
+              ].map((item, i) => (
+                <li key={i} className="flex items-center gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0" />
+                  <span className="font-halyard font-light text-[#181412] text-[19px] md:text-[20px] leading-[1.55]">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+// ── SLIDE 3: NAMING ───────────────────────────────────────────────────────────
+function Naming() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.nam-item', {
+        opacity: 0, y: 24, stagger: 0.08, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24">
+      <div className="max-w-[1400px] mx-auto">
+
+        <div className="nam-item mb-6">
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Pilar 02 · TheOne Foundation</span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
+          <div>
+            <h2 className="nam-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
+              Naming
+            </h2>
+            <div className="nam-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
+              R$ 3.000
+            </div>
+            <p className="nam-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
+              Criamos o nome que sua marca merece: estratégico, memorável e protegível. Um nome que carrega posicionamento, gera desejo e abre portas antes do primeiro contato.
+            </p>
+          </div>
+          <div className="nam-item hidden lg:flex items-center justify-center bg-[#EFEFEF] rounded-[20px] p-6">
+            <img
+              src="/images/eike-naming.png"
+              alt="Apresentação de Naming"
+              className="w-full object-contain"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="nam-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">O que resolve</h3>
+            <ul className="space-y-4">
+              {[
+                'Nome genérico que não diferencia nem é lembrado',
+                'Marca que confunde com concorrentes ou soa amadora',
+                'Nome difícil de pesquisar, lembrar ou indicar',
+                'Falta de alinhamento entre nome, posicionamento e público',
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="text-[#FE6942] text-[20px] leading-[1.5] shrink-0">→</span>
+                  <span className="font-halyard font-light text-[#181412] text-[19px] md:text-[20px] leading-[1.55]">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="nam-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">O que você recebe</h3>
+            <ul className="space-y-3">
+              {[
+                'Pesquisa de mercado e análise semântica',
+                'Geração criativa de opções de nome',
+                'Análise de disponibilidade e proteção (INPI)',
+                'Avaliação estratégica de cada opção',
+                'Apresentação das alternativas com racional',
+                'Refinamento e entrega do nome escolhido',
+              ].map((item, i) => (
+                <li key={i} className="flex items-center gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0" />
+                  <span className="font-halyard font-light text-[#181412] text-[19px] md:text-[20px] leading-[1.55]">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+// ── SLIDE 4: IDENTIDADE VISUAL ────────────────────────────────────────────────
+function IdentidadeVisual() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.id-item', {
+        opacity: 0, y: 24, stagger: 0.08, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24">
+      <div className="max-w-[1400px] mx-auto">
+
+        <div className="id-item mb-6">
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Pilar 03 · TheOne Foundation</span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
+          <div>
+            <h2 className="id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
+              Identidade de Marca<br />Essencial
+            </h2>
+            <div className="id-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
+              R$ 6.000
+            </div>
+            <p className="id-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
+              Transformamos a estratégia em uma expressão visual única. Uma identidade que o mercado reconhece, o público deseja e você tem orgulho de mostrar em qualquer contexto.
+            </p>
+          </div>
+          <div className="id-item hidden lg:block rounded-[24px] overflow-hidden" style={{ height: '400px' }}>
+            <img
+              src="/images/eike-identidade-bg.jpg"
+              alt="Identidade de Marca"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="id-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">O que resolve</h3>
+            <ul className="space-y-4">
+              {[
+                'Deixar de ter uma identidade genérica no mercado',
+                'Ajuda a aumentar a percepção de valor, transmitindo mais confiança, segurança ou desejo',
+                'Identidade inconsistente que confunde o público',
+                'A identidade atual está desalinhada com a proposta e o que o negócio quer de fato transmitir',
+                'Aumenta o reconhecimento e identificação da marca com o público',
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="text-[#FE6942] text-[20px] leading-[1.5] shrink-0">→</span>
+                  <span className="font-halyard font-light text-[#181412] text-[19px] md:text-[20px] leading-[1.55]">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="id-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">Entregas</h3>
+            <div className="space-y-5">
+              <div>
+                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Identidade Visual</h4>
+                <ul className="space-y-2 pl-1">
+                  {[
+                    'Desenvolvimento do sistema de identidade visual',
+                    'Desenvolvimento do Conceito do Logotipo',
+                    'Variações do Logotipo – Símbolo, Vertical, Horizontal',
+                    'Paleta de Cores – Cores principais e secundárias',
+                    'Definição da família tipográfica',
+                    'Elementos Gráficos Proprietários',
+                    'Exemplos de Aplicação da Marca (até 7)',
+                    'Apresentação de Identidade Visual',
+                  ].map((sub, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
+                      <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">{sub}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Identidade Verbal</h4>
+                <ul className="space-y-2 pl-1">
+                  {[
+                    'Eixo Narrativo',
+                    'Texto de narrativa da marca (storytelling)',
+                    'Manifesto',
+                    'Expressões da marca – Frases e mensagens chave da marca',
+                  ].map((sub, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
+                      <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">{sub}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Brandbook</h4>
+                <ul className="space-y-2 pl-1">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
+                    <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">
+                      Guia de marca essencial
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+// ── SLIDE 4B: IDENTIDADE VISUAL COMPLETA ──────────────────────────────────────
+function IdentidadeVisualCompleta() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.id-item', {
+        opacity: 0, y: 24, stagger: 0.08, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24">
+      <div className="max-w-[1400px] mx-auto">
+
+        <div className="id-item mb-6">
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Pilar 03 · TheOne Foundation</span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
+          <div>
+            <h2 className={`id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight ${IS_ALUDE ? 'mb-10' : 'mb-3'}`}>
+              {IS_ALUDE ? <>Identidade Visual<br />e Verbal</> : <>Identidade de Marca<br />Completa</>}
+            </h2>
+            {!IS_ALUDE && (
+              <div className="id-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
+                {formatBRL(SERVICES.find((service) => service.id === 'identidade_completa').price)}
+              </div>
+            )}
+            <p className="id-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
+              Transformamos a estratégia em uma expressão visual única. Uma identidade que o mercado reconhece, o público deseja e você tem orgulho de mostrar em qualquer contexto.
+            </p>
+          </div>
+          <div className="id-item hidden lg:block rounded-[24px] overflow-hidden" style={{ height: '400px' }}>
+            <img
+              src="/images/eike-identidade-bg.jpg"
+              alt="Identidade de Marca"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="id-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">O que resolve</h3>
+            <ul className="space-y-4">
+              {[
+                'Deixar de ter uma identidade genérica no mercado',
+                'Ajuda a aumentar a percepção de valor, transmitindo mais confiança, segurança ou desejo',
+                'Identidade inconsistente que confunde o público',
+                'A identidade atual está desalinhada com a proposta e o que o negócio quer de fato transmitir',
+                'Aumenta o reconhecimento e identificação da marca com o público',
+                'Precisa ter uma comunicação verbal proprietária e única no mercado',
+                'Quer ter extrema clareza do que comunicar e o que não comunicar',
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="text-[#FE6942] text-[20px] leading-[1.5] shrink-0">→</span>
+                  <span className="font-halyard font-light text-[#181412] text-[19px] md:text-[20px] leading-[1.55]">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="id-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">Entregas</h3>
+            <div className="space-y-5">
+              <div>
+                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Identidade Visual</h4>
+                <ul className="space-y-2 pl-1">
+                  {[
+                    'Desenvolvimento do sistema de identidade visual',
+                    'Desenvolvimento do Conceito do Logotipo',
+                    'Variações do Logotipo – Símbolo, Vertical, Horizontal',
+                    'Paleta de Cores – Cores principais e secundárias',
+                    'Definição da família tipográfica',
+                    'Elementos Gráficos Proprietários',
+                    'Exemplos de Aplicação da Marca (até 7)',
+                    'Apresentação de Identidade Visual',
+                  ].map((sub, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
+                      <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">{sub}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Identidade Verbal</h4>
+                <ul className="space-y-2 pl-1">
+                  {[
+                    'Eixo narrativo',
+                    'Texto de narrativa da marca (storytelling)',
+                    'Manifesto',
+                    'Expressões da marca – Frases e mensagens chave da marca',
+                    'Aplicações – Bio do Instagram, Bio do LinkedIn, etc',
+                    'Tom e Voz da marca',
+                    'Linguagem proprietária – Território de palavras, termos próprios, expressões características',
+                    'Slogan',
+                    'Regras de comunicação: DOs and DONTs',
+                  ].map((sub, idx) => (
+                    <li key={idx} className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
+                      <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">{sub}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-halyard font-bold text-[#FE6942] text-[15px] uppercase tracking-wider mb-2">Brandbook</h4>
+                <ul className="space-y-2 pl-1">
+                  <li className="flex items-start gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2" />
+                    <span className="font-halyard font-light text-[#181412] text-[16px] md:text-[17px] leading-[1.4]">
+                      Guia de marca completo
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+// ── SLIDE 5: MYBRANDING ───────────────────────────────────────────────────────
+function MyBranding() {
+  const sectionRef = useRef(null);
+  const [expanded, setExpanded] = useState({});
+  const togglePilar = (num) => setExpanded(prev => ({ ...prev, [num]: !prev[num] }));
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.mb-item', {
+        opacity: 0, y: 24, stagger: 0.08, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24">
+      <div className="max-w-[1400px] mx-auto">
+
+        <div className="mb-item mb-6">
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Produto · myBranding</span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
+          <div>
+            <h2 className={`mb-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight ${IS_ALUDE ? 'mb-10' : 'mb-3'}`}>
+              {IS_ALUDE ? <>Marca pessoal como<br />ativo do negócio</> : 'myBranding'}
+            </h2>
+            {!IS_ALUDE && (
+              <div className="mb-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
+                R$ 8.000
+              </div>
+            )}
+            <p className="mb-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
+              {IS_ALUDE
+                ? 'Duas lideranças com presença, ponto de vista e narrativas conectadas à visão da Alude, para humanizar a marca e ampliar sua capacidade de gerar autoridade e comunidade.'
+                : 'Você é seu maior ativo. O myBranding transforma quem você é em uma marca usando a metodologia BeOne para posicioná-lo como referência única no seu mercado.'}
+            </p>
+          </div>
+          <div className="mb-item hidden lg:block rounded-[24px] overflow-hidden" style={{ height: '400px' }}>
+            <img
+              src={myBrandingImg}
+              alt="myBranding"
+              className="w-full h-full object-cover object-center"
+            />
+          </div>
+        </div>
+
+        {/* Pilares do projeto */}
+        <div className="mb-item grid grid-cols-1 lg:grid-cols-3 gap-3 mb-10 md:mb-14">
+          {[
+            {
+              num: '01',
+              titulo: 'A Fundação: Diagnóstico e Pesquisa',
+              descricao: 'É aqui que nos aprofundamos e entendemos de forma completa sua jornada, mercado e público.',
+              itens: [
+                { titulo: 'Imersão Estratégica Pessoal', descricao: 'Mapeamento completo da sua trajetória, objetivos, impulsionadores e desafios que afetam a percepção da sua marca pessoal no mercado.' },
+                { titulo: 'Pesquisa de Mercado', descricao: 'Como outras referências do seu mercado se posicionam, onde estão os padrões repetidos e quais brechas estratégicas existem para você ocupar.' },
+                { titulo: 'Mapeamento Profundo de Público', descricao: 'Definição de público baseada não só em dados demográficos, mas nas necessidades, dores e desejos de quem se conecta com você.' },
+              ],
+            },
+            {
+              num: '02',
+              titulo: 'A Estratégia de Posicionamento e Marca',
+              descricao: 'Construímos uma estratégia para sua marca pessoal se tornar uma das principais referências, se diferenciar da concorrência e gerar desejo no público.',
+              itens: [
+                { titulo: 'Posicionamento e Diferenciação', descricao: 'Definição da sua proposta única de valor, diferenciais estratégicos e do território de marca pessoal que você vai ocupar.' },
+                { titulo: 'Personalidade da Marca', descricao: 'Propósito, valores, crenças e arquétipo que sustentam a conexão da sua marca pessoal com o público e justificam a escolha.' },
+                { titulo: 'Conceito e Narrativa', descricao: 'Criação do conceito central e da narrativa de origem que unificam toda a comunicação da sua marca pessoal nos diferentes canais.' },
+              ],
+            },
+            {
+              num: '03',
+              titulo: 'A Efetivação',
+              descricao: 'O plano prático para efetivar a estratégia da marca pessoal e posicionamento.',
+              itens: [
+                { titulo: 'Estratégia de Canais', descricao: 'Como você deve se portar em cada ponto de contato: Instagram, WhatsApp, Google, site e indicação, para ser visto, lembrado e escolhido.' },
+                { titulo: 'Estratégia de Conteúdo', descricao: 'Principais formatos, tópicos e linhas de comunicação para que sua marca pessoal construa autoridade e gere demanda orgânica.' },
+                { titulo: 'Guia de Marca Pessoal', descricao: 'Documento completo com toda a fundação estratégica da sua marca pessoal, o mapa que orienta toda decisão de comunicação, venda e crescimento.' },
+              ],
+            },
+          ].map((pilar) => (
+            <article key={pilar.num} className="bg-[#F8F8F8] rounded-2xl px-7 md:px-8 py-8 border border-black/[0.08] flex flex-col">
+              <button
+                onClick={() => togglePilar(pilar.num)}
+                className="flex items-center gap-4 mb-5 w-full text-left"
+              >
+                <span className="w-12 h-12 rounded-full flex items-center justify-center bg-[#FE6942] text-white font-halyard text-[16px] font-semibold shrink-0">
+                  {pilar.num}
+                </span>
+                <h3 className="font-halyard font-medium text-[#181412] text-[21px] md:text-[23px] leading-[1.1] flex-1">{pilar.titulo}</h3>
+                <svg
+                  className="shrink-0 transition-transform duration-300"
+                  style={{ transform: expanded[pilar.num] ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                  width="20" height="20" viewBox="0 0 20 20" fill="none"
+                >
+                  <path d="M5 7.5l5 5 5-5" stroke="#181412" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+              <p className="font-halyard font-normal text-[#181412] text-[17px] md:text-[18px] leading-[1.6] mb-4">{pilar.descricao}</p>
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateRows: expanded[pilar.num] ? '1fr' : '0fr',
+                  transition: 'grid-template-rows 380ms cubic-bezier(0.23,1,0.32,1)',
+                }}
+              >
+                <div className="overflow-hidden">
+                  <div
+                    className="mt-2 divide-y divide-black/[0.08] border-t border-black/[0.08]"
+                    style={{
+                      opacity: expanded[pilar.num] ? 1 : 0,
+                      transition: 'opacity 300ms ease',
+                      transitionDelay: expanded[pilar.num] ? '80ms' : '0ms',
+                    }}
+                  >
+                    {pilar.itens.map((item) => (
+                      <div key={item.titulo} className="py-4 last:pb-0">
+                        <h4 className="font-halyard font-semibold text-[#181412] text-[16px] md:text-[17px] leading-[1.25] mb-2">{item.titulo}</h4>
+                        <p className="font-halyard font-normal text-[#181412] text-[15px] md:text-[16px] leading-[1.55]">{item.descricao}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="mb-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-5">Para quem é</h3>
+            <p className="font-halyard font-normal text-[#181412] text-[19px] md:text-[21px] leading-[1.5] mb-5">
+              Fundadores, experts ou líderes que querem crescer usando sua própria autoridade e influência como canal de aquisição.
+            </p>
+            <ul className="space-y-4">
+              {[
+                'Reconhecido no mercado, mas sem monetizar isso',
+                'Quer atrair clientes sem depender só do negócio',
+                'Sua história e visão são diferenciais competitivos reais',
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <span className="text-[#FE6942] text-[20px] leading-[1.5] shrink-0">→</span>
+                  <span className="font-halyard font-light text-[#181412] text-[19px] md:text-[20px] leading-[1.55]">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mb-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">O que você recebe</h3>
+            <ul className="space-y-4">
+              {[
+                'Diagnóstico e imersão pessoal (metodologia BeOne)',
+                'Posicionamento de marca pessoal',
+                'Narrativa de origem e visão de mundo',
+                'Arquétipo e personalidade pública',
+                'Estratégia de conteúdo e canais',
+                'Guia de Marca Pessoal completo',
+              ].map((item, i) => (
+                <li key={i} className="flex items-center gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0" />
+                  <span className="font-halyard font-light text-[#181412] text-[19px] md:text-[20px] leading-[1.55]">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+// ── SLIDE 6: SITE BRAND EXPERIENCE ────────────────────────────────────────────
+function SiteBrandExperience() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.sbe-item', {
+        opacity: 0, y: 24, stagger: 0.08, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24">
+      <div className="max-w-[1400px] mx-auto">
+
+        <div className="sbe-item mb-6">
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Produto · Site BrandExperience</span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
+          <div>
+            <h2 className={`sbe-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight ${IS_ALUDE ? 'mb-10' : 'mb-3'}`}>
+              Site BrandExperience
+            </h2>
+            {!IS_ALUDE && (
+              <div className="sbe-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
+                {formatBRL(SERVICES.find((service) => service.id === 'sitebrand').price)}
+              </div>
+            )}
+            <p className="sbe-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
+              {IS_ALUDE
+                ? 'O ponto de contato que torna a nova percepção de valor visível: uma experiência de marca com prova social, diferenciais claros e mensagens relevantes para cada público da Alude.'
+                : 'Um site que é uma extensão do posicionamento da marca, e não um site institucional genérico. Desenvolvido em código com IA por brand designers que constroem uma experiência imersiva — fazendo seu cliente experienciar o universo da marca digitalmente e gerando impacto, conexão e memorização.'}
+            </p>
+          </div>
+          <div className="sbe-item hidden lg:block rounded-[24px] overflow-hidden" style={{ height: '400px' }}>
+            <img src={siteBrandExpImg} alt="Site BrandExperience" className="w-full h-full object-cover object-center" />
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="sbe-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-5">Para quem é</h3>
+            <p className="font-halyard font-normal text-[#181412] text-[19px] md:text-[21px] leading-[1.5]">
+              Empresas de serviço e tecnologia que vendem valor intangível e precisam que o digital comunique isso com precisão.
+            </p>
+          </div>
+
+          <div className="sbe-item bg-[#F8F8F8] rounded-2xl px-7 py-8 border border-black/[0.07]">
+            <h3 className="font-halyard font-semibold text-[#181412] text-[16px] tracking-[0.12em] uppercase mb-6">O que você recebe</h3>
+            <ul className="space-y-4">
+              {[
+                'Estratégia e arquitetura de informação',
+                'Copy estratégico alinhado à marca',
+                'Design de alta fidelidade com identidade visual',
+                'Desenvolvimento responsivo em código',
+                'Experiência imersiva com universo da marca',
+                'Entrega com treinamento de gestão do site',
+              ].map((item, i) => (
+                <li key={i} className="flex items-center gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0" />
+                  <span className="font-halyard font-light text-[#181412] text-[19px] md:text-[20px] leading-[1.55]">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+// ── SLIDE 8: THEONE AGENT ─────────────────────────────────────────────────────
+function TheOneAgent() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.agent-item', {
+        opacity: 0, y: 24, stagger: 0.09, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  const features = [
+    { titulo: 'Estrategista sempre disponível', descricao: 'Responde dúvidas sobre posicionamento, comunicação e estratégia com base no seu guia de marca.' },
+    { titulo: 'Ideias de conteúdo no tom certo', descricao: 'Gera pautas, roteiros e ideias de conteúdo alinhadas com o seu público e arquétipo de marca.' },
+    { titulo: 'Análise de pitchs e propostas', descricao: 'Avalia apresentações comerciais e sugere melhorias para aumentar conversão.' },
+    { titulo: 'Treinado com sua marca', descricao: 'Alimentado com toda a sua estratégia de marca entregue pela TheOne, não é um agente genérico.' },
+  ];
+
+  return (
+    <section ref={sectionRef} className="relative overflow-hidden bg-[#0a0a0a] px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24" style={{ minHeight: '100svh' }}>
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute', top: '-80px', right: '-60px',
+          width: '600px', height: '500px', borderRadius: '50%',
+          background: 'radial-gradient(ellipse, rgba(254,105,66,.12) 0%, transparent 65%)',
+          pointerEvents: 'none',
+        }}
+      />
+      <div className="max-w-[1400px] mx-auto relative z-10">
+
+        <div className="agent-item mb-6">
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Bônus incluso</span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_520px] gap-10 lg:gap-14 items-start">
+          {/* Esquerda */}
+          <div className="flex flex-col gap-8">
+            <div>
+              <h2 className="agent-item font-editorial font-normal text-white text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-4">
+                TheOne Agent
+              </h2>
+              <div className="agent-item font-halyard font-medium text-white text-[1.5rem] md:text-[1.75rem] leading-[1]">
+                Brinde
+              </div>
+            </div>
+            <p className="agent-item font-halyard font-light text-white/60 text-[20px] md:text-[22px] leading-[1.45] max-w-[44ch]">
+              Um agente de IA treinado com toda a sua estratégia de marca, exclusivo do seu negócio, disponível para usar a qualquer momento.
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {features.map((f, i) => (
+                <div key={i} className="agent-item bg-white/[0.05] border border-white/[0.08] rounded-2xl px-7 py-7">
+                  <h3 className="font-halyard font-semibold text-white text-[19px] md:text-[21px] leading-[1.2] mb-3">{f.titulo}</h3>
+                  <p className="font-halyard font-light text-white/55 text-[17px] md:text-[18px] leading-[1.55]">{f.descricao}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Direita: mockup Gemini */}
+          <div className="agent-item hidden lg:flex flex-col justify-start pt-2">
+            <div className="w-full rounded-[24px] border border-black/10 bg-[#F0F0F0] shadow-[0_18px_45px_rgba(0,0,0,0.12)] overflow-hidden">
+              <div className="h-9 px-4 flex items-center justify-between border-b border-black/[0.08] bg-white/70 font-halyard text-[11px] text-[#181412]/50">
+                <span>Gemini</span>
+                <span>TheOne | Estrategista de marca</span>
+                <span className="rounded-full bg-[#BDE8FF] px-2 py-0.5 text-[#181412]/60">Fazer upgrade</span>
+              </div>
+              <div className="flex flex-col items-center justify-center text-center px-8 py-14">
+                <div className="w-14 h-14 rounded-full bg-[#C978F3]/80 text-white flex items-center justify-center font-halyard font-medium text-[18px] mb-5">T</div>
+                <p className="font-halyard font-medium text-[#181412] text-[16px] mb-6">TheOne | Estrategista de marca</p>
+                <div className="space-y-2 text-left font-halyard text-[13px] text-[#181412]/50 w-full max-w-[300px]">
+                  <p className="font-semibold text-[#181412]/40 mb-1">Recentes</p>
+                  <p><span className="text-[#C978F3] mr-1.5">■</span> Roteiro de vídeo de pré-lançamento TheOne</p>
+                  <p><span className="text-[#C978F3] mr-1.5">■</span> Estratégia de conteúdo pré-lançamento TheOne</p>
+                  <p><span className="text-[#C978F3] mr-1.5">■</span> Análise de pitch — reunião com prospect</p>
+                </div>
+              </div>
+              <div className="px-8 pb-8">
+                <div className="w-full rounded-xl border border-black/10 bg-white px-4 py-3 font-halyard text-[13px] text-[#181412]/40">
+                  Peça ao Gemini
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  );
+}
+
+function ArrowItem({ children }) {
+  return (
+    <li className="flex items-center gap-3 font-halyard font-medium text-[#181412] text-[17px] md:text-[19px] leading-[1.25]">
+      <svg className="w-5 h-5 text-[#FE6942] shrink-0" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M4 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+      {children}
+    </li>
+  );
+}
+
+const cardClass = 'relative overflow-hidden bg-[#F4F4F5] rounded-[28px] md:rounded-[32px]';
+
+function CardEstrategia() {
+  return (
+    <div className={`${cardClass} flex flex-col md:flex-row min-h-[420px] md:min-h-[480px]`}>
+      <div className="flex-1 px-8 md:px-14 pt-12 md:pt-16 pb-8 md:pb-16 flex flex-col justify-between">
+        <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08]">
+          {IS_ALUDE ? <>Estratégia de Marca e<br />Posicionamento + Guia</> : <>Estratégia de<br />Posicionamento e<br />Marca + Guia</>}
+        </h3>
+        <div>
+          <p className="font-halyard font-light text-[#181412] text-[19px] md:text-[21px] leading-[1.45] max-w-[340px] mb-6">
+            Um documento com mais de 80 slides com a fundação estratégica e caminho para sua marca se tornar TheOne
+          </p>
+          <p className="font-halyard font-light text-[#181412] text-[17px] mb-3">Também inclui:</p>
+          <ul className="space-y-1.5">
+            <ArrowItem>Estratégia de Canais</ArrowItem>
+            <ArrowItem>{IS_ALUDE ? 'Estratégia de Conteúdo' : 'Estratégia de Produção de Conteúdo'}</ArrowItem>
+          </ul>
+        </div>
+      </div>
+      <div className="hidden md:flex shrink-0 self-end items-end justify-end pr-10 pb-8">
+        <img
+          src="/images/guia-de-estrategia.png"
+          alt="Guia de Estratégia de Posicionamento e Marca"
+          className="w-[300px] md:w-[380px] lg:w-[460px] object-contain object-bottom"
+        />
+      </div>
+    </div>
+  );
+}
+
+function CardNaming() {
+  return (
+    <div className={`${cardClass} flex flex-col md:flex-row min-h-[380px] md:min-h-[420px]`}>
+      <div className="flex-1 px-8 md:px-14 pt-12 md:pt-16 pb-8 md:pb-16 flex flex-col justify-between">
+        <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08]">
+          Naming
+        </h3>
+        <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.4] max-w-[320px]">
+          Exploramos diferentes territórios de nomes, sonoridade e escrita até chegar a uma opção que traduza com clareza a estratégia da marca, se diferencie dos concorrentes e se conecte com o público.
+        </p>
+      </div>
+      <div className="hidden md:flex shrink-0 items-center justify-center px-6 md:px-8 pb-10 md:pb-0 overflow-hidden">
+        <img
+          src="/images/eike-naming.png"
+          alt="Apresentação de Naming"
+          className="w-[300px] md:w-[440px] lg:w-[520px] object-contain"
+        />
+      </div>
+    </div>
+  );
+}
+
+function CardIdentidade() {
+  return (
+    <div
+      className={`${cardClass} min-h-[380px] md:min-h-[420px] bg-cover bg-[54%_center] md:bg-center`}
+      style={{ backgroundImage: 'url(/images/eike-identidade-bg.jpg)' }}
+    >
+      <div className="relative z-10 px-8 md:px-14 pt-12 md:pt-16 pb-10 md:pb-14 max-w-[380px]">
+        <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08] mb-20 md:mb-24">
+          Identidade Essencial<br />de Marca +<br />Guia
+        </h3>
+        <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.4] max-w-[300px]">
+          A partir do conceito central, desenvolvemos uma identidade que comunica a essência da marca e garante reconhecimento, coerência e diferenciação em todos os pontos de contato.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function CardIdentidadeCompleta() {
+  return (
+    <div
+      className={`${cardClass} min-h-[380px] md:min-h-[420px] bg-cover bg-[54%_center] md:bg-center`}
+      style={{ backgroundImage: 'url(/images/eike-identidade-bg.jpg)' }}
+    >
+      <div className="relative z-10 px-8 md:px-14 pt-12 md:pt-16 pb-10 md:pb-14 max-w-[380px]">
+        <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08] mb-20 md:mb-24">
+          Identidade Completa<br />de Marca +<br />Guia
+        </h3>
+        <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.4] max-w-[300px]">
+          Desenvolvimento do sistema visual completo e todas as diretrizes de identidade verbal (Tom e Voz, regras de comunicação, slogans, linguagem proprietária).
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function CardMyBranding() {
+  return (
+    <div className={`${cardClass} min-h-[380px] md:min-h-[420px] flex flex-col md:flex-row overflow-hidden`}>
+      <div className="flex-1 px-8 md:px-14 pt-12 md:pt-16 pb-8 md:pb-16 flex flex-col justify-between">
+        <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08]">
+          myBranding
+        </h3>
+        <div>
+          <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.4] max-w-[380px] mb-6">
+            Você é seu maior ativo. O myBranding transforma quem você é em uma marca usando a metodologia BeOne para posicioná-lo como referência única no seu mercado.
+          </p>
+          <ul className="space-y-1.5">
+            <ArrowItem>Posicionamento de marca pessoal</ArrowItem>
+            <ArrowItem>Narrativa de origem e visão de mundo</ArrowItem>
+            {IS_ALUDE && <ArrowItem>Estratégia de Canais e Conteúdo</ArrowItem>}
+            <ArrowItem>Guia de Marca Pessoal completo</ArrowItem>
+          </ul>
+        </div>
+      </div>
+      <div className="hidden md:block shrink-0 w-[360px] lg:w-[420px] overflow-hidden">
+        <img
+          src={myBrandingImg}
+          alt="myBranding"
+          className="w-full h-full object-cover object-center"
+        />
+      </div>
+    </div>
+  );
+}
+
+function CardSiteBrand() {
+  return (
+    <div className={`${cardClass} min-h-[380px] md:min-h-[420px] flex flex-col md:flex-row overflow-hidden`}>
+      <div className="flex-1 px-8 md:px-14 pt-12 md:pt-16 pb-8 md:pb-16 flex flex-col justify-between">
+        <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08]">
+          Site BrandExperience
+        </h3>
+        <div>
+          <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.4] max-w-[340px] mb-6">
+            {IS_ALUDE
+              ? 'Um site que é uma extensão do posicionamento da marca. Desenvolvido com IA por brand designers que constroem uma experiência imersiva, fazendo seu cliente experienciar o universo da marca digitalmente.'
+              : 'Um site que é uma extensão do posicionamento da marca. Desenvolvido em código com IA por brand designers que constroem uma experiência imersiva, fazendo seu cliente experienciar o universo da marca digitalmente.'}
+          </p>
+          <ul className="space-y-1.5">
+            {IS_ALUDE ? (
+              <>
+                <ArrowItem>Comunicação e copy focada na proposta de valor: dores, ganhos, diferenciais e prova social</ArrowItem>
+                <ArrowItem>Foco em aumentar a percepção de valor, autoridade e conexão com o público</ArrowItem>
+              </>
+            ) : (
+              <>
+                <ArrowItem>Copy estratégico alinhado à marca</ArrowItem>
+                <ArrowItem>Design de alta fidelidade com identidade visual</ArrowItem>
+                <ArrowItem>Desenvolvimento responsivo em código</ArrowItem>
+              </>
+            )}
+          </ul>
+        </div>
+      </div>
+      <div className="hidden md:block shrink-0 w-[360px] lg:w-[420px] overflow-hidden">
+        <img
+          src={siteBrandExpImg}
+          alt="Site BrandExperience"
+          className="w-full h-full object-cover object-center"
+        />
+      </div>
+    </div>
+  );
+}
+
+function CardTheOneAgent() {
+  return (
+    <div className={`${cardClass} min-h-[400px] md:min-h-[440px] flex flex-col md:block`}>
+      <div className="relative z-10 px-8 md:px-14 pt-10 md:pt-14 pb-8 md:pb-14 max-w-[420px]">
+        <span className="font-halyard font-semibold text-[#FE6942] text-[13px] tracking-[0.24em] uppercase mb-3 block">Bônus:</span>
+        <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08] mb-16 md:mb-20">
+          TheOne Agent
+        </h3>
+        <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.4] max-w-[340px]">
+          Agente de IA especialista no seu negócio, treinado com toda sua estratégia de marca e posicionamento para otimizar apresentações, gerar ideias de conteúdo focadas no seu público, analisar pitchs de vendas no dia a dia e muito mais.
+        </p>
+      </div>
+      <div className="relative md:absolute md:right-8 lg:right-10 md:top-16 lg:top-[60px] z-0 px-6 md:px-0 pb-8 md:pb-0">
+        <div className="relative w-full md:w-[480px] lg:w-[530px] rounded-[24px] border border-black/10 bg-[#F8F8F8] shadow-[0_18px_45px_rgba(0,0,0,0.08)] overflow-hidden aspect-[1.72]">
+          <div className="h-8 px-4 flex items-center justify-between border-b border-black/[0.08] bg-white/65 font-halyard text-[9px] text-[#181412]/50">
+            <span>Gemini</span>
+            <span>TheOne | Estrategista de marca</span>
+            <span className="rounded-full bg-[#BDE8FF] px-1.5 py-0.5 text-[#181412]/60">Fazer upgrade</span>
+          </div>
+          <div className="absolute inset-x-0 top-12 bottom-0 flex flex-col items-center justify-center text-center px-6">
+            <div className="w-10 h-10 rounded-full bg-[#C978F3]/80 text-white flex items-center justify-center font-halyard font-medium text-[15px] mb-4">T</div>
+            <p className="font-halyard font-medium text-[#181412] text-[14px] mb-4">TheOne | Estrategista de marca</p>
+            <div className="space-y-1.5 text-left font-halyard text-[10px] text-[#181412]/50">
+              <p>Recentes</p>
+              <p><span className="text-[#C978F3]">■</span> Roteiro de vídeo de pré-lançamento TheOne</p>
+              <p><span className="text-[#C978F3]">■</span> Estratégia de conteúdo pré-lançamento TheOne</p>
+            </div>
+          </div>
+          <div className="absolute left-1/2 bottom-5 -translate-x-1/2 w-[58%] rounded-xl border border-black/10 bg-white px-3 py-2 font-halyard text-[10px] text-[#181412]/50">
+            Peça ao Gemini
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── SLIDE 8: CALCULADORA ──────────────────────────────────────────────────────
+function Calculadora({ clientName }) {
+  const [selected, setSelected] = useState({
+    estrategia: true,
+    entrevistas: false,
+    naming:     false,
+    identidade: true,
+    identidade_completa: false,
+    sitebrand: false,
+  });
+  const [myBrandingQty, setMyBrandingQty] = useState(1);
+  const myBrandingUnitPrice = 6000;
+
+  const total = SERVICES.reduce((sum, s) => {
+    if (s.id === 'mybranding') return sum + (myBrandingQty * myBrandingUnitPrice);
+    return selected[s.id] ? sum + s.price : sum;
+  }, 0);
+  const discountPct = IS_ALUDE ? 0.10 : (total > 10000 ? 0.10 : 0.05);
+  const discountLabel = total > 10000 ? '10%' : '5%';
+  const totalDesconto = Math.round(total * (1 - discountPct));
+  const metade = Math.round(total / 2);
+
+  return (
+    <section className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24">
+      <div className="max-w-[1100px] mx-auto">
+
+        <div className="mb-3">
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Investimento</span>
+        </div>
+
+        <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.5rem,4vw,3.75rem)] leading-[1.02] tracking-tight mb-10 md:mb-12">
+          Defina o seu projeto{clientName ? ` · ${clientName}` : ''}
+        </h2>
+
+        {/* Checklist de serviços */}
+        <div className="space-y-6 mb-10 md:mb-14">
+
+          {/* Grupo TheOne Foundation */}
+          <div>
+            <div className="flex items-center gap-3 mb-3 px-1">
+              <span className="font-halyard font-semibold text-[14px] tracking-[0.20em] uppercase text-[#FE6942]">TheOne Foundation</span>
+              <div className="flex-1 h-px bg-[#FE6942]/20" />
+            </div>
+            <div className="space-y-3">
+              {SERVICES.filter(s => s.id !== 'mybranding' && s.id !== 'sitebrand').map((service) => (
+                <div
+                  key={service.id}
+                  onClick={() => setSelected((prev) => {
+                    const nextVal = !prev[service.id];
+                    const updated = { ...prev, [service.id]: nextVal };
+                    if (service.id === 'identidade' && nextVal) {
+                      updated.identidade_completa = false;
+                    } else if (service.id === 'identidade_completa' && nextVal) {
+                      updated.identidade = false;
+                    }
+                    return updated;
+                  })}
+                  className={`cursor-pointer rounded-2xl px-7 py-6 border transition-all duration-200 flex items-center justify-between gap-4 ${
+                    selected[service.id]
+                      ? 'border-[#FE6942] bg-[#FE6942]/[0.04]'
+                      : 'border-black/[0.09] bg-[#F8F8F8] hover:border-black/20'
+                  }`}
+                >
+                  <div className="flex items-center gap-5">
+                    <div
+                      className="w-6 h-6 rounded-md border flex items-center justify-center shrink-0 transition-all duration-150"
+                      style={{
+                        borderColor: selected[service.id] ? '#FE6942' : 'rgba(0,0,0,0.2)',
+                        background: selected[service.id] ? '#FE6942' : 'transparent',
+                      }}
+                    >
+                      {selected[service.id] && (
+                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                          <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </div>
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/50'}`}>
+                      {service.label}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-8 shrink-0">
+                    {!IS_ALUDE && (
+                      <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${selected[service.id] ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
+                        {service.prazo}
+                      </span>
+                    )}
+                    {!(IS_ALUDE && service.id === 'entrevistas') && (
+                      <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
+                        {formatBRL(service.price)}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Grupo myBranding */}
+          <div>
+            <div className="flex items-center gap-3 mb-3 px-1">
+              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">myBranding</span>
+              <div className="flex-1 h-px bg-black/10" />
+            </div>
+            <div className="space-y-3">
+              {SERVICES.filter(s => s.id === 'mybranding').map((service) => (
+                <div
+                  key={service.id}
+                  className={`rounded-2xl px-7 py-6 border transition-all duration-200 flex items-center justify-between gap-4 ${
+                    myBrandingQty > 0
+                      ? 'border-[#FE6942] bg-[#FE6942]/[0.04]'
+                      : 'border-black/[0.09] bg-[#F8F8F8] hover:border-black/20'
+                  }`}
+                >
+                  <div className="flex items-center gap-5">
+                    {/* Contador de pessoas */}
+                    <div className="flex items-center gap-0 bg-[#F0F0F0] border border-black/12 rounded-xl overflow-hidden">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setMyBrandingQty(prev => Math.max(0, prev - 1)); }}
+                        className="w-10 h-10 flex items-center justify-center font-halyard font-semibold text-[20px] text-[#181412] hover:bg-black/10 transition-colors select-none"
+                        aria-label="Diminuir quantidade"
+                      >
+                        −
+                      </button>
+                      <span className="font-halyard font-bold text-[17px] w-8 text-center text-[#181412] tabular-nums">
+                        {myBrandingQty}
+                      </span>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setMyBrandingQty(prev => prev + 1); }}
+                        className="w-10 h-10 flex items-center justify-center font-halyard font-semibold text-[20px] text-[#181412] hover:bg-black/10 transition-colors select-none"
+                        aria-label="Aumentar quantidade"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#181412]' : 'text-[#181412]/50'}`}>
+                      {service.label}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-8 shrink-0">
+                    {!IS_ALUDE && (
+                      <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
+                        {service.prazo}
+                      </span>
+                    )}
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
+                      {myBrandingQty > 0 ? formatBRL(myBrandingUnitPrice * myBrandingQty) : formatBRL(service.price)}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Grupo Site BrandExperience */}
+          <div>
+            <div className="flex items-center gap-3 mb-3 px-1">
+              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">Site BrandExperience</span>
+              <div className="flex-1 h-px bg-black/10" />
+            </div>
+            <div className="space-y-3">
+              {SERVICES.filter(s => s.id === 'sitebrand').map((service) => (
+                <div
+                  key={service.id}
+                  onClick={() => setSelected((prev) => ({ ...prev, [service.id]: !prev[service.id] }))}
+                  className={`cursor-pointer rounded-2xl px-7 py-6 border transition-all duration-200 flex items-center justify-between gap-4 ${
+                    selected[service.id]
+                      ? 'border-[#FE6942] bg-[#FE6942]/[0.04]'
+                      : 'border-black/[0.09] bg-[#F8F8F8] hover:border-black/20'
+                  }`}
+                >
+                  <div className="flex items-center gap-5">
+                    <div
+                      className="w-6 h-6 rounded-md border flex items-center justify-center shrink-0 transition-all duration-150"
+                      style={{
+                        borderColor: selected[service.id] ? '#FE6942' : 'rgba(0,0,0,0.2)',
+                        background: selected[service.id] ? '#FE6942' : 'transparent',
+                      }}
+                    >
+                      {selected[service.id] && (
+                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                          <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </div>
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/50'}`}>
+                      {service.label}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-8 shrink-0">
+                    {!IS_ALUDE && (
+                      <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${selected[service.id] ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
+                        {service.prazo}
+                      </span>
+                    )}
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
+                      {formatBRL(service.price)}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+
+        </div>
+
+        {/* Cards de entregáveis — aparecem abaixo dos checkboxes quando selecionados */}
+        {(SERVICES.some(s => s.id !== 'mybranding' && selected[s.id]) || myBrandingQty > 0) && (
+          <div className="flex flex-col gap-5 mb-10 md:mb-14">
+            {selected.estrategia && <CardEstrategia />}
+            {selected.entrevistas && (
+              <div className="bg-[#F4F4F5] rounded-[28px] md:rounded-[32px] px-8 md:px-14 pt-12 md:pt-16 pb-10 md:pb-14">
+                <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08] mb-6">
+                  {IS_ALUDE ? 'Entrevistas com pessoas da operação e com clientes' : 'Entrevistas com Clientes'}
+                </h3>
+                <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.4] max-w-[380px]">
+                  {IS_ALUDE
+                    ? 'Conversas em profundidade para entender a marca por dentro e por fora: cultura, operação, percepção, dores, desejos e diferenciais reconhecidos pelo mercado.'
+                    : 'Pesquisa em profundidade diretamente com os clientes da marca para mapear dores, desejos e diferenciais percebidos.'}
+                </p>
+              </div>
+            )}
+            {selected.naming     && <CardNaming />}
+            {myBrandingQty > 0   && <CardMyBranding />}
+            {selected.identidade && <CardIdentidade />}
+            {selected.identidade_completa && <CardIdentidadeCompleta />}
+            {selected.sitebrand  && <CardSiteBrand />}
+            <CardTheOneAgent />
+          </div>
+        )}
+
+        {/* Painel de total + pagamento */}
+        <div className="space-y-4">
+
+          <div className={`grid gap-4 ${total > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+            <div className="bg-[#F8F8F8] rounded-2xl px-7 py-7 border border-black/[0.07]">
+              <div className="font-halyard font-medium text-[12px] tracking-[0.18em] uppercase text-[#181412]/80 mb-2">Total do projeto</div>
+              <div className="font-halyard font-medium text-[#181412] text-[2.75rem] md:text-[3.25rem] leading-[1] mb-1 transition-all duration-300">
+                {total === 0 ? 'R$ 0' : formatBRL(total)}
+              </div>
+              {total === 0 && (
+                <div className="font-halyard font-light text-[#181412]/30 text-[14px]">Selecione os serviços acima</div>
+              )}
+            </div>
+
+            {total > 0 && (
+              <div className="bg-[#F8F8F8] rounded-2xl px-7 py-7 border border-black/[0.07]">
+                <div className="font-halyard font-medium text-[12px] tracking-[0.18em] uppercase text-[#FE6942] mb-2">
+                  À vista com {discountLabel} de desconto
+                </div>
+                <div className="font-halyard font-medium text-[#FE6942] text-[2.75rem] md:text-[3.25rem] leading-[1] mb-1 transition-all duration-300">
+                  {formatBRL(totalDesconto)}
+                </div>
+                {total > 10000 && (
+                  <div className="font-halyard font-light text-[12px] text-[#181412]/40 mt-1">
+                    Desconto especial para projetos acima de R$ 10.000
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {total > 0 && (
+            <div className="bg-[#F8F8F8] rounded-2xl px-7 py-6 border border-black/[0.07]">
+              <div className="font-halyard font-semibold text-[#181412] text-[13px] tracking-[0.14em] uppercase mb-4">
+                Condições de pagamento
+              </div>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
+                  <span className="font-halyard font-light text-[#181412] text-[18px] leading-[1.5]">
+                    <><span className="font-medium">3 parcelas:</span> {formatBRL(Math.round(total / 3))} (D+0 pra iniciar, D+30 e D+60)</>
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
+                  <span className="font-halyard font-light text-[#181412] text-[18px] leading-[1.5]">
+                    <span className="font-medium">À vista:</span> {discountLabel} de desconto: {formatBRL(totalDesconto)}
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
+                  <span className="font-halyard font-light text-[#181412] text-[18px] leading-[1.5]">
+                    <><span className="font-medium">Prazo:</span> de 10 semanas (aproximadamente 2,5 meses).</>
+                  </span>
+                </li>
+              </ul>
+            </div>
+          )}
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── SLIDE 6: CASA DA MARCA ────────────────────────────────────────────────────
+function CasaDaMarca() {
   return (
     <section className="bg-white h-full flex items-center justify-center px-2 md:px-6 lg:px-10 py-6">
       <svg
@@ -305,67 +1748,52 @@ function FoundationHouse() {
         fill="none"
         className="w-full max-w-[1380px]"
         role="img"
-        aria-label="Arquitetura de marca TheOne Foundation"
+        aria-label="Arquitetura de marca TheOne"
       >
         <defs>
-          <linearGradient id="foundationRoof" x1="720" y1="54" x2="720" y2="382" gradientUnits="userSpaceOnUse">
+          <linearGradient id="padraoRoof" x1="720" y1="54" x2="720" y2="382" gradientUnits="userSpaceOnUse">
             <stop offset="0" stopColor="#DADDE0" />
             <stop offset="1" stopColor="#ECEEEF" />
           </linearGradient>
-          <linearGradient id="foundationWall" x1="720" y1="388" x2="720" y2="655" gradientUnits="userSpaceOnUse">
+          <linearGradient id="padraoWall" x1="720" y1="388" x2="720" y2="655" gradientUnits="userSpaceOnUse">
             <stop offset="0" stopColor="#FBFBFB" />
             <stop offset="1" stopColor="#F2F3F3" />
           </linearGradient>
-          <linearGradient id="foundationBase" x1="370" y1="655" x2="1070" y2="765" gradientUnits="userSpaceOnUse">
+          <linearGradient id="padraoBase" x1="370" y1="655" x2="1070" y2="765" gradientUnits="userSpaceOnUse">
             <stop offset="0" stopColor="#1D1F20" />
             <stop offset="1" stopColor="#0A0A0A" />
           </linearGradient>
-          <filter id="foundationShadow" x="300" y="635" width="840" height="170" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+          <filter id="padraoShadow" x="300" y="635" width="840" height="170" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
             <feDropShadow dx="0" dy="18" stdDeviation="18" floodColor="#181412" floodOpacity="0.18" />
           </filter>
         </defs>
 
         <ellipse cx="720" cy="777" rx="355" ry="24" fill="#181412" opacity="0.08" />
 
-        <polygon points="720,54 354,382 1086,382" fill="url(#foundationRoof)" />
-        <rect x="372" y="388" width="696" height="267" fill="url(#foundationWall)" />
+        <polygon points="720,54 354,382 1086,382" fill="url(#padraoRoof)" />
+        <rect x="372" y="388" width="696" height="267" fill="url(#padraoWall)" />
         <rect x="372" y="388" width="46" height="267" fill="#DDE0E2" />
         <rect x="1022" y="388" width="46" height="267" fill="#DDE0E2" />
         <rect x="372" y="382" width="696" height="8" fill="white" opacity="0.92" />
 
-        <rect x="370" y="635" width="700" height="130" rx="5" fill="url(#foundationBase)" filter="url(#foundationShadow)" />
+        <rect x="370" y="635" width="700" height="130" rx="5" fill="url(#padraoBase)" filter="url(#padraoShadow)" />
 
         <path d="M694 176C694 168.82 699.82 163 707 163H733C740.18 163 746 168.82 746 176V195C746 202.18 740.18 208 733 208H718L700 222V208H707C699.82 208 694 202.18 694 195V176Z" stroke="#FE6942" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
         <circle cx="710" cy="186" r="3" fill="#FE6942" />
         <circle cx="720" cy="186" r="3" fill="#FE6942" />
         <circle cx="730" cy="186" r="3" fill="#FE6942" />
 
-        <text x="720" y="270" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="22" fontWeight="700" fill="#181412">
-          PONTOS DE CONTATO
-        </text>
-        <text x="720" y="304" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="18" fontWeight="400" fill="#181412" fillOpacity="0.68">
-          (INSTAGRAM, ANÚNCIO,
-        </text>
-        <text x="720" y="332" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="18" fontWeight="400" fill="#181412" fillOpacity="0.68">
-          REUNIÃO DE VENDA, SITE, ETC)
-        </text>
+        <text x="720" y="270" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="22" fontWeight="700" fill="#181412">PONTOS DE CONTATO</text>
+        <text x="720" y="304" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="18" fontWeight="400" fill="#181412" fillOpacity="0.68">Anúncio, Instagram, Tiktok, Comercial, PDV, Eventos</text>
 
         <path d="M720 462C699 462 682 481 682 481C682 481 699 500 720 500C741 500 758 481 758 481C758 481 741 462 720 462Z" stroke="#FE6942" strokeWidth="3.5" strokeLinejoin="round" />
         <circle cx="720" cy="481" r="10" stroke="#FE6942" strokeWidth="3.5" />
 
-        <text x="720" y="548" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="22" fontWeight="700" fill="#181412">
-          IDENTIDADE VISUAL,
-        </text>
-        <text x="720" y="580" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="22" fontWeight="700" fill="#181412">
-          NARRATIVA E COMUNICAÇÃO
-        </text>
+        <text x="720" y="548" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="18" fontWeight="400" fill="#181412" fillOpacity="0.68">Pitch de vendas, direcionamento do marketing,</text>
+        <text x="720" y="576" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="18" fontWeight="400" fill="#181412" fillOpacity="0.68">identidade visual, arquitetura do PDV</text>
 
-        <text x="720" y="696" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="30" fontWeight="700" fill="white">
-          THEONE FOUNDATION
-        </text>
-        <text x="720" y="735" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="21" fontWeight="400" fill="white" fillOpacity="0.7">
-          Estratégia de posicionamento e marca
-        </text>
+        <text x="720" y="696" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="30" fontWeight="700" fill="white">THEONE FOUNDATION</text>
+        <text x="720" y="735" textAnchor="middle" fontFamily="'Halyard Display',sans-serif" fontSize="21" fontWeight="400" fill="white" fillOpacity="0.7">Estratégia de Marca e Posicionamento</text>
 
         <path d="M916 210H1080" stroke="#181412" strokeWidth="1.3" />
         <path d="M916 210L902 230" stroke="#181412" strokeWidth="1.3" />
@@ -390,174 +1818,132 @@ function FoundationHouse() {
   );
 }
 
+// ── CASE: G4 ─────────────────────────────────────────────────────────────────
+function G4CaseStudy() {
+  const fundamentos = [
+    {
+      title: 'Narrativa em defesa do empresário',
+      text: 'O G4 apresenta o empresário como alguém que cria riqueza, empregos e crescimento. A marca confronta burocracia, o estigma do empresário como vilão e formas mais lentas de gerir negócios; defende uma gestão prática, digital e voltada à execução.',
+    },
+    {
+      title: 'Distribuição orgânica em escala',
+      text: 'Marca institucional, fundadores, mentores e unidades de negócio mantêm presença recorrente em diferentes redes e formatos.',
+    },
+    {
+      title: 'Conteúdo focado em servir o público',
+      text: 'Pautas sobre dores de empresários, assuntos do mercado, empresas, pessoas e decisões que interessam à audiência.',
+    },
+    {
+      title: 'Consistência de posicionamento',
+      text: 'As diferentes frentes reforçam a mesma visão de negócio e ajudam o G4 a ocupar um território claro na mente de quem empreende.',
+    },
+    {
+      title: 'Marcas pessoais que ampliam valor percebido',
+      text: 'As marcas pessoais de Tallis, Alfredo e Nardon fortalecem a conexão do público com o G4 e elevam a percepção de valor da marca.',
+    },
+    {
+      title: 'Associação e pertencimento',
+      text: 'Mentores, empresários convidados, eventos, comunidade e alunos colocam a marca ao lado de pessoas e contextos valorizados pelo público.',
+    },
+  ];
 
-
-
-
-
-// ── SEÇÃO: ENTREGÁVEIS ────────────────────────────────────────────────────────
-function Entregaveis() {
-  const sectionRef = useRef(null);
-  const agentName = `The${PROPOSTA_DATA.empresa.split(' ')[0]} ${PROPOSTA_DATA.escopo.bonus.titulo}`;
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.entregavel-block', {
-        opacity: 0, y: 24, stagger: 0.08, duration: 0.72, ease: 'power3.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 72%' },
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
+  const faturamento = [
+    { value: 'R$ 11 mi', year: '2019' },
+    { value: 'R$ 204 mi', year: '2023' },
+    { value: 'R$ 508 mi', year: '2025' },
+  ];
 
   return (
-    <section ref={sectionRef} className="bg-white min-h-full px-6 md:px-12 lg:px-16 pt-14 md:pt-16 lg:pt-20 pb-24">
-      <div className="max-w-[1240px] mx-auto">
-        <div className="entregavel-block text-center mb-12 md:mb-16">
-          <span className="font-halyard text-[15px] md:text-[17px] tracking-[0.24em] uppercase text-[#FE6942] font-semibold block mb-4">
-            Entregáveis
-          </span>
-          <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.6rem,4.2vw,4.4rem)] leading-[0.98] tracking-tight">
-            O que você recebe
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start justify-items-center">
-          <div className="entregavel-block w-full max-w-[520px]">
-            <div className="lg:h-[320px] flex items-end justify-center">
-              <img
-                src="/images/guia-de-estrategia.png"
-                alt="Guia de Estratégia de Posicionamento e Marca"
-                className="w-full max-w-[310px] lg:max-w-[350px] mx-auto"
-              />
-            </div>
-
-            <div className="mt-5 max-w-[520px]">
-              <h3 className="font-halyard font-medium text-[#181412] text-[24px] md:text-[29px] leading-[1.12]">
-                Guia de Estratégia de
-                <br />
-                Posicionamento e Marca
-              </h3>
-              <p className="mt-4 font-halyard font-light text-[#181412] text-[17px] md:text-[20px] leading-[1.3] max-w-[500px]">
-                Um documento com mais de 80 slides com a fundação estratégica e caminho para sua marca se tornar TheOne
-              </p>
-
-              <div className="mt-5">
-                <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[19px] leading-[1.3] mb-2">
-                  Também inclui:
-                </p>
-                <ul className="space-y-1.5">
-                  {['Estratégia de Canais', 'Estratégia de Conteúdo'].map((item) => (
-                    <li key={item} className="flex items-center gap-3 font-halyard font-medium text-[#181412] text-[17px] md:text-[20px] leading-[1.25]">
-                      <svg
-                        className="w-5 h-5 md:w-6 md:h-6 text-[#FE6942] shrink-0"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        aria-hidden="true"
-                      >
-                        <path
-                          d="M4 12h14M13 6l6 6-6 6"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
+    <section className="min-h-[100svh] bg-[#F6F2EE] text-[#181412] px-6 md:px-12 lg:px-16 py-16 md:py-20">
+      <article className="mx-auto max-w-[1440px]">
+        <header className="pb-12 md:pb-16">
+          <div className="flex items-center justify-between gap-6 mb-8">
+            <span className="font-halyard text-[12px] md:text-[14px] tracking-[.22em] uppercase font-semibold text-[#FE6942]">Case de marca · G4</span>
+            <span className="font-halyard text-[12px] md:text-[14px] tracking-[.16em] uppercase text-[#181412]/45">Conteúdo, comunidade e aquisição</span>
           </div>
 
-          <div className="entregavel-block w-full max-w-[520px]">
-            <div className="lg:h-[320px] flex items-end justify-center">
-              <div className="relative mx-auto w-full max-w-[340px] rounded-[28px] border border-black/15 bg-[#F7F7F7] shadow-[0_20px_58px_rgba(0,0,0,0.08)] overflow-hidden aspect-[1.78]">
-                <div className="h-8 px-4 flex items-center justify-between border-b border-black/10 bg-white/70 font-halyard text-[10px] text-[#181412]/55">
-                  <span>Gemini</span>
-                  <span>Edifica | Estratégia de marca</span>
-                  <span className="rounded-full bg-[#BDE8FF] px-2 py-1 text-[#181412]/70">Fazer upgrade</span>
-                </div>
-                <div className="absolute inset-x-0 top-12 bottom-0 flex flex-col items-center justify-center text-center px-8">
-                  <div className="w-9 h-9 rounded-full bg-[#C978F3]/80 text-white flex items-center justify-center font-halyard font-medium text-[15px] mb-4">
-                    E
-                  </div>
-                  <p className="font-halyard font-medium text-[#181412] text-[16px] mb-5">
-                    Edifica | Estrategista de marca
-                  </p>
-                  <div className="space-y-2 text-left font-halyard text-[12px] text-[#181412]/55">
-                    <p>Recentes</p>
-                    <p><span className="text-[#C978F3]">■</span> Roteiro de vídeos para Instagram</p>
-                    <p><span className="text-[#C978F3]">■</span> Estratégia de conteúdo para o WhatsApp</p>
-                  </div>
-                </div>
-                <div className="absolute left-1/2 bottom-5 -translate-x-1/2 w-[56%] rounded-2xl border border-black/10 bg-white px-4 py-3 font-halyard text-[11px] text-[#181412]/55">
-                  Peça ao Gemini
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-5 max-w-[520px]">
-              <h3 className="font-halyard font-medium text-[#181412] text-[24px] md:text-[29px] leading-[1.12] flex flex-wrap items-baseline gap-x-6 gap-y-2">
-                {agentName}
-                <span className="font-halyard text-[13px] tracking-[0.24em] uppercase text-[#FE6942] font-semibold">
-                  Bônus
-                </span>
-              </h3>
-              <p className="mt-4 font-halyard font-light text-[#181412] text-[17px] md:text-[20px] leading-[1.3] max-w-[520px]">
-                {PROPOSTA_DATA.escopo.bonus.descricao}
+          <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(500px,560px)] gap-10 lg:gap-14 items-center">
+            <div>
+              <h2 className="font-editorial font-normal text-[clamp(2.55rem,4.2vw,4.25rem)] leading-[1.06] tracking-[-.035em] max-w-[820px]">
+                Em 2023, as redes do G4 respondiam por mais de <span className="text-[#FE6942]">60%</span> da geração de leads orgânicos.
+              </h2>
+              <p className="font-halyard font-normal text-[17px] md:text-[19px] leading-[1.5] text-[#181412]/65 mt-6 max-w-[860px]">
+                Fonte: entrevista com liderança interna de Marketing do G4, <em>Papo Social Media</em> / mLabs, 2023; G4; Exame; InfoMoney; VEJA.
+              </p>
+              <p className="font-halyard font-light text-[21px] md:text-[26px] leading-[1.42] text-[#181412]/70 mt-8 max-w-[760px]">
+                O dado mostra o peso que a construção de marca passou a ter na aquisição da empresa.
               </p>
             </div>
+
+            <div className="flex flex-col">
+              <aside className="w-full overflow-hidden rounded-[28px] border border-[#181412]/10 bg-[#E7E4E0] aspect-[1.635]">
+                <img
+                  src="/images/g4-founders.jpg"
+                  alt="Fundadores do G4 Educação"
+                  className="h-full w-full object-cover object-center"
+                />
+              </aside>
+              <svg className="mt-5 ml-5 animate-bounce text-[#FE6942]" width="38" height="38" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 2.5v17M4.75 12.25 12 19.5l7.25-7.25" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
           </div>
-        </div>
-      </div>
+        </header>
+
+        <section className="pt-12 md:pt-16 pb-12 md:pb-16 border-y border-[#181412]/15">
+          <div className="flex items-end justify-between gap-6 mb-8">
+            <h3 className="font-halyard font-semibold text-[13px] tracking-[.2em] uppercase text-[#181412]/45">Faturamento divulgado pelo G4</h3>
+            <span className="font-halyard text-[13px] text-[#181412]/45">2019 — 2025</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 border-t border-[#181412]/20">
+            {faturamento.map((item, index) => (
+              <div key={item.year} className={`pt-6 md:pt-8 ${index ? 'md:border-l md:border-[#181412]/20 md:pl-8' : ''}`}>
+                <div className="font-editorial text-[#FE6942] text-[clamp(2.9rem,4.8vw,4.8rem)] leading-none tracking-[-.04em]">{item.value}</div>
+                <div className="font-halyard text-[16px] text-[#181412]/55 mt-2">{item.year}</div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="grid grid-cols-1 lg:grid-cols-[260px_minmax(0,1fr)] gap-8 lg:gap-16 py-12 md:py-16 border-b border-[#181412]/15">
+          <h3 className="font-halyard font-semibold text-[13px] tracking-[.2em] uppercase text-[#181412]/45">Contexto</h3>
+          <p className="font-halyard font-light text-[22px] md:text-[28px] leading-[1.42] max-w-[920px]">
+            Fundado em 2019, o G4 entrou em uma categoria onde FGV, Fundação Dom Cabral e Insper já reuniam décadas de reconhecimento. A empresa construiu presença junto a empresários a partir de uma narrativa própria, distribuição frequente de conteúdo e associações que reforçam seu valor percebido.
+          </p>
+        </section>
+
+        <section className="py-12 md:py-16 border-b border-[#181412]/15">
+          <h3 className="font-editorial text-[clamp(2.45rem,4.4vw,4.5rem)] leading-[.95] tracking-[-.035em] max-w-[780px] mb-10 md:mb-14">
+            O que sustentou essa construção de marca
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-9">
+            {fundamentos.map((item, index) => (
+              <div key={item.title} className="grid grid-cols-[34px_minmax(0,1fr)] gap-4">
+                <span className="font-halyard font-semibold text-[#FE6942] text-[14px] pt-1">0{index + 1}</span>
+                <div>
+                  <h4 className="font-halyard font-semibold text-[25px] md:text-[30px] leading-[1.05] tracking-[-.02em] mb-3">{item.title}</h4>
+                  <p className="font-halyard font-normal text-[19px] md:text-[21px] leading-[1.48] text-[#181412]/75">{item.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
+      </article>
     </section>
   );
 }
 
-// ── SEÇÃO: RESULTADOS ─────────────────────────────────────────────────────────
-function Resultados() {
-  const sectionRef = useRef(null);
+// ── SLIDE 7: CRONOGRAMA ───────────────────────────────────────────────────────
+const CRONOGRAMA_STEPS = [
+  { etapa: '01', nome: 'Imersão', descricao: 'Diagnóstico completo do negócio, mercado e público' },
+  { etapa: '02', nome: 'Pesquisa', descricao: 'Análise de concorrência e oportunidades de posicionamento' },
+  { etapa: '03', nome: 'Estratégia', descricao: 'Posicionamento, narrativa e identidade da marca' },
+  { etapa: '04', nome: 'Criação', descricao: 'Desenvolvimento dos entregáveis do projeto' },
+  { etapa: '05', nome: 'Entrega', descricao: 'Apresentação final, arquivos e orientação para implementação' },
+  { etapa: '06', nome: 'Acompanhamento', descricao: 'Suporte contínuo para garantir a implementação da estratégia e evolução da marca' },
+];
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from('.resultado-item', {
-        opacity: 0, y: 16, stagger: 0.42, duration: 1.1, ease: 'power3.out',
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 65%' },
-      });
-    }, sectionRef);
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <section ref={sectionRef} className="bg-white pt-24 pb-28 md:py-36 px-6 md:px-12 lg:px-16">
-      <div className="max-w-[1400px] mx-auto">
-
-        <div className="mb-16 md:mb-20">
-          <span className="font-halyard text-[15px] md:text-[17px] tracking-[0.22em] uppercase text-[#FE6942] font-medium block mb-5">
-            Objetivos do projeto
-          </span>
-          <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.2rem,3.5vw,3rem)] leading-[1.05] tracking-tight">
-            O que queremos atingir com esse projeto para a Edifica
-          </h2>
-        </div>
-
-        <ul className="space-y-6 md:space-y-8">
-          {PROPOSTA_DATA.resultados.map((r, i) => (
-            <li key={i} className="resultado-item flex items-start gap-5 md:gap-7">
-              <span className="text-[#FE6942] text-[1.4rem] md:text-[1.6rem] leading-none mt-1 shrink-0 select-none">→</span>
-              <p className="font-halyard font-normal text-[#181412]/70 text-[20px] md:text-[26px] leading-[1.5]">{r}</p>
-            </li>
-          ))}
-        </ul>
-
-      </div>
-    </section>
-  );
-}
-
-// ── SEÇÃO: CRONOGRAMA ─────────────────────────────────────────────────────────
 function Cronograma() {
   const sectionRef = useRef(null);
   const lineRef = useRef(null);
@@ -580,8 +1966,7 @@ function Cronograma() {
           }
         );
       }
-
-      gsap.from('.crono-step', {
+      gsap.from('.crono-p-step', {
         opacity: 0, y: 30, stagger: 0.1, duration: 0.8, ease: 'power3.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 65%' },
       });
@@ -599,43 +1984,35 @@ function Cronograma() {
               Linha do Tempo
             </span>
             <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.2rem,3.5vw,3rem)] leading-[1.05] tracking-tight">
-              Cronograma do projeto
+              Como trabalhamos
             </h2>
           </div>
           <p className="font-halyard font-light text-black text-[20px] md:text-[24px] leading-[1.45] max-w-[36ch] lg:justify-self-end lg:text-right">
-            Prazo estimado geral de até 30 dias para a entrega completa do projeto.
+            {IS_ALUDE ? 'Prazo de 2 a 4 meses, de acordo com os serviços contratados e a cadência de validações.' : 'Prazo médio de 4 a 12 semanas, de acordo com os serviços contratados.'}
           </p>
         </div>
 
-        {/* Desktop: horizontal */}
         <div className="hidden md:block relative">
           <div className="absolute top-[36px] left-0 right-0 h-px bg-black/10" />
-          <div
-            ref={lineRef}
-            className="absolute top-[36px] left-0 right-0 h-px bg-[#FE6942] origin-left"
-          />
-
-          <div className="grid"
-            style={{ gridTemplateColumns: `repeat(${PROPOSTA_DATA.cronograma.length}, 1fr)` }}
-          >
-            {PROPOSTA_DATA.cronograma.map((step, i) => (
-              <div key={i} className="crono-step flex flex-col items-center text-center px-4">
+          <div ref={lineRef} className="absolute top-[36px] left-0 right-0 h-px bg-[#FE6942] origin-left" />
+          <div className="grid" style={{ gridTemplateColumns: `repeat(${CRONOGRAMA_STEPS.length}, 1fr)` }}>
+            {CRONOGRAMA_STEPS.map((step, i) => (
+              <div key={i} className="crono-p-step flex flex-col items-center text-center px-4">
                 <div className="w-[72px] h-[72px] rounded-full border-2 border-[#FE6942] bg-white flex items-center justify-center mb-6 relative z-10">
                   <span className="font-halyard font-medium text-[#FE6942] text-[1.55rem]">{step.etapa}</span>
                 </div>
-                <span className="font-halyard font-medium text-[#181412] text-[21px] mb-2">{step.nome}</span>
-                <p className="font-halyard font-light text-black text-[18px] leading-[1.5]">{step.descricao}</p>
+                <span className="font-halyard font-medium text-[#181412] text-[19px] lg:text-[20px] mb-2">{step.nome}</span>
+                <p className="font-halyard font-light text-black text-[16px] lg:text-[17px] leading-[1.45]">{step.descricao}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Mobile: vertical */}
         <div className="md:hidden relative pl-10">
           <div className="absolute left-[18px] top-0 bottom-0 w-px bg-black/10" />
           <div className="space-y-10">
-            {PROPOSTA_DATA.cronograma.map((step, i) => (
-              <div key={i} className="crono-step relative">
+            {CRONOGRAMA_STEPS.map((step, i) => (
+              <div key={i} className="crono-p-step relative">
                 <div className="absolute -left-[28px] top-0 w-9 h-9 rounded-full border-2 border-[#FE6942] bg-white flex items-center justify-center">
                   <span className="font-halyard font-medium text-[#FE6942] text-[1rem]">{step.etapa}</span>
                 </div>
@@ -651,39 +2028,14 @@ function Cronograma() {
   );
 }
 
-// ── SEÇÃO: PERGUNTA INTERATIVA ────────────────────────────────────────────────
-function PropostaQuestion() {
-  const sectionRef = useRef(null);
-
-  return (
-    <section
-      ref={sectionRef}
-      className="h-full bg-white flex items-center justify-center px-6 py-20 relative overflow-hidden"
-    >
-      <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(circle at 50% 55%, rgba(254,105,66,0.05) 0%, transparent 65%)' }}
-      />
-
-      <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-        <span className="font-halyard text-[15px] md:text-[17px] tracking-[0.28em] uppercase text-[#FE6942]/70 font-medium mb-8">
-          Antes de continuar
-        </span>
-        <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2rem,5vw,3.75rem)] leading-[1.1] tracking-tight max-w-[820px] mb-16">
-          Esta solução resolve<br />o cenário atual e sustenta<br />o próximo patamar da Edifica?
-        </h2>
-      </div>
-    </section>
-  );
-}
-
-// ── SEÇÃO: INVESTIMENTO — EDIFICA (card único R$7.000) ────────────────────────
-function Investimento() {
+// ── SLIDE 9: CONSULTORIA ──────────────────────────────────────────────────────
+function Consultoria() {
   const sectionRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.inv-block', {
-        opacity: 0, y: 40, stagger: 0.15, duration: 0.9, ease: 'power3.out',
+      gsap.from('.cons-item', {
+        opacity: 0, y: 24, stagger: 0.09, duration: 0.8, ease: 'power3.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
       });
     }, sectionRef);
@@ -691,273 +2043,46 @@ function Investimento() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-white pt-16 pb-28 md:pt-20 md:pb-28 px-6 md:px-12 lg:px-16">
-      <div className="max-w-[1400px] mx-auto">
+    <section ref={sectionRef} className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24 flex flex-col justify-center min-h-[100svh]">
+      <div className="max-w-[900px] mx-auto w-full">
 
-        <div className="mb-10 md:mb-12 inv-block">
-          <h2 className="font-halyard font-medium text-[#181412] text-[clamp(2.5rem,4vw,3.5rem)] leading-[1.05] tracking-tight">
-            Investimento
-          </h2>
-        </div>
+        <h2 className="cons-item font-halyard font-semibold text-[#181412] text-[clamp(2rem,3.6vw,3.2rem)] leading-[1.1] mb-4">
+          Advisory de Conteúdo & Posicionamento
+        </h2>
+        <p className="cons-item font-halyard font-light text-[#181412] text-[20px] md:text-[22px] leading-[1.5] mb-12 max-w-[58ch]">
+          Um acompanhamento estratégico focado em garantir que o planejamento de marca ganhe vida. Atuamos como seu "Head de Conteúdo", direcionando o estrategista (social media), revisando pautas e orientando o tom de voz da Edifica e de vocês.
+        </p>
 
-        {/* Card 1: TheOne Foundation */}
-        <div className="inv-block bg-[#F8F8F8] rounded-[24px] px-8 md:px-12 py-10 border border-black/[0.08] flex flex-col md:flex-row md:items-center gap-8 md:gap-16 mb-5 transition-shadow duration-500 hover:shadow-lg">
-          <span className="font-editorial font-normal text-[#FE6942]/25 text-[4rem] md:text-[5rem] leading-none shrink-0 select-none">
-            01
-          </span>
-          <div className="flex-1 min-w-0">
-            <h3 className="font-halyard font-medium text-[#181412] text-[1.75rem] md:text-[2.25rem] leading-[1.1] mb-3">
-              TheOne Foundation
-            </h3>
-            <p className="font-halyard font-normal text-[#181412] text-[18px] md:text-[20px] leading-[1.45] max-w-[52ch]">
-              Diagnóstico, pesquisa de mercado, posicionamento, narrativa, personalidade, estratégia de canais e conteúdo. Entrega do Guia completo.
-            </p>
-          </div>
-          <div className="shrink-0 md:text-right">
-            <div className="font-halyard font-medium text-gradient text-[2.5rem] md:text-[3.25rem] leading-[1]">
-              R$7.000
-            </div>
-          </div>
-        </div>
-
-        {/* Card 2: Consultoria — duas opções */}
-        <div className="inv-block bg-[#F8F8F8] rounded-[24px] px-8 md:px-12 py-10 border border-black/[0.08] mb-5">
-          <div className="flex flex-col md:flex-row md:items-start gap-8 md:gap-16">
-            <span className="font-editorial font-normal text-[#FE6942]/25 text-[4rem] md:text-[5rem] leading-none shrink-0 select-none">
-              02
-            </span>
-            <div className="flex-1 min-w-0">
-              <h3 className="font-halyard font-medium text-[#181412] text-[1.75rem] md:text-[2.25rem] leading-[1.1] mb-3">
-                Consultoria de Acompanhamento Mensal
-              </h3>
-              <p className="font-halyard font-normal text-[#181412] text-[18px] md:text-[20px] leading-[1.45] max-w-[52ch] mb-8">
-                Suporte estratégico para colocar o posicionamento em prática, com encontros regulares e suporte direto no WhatsApp. Mínimo 3 meses.
-              </p>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-white rounded-2xl px-6 py-6 border border-black/[0.08]">
-                  <div className="font-halyard text-[12px] tracking-[0.2em] uppercase text-[#181412]/40 mb-3">Essencial</div>
-                  <div className="font-halyard font-medium text-gradient text-[2rem] md:text-[2.5rem] leading-[1] mb-2">
-                    R$1.000<span className="text-[1rem] text-[#181412]/40 font-normal">/mês</span>
-                  </div>
-                  <ul className="space-y-1.5 mt-4">
-                    {['2 encontros mensais', 'Suporte via WhatsApp'].map((f) => (
-                      <li key={f} className="flex items-center gap-2.5 font-halyard font-light text-[16px] text-[#181412]">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="bg-white rounded-2xl px-6 py-6 border-2 border-[#FE6942]">
-                  <div className="font-halyard text-[12px] tracking-[0.2em] uppercase text-[#FE6942] mb-3">Premium</div>
-                  <div className="font-halyard font-medium text-gradient text-[2rem] md:text-[2.5rem] leading-[1] mb-2">
-                    R$2.000<span className="text-[1rem] text-[#181412]/40 font-normal">/mês</span>
-                  </div>
-                  <ul className="space-y-1.5 mt-4">
-                    {['4 encontros mensais', 'Suporte via WhatsApp'].map((f) => (
-                      <li key={f} className="flex items-center gap-2.5 font-halyard font-light text-[16px] text-[#181412]">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0" />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="inv-block bg-[#F8F8F8] rounded-2xl px-8 md:px-10 py-7 border border-black/[0.08]">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-5">
-            {[
-              ['Validade da proposta', '5 dias corridos'],
-              ['Disponibilidade de início', '08/05 - Sexta'],
-              ['Vagas disponíveis para maio', '2'],
-            ].map(([label, value]) => (
-              <div key={label}>
-                <div className="font-halyard text-[12px] tracking-[0.18em] uppercase text-[#FE6942] mb-1.5">
-                  {label}
-                </div>
-                <div className="font-halyard font-medium text-[20px] md:text-[22px] leading-[1.15] text-[#181412]">
-                  {value}
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="font-halyard font-light text-[18px] md:text-[19px] leading-[1.45] text-[#181412]/80">
-            Para garantir qualidade na entrega, trabalhamos com um número limitado de projetos como esse de forma simultânea. A confirmação nesta reunião já permite reservarmos a agenda e iniciarmos o planejamento do projeto.
-          </p>
-        </div>
-
-        {/* Formas e meios de pagamento */}
-        <div className="inv-block mt-5 bg-[#F8F8F8] rounded-2xl px-8 md:px-10 py-8 border border-black/[0.08] flex flex-col md:flex-row gap-8 md:gap-16">
-          <div className="flex-1">
-            <h4 className="font-halyard font-medium text-[#181412] text-[15px] tracking-[0.12em] uppercase mb-5">
-              Formas de pagamento
-            </h4>
-            <ul className="space-y-3.5">
-              {['Pagamento 50% no início e 50% após 30 dias', 'Pagamento à vista com condição especial de 10%'].map((f) => (
-                <li key={f} className="flex items-center gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0" />
-                  <span className="font-halyard font-light text-[18px] md:text-[19px] text-[#181412]">{f}</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="cons-item bg-[#F8F8F8] border border-black/10 rounded-2xl p-8 flex flex-col justify-between" style={{ border: '1px solid #FE6942' }}>
+            <div>
+              <h3 className="font-halyard font-semibold text-[20px] text-[#181412] mb-1">Acompanhamento Quinzenal</h3>
+              <ul className="mt-8 space-y-3 mb-10">
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
+                  <span className="font-halyard font-light text-[#181412] text-[16px] leading-[1.4]">Direcionamento do estrategista contratado</span>
                 </li>
-              ))}
-            </ul>
-          </div>
-          <div className="flex-1">
-            <h4 className="font-halyard font-medium text-[#181412] text-[15px] tracking-[0.12em] uppercase mb-5">
-              Meios de pagamento
-            </h4>
-            <ul className="space-y-3.5">
-              {['Pix', 'Boleto', 'Cartão de crédito em até 12x com taxa da operadora'].map((f) => (
-                <li key={f} className="flex items-center gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0" />
-                  <span className="font-halyard font-light text-[18px] md:text-[19px] text-[#181412]">{f}</span>
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
+                  <span className="font-halyard font-light text-[#181412] text-[16px] leading-[1.4]">1 reunião a cada 15 dias para ideação e revisão</span>
                 </li>
-              ))}
-            </ul>
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
+                  <span className="font-halyard font-light text-[#181412] text-[16px] leading-[1.4]">Acompanhamento direto e suporte via grupo de WhatsApp</span>
+                </li>
+              </ul>
+            </div>
+            <div>
+              <div className="font-halyard font-medium text-[2.2rem] text-[#FE6942] leading-[1]">R$ 4.000<span className="text-[1.125rem] text-black/40 font-light"> /mês</span></div>
+            </div>
           </div>
         </div>
 
       </div>
     </section>
   );
-}
-
-// ── SLIDESHOW DAS SEÇÕES DA PROPOSTA ─────────────────────────────────────────
-const SLIDE_TOTAL = 9;
-
-function PropostaSlideshow() {
-  const [current, setCurrent] = useState(0);
-  const [animDir, setAnimDir] = useState('next');
-  const [escopoVisiblePillars, setEscopoVisiblePillars] = useState(1);
-  const [hasMoreBelow, setHasMoreBelow] = useState(false);
-  const wrapperRef = useRef(null);
-  const slideScrollRef = useRef(null);
-  const isTransitioning = useRef(false);
-
-  const checkScroll = useCallback(() => {
-    const el = slideScrollRef.current;
-    if (!el) return;
-    const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 8;
-    setHasMoreBelow(!atBottom && el.scrollHeight > el.clientHeight);
-  }, []);
-
-  useEffect(() => {
-    setHasMoreBelow(false);
-    const id = requestAnimationFrame(() => {
-      requestAnimationFrame(checkScroll);
-    });
-    return () => cancelAnimationFrame(id);
-  }, [current, escopoVisiblePillars, checkScroll]);
-
-  const navigate = useCallback((dir) => {
-    if (isTransitioning.current) return;
-    if (current === 2 && dir > 0 && escopoVisiblePillars < PROPOSTA_DATA.escopo.pilares.length) {
-      isTransitioning.current = true;
-      setEscopoVisiblePillars((count) => Math.min(count + 1, PROPOSTA_DATA.escopo.pilares.length));
-      setTimeout(() => { isTransitioning.current = false; }, 350);
-      return;
-    }
-    if (current === 2 && dir < 0 && escopoVisiblePillars > 1) {
-      isTransitioning.current = true;
-      setEscopoVisiblePillars((count) => Math.max(count - 1, 1));
-      setTimeout(() => { isTransitioning.current = false; }, 350);
-      return;
-    }
-    const next = current + dir;
-    if (next < 0 || next >= SLIDE_TOTAL) return;
-    isTransitioning.current = true;
-    setAnimDir(dir > 0 ? 'next' : 'prev');
-    if (next === 2) {
-      setEscopoVisiblePillars(dir > 0 ? 1 : PROPOSTA_DATA.escopo.pilares.length);
-    }
-    setCurrent(next);
-    setTimeout(() => { isTransitioning.current = false; }, 800);
-  }, [current, escopoVisiblePillars]);
-
-  const isNextBlocked = false;
-
-  return (
-    <div ref={wrapperRef} className="relative overflow-hidden bg-white" style={{ height: '100svh' }}>
-
-      {/* Slide content */}
-      <div
-        key={current}
-        ref={slideScrollRef}
-        data-lenis-prevent
-        onScroll={checkScroll}
-        className={`absolute inset-0 overflow-y-auto pb-20 md:pb-16 ${animDir === 'next' ? 'slide-from-right' : 'slide-from-left'}`}
-      >
-        {current === 0 && <Contexto showDesejado={false} />}
-        {current === 1 && <Contexto showDesejado={true} />}
-        {current === 2 && <Escopo visiblePillars={escopoVisiblePillars} />}
-        {current === 3 && <FoundationHouse />}
-        {current === 4 && <Entregaveis />}
-        {current === 5 && <Resultados />}
-        {current === 6 && <Cronograma />}
-        {current === 7 && <PropostaQuestion />}
-        {current === 8 && <Investimento />}
-      </div>
-
-      {/* Scroll gradient hint */}
-      <div
-        className="absolute bottom-14 md:bottom-16 left-0 right-0 h-16 pointer-events-none z-10 transition-opacity duration-300"
-        style={{ opacity: hasMoreBelow ? 1 : 0, background: 'linear-gradient(to top, rgba(255,255,255,0.95) 0%, transparent 100%)' }}
-        aria-hidden="true"
-      />
-
-      {/* Navigation: arrows + dots */}
-      <div className="absolute bottom-2 md:bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20">
-        <button
-          onClick={() => navigate(-1)}
-          disabled={current === 0}
-          aria-label="Slide anterior"
-          className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-black/15 bg-white/85 backdrop-blur-sm flex items-center justify-center transition-all duration-150 disabled:opacity-25 hover:border-black/30 active:scale-[0.97]"
-        >
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-            <path d="M10 12L6 8l4-4" stroke="#181412" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-
-        <div className="flex items-center gap-1.5">
-          {Array.from({ length: SLIDE_TOTAL }).map((_, i) => (
-            <div
-              key={i}
-              className="rounded-full transition-all duration-300"
-              style={{
-                width: i === current ? '16px' : '5px',
-                height: '5px',
-                backgroundColor: i === current ? '#FE6942' : 'rgba(0,0,0,0.14)',
-              }}
-            />
-          ))}
-        </div>
-
-        <button
-          onClick={() => navigate(1)}
-          disabled={isNextBlocked}
-          aria-label="Próximo slide"
-          className="w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-all duration-150 disabled:opacity-25 active:scale-[0.97]"
-          style={{ background: 'linear-gradient(135deg, #FED1C5 0%, #FF5224 100%)' }}
-        >
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-            <path d="M6 12l4-4-4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  );
-}
-
-// ── PÁGINA PRINCIPAL ──────────────────────────────────────────────────────────
+}// ── PÁGINA ────────────────────────────────────────────────────────────────────
 export default function PropostaEdifica() {
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const prefersConstrainedMotion = useConstrainedMotion();
-  const shouldUseLenis = !prefersReducedMotion && !prefersConstrainedMotion;
-
   useEffect(() => {
     const meta = document.createElement('meta');
     meta.name = 'robots';
@@ -968,76 +2093,15 @@ export default function PropostaEdifica() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-
-    const rafId = requestAnimationFrame(() => {
-      requestAnimationFrame(() => ScrollTrigger.refresh());
-    });
-
+    const rafId = requestAnimationFrame(() =>
+      requestAnimationFrame(() => ScrollTrigger.refresh())
+    );
     return () => cancelAnimationFrame(rafId);
   }, []);
-
-  useEffect(() => {
-    if (!shouldUseLenis) return undefined;
-
-    const lenis = new Lenis({
-      duration: 1.5,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 0.8,
-    });
-
-    window.__theOneLenis = lenis;
-    lenis.on('scroll', ScrollTrigger.update);
-
-    let refreshId = requestAnimationFrame(() => {
-      requestAnimationFrame(() => ScrollTrigger.refresh());
-    });
-
-    let rafId = 0;
-    function raf(time) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-    rafId = requestAnimationFrame(raf);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      cancelAnimationFrame(refreshId);
-      if (window.__theOneLenis === lenis) {
-        delete window.__theOneLenis;
-      }
-      lenis.destroy();
-    };
-  }, [shouldUseLenis]);
 
   return (
     <div className="bg-[#0a0a0a] min-h-screen font-sans">
       <div className="noise-overlay" aria-hidden="true" />
-
-      <div style={{ backgroundColor: '#F5EEE9' }}>
-        <Hero
-          showLogo={true}
-          introPhrases={[
-            <>Olá, <span style={{ color: '#FE6942' }}>{PROPOSTA_DATA.cliente}</span></>,
-            <>Seja bem-vindo à <span style={{ color: '#FE6942' }}>TheOne</span></>,
-          ]}
-        />
-        <StorytellingIntro />
-        <PersonaTrigger onTrigger={() => {}} triggered />
-        <GradientTransition />
-      </div>
-
-      <Storytelling persona="empresario" />
-      <TheOne />
-      <SolucoesTheOne />
-      <Methodology />
-
-      <Suspense fallback={null}>
-        <Founders />
-      </Suspense>
-
       <PropostaSlideshow />
     </div>
   );
