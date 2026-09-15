@@ -18,20 +18,46 @@ const IS_ALUDE = true;
 
 const EDIFICA_PROPOSAL = {
   clientName: 'Edifica',
-  cenarioAtual: `- Faturamento rodando muito bem (R$ 200k/mês) e operação real robusta, mas que não transparece pro mercado antes da call de vendas (postzinhos sem narrativa forte).
+  cenarioAtual: `• A Edifica depende integralmente do tráfego pago para adquirir clientes; prospecção ativa não é uma frente em operação.
 
-- Dependência 100% de tráfego pago, sem prospecção ativa, com CPL (Custo Por Lead) ficando cada vez mais alto pela concorrência absurda.
+• O tráfego ainda sustenta as metas e contratos mensais, mas o CPL e o custo de aquisição vêm aumentando.
 
-- Ticket travado (R$ 1.800 – R$ 2.600) e leads que já entram nas reuniões negociando preço e pedindo descontos pois não percebem valor.
+• Leads vindos do tráfego tendem a ser bombardeados por outras agências e comparam a Edifica com opções de preço mais baixo.
 
-- Concorrência feroz no setor (278 agências oferecendo a "mesma coisa" por valores menores), tornando o mar azul um oceano vermelho onde a diferenciação está difícil.`,
-  cenarioDesejado: `- Construir uma narrativa forte e um posicionamento de marca que diferencie a Edifica da concorrência, criando um verdadeiro "movimento" (storytelling, inimigo em comum, comunidade e pertencimento).
+• A equipe comercial encontra resistência em leads do tráfego cujo limite de investimento costuma ficar entre R$ 2 mil e R$ 2,6 mil mensais.
 
-- Elevar o ticket para R$ 5.000 – R$ 6.000+, com autoridade pré-construída para que o lead não questione o preço na call de vendas.
+• A empresa percebe dificuldade em acessar clientes maiores.
 
-- Estruturar a arquitetura da marca onde a Edifica se posiciona como corporativa forte, e as marcas pessoais (Pedro e Léo) funcionam como conselheiros e catalisadores dessa autoridade.
+• O mercado tem cada vez mais empresas vendendo soluções parecidas, o que aumenta a comparação entre opções.
 
-- Ter clareza do direcionamento estratégico para guiar o novo estrategista de conteúdo (social media) na produção contínua.`,
+• Como muitos leads chegam sem conhecer a Edifica, o time comercial gasta mais energia e força para construir autoridade e confiança durante a negociação.
+
+• O canal orgânico ainda não está estruturado com estratégia e consistência para gerar demanda.
+
+• Pedro e Léo reconhecem que não têm repertório nem perfil para liderar a produção estratégica de conteúdo no dia a dia.
+
+• Pedro já tem uma marca pessoal voltada a ensinar donos de agência, mas está aberto a aparecer como uma das frentes da Edifica.
+
+• A Edifica ainda não tem uma pessoa interna responsável por estruturar e conduzir conteúdo como canal de crescimento.`,
+  cenarioDesejado: `• Ser percebida como diferente das empresas que vendem coisas parecidas, sem ocupar apenas o lugar de mais uma agência de tráfego.
+
+• Construir um posicionamento específico para o nicho que a Edifica quer atender, com uma ideia clara do que a marca defende e do que ela não representa.
+
+• Atrair clientes de maior porte e mais alinhados à proposta da empresa.
+
+• Desenvolver uma narrativa capaz de criar identificação, pertencimento e movimento em torno da marca.
+
+• Usar conteúdo como um canal estratégico de aquisição no longo prazo, sem depender exclusivamente de mídia paga.
+
+• Fazer conteúdo orientado por negócio, estratégia e testes, não por postar por postar.
+
+• Ter Pedro e, quando fizer sentido, Léo como rostos que reforçam a autoridade e a proximidade da Edifica.
+
+• Contratar uma pessoa interna, em tempo integral, para executar a produção de conteúdo.
+
+• Ter direcionamento recorrente para essa pessoa, garantindo que planejamento, pautas e execução sigam a estratégia da marca.
+
+• Construir um case relevante no segmento e consolidar a Edifica como uma das principais referências do mercado.`,
 };
 
 const SERVICES = [
