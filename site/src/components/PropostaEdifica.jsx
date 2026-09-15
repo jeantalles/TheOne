@@ -1714,7 +1714,7 @@ function Calculadora({ clientName }) {
                 <li className="flex items-start gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
                   <span className="font-halyard font-light text-[#181412] text-[18px] leading-[1.5]">
-                    <><span className="font-medium">3 parcelas:</span> {formatBRL(Math.round(total / 3))} (D+0 pra iniciar, D+30 e D+60)</>
+                    {IS_ALUDE ? <><span className="font-medium">4 parcelas:</span> {formatBRL(Math.round(total / 4))} por mês</> : <><span className="font-medium">50/50:</span> {formatBRL(metade)} no início + {formatBRL(total - metade)} após 30 dias</>}
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -1726,7 +1726,7 @@ function Calculadora({ clientName }) {
                 <li className="flex items-start gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
                   <span className="font-halyard font-light text-[#181412] text-[18px] leading-[1.5]">
-                    <><span className="font-medium">Prazo:</span> de 10 semanas (aproximadamente 2,5 meses).</>
+                    {IS_ALUDE ? <><span className="font-medium">Prazo:</span> de 2 a 4 meses, de acordo com o escopo contratado.</> : <><span className="font-medium">Cartão:</span> em até 12x com taxa da operadora</>}
                   </span>
                 </li>
               </ul>
@@ -2081,7 +2081,207 @@ function Consultoria() {
       </div>
     </section>
   );
-}// ── PÁGINA ────────────────────────────────────────────────────────────────────
+}
+
+function PropostaSlideshow() {
+  const [proposalState, setProposalState, generateLink] = useProposalState({
+    clientName: IS_ALUDE ? EDIFICA_PROPOSAL.clientName : '',
+    cenarioAtual: IS_ALUDE ? EDIFICA_PROPOSAL.cenarioAtual : '',
+    cenarioDesejado: IS_ALUDE ? EDIFICA_PROPOSAL.cenarioDesejado : '',
+  });
+  const [current, setCurrent] = useState(0);
+  const [animDir, setAnimDir] = useState('next');
+  const [hasMoreBelow, setHasMoreBelow] = useState(false);
+  const slideScrollRef = useRef(null);
+  const isTransitioning = useRef(false);
+
+  const checkScroll = useCallback(() => {
+    const el = slideScrollRef.current;
+    if (!el) return;
+    setHasMoreBelow(el.scrollHeight > el.clientHeight && el.scrollTop + el.clientHeight < el.scrollHeight - 8);
+  }, []);
+
+  useEffect(() => {
+    let innerId = 0;
+    const id = requestAnimationFrame(() => {
+      setHasMoreBelow(false);
+      innerId = requestAnimationFrame(checkScroll);
+    });
+    return () => {
+      cancelAnimationFrame(id);
+      cancelAnimationFrame(innerId);
+    };
+  }, [current, checkScroll]);
+
+  const navigate = useCallback((dir) => {
+    if (isTransitioning.current) return;
+    const next = current + dir;
+    if (next < 0 || next >= SLIDE_TOTAL) return;
+    isTransitioning.current = true;
+    setAnimDir(dir > 0 ? 'next' : 'prev');
+    setCurrent(next);
+    setTimeout(() => { isTransitioning.current = false; }, 800);
+  }, [current]);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigate(1);
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') navigate(-1);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [navigate]);
+
+  return (
+    <div
+      className="relative overflow-hidden"
+      style={{ height: '100svh', background: DARK_SLIDES.includes(current) ? '#0a0a0a' : '#fff' }}
+    >
+
+      <div
+        key={current}
+        ref={slideScrollRef}
+        data-lenis-prevent
+        onScroll={checkScroll}
+        className={`absolute inset-0 overflow-y-auto ${DARK_SLIDES.includes(current) ? 'pb-0' : 'pb-20 md:pb-16'} ${animDir === 'next' ? 'slide-from-right' : 'slide-from-left'}`}
+      >
+        {current === 0  && <Capa />}
+        {current === 1 && !IS_ALUDE && (
+          <NomeClienteSlide 
+            clientName={proposalState.clientName} 
+            setClientName={(v) => setProposalState({ clientName: v })} 
+            onGenerateLink={generateLink} 
+          />
+        )}
+        {current === (IS_ALUDE ? 1 : 2) && (
+          <ContextoEditavel 
+            showDesejado={false}
+            cenarioAtual={proposalState.cenarioAtual}
+            setCenarioAtual={(v) => setProposalState({ cenarioAtual: v })}
+            cenarioDesejado={proposalState.cenarioDesejado}
+            setCenarioDesejado={(v) => setProposalState({ cenarioDesejado: v })}
+          />
+        )}
+        {current === (IS_ALUDE ? 2 : 3) && (
+          <ContextoEditavel 
+            showDesejado={true}
+            cenarioAtual={proposalState.cenarioAtual}
+            setCenarioAtual={(v) => setProposalState({ cenarioAtual: v })}
+            cenarioDesejado={proposalState.cenarioDesejado}
+            setCenarioDesejado={(v) => setProposalState({ cenarioDesejado: v })}
+          />
+        )}
+        {current === (IS_ALUDE ? 3 : 4) && <Dores />}
+        {current === (IS_ALUDE ? 4 : 5) && (IS_ALUDE
+          ? <SobreTheOne scrollerRef={slideScrollRef} mode="hero" />
+          : <SobreTheOne scrollerRef={slideScrollRef} />
+        )}
+        {current === 6  && !IS_ALUDE && <SobreJean />}
+        {current === 7  && !IS_ALUDE && <CaseSlide slug="zenic" />}
+        {current === 8  && !IS_ALUDE && <CaseSlide slug="thunders" />}
+        {current === 9  && !IS_ALUDE && <CaseSlide slug="camilla-toscano" />}
+        {current === 10 && !IS_ALUDE && <TheOneFoundation />}
+        {current === 11 && !IS_ALUDE && <CasaDaMarca />}
+        {current === 12 && !IS_ALUDE && <EstrategiaDeMarca />}
+        {current === 13 && !IS_ALUDE && <Naming />}
+        {current === 14 && !IS_ALUDE && <IdentidadeVisual />}
+        {current === 15 && !IS_ALUDE && <IdentidadeVisualCompleta />}
+        {current === 16 && !IS_ALUDE && <MyBranding />}
+        {current === 17 && !IS_ALUDE && <SiteBrandExperience />}
+        {current === 18 && !IS_ALUDE && <TheOneAgent />}
+        {current === 19 && !IS_ALUDE && <Cronograma />}
+        {current === 20 && !IS_ALUDE && <Calculadora clientName={proposalState.clientName} />}
+        {current === 21 && !IS_ALUDE && <Consultoria />}
+
+        {current === 5  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="market" />}
+        {current === 6  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={0} />}
+        {current === 7  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={1} />}
+        {current === 8  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={2} />}
+        {current === 9  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="about" />}
+        {current === 10 && IS_ALUDE && <SobreJean />}
+        {current === 11 && IS_ALUDE && <CaseSlide slug="zenic" />}
+        {current === 12 && IS_ALUDE && <CaseSlide slug="thunders" />}
+        {current === 13 && IS_ALUDE && <CaseSlide slug="camilla-toscano" />}
+        {current === 14 && IS_ALUDE && <TheOneFoundation />}
+        {current === 15 && IS_ALUDE && <CasaDaMarca />}
+        {current === 16 && IS_ALUDE && <G4CaseStudy />}
+        {current === 17 && IS_ALUDE && <EstrategiaDeMarca />}
+        {current === 18 && IS_ALUDE && <MyBranding />}
+        {current === 19 && IS_ALUDE && <IdentidadeVisualCompleta />}
+        {current === 20 && IS_ALUDE && <SiteBrandExperience />}
+        {current === 21 && IS_ALUDE && <TheOneAgent />}
+        {current === 22 && IS_ALUDE && <Cronograma />}
+        {current === 23 && IS_ALUDE && <Calculadora clientName={proposalState.clientName} />}
+        {current === 24 && IS_ALUDE && <Consultoria />}
+      </div>
+
+      <div
+        className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none z-10 transition-opacity duration-300"
+        style={{
+          opacity: hasMoreBelow ? 1 : 0,
+          background: `linear-gradient(to top, ${current === 5 ? 'rgba(128,128,128,0.15)' : (DARK_SLIDES.includes(current) ? 'rgba(10,10,10,0.95)' : 'rgba(255,255,255,0.95)')} 0%, transparent 100%)`,
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="absolute bottom-2 md:bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-3 z-20">
+        <button
+          onClick={() => navigate(-1)}
+          disabled={current === 0}
+          aria-label="Slide anterior"
+          className="w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-all duration-150 disabled:opacity-25 active:scale-[0.97]"
+          style={{
+            border: `1px solid ${DARK_SLIDES.includes(current) ? 'rgba(255,255,255,.2)' : 'rgba(0,0,0,.15)'}`,
+            background: DARK_SLIDES.includes(current) ? 'rgba(255,255,255,.1)' : 'rgba(255,255,255,.9)',
+            backdropFilter: 'blur(8px)',
+          }}
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M10 12L6 8l4-4" stroke={DARK_SLIDES.includes(current) ? 'white' : '#181412'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+
+        <div className="flex items-center gap-1.5">
+          {Array.from({ length: SLIDE_TOTAL }).map((_, i) => (
+            <div
+              key={i}
+              onClick={() => {
+                if (i === current || isTransitioning.current) return;
+                isTransitioning.current = true;
+                setAnimDir(i > current ? 'next' : 'prev');
+                setCurrent(i);
+                setTimeout(() => { isTransitioning.current = false; }, 800);
+              }}
+              className="rounded-full transition-all duration-300 cursor-pointer"
+              style={{
+                width: i === current ? '16px' : '5px',
+                height: '5px',
+                backgroundColor: i === current
+                  ? '#FE6942'
+                  : (DARK_SLIDES.includes(current) ? 'rgba(255,255,255,.3)' : 'rgba(0,0,0,0.14)'),
+              }}
+            />
+          ))}
+        </div>
+
+        <button
+          onClick={() => navigate(1)}
+          disabled={current === SLIDE_TOTAL - 1}
+          aria-label="Próximo slide"
+          className="w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-all duration-150 active:scale-[0.97] disabled:opacity-25"
+          style={{ background: 'linear-gradient(135deg, #FED1C5 0%, #FF5224 100%)' }}
+        >
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <path d="M6 12l4-4-4-4" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  );
+}
+
+// ── PÁGINA ────────────────────────────────────────────────────────────────────
 export default function PropostaEdifica() {
   useEffect(() => {
     const meta = document.createElement('meta');
