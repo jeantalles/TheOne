@@ -181,7 +181,7 @@ function Dores() {
             Diagnóstico
           </span>
           <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.5rem,4vw,3.75rem)] leading-[1.02] tracking-tight">
-            {IS_ALUDE ? 'Entendemos exatamente as dores de empresas de serviço' : 'O que impede marcas como a sua de crescerem'}
+            {IS_ALUDE ? 'Entendemos exatamente os desafios de empresas de serviço' : 'O que impede marcas como a sua de crescerem'}
           </h2>
         </div>
 
