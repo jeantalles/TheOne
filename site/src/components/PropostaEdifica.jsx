@@ -66,7 +66,7 @@ const SERVICES = [
   { id: 'naming', label: 'Naming', price: 3000, prazo: '2 semanas' },
   { id: 'identidade', label: 'Identidade de Marca Essencial', price: 6000, prazo: '4 semanas' },
   { id: 'identidade_completa', label: 'Identidade de Marca Completa', price: 8000, prazo: '6 semanas' },
-  { id: 'mybranding', label: 'myBranding (Pedro + Léo)', price: 6000, prazo: '4 semanas' },
+  { id: 'mybranding', label: 'myBranding', price: 6000, prazo: '4 semanas' },
   { id: 'sitebrand', label: 'Site BrandExperience', price: 8000, prazo: '6 semanas' },
 ];
 
@@ -607,9 +607,11 @@ function Naming() {
             <h2 className="nam-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
               Naming
             </h2>
-            <div className="nam-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              R$ 3.000
-            </div>
+            {!IS_ALUDE && (
+              <div className="nam-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
+                R$ 3.000
+              </div>
+            )}
             <p className="nam-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               Criamos o nome que sua marca merece: estratégico, memorável e protegível. Um nome que carrega posicionamento, gera desejo e abre portas antes do primeiro contato.
             </p>
@@ -693,9 +695,11 @@ function IdentidadeVisual() {
             <h2 className="id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
               Identidade de Marca<br />Essencial
             </h2>
-            <div className="id-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              R$ 6.000
-            </div>
+            {!IS_ALUDE && (
+              <div className="id-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
+                R$ 6.000
+              </div>
+            )}
             <p className="id-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               Transformamos a estratégia em uma expressão visual única. Uma identidade que o mercado reconhece, o público deseja e você tem orgulho de mostrar em qualquer contexto.
             </p>
@@ -2103,9 +2107,11 @@ function Consultoria() {
                 </li>
               </ul>
             </div>
-            <div>
-              <div className="font-halyard font-medium text-[2.2rem] text-[#FE6942] leading-[1]">R$ 4.000<span className="text-[1.125rem] text-black/40 font-light"> /mês</span></div>
-            </div>
+            {!IS_ALUDE && (
+              <div>
+                <div className="font-halyard font-medium text-[2.2rem] text-[#FE6942] leading-[1]">R$ 4.000<span className="text-[1.125rem] text-black/40 font-light"> /mês</span></div>
+              </div>
+            )}
           </div>
         </div>
 
