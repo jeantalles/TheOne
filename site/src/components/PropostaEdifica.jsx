@@ -128,26 +128,14 @@ function Dores() {
   const sectionRef = useRef(null);
 
   const dores = IS_ALUDE ? [
-    {
-      titulo: 'Comunicação técnica, focada em features',
-      descricao: 'Produtos de tecnologia resolvem dores concretas, mas muitas vezes se comunicam pelo que fazem — não pela transformação que ajudam o cliente a construir.',
-    },
-    {
-      titulo: 'Produto vendido como mais uma opção',
-      descricao: 'Sem uma diferença de marca clara, o produto é comparado a outras soluções disponíveis e a escolha se reduz a funcionalidades, preço e condições comerciais.',
-    },
-    {
-      titulo: 'Narrativa sem pertencimento',
-      descricao: 'Quando falta uma ideia maior, o público não se reconhece, não compartilha e não associa a marca ao próprio crescimento.',
-    },
-    {
-      titulo: 'Desejo menor do que o valor entregue',
-      descricao: 'Na venda, a percepção de valor não acompanha a qualidade do produto e da experiência que ele entrega.',
-    },
-    {
-      titulo: 'Dependência de tráfego pago',
-      descricao: 'Quando a marca não é procurada por convicção, a aquisição depende mais da urgência e do investimento em mídia do que da preferência construída ao longo do tempo.',
-    },
+    { titulo: 'Dependência do tráfego pago' },
+    { titulo: 'Não utiliza a marca e o conteúdo para gerar demanda' },
+    { titulo: 'Mercado comoditizado, com soluções e formas de se vender parecidas' },
+    { titulo: 'Marca percebida como mais uma opção no mercado' },
+    { titulo: 'Dificuldade para aumentar o ticket médio e vender contratos maiores' },
+    { titulo: 'Falta de clareza sobre posicionamento, público e proposta de valor' },
+    { titulo: 'Marca pouco conhecida para a visão que o negócio tem de se tornar' },
+    { titulo: 'Não tem uma estratégia para utilizar a marca para impulsionar o crescimento' },
   ] : [
     {
       titulo: 'Dependência de tráfego pago',
@@ -193,13 +181,8 @@ function Dores() {
             Diagnóstico
           </span>
           <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.5rem,4vw,3.75rem)] leading-[1.02] tracking-tight">
-            {IS_ALUDE ? 'Produtos de tecnologia' : 'O que impede marcas como a sua de crescerem'}
+            {IS_ALUDE ? 'A TheOne é especialista em empresas de serviço de alto valor agregado' : 'O que impede marcas como a sua de crescerem'}
           </h2>
-          {IS_ALUDE && (
-            <p className="font-halyard font-light text-[#181412] text-[20px] md:text-[23px] leading-[1.45] max-w-[52ch] mt-6">
-              A TheOne é especializada em marcas de tecnologia e conhece os desafios que fazem bons produtos parecerem apenas mais uma ferramenta no mercado.
-            </p>
-          )}
         </div>
 
         <div className="flex flex-col gap-4">
@@ -212,9 +195,11 @@ function Dores() {
                 <h3 className="font-halyard font-semibold text-[#181412] text-[22px] md:text-[24px] leading-[1.2]">
                   {dore.titulo}
                 </h3>
-                <p className="font-halyard font-light text-[#181412] text-[18px] md:text-[20px] leading-[1.5] mt-1.5">
-                  {dore.descricao}
-                </p>
+                {dore.descricao && (
+                  <p className="font-halyard font-light text-[#181412] text-[18px] md:text-[20px] leading-[1.5] mt-1.5">
+                    {dore.descricao}
+                  </p>
+                )}
               </div>
             </div>
           ))}
