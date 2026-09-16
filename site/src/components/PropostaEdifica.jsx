@@ -2432,8 +2432,8 @@ function PropostaSlideshow() {
         {current === 17 && IS_ALUDE && <EstrategiaDeMarca />}
         {current === 18 && IS_ALUDE && <Naming />}
         {current === 19 && IS_ALUDE && <IdentidadeVisual />}
-        {current === 20 && IS_ALUDE && <MyBranding />}
-        {current === 21 && IS_ALUDE && <IdentidadeVisualCompleta />}
+        {current === 20 && IS_ALUDE && <IdentidadeVisualCompleta />}
+        {current === 21 && IS_ALUDE && <MyBranding />}
         {current === 22 && IS_ALUDE && <SiteBrandExperience />}
         {current === 23 && IS_ALUDE && <TheOneAgent />}
         {current === 24 && IS_ALUDE && <Cronograma />}
