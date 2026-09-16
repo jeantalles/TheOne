@@ -2235,6 +2235,78 @@ function SobreTheOne({ scrollerRef, mode = 'all', storyPanelIndex = null }) {
   );
 }
 
+const CLIENT_LOGOS = [
+  { src: '/images/founders-logos/o-boticario.png', alt: 'O Boticario' },
+  { src: '/images/founders-logos/max-titanium.png', alt: 'Max Titanium' },
+  { src: '/images/founders-logos/stihl.png', alt: 'Stihl' },
+  { src: '/images/founders-logos/jacuzzi.png', alt: 'Jacuzzi' },
+  { src: '/images/founders-logos/arezzo.png', alt: 'Arezzo' },
+  { src: '/images/founders-logos/cyrela.png', alt: 'Cyrela' },
+];
+
+function SobreJean() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.jean-item', {
+        opacity: 0, y: 32, stagger: 0.1, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="bg-[#212121] font-halyard min-h-[100svh] px-6 md:px-12 lg:px-16 pt-10 md:pt-12 pb-16 md:pb-20 flex items-center">
+      <div className="max-w-[1400px] w-full mx-auto">
+        <div className="border border-[#5B5B5B] rounded-[28px] overflow-hidden">
+          <div className="flex flex-col md:flex-row">
+            <div className="relative overflow-hidden w-full md:w-[38%] aspect-[4/5] md:aspect-auto md:min-h-[560px] shrink-0 bg-[#1a1a1a]">
+              <img src="/images/Jean.jpeg" alt="Jean Talles" className="absolute inset-0 w-full h-full object-cover object-center" />
+            </div>
+            <div className="flex-1 flex flex-col justify-center bg-[#212121] px-8 md:px-14 lg:px-16 pt-10 pb-12 md:py-14">
+              <span className="jean-item inline-flex items-center bg-[#FE6942] text-white text-[13px] font-semibold tracking-[0.24em] uppercase px-6 py-2.5 rounded-full w-fit mb-8">Fundador</span>
+              <h3 className="jean-item font-editorial text-white text-[32px] md:text-[52px] leading-[1.05] mb-3">Jean Talles</h3>
+              <p className="jean-item text-[#FE6942] text-[14px] md:text-[15px] uppercase tracking-[0.18em] mb-8">Estrategista de Marca e Comunicação</p>
+              <div className="jean-item w-16 h-px bg-white/10 mb-8" />
+              <ul className="space-y-5 mb-10">
+                {[
+                  'Liderou e estruturou o setor de comunicação para key accounts na maior assessoria de marketing e vendas do país.',
+                  'O cara de branding que veio do mundo da performance.',
+                  'Fundador e idealizador da TheOne, a principal aliada de negócios visionários no Brasil.',
+                ].map((b, i) => (
+                  <li key={i} className="jean-item flex gap-4 items-start">
+                    <span className="text-[#FE6942] text-[1.1rem] leading-none mt-1.5 shrink-0">→</span>
+                    <p className="text-[#E1E1E1] font-light text-[18px] md:text-[21px] leading-[1.5] max-w-[34ch]">{b}</p>
+                  </li>
+                ))}
+              </ul>
+              <div className="jean-item grid grid-cols-3 md:grid-cols-6 gap-x-6 gap-y-5">
+                {CLIENT_LOGOS.map((logo) => (
+                  <div key={logo.alt} className="flex h-[22px] items-center">
+                    <img src={logo.src} alt={logo.alt} className="max-h-full w-auto max-w-[80px] object-contain opacity-60" />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CaseSlide({ slug }) {
+  const caseData = caseStudies.find((c) => c.slug === slug);
+  if (!caseData) return null;
+  return (
+    <div className="[&_header]:hidden">
+      <CasePageTemplate caseStudy={caseData} />
+    </div>
+  );
+}
+
 function PropostaSlideshow() {
   const [proposalState, setProposalState, generateLink] = useProposalState({
     clientName: IS_ALUDE ? EDIFICA_PROPOSAL.clientName : '',
