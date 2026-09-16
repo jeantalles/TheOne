@@ -803,7 +803,7 @@ function IdentidadeVisualCompleta() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
             <h2 className={`id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight ${IS_ALUDE ? 'mb-10' : 'mb-3'}`}>
-              {IS_ALUDE ? <>Identidade Visual<br />e Verbal</> : <>Identidade de Marca<br />Completa</>}
+              <>Identidade de Marca<br />Completa</>
             </h2>
             {!IS_ALUDE && (
               <div className="id-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
