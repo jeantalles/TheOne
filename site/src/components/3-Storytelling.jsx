@@ -32,6 +32,15 @@ const TOKEN_STYLES = {
   },
 };
 
+function scaleFontSize(value, factor) {
+  if (factor === 1) return value;
+
+  return value.replace(/(-?\d*\.?\d+)(px|rem|vw|em)/g, (_, number, unit) => {
+    const scaled = Math.round(Number(number) * factor * 1000) / 1000;
+    return `${scaled}${unit}`;
+  });
+}
+
 const PANEL_03 = {
   tag: '03 ⏤ 04',
   title: 'O problema é que o marketing industrializado não foi feito para negócios visionários.',
@@ -92,7 +101,7 @@ const STORIES = {
 
 
 
-function parseStyledText(lineText) {
+function parseStyledText(lineText, fontScale = 1) {
   const parts = [];
   let currentText = '';
   let index = 0;
@@ -120,9 +129,14 @@ function parseStyledText(lineText) {
       break;
     }
 
+    const tokenStyle = TOKEN_STYLES[token];
+    const style = tokenStyle.fontSize
+      ? { ...tokenStyle, fontSize: scaleFontSize(tokenStyle.fontSize, fontScale) }
+      : tokenStyle;
+
     parts.push({
       text: lineText.substring(index, endIndex),
-      style: TOKEN_STYLES[token],
+      style,
     });
 
     index = endIndex + token.length + 3;
@@ -135,8 +149,8 @@ function parseStyledText(lineText) {
   return parts;
 }
 
-function renderStyledWords(line, keyPrefix, wordClass = '') {
-  return parseStyledText(line).flatMap((part, partIndex) =>
+function renderStyledWords(line, keyPrefix, wordClass = '', fontScale = 1) {
+  return parseStyledText(line, fontScale).flatMap((part, partIndex) =>
     part.text.split(' ').filter(Boolean).map((word, wordIndex) => (
       <span
         key={`${keyPrefix}-${partIndex}-${wordIndex}`}
@@ -149,7 +163,7 @@ function renderStyledWords(line, keyPrefix, wordClass = '') {
   );
 }
 
-function renderCompactLine(line, keyPrefix) {
+function renderCompactLine(line, keyPrefix, fontScale) {
   return (
     <div
       key={keyPrefix}
@@ -157,12 +171,12 @@ function renderCompactLine(line, keyPrefix) {
         minHeight: line.includes('[QUESTION]') ? '1.4em' : undefined,
       }}
     >
-      {renderStyledWords(line, keyPrefix, 'story-mobile-copy-word')}
+      {renderStyledWords(line, keyPrefix, 'story-mobile-copy-word', fontScale)}
     </div>
   );
 }
 
-function renderCompactParagraphs(paragraphs) {
+function renderCompactParagraphs(paragraphs, fontScale) {
   return paragraphs.map((paragraph, paragraphIndex) => {
     const lines = paragraph.split('\n');
 
@@ -173,19 +187,21 @@ function renderCompactParagraphs(paragraphs) {
           marginBottom: paragraphIndex < paragraphs.length - 1 ? STORYTELLING_CONFIG.spacing.paragrafos : 0,
         }}
       >
-        {lines.map((line, lineIndex) => renderCompactLine(line, `${paragraphIndex}-${lineIndex}`))}
+        {lines.map((line, lineIndex) => renderCompactLine(line, `${paragraphIndex}-${lineIndex}`, fontScale))}
       </div>
     );
   });
 }
 
-function renderCompactTitle(title) {
-  return renderStyledWords(title.replace(/\n/g, ' '), 'title', 'story-mobile-title-word');
+function renderCompactTitle(title, fontScale) {
+  return renderStyledWords(title.replace(/\n/g, ' '), 'title', 'story-mobile-title-word', fontScale);
 }
 
-export default function Storytelling({ persona, scroller = null, panelIndex = null, staticMode = false }) {
+export default function Storytelling({ persona, scroller = null, panelIndex = null, staticMode = false, fontScale: requestedFontScale = 1 }) {
   const containerRef = useRef(null);
   const style = STORYTELLING_CONFIG.fontSize;
+  const fontScale = staticMode ? requestedFontScale : 1;
+  const scaledFont = (value) => scaleFontSize(value, fontScale);
   const isCompactLayout = useMediaQuery('(max-width: 1023px)');
   const allStories = STORIES[persona] || STORIES['empresario'];
   const stories = panelIndex === null ? allStories : [allStories[panelIndex]].filter(Boolean);
@@ -358,7 +374,7 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
           minHeight: line.includes('[QUESTION]') ? '1.4em' : undefined,
         }}
       >
-        {parseStyledText(line).map((part, partIndex) =>
+        {parseStyledText(line, fontScale).map((part, partIndex) =>
           part.text.split(' ').filter(Boolean).map((word, wordIndex) => (
             <span
               key={`${partIndex}-${wordIndex}`}
@@ -374,8 +390,9 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
 
   const renderDesktopBody = (story) => {
     const fontSize = staticMode
-      ? 'clamp(1.1rem, 1.55vw, 1.5rem)'
+      ? 'clamp(1.35rem, 2.05vw, 1.9rem)'
       : (story.textSizeDesktop || style.texto);
+    const scaledBodyFontSize = scaledFont(fontSize);
 
     if (story.transitionMode === 'swapParagraphs') {
       return (
@@ -383,7 +400,7 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
           <div className="story-swap-first absolute inset-0 flex items-center justify-center">
             <div
               className="font-halyard font-light text-[#C7C7C7] text-center"
-              style={{ fontSize, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
+              style={{ fontSize: scaledBodyFontSize, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
             >
               {renderWordsWithParagraphs(story.paragraphs[0])}
             </div>
@@ -391,7 +408,7 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
           <div className="story-swap-second absolute inset-0 flex items-center justify-center opacity-0">
             <div
               className="font-halyard font-light text-[#C7C7C7] text-center"
-              style={{ fontSize, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
+              style={{ fontSize: scaledBodyFontSize, lineHeight: STORYTELLING_CONFIG.lineHeight.texto }}
             >
               {renderWordsWithParagraphs(story.paragraphs[1])}
             </div>
@@ -403,7 +420,7 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
     return (
       <p
         className={`story-copy-container font-halyard font-light text-[#C7C7C7] mt-6 ${staticMode ? (panelIndex === 0 ? 'max-w-[44rem]' : 'max-w-[56rem]') : 'max-w-4xl'}`}
-        style={{ fontSize, lineHeight: staticMode ? '1.42' : STORYTELLING_CONFIG.lineHeight.texto }}
+        style={{ fontSize: scaledBodyFontSize, lineHeight: staticMode ? '1.42' : STORYTELLING_CONFIG.lineHeight.texto }}
       >
         {renderWordsWithParagraphs(story.content)}
       </p>
@@ -412,8 +429,9 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
 
   const renderCompactBody = (story) => {
     const fontSize = staticMode
-      ? 'clamp(1.05rem, 4.2vw, 1.32rem)'
+      ? 'clamp(1.18rem, 5vw, 1.55rem)'
       : (story.textSizeMobile || 'clamp(1.35rem, 5.2vw, 1.65rem)');
+    const scaledBodyFontSize = scaledFont(fontSize);
     const paragraphs = story.transitionMode === 'swapParagraphs'
       ? story.paragraphs
       : story.content.split('\n').filter(Boolean);
@@ -421,9 +439,9 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
     return (
       <div
         className={`story-mobile-body mt-6 font-halyard font-light text-[#C7C7C7] ${staticMode ? (panelIndex === 0 ? 'max-w-[33rem]' : 'max-w-[38rem]') : 'max-w-4xl'}`}
-        style={{ fontSize, lineHeight: staticMode ? '1.42' : STORYTELLING_CONFIG.lineHeight.texto }}
+        style={{ fontSize: scaledBodyFontSize, lineHeight: staticMode ? '1.42' : STORYTELLING_CONFIG.lineHeight.texto }}
       >
-        {renderCompactParagraphs(paragraphs)}
+        {renderCompactParagraphs(paragraphs, fontScale)}
       </div>
     );
   };
@@ -451,14 +469,14 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
           >
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,82,36,0.06)_0%,transparent_60%)] pointer-events-none z-0" />
             <div className={`relative z-10 max-w-5xl w-full text-center flex flex-col items-center ${staticMode ? 'gap-5 py-0' : 'gap-8 py-16'}`}>
-              <span className="text-[#FE6942] font-halyard tracking-widest uppercase" style={{ fontSize: style.tag }}>
+              <span className="text-[#FE6942] font-halyard tracking-widest uppercase" style={{ fontSize: scaledFont(style.tag) }}>
                 {story.tag}
               </span>
               <h2
                 className="story-title-container font-editorial font-normal leading-[1.1] text-white story-mobile-title"
-                style={{ fontSize: story.titleSizeMobile || 'clamp(2.34rem, 8.15vw, 4rem)', maxWidth: story.titleWidth }}
+                style={{ fontSize: scaledFont(story.titleSizeMobile || 'clamp(2.34rem, 8.15vw, 4rem)'), maxWidth: story.titleWidth }}
               >
-                {renderCompactTitle(story.title)}
+                {renderCompactTitle(story.title, fontScale)}
               </h2>
               {renderCompactBody(story)}
             </div>
@@ -484,13 +502,13 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
             className={`relative z-10 max-w-5xl w-full text-center flex flex-col items-center ${staticMode ? 'gap-5 py-8' : 'gap-8 py-16'}`}
             style={!staticMode && index === 0 ? { paddingTop: 'clamp(6rem, 18vh, 11rem)' } : undefined}
           >
-            <span className="text-[#FE6942] font-halyard tracking-widest uppercase" style={{ fontSize: style.tag }}>
+            <span className="text-[#FE6942] font-halyard tracking-widest uppercase" style={{ fontSize: scaledFont(style.tag) }}>
               {story.tag}
             </span>
             <h2
               className="story-title-container font-editorial font-normal leading-[1.1] text-white"
               style={{
-                fontSize: story.titleSizeDesktop || (staticMode ? 'clamp(2.2rem, 4.35vw, 3.8rem)' : style.titulo),
+                fontSize: scaledFont(story.titleSizeDesktop || (staticMode ? 'clamp(2.2rem, 4.35vw, 3.8rem)' : style.titulo)),
                 maxWidth: story.titleWidth,
               }}
             >

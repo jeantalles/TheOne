@@ -2191,6 +2191,7 @@ function SobreTheOne({ scrollerRef, mode = 'all', storyPanelIndex = null }) {
           scroller={scroller}
           panelIndex={storyPanelIndex}
           staticMode={mode === 'story'}
+          fontScale={0.9}
         />
       )}
 
