@@ -2061,43 +2061,52 @@ function Consultoria() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24 flex flex-col justify-center min-h-[100svh]">
-      <div className="max-w-[900px] mx-auto w-full">
+    <section ref={sectionRef} className="relative overflow-hidden bg-[#F8F7F5] px-6 md:px-12 lg:px-16 py-14 md:py-16 lg:py-20 flex flex-col justify-center min-h-[100svh]">
+      <div className="absolute inset-x-0 top-0 h-px bg-[#FE6942]" />
+      <div className="max-w-[1400px] mx-auto w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_.92fr] gap-10 lg:gap-16 xl:gap-24 items-end">
+          <div className="max-w-[760px]">
+            <span className="cons-item block font-halyard font-semibold text-[14px] md:text-[15px] tracking-[0.22em] uppercase text-[#FE6942] mb-6">
+              Acompanhamento estratégico
+            </span>
+            <h2 className="cons-item font-editorial font-normal text-[#181412] text-[clamp(3.4rem,6.1vw,6.25rem)] leading-[.92] tracking-[-0.045em] mb-8">
+              Advisory de Conteúdo &amp; Posicionamento
+            </h2>
+            <p className="cons-item font-halyard font-light text-[#181412] text-[21px] md:text-[25px] leading-[1.42] max-w-[35ch]">
+              Um acompanhamento estratégico para fazer o planejamento de marca ganhar vida, com direcionamento da produção de conteúdo, revisão de pautas e orientação do tom de voz.
+            </p>
+          </div>
 
-        <h2 className="cons-item font-halyard font-semibold text-[#181412] text-[clamp(2rem,3.6vw,3.2rem)] leading-[1.1] mb-4">
-          Advisory de Conteúdo & Posicionamento
-        </h2>
-        <p className="cons-item font-halyard font-light text-[#181412] text-[20px] md:text-[22px] leading-[1.5] mb-12 max-w-[58ch]">
-          Um acompanhamento estratégico focado em garantir que o planejamento de marca ganhe vida. Atuamos como seu "Head de Conteúdo", direcionando o estrategista (social media), revisando pautas e orientando o tom de voz da Edifica e de vocês.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <div className="cons-item bg-[#F8F8F8] border border-black/10 rounded-2xl p-8 flex flex-col justify-between" style={{ border: '1px solid #FE6942' }}>
-            <div>
-              <h3 className="font-halyard font-semibold text-[20px] text-[#181412] mb-1">Acompanhamento Quinzenal</h3>
-              <ul className="mt-8 space-y-3 mb-10">
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
-                  <span className="font-halyard font-light text-[#181412] text-[16px] leading-[1.4]">Direcionamento do estrategista contratado</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
-                  <span className="font-halyard font-light text-[#181412] text-[16px] leading-[1.4]">1 reunião a cada 15 dias para ideação e revisão</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
-                  <span className="font-halyard font-light text-[#181412] text-[16px] leading-[1.4]">Acompanhamento direto e suporte via grupo de WhatsApp</span>
-                </li>
-              </ul>
-            </div>
-            {!IS_ALUDE && (
+          <div className="cons-item bg-[#211F1E] text-white rounded-[28px] p-7 md:p-9 lg:p-10 shadow-[0_18px_48px_rgba(24,20,18,0.12)]">
+            <div className="flex items-start justify-between gap-6 pb-8 border-b border-white/15">
               <div>
-                <div className="font-halyard font-medium text-[2.2rem] text-[#FE6942] leading-[1]">R$ 4.000<span className="text-[1.125rem] text-black/40 font-light"> /mês</span></div>
+                <span className="block font-halyard font-semibold text-[13px] tracking-[0.18em] uppercase text-[#FE6942] mb-3">Acompanhamento quinzenal</span>
+                <p className="font-halyard font-light text-[17px] md:text-[18px] leading-[1.4] text-white/65">Direção contínua para transformar estratégia em conteúdo consistente.</p>
               </div>
-            )}
+              <span className="shrink-0 flex items-center justify-center w-10 h-10 rounded-full border border-[#FE6942] text-[#FE6942] font-halyard text-[18px]">01</span>
+            </div>
+
+            <ul className="py-8 space-y-5">
+              {[
+                'Direcionamento do estrategista contratado',
+                '1 reunião a cada 15 dias para ideação e revisão',
+                'Acompanhamento direto e suporte via grupo de WhatsApp',
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
+                  <span className="font-halyard font-light text-[18px] md:text-[19px] leading-[1.42] text-white/90">{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="pt-7 border-t border-white/15 flex items-end justify-between gap-5">
+              <span className="font-halyard font-medium text-[13px] tracking-[0.18em] uppercase text-white/45 pb-1">Investimento mensal</span>
+              <div className="font-halyard font-medium text-[#FE6942] text-[clamp(2.8rem,4vw,4.4rem)] leading-[.82] tracking-[-0.055em] whitespace-nowrap">
+                R$ 4.000<span className="text-[1.1rem] md:text-[1.25rem] tracking-normal text-white/55 font-light"> /mês</span>
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
     </section>
   );
