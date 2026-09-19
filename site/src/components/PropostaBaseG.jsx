@@ -1377,10 +1377,6 @@ function Calculadora({ clientName }) {
     sitebrand:  false,
   });
   const [myBrandingQty, setMyBrandingQty] = useState({ mybranding_marca: 0, mybranding_conteudo: 0 });
-  const [selected, setSelected] = useState({
-    estrategia: true,
-    estrategia_conteudo: false,
-    estrategia_conteudo: false,
 
   const hasFoundation = selected.estrategia;
   const myBrandingPrice = {
