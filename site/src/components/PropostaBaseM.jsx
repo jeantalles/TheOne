@@ -431,14 +431,9 @@ function EstrategiaDeMarca() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
-            <h2 className={`est-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight ${IS_ALUDE ? 'mb-10' : 'mb-3'}`}>
+            <h2 className="est-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-10">
               {IS_ALUDE ? <>Estratégia de<br />Marca e<br />Posicionamento</> : <>Estratégia<br />de Marca</>}
             </h2>
-            {!IS_ALUDE && (
-              <div className="est-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-                {formatBRL(SERVICES.find((service) => service.id === 'estrategia').price)}
-              </div>
-            )}
             <p className="est-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               {IS_ALUDE
                 ? 'Uma fundação para transformar a experiência que a Alude já entrega em uma marca percebida como inevitável pelos profissionais que movem o mercado imobiliário.'
@@ -612,12 +607,9 @@ function Naming() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
-            <h2 className="nam-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
+            <h2 className="nam-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-10">
               Naming
             </h2>
-            <div className="nam-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              R$ 3.000
-            </div>
             <p className="nam-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               Criamos o nome que sua marca merece: estratégico, memorável e protegível. Um nome que carrega posicionamento, gera desejo e abre portas antes do primeiro contato.
             </p>
@@ -698,12 +690,9 @@ function IdentidadeVisual() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
-            <h2 className="id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
+            <h2 className="id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-10">
               Identidade de Marca<br />Essencial
             </h2>
-            <div className="id-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              R$ 6.000
-            </div>
             <p className="id-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               Transformamos a estratégia em uma expressão visual única. Uma identidade que o mercado reconhece, o público deseja e você tem orgulho de mostrar em qualquer contexto.
             </p>
@@ -821,14 +810,9 @@ function IdentidadeVisualCompleta() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
-            <h2 className={`id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight ${IS_ALUDE ? 'mb-10' : 'mb-3'}`}>
+            <h2 className="id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-10">
               {IS_ALUDE ? <>Identidade Visual<br />e Verbal</> : <>Identidade de Marca<br />Completa</>}
             </h2>
-            {!IS_ALUDE && (
-              <div className="id-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-                {formatBRL(SERVICES.find((service) => service.id === 'identidade_completa').price)}
-              </div>
-            )}
             <p className="id-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               Transformamos a estratégia em uma expressão visual única. Uma identidade que o mercado reconhece, o público deseja e você tem orgulho de mostrar em qualquer contexto.
             </p>
@@ -955,14 +939,9 @@ function MyBranding() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
-            <h2 className={`mb-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight ${IS_ALUDE ? 'mb-10' : 'mb-3'}`}>
+            <h2 className="mb-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-10">
               {IS_ALUDE ? <>Marca pessoal como<br />ativo do negócio</> : 'myBranding'}
             </h2>
-            {!IS_ALUDE && (
-              <div className="mb-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-                R$ 8.000
-              </div>
-            )}
             <p className="mb-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               {IS_ALUDE
                 ? 'Duas lideranças com presença, ponto de vista e narrativas conectadas à visão da Alude, para humanizar a marca e ampliar sua capacidade de gerar autoridade e comunidade.'
@@ -1128,14 +1107,9 @@ function SiteBrandExperience() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
-            <h2 className={`sbe-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight ${IS_ALUDE ? 'mb-10' : 'mb-3'}`}>
+            <h2 className="sbe-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-10">
               Site BrandExperience
             </h2>
-            {!IS_ALUDE && (
-              <div className="sbe-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-                {formatBRL(SERVICES.find((service) => service.id === 'sitebrand').price)}
-              </div>
-            )}
             <p className="sbe-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               {IS_ALUDE
                 ? 'O ponto de contato que torna a nova percepção de valor visível: uma experiência de marca com prova social, diferenciais claros e mensagens relevantes para cada público da Alude.'
