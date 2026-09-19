@@ -15,11 +15,42 @@ import { useProposalState } from '../hooks/useProposalState';
 gsap.registerPlugin(ScrollTrigger);
 
 const IS_ALUDE = typeof window !== 'undefined' && /^\/alude\/?$/.test(window.location.pathname);
+const IS_SOCIO = typeof window !== 'undefined' && /^\/socio-estrategico\/?$/.test(window.location.pathname);
 
 const ALUDE_PROPOSAL = {
   clientName: 'Alude',
   cenarioAtual: `- Produto e experiência de alto valor para publico, mas comunicação predominantemente técnica, centrada em funcionalidades e necessidades imediatas.\n\n- Marca com pouca narrativa, pertencimento e comunidade para um público muito específico: corretores e imobiliárias. Um potencial inexplorado.\n\n- Identidade de marca distante e técnica, próxima ao padrão SaaS, que ainda não traduz o valor e a relevância da empresa pro mercado.\n\n- Lideranças ainda não são ativos de marca e humanização.\n\n- Site subutiliza provas sociais, diferenciais, dores, desejos para gerar mais valor pro mercado imobiliario.`,
   cenarioDesejado: `- Usar a marca pra potencializar toda a aquisição: marketing, vendas, conversão, retenção e expansão de canais.\n\n- Narrativa que gere pertencimento e torne a marca uma referência para quem quer evoluir o mercado imobiliário.\n\n- Comunicação capaz de gerar valor funcional, emocional, simbólico e de pertencimento.\n\n- Ter marcas pessoais relevantes associadas à marca, tornando a marca mais conectada, reconhecida e distribuída para o público.\n\n- Site que aumenta a percepção de valor, com prova social, diferenciais claros e PUV relevante por público.`,
+};
+
+const SOCIO_PROPOSAL = {
+  clientName: 'Sócio Estratégico',
+  cenarioAtual: `- O ecossistema está em formação, com empresas de serviço, participações societárias e novas frentes sendo incorporadas.
+
+- Existe uma tese de marca monolítica, com “Sócio” como prefixo das empresas, mas a arquitetura e a relação entre as marcas ainda não estão definidas.
+
+- A visão de negócio, posicionamento e futuro da Sócio estão claras na cabeça do Max, mas ainda não foram compiladas em uma direção estratégica aplicável.
+
+- Não há clareza sobre como cada marca deve se comunicar e se vender: narrativa, posicionamento, identidade visual, cores, padrão do “S” e grau de conexão entre as empresas.
+
+- A comunicação atual, especialmente no Instagram, não traduz com clareza o que está sendo construído no ecossistema.
+
+- Max está estruturando um produto escalável que une consultoria, mentoria, comunidade, networking e eventos, mas a tese ainda está em fase de validação e construção.
+
+- A marca precisa lidar com a complexidade da personalidade do Max, que une criação, arte, performance, resultado, visão social e uma postura mais combativa.`,
+  cenarioDesejado: `- Consolidar a Sócio como uma plataforma de serviços para negócios de alto crescimento, conectando as empresas do ecossistema sob uma visão única.
+
+- Organizar a arquitetura de marca, o posicionamento e a narrativa para dar clareza sobre o papel de cada negócio e da marca pessoal do Max.
+
+- Construir uma marca que seja a cara do Max, gere orgulho e represente sua visão de negócio e de vida.
+
+- Transformar a visão de mobilidade social em um pilar claro da marca, criando mecanismos para gerar crescimento e oportunidades para outras pessoas.
+
+- Criar uma comunicação que explique com clareza o que é a Sócio, o que ela faz e para onde está indo.
+
+- Desenvolver uma marca com potencial de gerar pertencimento, comunidade e movimento, mesmo dentro de um mercado B2B.
+
+- Ter uma base estratégica que oriente a produção de conteúdo, os eventos e a expansão das novas empresas do ecossistema.`,
 };
 
 const SERVICES = IS_ALUDE
@@ -46,9 +77,11 @@ const SERVICES = IS_ALUDE
     ];
 
 // Alude: narrativa TheOne distribuída em telas individuais; proposta base preserva a sequência original.
-const SLIDE_TOTAL = IS_ALUDE ? 25 : 22;
+const SLIDE_TOTAL = IS_SOCIO ? 25 : (IS_ALUDE ? 25 : 22);
 
-const DARK_SLIDES = IS_ALUDE ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 21] : [0, 1, 6, 7, 8, 9, 10, 18];
+const DARK_SLIDES = IS_SOCIO
+  ? [0, 1, 6, 7, 8, 9, 10, 12, 19]
+  : (IS_ALUDE ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 21] : [0, 1, 6, 7, 8, 9, 10, 18]);
 
 const formatBRL = (v) => `R$ ${v.toLocaleString('pt-BR')}`;
 
@@ -1447,6 +1480,190 @@ function CardTheOneAgent() {
   );
 }
 
+// ── SLIDE: PIRÂMIDE DO POSICIONAMENTO ─────────────────────────────────────────
+function PiramidePosicionamento() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.socio-pyramid-item', {
+        opacity: 0, y: 28, stagger: 0.1, duration: 0.85, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+      });
+      gsap.from('.socio-pyramid-graphic', {
+        opacity: 0, scale: 0.92, filter: 'blur(8px)', duration: 0.9, ease: 'power3.out', delay: 0.2,
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="bg-[#0a0a0a] min-h-[100svh] px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24 flex items-center">
+      <div className="max-w-[1400px] w-full mx-auto grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-20 items-center">
+        <div>
+          <span className="socio-pyramid-item font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold block mb-6">Nossa metodologia</span>
+          <h2 className="socio-pyramid-item font-editorial font-normal text-white text-[clamp(2.5rem,4vw,4rem)] leading-[1.05] tracking-tight mb-8">
+            A ciência por trás de um <span className="italic text-white/65">posicionamento inevitável</span>
+          </h2>
+          <p className="socio-pyramid-item text-white/70 font-halyard font-light text-[18px] md:text-[21px] leading-[1.5] mb-8 max-w-[45ch]">
+            A estratégia parte de três leituras que precisam se encontrar: o público, o negócio e o mercado. É nessa interseção que uma marca deixa de ser apenas uma opção.
+          </p>
+          <ul className="space-y-4">
+            {[
+              'O que o público precisa, deseja e teme.',
+              'Como os concorrentes se posicionam e se vendem.',
+              'A solução, a transformação e os diferenciais que o negócio sustenta.',
+            ].map((item, i) => (
+              <li key={item} className="socio-pyramid-item flex items-start gap-3">
+                <span className="text-white/40 font-halyard font-medium text-[16px] md:text-[18px] mt-[3px]">0{i + 1}.</span>
+                <span className="font-halyard font-light text-white/80 text-[18px] md:text-[19px] leading-[1.5]">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="socio-pyramid-graphic relative w-full aspect-square max-w-[460px] mx-auto flex items-center justify-center">
+          <svg width="100%" height="100%" viewBox="0 0 400 400" className="absolute inset-0 pointer-events-none opacity-30" aria-hidden="true">
+            <line x1="200" y1="60" x2="350" y2="320" stroke="#FFF" strokeWidth="1" strokeDasharray="4 4" />
+            <line x1="350" y1="320" x2="50" y2="320" stroke="#FFF" strokeWidth="1" strokeDasharray="4 4" />
+            <line x1="50" y1="320" x2="200" y2="60" stroke="#FFF" strokeWidth="1" strokeDasharray="4 4" />
+          </svg>
+
+          {[
+            { label: 'Público', position: 'top-[15%] left-1/2', icon: 'P' },
+            { label: 'Negócio', position: 'top-[80%] left-[87.5%]', icon: 'N' },
+            { label: 'Mercado', position: 'top-[80%] left-[12.5%]', icon: 'M' },
+          ].map((point) => (
+            <div key={point.label} className={`absolute ${point.position} -translate-x-1/2 -translate-y-1/2 flex flex-col items-center`}>
+              <div className="w-[64px] h-[64px] md:w-[72px] md:h-[72px] rounded-full border border-white/20 bg-[#141414] flex items-center justify-center mb-3">
+                <span className="font-editorial text-[28px] text-[#FE6942]">{point.icon}</span>
+              </div>
+              <span className="text-white font-halyard text-[15px] md:text-[16px] tracking-wide">{point.label}</span>
+            </div>
+          ))}
+
+          <div className="absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-[80%]">
+            <p className="text-white/60 font-halyard font-semibold tracking-tight text-[22px] md:text-[26px] leading-none mb-2">Posicionamento</p>
+            <span className="font-editorial text-white text-[34px] md:text-[42px] leading-none">Inevitável</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ── SLIDES: CENÁRIOS DE PROJETO SÓCIO ESTRATÉGICO ─────────────────────────────
+function CenarioProjetoSocio({ cenario, strategyPrice, contentPrice, duration, scope, brandCount }) {
+  const [selected, setSelected] = useState({
+    estrategia: true,
+    conteudo_canais: true,
+    identidade_essencial: true,
+    identidade_completa: false,
+    marca_pessoal: true,
+    conteudo_pessoal: true,
+    entrevistas: false,
+    naming: false,
+    site: false,
+  });
+
+  const services = [
+    { id: 'estrategia', group: 'Fundação estratégica', label: 'Estratégia de Marca e Posicionamento', detail: scope, price: strategyPrice, prazo: cenario === 'Cenário 1' ? '6 semanas' : '10 semanas' },
+    { id: 'conteudo_canais', group: 'Fundação estratégica', label: 'Estratégia de Conteúdo e Canais', detail: cenario === 'Cenário 1' ? 'Direcionamento dos canais e da comunicação da Sócio Estratégico.' : 'Direcionamento dos canais e da comunicação das 4 marcas do ecossistema.', price: contentPrice, prazo: 'Incluída na etapa estratégica' },
+    { id: 'entrevistas', group: 'Itens complementares', label: 'Entrevistas com clientes e operação', detail: 'Pesquisa em profundidade para ampliar a leitura do ecossistema.', price: 3000, prazo: '2 semanas' },
+    { id: 'naming', group: 'Itens complementares', label: 'Naming', detail: 'Definição de nomes para novas frentes ou ofertas.', price: 5000, prazo: '2 semanas' },
+    { id: 'identidade_essencial', group: 'Identidade do ecossistema', label: 'Identidade de Marca Essencial', detail: 'Aplicada às 4 marcas do ecossistema Sócio.', price: 12000, prazo: '6 semanas' },
+    { id: 'identidade_completa', group: 'Identidade do ecossistema', label: 'Identidade de Marca Completa', detail: 'Alternativa à identidade essencial, com sistema visual e verbal ampliado.', price: 8000, prazo: '6 semanas' },
+    { id: 'marca_pessoal', group: 'Marca pessoal · Max', label: 'Estratégia de Marca Pessoal', detail: 'Posicionamento, narrativa e plataforma da marca pessoal do Max.', price: 6000, prazo: '4 semanas' },
+    { id: 'conteudo_pessoal', group: 'Marca pessoal · Max', label: 'Estratégia de Conteúdo da Marca Pessoal', detail: 'Linhas editoriais, formatos e direcionamento de conteúdo.', price: 2000, prazo: 'Incluída na etapa de marca pessoal' },
+    { id: 'site', group: 'Itens complementares', label: 'Site BrandExperience', detail: 'Experiência digital orientada pela nova estratégia.', price: 7000, prazo: '6 semanas' },
+  ];
+
+  const groups = ['Fundação estratégica', 'Identidade do ecossistema', 'Marca pessoal · Max', 'Itens complementares'];
+  const total = services.reduce((sum, service) => sum + (selected[service.id] ? service.price : 0), 0);
+  const totalVista = Math.round(total * 0.9);
+  const metade = Math.round(total / 2);
+
+  const toggleService = (id) => {
+    setSelected((current) => {
+      const next = { ...current, [id]: !current[id] };
+      if (id === 'identidade_essencial' && next[id]) next.identidade_completa = false;
+      if (id === 'identidade_completa' && next[id]) next.identidade_essencial = false;
+      return next;
+    });
+  };
+
+  return (
+    <section className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24">
+      <div className="max-w-[1100px] mx-auto">
+        <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Investimento · {cenario}</span>
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 lg:gap-12 items-end mt-4 mb-10 md:mb-12">
+          <div>
+            <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.5rem,4vw,3.75rem)] leading-[1.02] tracking-tight">Defina o seu projeto</h2>
+            <p className="font-halyard font-light text-[#181412]/70 text-[19px] md:text-[22px] leading-[1.45] max-w-[53ch] mt-5">{scope}</p>
+          </div>
+          <div className="rounded-2xl border border-[#FE6942]/25 bg-[#FE6942]/[0.04] px-6 py-5 min-w-[210px]">
+            <div className="font-halyard font-semibold text-[12px] tracking-[.18em] uppercase text-[#FE6942]">Prazo do projeto</div>
+            <div className="font-editorial text-[#181412] text-[2rem] leading-none mt-2">{duration}</div>
+            <div className="font-halyard font-light text-[#181412]/60 text-[14px] mt-2">{brandCount}</div>
+          </div>
+        </div>
+
+        <div className="space-y-7">
+          {groups.map((group) => (
+            <div key={group}>
+              <div className="flex items-center gap-3 mb-3 px-1">
+                <span className="font-halyard font-semibold text-[13px] tracking-[0.20em] uppercase text-[#FE6942]">{group}</span>
+                <div className="flex-1 h-px bg-[#FE6942]/20" />
+              </div>
+              <div className="space-y-3">
+                {services.filter((service) => service.group === group).map((service) => {
+                  const isSelected = selected[service.id];
+                  return (
+                    <button
+                      key={service.id}
+                      type="button"
+                      onClick={() => toggleService(service.id)}
+                      className={`w-full text-left rounded-2xl px-6 md:px-7 py-5 border transition-all duration-200 flex items-center justify-between gap-5 ${isSelected ? 'border-[#FE6942] bg-[#FE6942]/[0.04]' : 'border-black/[0.09] bg-[#F8F8F8] hover:border-black/20'}`}
+                    >
+                      <div className="flex items-start gap-4 md:gap-5 min-w-0">
+                        <span className="mt-1 w-6 h-6 rounded-md border flex items-center justify-center shrink-0" style={{ borderColor: isSelected ? '#FE6942' : 'rgba(0,0,0,.2)', background: isSelected ? '#FE6942' : 'transparent' }}>
+                          {isSelected && <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+                        </span>
+                        <span>
+                          <span className={`block font-halyard font-medium text-[18px] md:text-[20px] leading-[1.15] ${isSelected ? 'text-[#181412]' : 'text-[#181412]/50'}`}>{service.label}</span>
+                          <span className={`block font-halyard font-light text-[14px] md:text-[15px] leading-[1.35] mt-1.5 ${isSelected ? 'text-[#181412]/65' : 'text-[#181412]/35'}`}>{service.detail}</span>
+                        </span>
+                      </div>
+                      <div className="shrink-0 text-right">
+                        <span className={`block font-halyard font-medium text-[16px] md:text-[18px] ${isSelected ? 'text-[#181412]' : 'text-[#181412]/35'}`}>{formatBRL(service.price)}</span>
+                        <span className={`block font-halyard font-medium text-[12px] tracking-wide mt-1 ${isSelected ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>{service.prazo}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
+          <div className="bg-[#181412] rounded-2xl px-7 py-7 text-white">
+            <div className="font-halyard font-medium text-[12px] tracking-[.18em] uppercase text-white/50 mb-2">Total do projeto</div>
+            <div className="font-editorial text-[clamp(2.6rem,4vw,3.4rem)] leading-none">{formatBRL(total)}</div>
+            <div className="font-halyard font-light text-[15px] text-white/55 mt-3">50/50: {formatBRL(metade)} no início + {formatBRL(total - metade)} após 30 dias</div>
+          </div>
+          <div className="bg-[#F8F8F8] rounded-2xl px-7 py-7 border border-black/[0.07]">
+            <div className="font-halyard font-medium text-[12px] tracking-[.18em] uppercase text-[#FE6942] mb-2">À vista · 10% de desconto</div>
+            <div className="font-editorial text-[#FE6942] text-[clamp(2.6rem,4vw,3.4rem)] leading-none">{formatBRL(totalVista)}</div>
+            <div className="font-halyard font-light text-[15px] text-[#181412]/55 mt-3">Os itens complementares permanecem disponíveis para composição do escopo.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── SLIDE 8: CALCULADORA ──────────────────────────────────────────────────────
 function Calculadora({ clientName }) {
   const [selected, setSelected] = useState({
@@ -1465,7 +1682,7 @@ function Calculadora({ clientName }) {
     mybranding_marca: IS_ALUDE ? 6500 : (hasFoundation ? 6000 : 9700),
     mybranding_conteudo: IS_ALUDE ? 0 : 2000
   };
-  
+
   const total = SERVICES.reduce((sum, s) => {
     if (s.id.startsWith('mybranding')) return sum + (myBrandingQty[s.id] * myBrandingPrice[s.id]);
     return selected[s.id] ? sum + s.price : sum;
@@ -2384,9 +2601,9 @@ function CaseSlide({ slug }) {
 // ── SLIDESHOW ─────────────────────────────────────────────────────────────────
 function PropostaSlideshow() {
   const [proposalState, setProposalState, generateLink] = useProposalState({
-    clientName: IS_ALUDE ? ALUDE_PROPOSAL.clientName : '',
-    cenarioAtual: IS_ALUDE ? ALUDE_PROPOSAL.cenarioAtual : '',
-    cenarioDesejado: IS_ALUDE ? ALUDE_PROPOSAL.cenarioDesejado : '',
+    clientName: IS_ALUDE ? ALUDE_PROPOSAL.clientName : (IS_SOCIO ? SOCIO_PROPOSAL.clientName : ''),
+    cenarioAtual: IS_ALUDE ? ALUDE_PROPOSAL.cenarioAtual : (IS_SOCIO ? SOCIO_PROPOSAL.cenarioAtual : ''),
+    cenarioDesejado: IS_ALUDE ? ALUDE_PROPOSAL.cenarioDesejado : (IS_SOCIO ? SOCIO_PROPOSAL.cenarioDesejado : ''),
   });
   const [current, setCurrent] = useState(0);
   const [animDir, setAnimDir] = useState('next');
@@ -2481,17 +2698,31 @@ function PropostaSlideshow() {
         {current === 9  && !IS_ALUDE && <CaseSlide slug="camilla-toscano" />}
         {current === 10 && !IS_ALUDE && <TheOneFoundation />}
         {current === 11 && !IS_ALUDE && <CasaDaMarca />}
-        {current === 12 && !IS_ALUDE && <EstrategiaDeMarca />}
-        {current === 13 && !IS_ALUDE && <Naming />}
-        {current === 14 && !IS_ALUDE && <IdentidadeVisual />}
-        {current === 15 && !IS_ALUDE && <IdentidadeVisualCompleta />}
-        {current === 16 && !IS_ALUDE && <MyBranding />}
-        {current === 17 && !IS_ALUDE && <SiteBrandExperience />}
-        {current === 18 && !IS_ALUDE && <TheOneAgent />}
-        {current === 19 && !IS_ALUDE && <Cronograma />}
-        {current === 20 && !IS_ALUDE && <Calculadora clientName={proposalState.clientName} />}
-        {current === 21 && !IS_ALUDE && <AdvisoryBranding />}
-        {current === 22 && !IS_ALUDE && <AdvisoryConteudo />}
+        {current === 12 && !IS_ALUDE && !IS_SOCIO && <EstrategiaDeMarca />}
+        {current === 13 && !IS_ALUDE && !IS_SOCIO && <Naming />}
+        {current === 14 && !IS_ALUDE && !IS_SOCIO && <IdentidadeVisual />}
+        {current === 15 && !IS_ALUDE && !IS_SOCIO && <IdentidadeVisualCompleta />}
+        {current === 16 && !IS_ALUDE && !IS_SOCIO && <MyBranding />}
+        {current === 17 && !IS_ALUDE && !IS_SOCIO && <SiteBrandExperience />}
+        {current === 18 && !IS_ALUDE && !IS_SOCIO && <TheOneAgent />}
+        {current === 19 && !IS_ALUDE && !IS_SOCIO && <Cronograma />}
+        {current === 20 && !IS_ALUDE && !IS_SOCIO && <Calculadora clientName={proposalState.clientName} />}
+        {current === 21 && !IS_ALUDE && !IS_SOCIO && <AdvisoryBranding />}
+        {current === 22 && !IS_ALUDE && !IS_SOCIO && <AdvisoryConteudo />}
+
+        {current === 12 && IS_SOCIO && <PiramidePosicionamento />}
+        {current === 13 && IS_SOCIO && <EstrategiaDeMarca />}
+        {current === 14 && IS_SOCIO && <Naming />}
+        {current === 15 && IS_SOCIO && <IdentidadeVisual />}
+        {current === 16 && IS_SOCIO && <IdentidadeVisualCompleta />}
+        {current === 17 && IS_SOCIO && <MyBranding />}
+        {current === 18 && IS_SOCIO && <SiteBrandExperience />}
+        {current === 19 && IS_SOCIO && <TheOneAgent />}
+        {current === 20 && IS_SOCIO && <Cronograma />}
+        {current === 21 && IS_SOCIO && <CenarioProjetoSocio cenario="Cenário 1" strategyPrice={9700} contentPrice={3000} duration="16 semanas" brandCount="4 marcas no ecossistema + marca pessoal" scope="Estratégia e posicionamento da Sócio Estratégico, com estratégia de canais e conteúdo. A identidade essencial abrange as 4 marcas do ecossistema; a marca pessoal do Max completa o projeto." />}
+        {current === 22 && IS_SOCIO && <CenarioProjetoSocio cenario="Cenário 2" strategyPrice={25000} contentPrice={12000} duration="20 semanas" brandCount="4 marcas no ecossistema + marca pessoal" scope="Projeto completo para o ecossistema: estratégia de marca, posicionamento e estratégia de canais e conteúdo para Sócio Estratégico, Sócio Talentos, Aporta Capital e Sócio IA." />}
+        {current === 23 && IS_SOCIO && <AdvisoryBranding />}
+        {current === 24 && IS_SOCIO && <AdvisoryConteudo />}
 
         {current === 5  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="market" />}
         {current === 6  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={0} />}
