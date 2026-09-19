@@ -1447,6 +1447,7 @@ function CardTheOneAgent() {
 function Calculadora({ clientName }) {
   const [selected, setSelected] = useState({
     estrategia: true,
+    estrategia_conteudo: false,
     entrevistas: IS_ALUDE,
     naming:     false,
     identidade: !IS_ALUDE,
@@ -1457,7 +1458,7 @@ function Calculadora({ clientName }) {
   const myBrandingUnitPrice = IS_ALUDE ? 6500 : (myBrandingQty >= 2 ? 5000 : 6000);
 
   const total = SERVICES.reduce((sum, s) => {
-    if (s.id === 'mybranding') return sum + (myBrandingQty * myBrandingUnitPrice);
+    if (s.id.startsWith('mybranding')) return sum + (myBrandingQty * myBrandingUnitPrice);
     return selected[s.id] ? sum + s.price : sum;
   }, 0);
   const discountPct = IS_ALUDE ? 0.10 : (total > 10000 ? 0.10 : 0.05);
@@ -1487,7 +1488,7 @@ function Calculadora({ clientName }) {
               <div className="flex-1 h-px bg-[#FE6942]/20" />
             </div>
             <div className="space-y-3">
-              {SERVICES.filter(s => s.id !== 'mybranding' && s.id !== 'sitebrand').map((service) => (
+              {SERVICES.filter(s => !s.id.startsWith('mybranding') && s.id !== 'sitebrand').map((service) => (
                 <div
                   key={service.id}
                   onClick={() => setSelected((prev) => {
@@ -1548,11 +1549,11 @@ function Calculadora({ clientName }) {
               <div className="flex-1 h-px bg-black/10" />
             </div>
             <div className="space-y-3">
-              {SERVICES.filter(s => s.id === 'mybranding').map((service) => (
+              {SERVICES.filter(s => s.id.startsWith('mybranding')).map((service) => (
                 <div
                   key={service.id}
                   className={`rounded-2xl px-7 py-6 border transition-all duration-200 flex items-center justify-between gap-4 ${
-                    myBrandingQty > 0
+                    myBrandingQty[service.id] > 0
                       ? 'border-[#FE6942] bg-[#FE6942]/[0.04]'
                       : 'border-black/[0.09] bg-[#F8F8F8] hover:border-black/20'
                   }`}
@@ -1561,35 +1562,35 @@ function Calculadora({ clientName }) {
                     {/* Contador de pessoas */}
                     <div className="flex items-center gap-0 bg-[#F0F0F0] border border-black/12 rounded-xl overflow-hidden">
                       <button
-                        onClick={(e) => { e.stopPropagation(); setMyBrandingQty(prev => Math.max(0, prev - 1)); }}
+                        onClick={(e) => { e.stopPropagation(); setMyBrandingQty(prev => ({...prev, [service.id]: Math.max(0, prev[service.id] - 1)})); }}
                         className="w-10 h-10 flex items-center justify-center font-halyard font-semibold text-[20px] text-[#181412] hover:bg-black/10 transition-colors select-none"
                         aria-label="Diminuir quantidade"
                       >
                         −
                       </button>
                       <span className="font-halyard font-bold text-[17px] w-8 text-center text-[#181412] tabular-nums">
-                        {myBrandingQty}
+                        {myBrandingQty[service.id]}
                       </span>
                       <button
-                        onClick={(e) => { e.stopPropagation(); setMyBrandingQty(prev => prev + 1); }}
+                        onClick={(e) => { e.stopPropagation(); setMyBrandingQty(prev => ({...prev, [service.id]: prev[service.id] + 1})); }}
                         className="w-10 h-10 flex items-center justify-center font-halyard font-semibold text-[20px] text-[#181412] hover:bg-black/10 transition-colors select-none"
                         aria-label="Aumentar quantidade"
                       >
                         +
                       </button>
                     </div>
-                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#181412]' : 'text-[#181412]/50'}`}>
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty[service.id] > 0 ? 'text-[#181412]' : 'text-[#181412]/50'}`}>
                       {service.label}
                     </span>
                   </div>
                   <div className="flex items-center gap-8 shrink-0">
                     {!IS_ALUDE && (
-                      <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
+                      <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${myBrandingQty[service.id] > 0 ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
                         {service.prazo}
                       </span>
                     )}
-                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
-                      {myBrandingQty > 0 ? formatBRL(myBrandingUnitPrice * myBrandingQty) : formatBRL(service.price)}
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty[service.id] > 0 ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
+                      {(myBrandingQty.mybranding_marca > 0 || myBrandingQty.mybranding_conteudo > 0) ? formatBRL(myBrandingUnitPrice * myBrandingQty) : formatBRL(service.price)}
                     </span>
                   </div>
                 </div>
@@ -1651,7 +1652,7 @@ function Calculadora({ clientName }) {
         </div>
 
         {/* Cards de entregáveis — aparecem abaixo dos checkboxes quando selecionados */}
-        {(SERVICES.some(s => s.id !== 'mybranding' && selected[s.id]) || myBrandingQty > 0) && (
+        {(SERVICES.some(s => !s.id.startsWith('mybranding') && selected[s.id]) || (myBrandingQty.mybranding_marca > 0 || myBrandingQty.mybranding_conteudo > 0)) && (
           <div className="flex flex-col gap-5 mb-10 md:mb-14">
             {selected.estrategia && <CardEstrategia />}
             {selected.entrevistas && (
@@ -1667,7 +1668,7 @@ function Calculadora({ clientName }) {
               </div>
             )}
             {selected.naming     && <CardNaming />}
-            {myBrandingQty > 0   && <CardMyBranding />}
+            {(myBrandingQty.mybranding_marca > 0 || myBrandingQty.mybranding_conteudo > 0)   && <CardMyBranding />}
             {selected.identidade && <CardIdentidade />}
             {selected.identidade_completa && <CardIdentidadeCompleta />}
             {selected.sitebrand  && <CardSiteBrand />}
