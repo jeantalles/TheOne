@@ -1557,108 +1557,252 @@ function PiramidePosicionamento() {
 function CenarioProjetoSocio({ cenario, strategyPrice, contentPrice, duration, scope, brandCount }) {
   const [selected, setSelected] = useState({
     estrategia: true,
-    conteudo_canais: true,
-    identidade_essencial: true,
-    identidade_completa: false,
-    marca_pessoal: true,
-    conteudo_pessoal: true,
+    estrategia_conteudo: false,
     entrevistas: false,
     naming: false,
-    site: false,
+    identidade: true,
+    identidade_completa: false,
+    sitebrand: false,
   });
 
+  const [myBrandingQty, setMyBrandingQty] = useState({ mybranding_marca: 0, mybranding_conteudo: 0 });
+
+  const hasFoundation = selected.estrategia;
+  const myBrandingPrice = {
+    mybranding_marca: hasFoundation ? 6000 : 9700,
+    mybranding_conteudo: 2000,
+  };
+
   const services = [
-    { id: 'estrategia', group: 'Fundação estratégica', label: 'Estratégia de Marca e Posicionamento', detail: scope, price: strategyPrice, prazo: cenario === 'Cenário 1' ? '6 semanas' : '10 semanas' },
-    { id: 'conteudo_canais', group: 'Fundação estratégica', label: 'Estratégia de Conteúdo e Canais', detail: cenario === 'Cenário 1' ? 'Direcionamento dos canais e da comunicação da Sócio Estratégico.' : 'Direcionamento dos canais e da comunicação das 4 marcas do ecossistema.', price: contentPrice, prazo: 'Incluída na etapa estratégica' },
-    { id: 'entrevistas', group: 'Itens complementares', label: 'Entrevistas com clientes e operação', detail: 'Pesquisa em profundidade para ampliar a leitura do ecossistema.', price: 3000, prazo: '2 semanas' },
-    { id: 'naming', group: 'Itens complementares', label: 'Naming', detail: 'Definição de nomes para novas frentes ou ofertas.', price: 5000, prazo: '2 semanas' },
-    { id: 'identidade_essencial', group: 'Identidade do ecossistema', label: 'Identidade de Marca Essencial', detail: 'Aplicada às 4 marcas do ecossistema Sócio.', price: 12000, prazo: '6 semanas' },
-    { id: 'identidade_completa', group: 'Identidade do ecossistema', label: 'Identidade de Marca Completa', detail: 'Alternativa à identidade essencial, com sistema visual e verbal ampliado.', price: 8000, prazo: '6 semanas' },
-    { id: 'marca_pessoal', group: 'Marca pessoal · Max', label: 'Estratégia de Marca Pessoal', detail: 'Posicionamento, narrativa e plataforma da marca pessoal do Max.', price: 6000, prazo: '4 semanas' },
-    { id: 'conteudo_pessoal', group: 'Marca pessoal · Max', label: 'Estratégia de Conteúdo da Marca Pessoal', detail: 'Linhas editoriais, formatos e direcionamento de conteúdo.', price: 2000, prazo: 'Incluída na etapa de marca pessoal' },
-    { id: 'site', group: 'Itens complementares', label: 'Site BrandExperience', detail: 'Experiência digital orientada pela nova estratégia.', price: 7000, prazo: '6 semanas' },
+    { id: 'estrategia', label: 'Estratégia de Marca e Posicionamento', price: strategyPrice, prazo: cenario === 'Cenário 1' ? '6 semanas' : '10 semanas' },
+    { id: 'estrategia_conteudo', label: 'Estratégia de Conteúdo e Canais', price: contentPrice, prazo: '2 semanas' },
+    { id: 'entrevistas', label: 'Entrevistas com Clientes', price: 3000, prazo: '2 semanas' },
+    { id: 'naming', label: 'Naming', price: 5000, prazo: '2 semanas' },
+    { id: 'identidade', label: 'Identidade de Marca Essencial', price: 12000, prazo: '6 semanas' },
+    { id: 'identidade_completa', label: 'Identidade de Marca Completa', price: 8000, prazo: '6 semanas' },
+    { id: 'mybranding_marca', label: 'Estratégia de Marca Pessoal', price: 0, prazo: '4 semanas' },
+    { id: 'mybranding_conteudo', label: 'Estratégia de Conteúdo', price: 0, prazo: '2 semanas' },
+    { id: 'sitebrand', label: 'Site BrandExperience', price: 7000, prazo: '6 semanas' },
   ];
 
-  const groups = ['Fundação estratégica', 'Identidade do ecossistema', 'Marca pessoal · Max', 'Itens complementares'];
-  const total = services.reduce((sum, service) => sum + (selected[service.id] ? service.price : 0), 0);
-  const totalVista = Math.round(total * 0.9);
-  const metade = Math.round(total / 2);
+  const total = services.reduce((sum, s) => {
+    if (s.id.startsWith('mybranding')) return sum + (myBrandingQty[s.id] * myBrandingPrice[s.id]);
+    return selected[s.id] ? sum + s.price : sum;
+  }, 0);
 
-  const toggleService = (id) => {
-    setSelected((current) => {
-      const next = { ...current, [id]: !current[id] };
-      if (id === 'identidade_essencial' && next[id]) next.identidade_completa = false;
-      if (id === 'identidade_completa' && next[id]) next.identidade_essencial = false;
-      return next;
-    });
-  };
+  const discountPct = total > 10000 ? 0.10 : 0.05;
+  const discountLabel = total > 10000 ? '10%' : '5%';
+  const totalDesconto = Math.round(total * (1 - discountPct));
+  const metade = Math.round(total / 2);
 
   return (
     <section className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24">
       <div className="max-w-[1100px] mx-auto">
-        <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Investimento · {cenario}</span>
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 lg:gap-12 items-end mt-4 mb-10 md:mb-12">
+        <div className="mb-3">
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Investimento · {cenario}</span>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-6 lg:gap-12 items-end mb-10 md:mb-12">
           <div>
-            <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.5rem,4vw,3.75rem)] leading-[1.02] tracking-tight">Defina o seu projeto</h2>
-            <p className="font-halyard font-light text-[#181412]/70 text-[19px] md:text-[22px] leading-[1.45] max-w-[53ch] mt-5">{scope}</p>
+            <h2 className="font-editorial font-normal text-[#181412] text-[clamp(2.5rem,4vw,3.75rem)] leading-[1.02] tracking-tight">
+              Defina o seu projeto
+            </h2>
+            {scope && (
+              <p className="font-halyard font-light text-[#181412]/70 text-[19px] md:text-[22px] leading-[1.45] max-w-[53ch] mt-4">
+                {scope}
+              </p>
+            )}
           </div>
-          <div className="rounded-2xl border border-[#FE6942]/25 bg-[#FE6942]/[0.04] px-6 py-5 min-w-[210px]">
-            <div className="font-halyard font-semibold text-[12px] tracking-[.18em] uppercase text-[#FE6942]">Prazo do projeto</div>
-            <div className="font-editorial text-[#181412] text-[2rem] leading-none mt-2">{duration}</div>
-            <div className="font-halyard font-light text-[#181412]/60 text-[14px] mt-2">{brandCount}</div>
-          </div>
-        </div>
-
-        <div className="space-y-7">
-          {groups.map((group) => (
-            <div key={group}>
-              <div className="flex items-center gap-3 mb-3 px-1">
-                <span className="font-halyard font-semibold text-[13px] tracking-[0.20em] uppercase text-[#FE6942]">{group}</span>
-                <div className="flex-1 h-px bg-[#FE6942]/20" />
-              </div>
-              <div className="space-y-3">
-                {services.filter((service) => service.group === group).map((service) => {
-                  const isSelected = selected[service.id];
-                  return (
-                    <button
-                      key={service.id}
-                      type="button"
-                      onClick={() => toggleService(service.id)}
-                      className={`w-full text-left rounded-2xl px-6 md:px-7 py-5 border transition-all duration-200 flex items-center justify-between gap-5 ${isSelected ? 'border-[#FE6942] bg-[#FE6942]/[0.04]' : 'border-black/[0.09] bg-[#F8F8F8] hover:border-black/20'}`}
-                    >
-                      <div className="flex items-start gap-4 md:gap-5 min-w-0">
-                        <span className="mt-1 w-6 h-6 rounded-md border flex items-center justify-center shrink-0" style={{ borderColor: isSelected ? '#FE6942' : 'rgba(0,0,0,.2)', background: isSelected ? '#FE6942' : 'transparent' }}>
-                          {isSelected && <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg>}
-                        </span>
-                        <span>
-                          <span className={`block font-halyard font-medium text-[18px] md:text-[20px] leading-[1.15] ${isSelected ? 'text-[#181412]' : 'text-[#181412]/50'}`}>{service.label}</span>
-                          <span className={`block font-halyard font-light text-[14px] md:text-[15px] leading-[1.35] mt-1.5 ${isSelected ? 'text-[#181412]/65' : 'text-[#181412]/35'}`}>{service.detail}</span>
-                        </span>
-                      </div>
-                      <div className="shrink-0 text-right">
-                        <span className={`block font-halyard font-medium text-[16px] md:text-[18px] ${isSelected ? 'text-[#181412]' : 'text-[#181412]/35'}`}>{formatBRL(service.price)}</span>
-                        <span className={`block font-halyard font-medium text-[12px] tracking-wide mt-1 ${isSelected ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>{service.prazo}</span>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
+          {duration && (
+            <div className="rounded-2xl border border-[#FE6942]/25 bg-[#FE6942]/[0.04] px-6 py-5 min-w-[210px]">
+              <div className="font-halyard font-semibold text-[12px] tracking-[.18em] uppercase text-[#FE6942]">Prazo do projeto</div>
+              <div className="font-editorial text-[#181412] text-[2rem] leading-none mt-2">{duration}</div>
+              {brandCount && <div className="font-halyard font-light text-[#181412]/60 text-[14px] mt-2">{brandCount}</div>}
             </div>
-          ))}
+          )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-10">
+        {/* Checklist de serviços padrão da Proposta M */}
+        <div className="space-y-6 mb-10 md:mb-14">
+
+          {/* Grupo TheOne Foundation */}
+          <div>
+            <div className="flex items-center gap-3 mb-3 px-1">
+              <span className="font-halyard font-semibold text-[14px] tracking-[0.20em] uppercase text-[#FE6942]">TheOne Foundation</span>
+              <div className="flex-1 h-px bg-[#FE6942]/20" />
+            </div>
+            <div className="space-y-3">
+              {services.filter(s => !s.id.startsWith('mybranding') && s.id !== 'sitebrand').map((service) => (
+                <div
+                  key={service.id}
+                  onClick={() => setSelected((prev) => {
+                    const nextVal = !prev[service.id];
+                    const updated = { ...prev, [service.id]: nextVal };
+                    if (service.id === 'identidade' && nextVal) {
+                      updated.identidade_completa = false;
+                    } else if (service.id === 'identidade_completa' && nextVal) {
+                      updated.identidade = false;
+                    }
+                    return updated;
+                  })}
+                  className={`cursor-pointer rounded-2xl px-7 py-6 border transition-all duration-200 flex items-center justify-between gap-4 ${
+                    selected[service.id]
+                      ? 'border-[#FE6942] bg-[#FE6942]/[0.04]'
+                      : 'border-black/[0.09] bg-[#F8F8F8] hover:border-black/20'
+                  }`}
+                >
+                  <div className="flex items-center gap-5">
+                    <div
+                      className="w-6 h-6 rounded-md border flex items-center justify-center shrink-0 transition-all duration-150"
+                      style={{
+                        borderColor: selected[service.id] ? '#FE6942' : 'rgba(0,0,0,0.2)',
+                        background: selected[service.id] ? '#FE6942' : 'transparent',
+                      }}
+                    >
+                      {selected[service.id] && (
+                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                          <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </div>
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/50'}`}>
+                      {service.label}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-8 shrink-0">
+                    <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${selected[service.id] ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
+                      {service.prazo}
+                    </span>
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
+                      {formatBRL(service.price)}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Grupo myBranding */}
+          <div>
+            <div className="flex items-center gap-3 mb-3 px-1">
+              <span className="font-halyard font-semibold text-[14px] tracking-[0.20em] uppercase text-[#FE6942]">myBranding</span>
+              <div className="flex-1 h-px bg-[#FE6942]/20" />
+            </div>
+            <div className="space-y-3">
+              {services.filter(s => s.id.startsWith('mybranding')).map((service) => (
+                <div
+                  key={service.id}
+                  className={`rounded-2xl px-7 py-6 border transition-all duration-200 flex items-center justify-between gap-4 ${
+                    myBrandingQty[service.id] > 0
+                      ? 'border-[#FE6942] bg-[#FE6942]/[0.04]'
+                      : 'border-black/[0.09] bg-[#F8F8F8] hover:border-black/20'
+                  }`}
+                >
+                  <div className="flex items-center gap-5">
+                    <div className="flex items-center gap-0 bg-[#F0F0F0] border border-black/12 rounded-xl overflow-hidden">
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setMyBrandingQty(prev => ({...prev, [service.id]: Math.max(0, prev[service.id] - 1)})); }}
+                        className="w-10 h-10 flex items-center justify-center font-halyard font-semibold text-[20px] text-[#181412] hover:bg-black/10 transition-colors select-none"
+                        aria-label="Diminuir quantidade"
+                      >
+                        −
+                      </button>
+                      <span className="font-halyard font-bold text-[17px] w-8 text-center text-[#181412] tabular-nums">
+                        {myBrandingQty[service.id]}
+                      </span>
+                      <button
+                        onClick={(e) => { e.stopPropagation(); setMyBrandingQty(prev => ({...prev, [service.id]: prev[service.id] + 1})); }}
+                        className="w-10 h-10 flex items-center justify-center font-halyard font-semibold text-[20px] text-[#181412] hover:bg-black/10 transition-colors select-none"
+                        aria-label="Aumentar quantidade"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty[service.id] > 0 ? 'text-[#181412]' : 'text-[#181412]/50'}`}>
+                      {service.label}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-8 shrink-0">
+                    <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${myBrandingQty[service.id] > 0 ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
+                      {service.prazo}
+                    </span>
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty[service.id] > 0 ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
+                      {myBrandingQty[service.id] > 0 ? formatBRL(myBrandingPrice[service.id] * myBrandingQty[service.id]) : formatBRL(myBrandingPrice[service.id])}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Grupo Site BrandExperience */}
+          <div>
+            <div className="flex items-center gap-3 mb-3 px-1">
+              <span className="font-halyard font-semibold text-[14px] tracking-[0.20em] uppercase text-[#FE6942]">Site BrandExperience</span>
+              <div className="flex-1 h-px bg-[#FE6942]/20" />
+            </div>
+            <div className="space-y-3">
+              {services.filter(s => s.id === 'sitebrand').map((service) => (
+                <div
+                  key={service.id}
+                  onClick={() => setSelected((prev) => ({ ...prev, [service.id]: !prev[service.id] }))}
+                  className={`cursor-pointer rounded-2xl px-7 py-6 border transition-all duration-200 flex items-center justify-between gap-4 ${
+                    selected[service.id]
+                      ? 'border-[#FE6942] bg-[#FE6942]/[0.04]'
+                      : 'border-black/[0.09] bg-[#F8F8F8] hover:border-black/20'
+                  }`}
+                >
+                  <div className="flex items-center gap-5">
+                    <div
+                      className="w-6 h-6 rounded-md border flex items-center justify-center shrink-0 transition-all duration-150"
+                      style={{
+                        borderColor: selected[service.id] ? '#FE6942' : 'rgba(0,0,0,0.2)',
+                        background: selected[service.id] ? '#FE6942' : 'transparent',
+                      }}
+                    >
+                      {selected[service.id] && (
+                        <svg width="11" height="11" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                          <path d="M2 6l3 3 5-5" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
+                      )}
+                    </div>
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/50'}`}>
+                      {service.label}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-8 shrink-0">
+                    <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${selected[service.id] ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
+                      {service.prazo}
+                    </span>
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${selected[service.id] ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
+                      {formatBRL(service.price)}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+        </div>
+
+        {/* Totais: 50/50 e À Vista */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-[#181412] rounded-2xl px-7 py-7 text-white">
             <div className="font-halyard font-medium text-[12px] tracking-[.18em] uppercase text-white/50 mb-2">Total do projeto</div>
             <div className="font-editorial text-[clamp(2.6rem,4vw,3.4rem)] leading-none">{formatBRL(total)}</div>
-            <div className="font-halyard font-light text-[15px] text-white/55 mt-3">50/50: {formatBRL(metade)} no início + {formatBRL(total - metade)} após 30 dias</div>
+            <div className="font-halyard font-light text-[15px] text-white/55 mt-3">
+              50/50: {formatBRL(metade)} no início + {formatBRL(total - metade)} após 30 dias
+            </div>
           </div>
           <div className="bg-[#F8F8F8] rounded-2xl px-7 py-7 border border-black/[0.07]">
-            <div className="font-halyard font-medium text-[12px] tracking-[.18em] uppercase text-[#FE6942] mb-2">À vista · 10% de desconto</div>
-            <div className="font-editorial text-[#FE6942] text-[clamp(2.6rem,4vw,3.4rem)] leading-none">{formatBRL(totalVista)}</div>
-            <div className="font-halyard font-light text-[15px] text-[#181412]/55 mt-3">Os itens complementares permanecem disponíveis para composição do escopo.</div>
+            <div className="font-halyard font-medium text-[12px] tracking-[.18em] uppercase text-[#FE6942] mb-2">À vista · {discountLabel} de desconto</div>
+            <div className="font-editorial text-[#FE6942] text-[clamp(2.6rem,4vw,3.4rem)] leading-none">{formatBRL(totalDesconto)}</div>
+            <div className="font-halyard font-light text-[15px] text-[#181412]/55 mt-3">
+              Economia de {formatBRL(total - totalDesconto)} com pagamento à vista
+            </div>
           </div>
         </div>
+
       </div>
     </section>
   );
