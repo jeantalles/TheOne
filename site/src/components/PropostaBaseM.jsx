@@ -76,11 +76,11 @@ const SERVICES = IS_ALUDE
       { id: 'sitebrand', label: 'Site BrandExperience', price: 7000, prazo: '6 semanas' },
     ];
 
-// Alude: narrativa TheOne distribuída em telas individuais; proposta base preserva a sequência original.
-const SLIDE_TOTAL = IS_SOCIO ? 25 : (IS_ALUDE ? 25 : 22);
+// Alude e Sócio: narrativa TheOne distribuída em telas individuais; proposta base preserva a sequência original.
+const SLIDE_TOTAL = IS_SOCIO ? 29 : (IS_ALUDE ? 26 : 23);
 
 const DARK_SLIDES = IS_SOCIO
-  ? [0, 1, 6, 7, 8, 9, 10, 12, 19]
+  ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 23]
   : (IS_ALUDE ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 21] : [0, 1, 6, 7, 8, 9, 10, 18]);
 
 const formatBRL = (v) => `R$ ${v.toLocaleString('pt-BR')}`;
@@ -2625,6 +2625,35 @@ function AdvisoryConteudo() {
 }
 
 
+function ContextoDeMercado() {
+  return (
+    <section className="relative min-h-[100svh] overflow-hidden bg-[#352B27] px-6 md:px-12 lg:px-16 py-8 flex items-center justify-center">
+      <div className="absolute inset-0 opacity-70 pointer-events-none" style={{ background: 'radial-gradient(circle at 50% 0%, rgba(254,105,66,.12), transparent 52%)' }} />
+      <div className="relative max-w-5xl mx-auto text-center flex flex-col items-center gap-5 py-8">
+        <span className="text-[#FE6942] font-halyard tracking-widest uppercase text-[23px]">
+          01 ⏤ 04
+        </span>
+        <h2 className="font-editorial font-normal text-[clamp(2.2rem,4.35vw,3.8rem)] leading-[1.1] tracking-tight max-w-[920px]">
+          <span className="text-[#FE6942]">Você não pode se vender<br />da mesma forma</span>{' '}
+          <span className="text-white">que o restante do seu mercado.</span>
+        </h2>
+
+        <div className="font-halyard font-light text-[#C7C7C7] text-[clamp(1.1rem,1.65vw,1.45rem)] leading-[1.42] space-y-5 max-w-[44rem] mx-auto">
+          <p>
+            Ter um bom produto, rodar anúncio e produzir conteúdo não é mais um diferencial. O mercado está ficando cada vez mais competitivo e parecido.
+          </p>
+          <p>
+            <strong className="font-semibold text-white">A maioria das empresas se posiciona na mesma prateleira que seus concorrentes</strong>, com ofertas parecidas. Se a embalagem de todos na prateleira for igual, os clientes vão escolher pelo quê? <strong className="font-semibold text-white">Preço.</strong>
+          </p>
+          <p>
+            E o pior: você pode até ser foda no que faz, referência pra quem já te conhece, e <strong className="font-semibold text-white">mesmo assim continuar invisível pro resto do mercado.</strong>
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── SLIDE 9: SOBRE A THEONE (Hero + Storytelling + seção "Existimos") ─────────
 function SobreTheOne({ scrollerRef, mode = 'all', storyPanelIndex = null }) {
   const aboutRef = useRef(null);
@@ -2686,10 +2715,10 @@ function SobreTheOne({ scrollerRef, mode = 'all', storyPanelIndex = null }) {
           disableNavEvents
           showTopLogo
           scroller={scroller}
-          hideFinalScrollHint={IS_ALUDE}
+          hideFinalScrollHint={IS_ALUDE || IS_SOCIO}
         />
       )}
-      {showMarket && IS_ALUDE && <ContextoDeMercado />}
+      {showMarket && (IS_ALUDE || IS_SOCIO) && <ContextoDeMercado />}
       {showStory && scroller && (
         <StorytellingSection
           persona={IS_ALUDE ? 'alude' : 'empresario'}
@@ -2892,14 +2921,14 @@ function PropostaSlideshow() {
         className={`absolute inset-0 overflow-y-auto ${DARK_SLIDES.includes(current) ? 'pb-0' : 'pb-20 md:pb-16'} ${animDir === 'next' ? 'slide-from-right' : 'slide-from-left'}`}
       >
         {current === 0  && <Capa />}
-        {current === 1 && !IS_ALUDE && (
+        {current === 1 && !IS_ALUDE && !IS_SOCIO && (
           <NomeClienteSlide 
             clientName={proposalState.clientName} 
             setClientName={(v) => setProposalState({ clientName: v })} 
             onGenerateLink={generateLink} 
           />
         )}
-        {current === (IS_ALUDE ? 1 : 2) && (
+        {current === (IS_ALUDE || IS_SOCIO ? 1 : 2) && (
           <ContextoEditavel 
             showDesejado={false}
             cenarioAtual={proposalState.cenarioAtual}
@@ -2908,7 +2937,7 @@ function PropostaSlideshow() {
             setCenarioDesejado={(v) => setProposalState({ cenarioDesejado: v })}
           />
         )}
-        {current === (IS_ALUDE ? 2 : 3) && (
+        {current === (IS_ALUDE || IS_SOCIO ? 2 : 3) && (
           <ContextoEditavel 
             showDesejado={true}
             cenarioAtual={proposalState.cenarioAtual}
@@ -2917,17 +2946,17 @@ function PropostaSlideshow() {
             setCenarioDesejado={(v) => setProposalState({ cenarioDesejado: v })}
           />
         )}
-        {current === (IS_ALUDE ? 3 : 4) && <Dores />}
-        {current === (IS_ALUDE ? 4 : 5) && (IS_ALUDE
+        {current === (IS_ALUDE || IS_SOCIO ? 3 : 4) && <Dores />}
+        {current === (IS_ALUDE || IS_SOCIO ? 4 : 5) && ((IS_ALUDE || IS_SOCIO)
           ? <SobreTheOne scrollerRef={slideScrollRef} mode="hero" />
           : <SobreTheOne scrollerRef={slideScrollRef} />
         )}
-        {current === 6  && !IS_ALUDE && <SobreJean />}
-        {current === 7  && !IS_ALUDE && <CaseSlide slug="zenic" />}
-        {current === 8  && !IS_ALUDE && <CaseSlide slug="thunders" />}
-        {current === 9  && !IS_ALUDE && <CaseSlide slug="camilla-toscano" />}
-        {current === 10 && !IS_ALUDE && <TheOneFoundation />}
-        {current === 11 && !IS_ALUDE && <CasaDaMarca />}
+        {current === 6  && !IS_ALUDE && !IS_SOCIO && <SobreJean />}
+        {current === 7  && !IS_ALUDE && !IS_SOCIO && <CaseSlide slug="zenic" />}
+        {current === 8  && !IS_ALUDE && !IS_SOCIO && <CaseSlide slug="thunders" />}
+        {current === 9  && !IS_ALUDE && !IS_SOCIO && <CaseSlide slug="camilla-toscano" />}
+        {current === 10 && !IS_ALUDE && !IS_SOCIO && <TheOneFoundation />}
+        {current === 11 && !IS_ALUDE && !IS_SOCIO && <CasaDaMarca />}
         {current === 12 && !IS_ALUDE && !IS_SOCIO && <EstrategiaDeMarca />}
         {current === 13 && !IS_ALUDE && !IS_SOCIO && <Naming />}
         {current === 14 && !IS_ALUDE && !IS_SOCIO && <IdentidadeVisual />}
@@ -2940,31 +2969,20 @@ function PropostaSlideshow() {
         {current === 21 && !IS_ALUDE && !IS_SOCIO && <AdvisoryBranding />}
         {current === 22 && !IS_ALUDE && !IS_SOCIO && <AdvisoryConteudo />}
 
-        {current === 12 && IS_SOCIO && <PiramidePosicionamento />}
-        {current === 13 && IS_SOCIO && <EstrategiaDeMarca />}
-        {current === 14 && IS_SOCIO && <Naming />}
-        {current === 15 && IS_SOCIO && <IdentidadeVisual />}
-        {current === 16 && IS_SOCIO && <IdentidadeVisualCompleta />}
-        {current === 17 && IS_SOCIO && <MyBranding />}
-        {current === 18 && IS_SOCIO && <SiteBrandExperience />}
-        {current === 19 && IS_SOCIO && <TheOneAgent />}
-        {current === 20 && IS_SOCIO && <Cronograma />}
-        {current === 21 && IS_SOCIO && <CenarioProjetoSocio cenario="Cenário 1" strategyPrice={9700} contentPrice={3000} duration="14 semanas" brandCount="4 marcas no ecossistema + marca pessoal" scope="Estratégia e posicionamento da Sócio Estratégico, com estratégia de canais e conteúdo. A identidade essencial abrange as 4 marcas do ecossistema; a marca pessoal do Max completa o projeto." />}
-        {current === 22 && IS_SOCIO && <CenarioProjetoSocio cenario="Cenário 2" strategyPrice={25000} contentPrice={12000} duration="18 semanas" brandCount="4 marcas no ecossistema + marca pessoal" scope="Projeto completo para o ecossistema: estratégia de marca, posicionamento e estratégia de canais e conteúdo para Sócio Estratégico, Sócio Talentos, Aporta Capital e Sócio IA." />}
-        {current === 23 && IS_SOCIO && <AdvisoryBranding />}
-        {current === 24 && IS_SOCIO && <AdvisoryConteudo />}
+        {/* Narrative TheOne slides (Alude e Sócio) */}
+        {current === 5  && (IS_ALUDE || IS_SOCIO) && <SobreTheOne scrollerRef={slideScrollRef} mode="market" />}
+        {current === 6  && (IS_ALUDE || IS_SOCIO) && <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={0} />}
+        {current === 7  && (IS_ALUDE || IS_SOCIO) && <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={1} />}
+        {current === 8  && (IS_ALUDE || IS_SOCIO) && <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={2} />}
+        {current === 9  && (IS_ALUDE || IS_SOCIO) && <SobreTheOne scrollerRef={slideScrollRef} mode="about" />}
+        {current === 10 && (IS_ALUDE || IS_SOCIO) && <SobreJean />}
+        {current === 11 && (IS_ALUDE || IS_SOCIO) && <CaseSlide slug="zenic" />}
+        {current === 12 && (IS_ALUDE || IS_SOCIO) && <CaseSlide slug="thunders" />}
+        {current === 13 && (IS_ALUDE || IS_SOCIO) && <CaseSlide slug="camilla-toscano" />}
+        {current === 14 && (IS_ALUDE || IS_SOCIO) && <TheOneFoundation />}
+        {current === 15 && (IS_ALUDE || IS_SOCIO) && <CasaDaMarca />}
 
-        {current === 5  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="market" />}
-        {current === 6  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={0} />}
-        {current === 7  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={1} />}
-        {current === 8  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="story" storyPanelIndex={2} />}
-        {current === 9  && IS_ALUDE && <SobreTheOne scrollerRef={slideScrollRef} mode="about" />}
-        {current === 10 && IS_ALUDE && <SobreJean />}
-        {current === 11 && IS_ALUDE && <CaseSlide slug="zenic" />}
-        {current === 12 && IS_ALUDE && <CaseSlide slug="thunders" />}
-        {current === 13 && IS_ALUDE && <CaseSlide slug="camilla-toscano" />}
-        {current === 14 && IS_ALUDE && <TheOneFoundation />}
-        {current === 15 && IS_ALUDE && <CasaDaMarca />}
+        {/* Alude specific remaining slides */}
         {current === 16 && IS_ALUDE && <G4CaseStudy />}
         {current === 17 && IS_ALUDE && <EstrategiaDeMarca />}
         {current === 18 && IS_ALUDE && <MyBranding />}
@@ -2975,13 +2993,28 @@ function PropostaSlideshow() {
         {current === 23 && IS_ALUDE && <Calculadora clientName={proposalState.clientName} />}
         {current === 24 && IS_ALUDE && <AdvisoryBranding />}
         {current === 25 && IS_ALUDE && <AdvisoryConteudo />}
+
+        {/* Sócio Estratégico specific remaining slides */}
+        {current === 16 && IS_SOCIO && <PiramidePosicionamento />}
+        {current === 17 && IS_SOCIO && <EstrategiaDeMarca />}
+        {current === 18 && IS_SOCIO && <Naming />}
+        {current === 19 && IS_SOCIO && <IdentidadeVisual />}
+        {current === 20 && IS_SOCIO && <IdentidadeVisualCompleta />}
+        {current === 21 && IS_SOCIO && <MyBranding />}
+        {current === 22 && IS_SOCIO && <SiteBrandExperience />}
+        {current === 23 && IS_SOCIO && <TheOneAgent />}
+        {current === 24 && IS_SOCIO && <Cronograma />}
+        {current === 25 && IS_SOCIO && <CenarioProjetoSocio cenario="Cenário 1" strategyPrice={9700} contentPrice={3000} duration="14 semanas" brandCount="4 marcas no ecossistema + marca pessoal" scope="Estratégia e posicionamento da Sócio Estratégico, com estratégia de canais e conteúdo. A identidade essencial abrange as 4 marcas do ecossistema; a marca pessoal do Max completa o projeto." />}
+        {current === 26 && IS_SOCIO && <CenarioProjetoSocio cenario="Cenário 2" strategyPrice={25000} contentPrice={12000} duration="18 semanas" brandCount="4 marcas no ecossistema + marca pessoal" scope="Projeto completo para o ecossistema: estratégia de marca, posicionamento e estratégia de canais e conteúdo para Sócio Estratégico, Sócio Talentos, Aporta Capital e Sócio IA." />}
+        {current === 27 && IS_SOCIO && <AdvisoryBranding />}
+        {current === 28 && IS_SOCIO && <AdvisoryConteudo />}
       </div>
 
       <div
         className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none z-10 transition-opacity duration-300"
         style={{
           opacity: hasMoreBelow ? 1 : 0,
-          background: `linear-gradient(to top, ${current === 5 ? 'rgba(128,128,128,0.15)' : (DARK_SLIDES.includes(current) ? 'rgba(10,10,10,0.95)' : 'rgba(255,255,255,0.95)')} 0%, transparent 100%)`,
+          background: `linear-gradient(to top, ${(!IS_ALUDE && !IS_SOCIO && current === 5) ? 'rgba(128,128,128,0.15)' : (DARK_SLIDES.includes(current) ? 'rgba(10,10,10,0.95)' : 'rgba(255,255,255,0.95)')} 0%, transparent 100%)`,
         }}
         aria-hidden="true"
       />

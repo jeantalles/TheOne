@@ -205,7 +205,7 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
   const isCompactLayout = useMediaQuery('(max-width: 1023px)');
   const allStories = STORIES[persona] || STORIES['empresario'];
   const stories = panelIndex === null ? allStories : [allStories[panelIndex]].filter(Boolean);
-  const background = persona === 'alude'
+  const background = (persona === 'alude' || staticMode)
     ? '#352B27'
     : 'linear-gradient(to bottom, #010000 0%, #212121 100%)';
 
