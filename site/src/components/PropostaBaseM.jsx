@@ -2216,7 +2216,7 @@ function Cronograma() {
             </h2>
           </div>
           <p className="font-halyard font-light text-black text-[20px] md:text-[24px] leading-[1.45] max-w-[36ch] lg:justify-self-end lg:text-right">
-            {IS_ALUDE ? 'Prazo de 2 a 4 meses, de acordo com os serviços contratados e a cadência de validações.' : 'Prazo médio de 4 a 12 semanas, de acordo com os serviços contratados.'}
+            {IS_ALUDE ? 'Prazo de 2 a 4 meses, de acordo com os serviços contratados e a cadência de validações.' : (IS_SOCIO ? 'Prazo de 16 a 20 semanas, de acordo com o cenário escolhido.' : 'Prazo médio de 4 a 12 semanas, de acordo com os serviços contratados.')}
           </p>
         </div>
 
