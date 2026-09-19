@@ -390,7 +390,7 @@ export default function Storytelling({ persona, scroller = null, panelIndex = nu
 
   const renderDesktopBody = (story) => {
     const fontSize = staticMode
-      ? 'clamp(1.35rem, 2.05vw, 1.9rem)'
+      ? 'clamp(1.1rem, 1.65vw, 1.45rem)'
       : (story.textSizeDesktop || style.texto);
     const scaledBodyFontSize = scaledFont(fontSize);
 
