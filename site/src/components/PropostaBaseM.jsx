@@ -1555,10 +1555,9 @@ function PiramidePosicionamento() {
 
 // ── SLIDES: CENÁRIOS DE PROJETO SÓCIO ESTRATÉGICO ─────────────────────────────
 function CenarioProjetoSocio({ cenario, strategyPrice, contentPrice, duration, scope, brandCount }) {
-  const isCenario2 = cenario === 'Cenário 2';
   const [selected, setSelected] = useState({
     estrategia: true,
-    estrategia_conteudo: isCenario2,
+    estrategia_conteudo: true,
     entrevistas: false,
     naming: false,
     identidade: true,
@@ -1567,8 +1566,8 @@ function CenarioProjetoSocio({ cenario, strategyPrice, contentPrice, duration, s
   });
 
   const [myBrandingQty, setMyBrandingQty] = useState({
-    mybranding_marca: isCenario2 ? 1 : 0,
-    mybranding_conteudo: isCenario2 ? 1 : 0,
+    mybranding_marca: 1,
+    mybranding_conteudo: 1,
   });
 
   const hasFoundation = selected.estrategia;
