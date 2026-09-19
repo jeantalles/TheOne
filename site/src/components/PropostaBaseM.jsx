@@ -1555,9 +1555,10 @@ function PiramidePosicionamento() {
 
 // ── SLIDES: CENÁRIOS DE PROJETO SÓCIO ESTRATÉGICO ─────────────────────────────
 function CenarioProjetoSocio({ cenario, strategyPrice, contentPrice, duration, scope, brandCount }) {
+  const isCenario2 = cenario === 'Cenário 2';
   const [selected, setSelected] = useState({
     estrategia: true,
-    estrategia_conteudo: false,
+    estrategia_conteudo: isCenario2,
     entrevistas: false,
     naming: false,
     identidade: true,
@@ -1565,7 +1566,10 @@ function CenarioProjetoSocio({ cenario, strategyPrice, contentPrice, duration, s
     sitebrand: false,
   });
 
-  const [myBrandingQty, setMyBrandingQty] = useState({ mybranding_marca: 0, mybranding_conteudo: 0 });
+  const [myBrandingQty, setMyBrandingQty] = useState({
+    mybranding_marca: isCenario2 ? 1 : 0,
+    mybranding_conteudo: isCenario2 ? 1 : 0,
+  });
 
   const hasFoundation = selected.estrategia;
   const myBrandingPrice = {
@@ -1579,7 +1583,7 @@ function CenarioProjetoSocio({ cenario, strategyPrice, contentPrice, duration, s
     { id: 'entrevistas', label: 'Entrevistas com Clientes', price: 3000, prazo: '2 semanas' },
     { id: 'naming', label: 'Naming', price: 5000, prazo: '2 semanas' },
     { id: 'identidade', label: 'Identidade de Marca Essencial', price: 12000, prazo: '6 semanas' },
-    { id: 'identidade_completa', label: 'Identidade de Marca Completa', price: 8000, prazo: '6 semanas' },
+    { id: 'identidade_completa', label: 'Identidade de Marca Completa', price: cenario === 'Cenário 1' ? 16000 : 20000, prazo: '6 semanas' },
     { id: 'mybranding_marca', label: 'Estratégia de Marca Pessoal', price: 0, prazo: '4 semanas' },
     { id: 'mybranding_conteudo', label: 'Estratégia de Conteúdo', price: 0, prazo: '2 semanas' },
     { id: 'sitebrand', label: 'Site BrandExperience', price: 7000, prazo: '6 semanas' },
