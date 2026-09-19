@@ -92,7 +92,7 @@ function Capa() {
   return (
     <section
       className="relative overflow-hidden flex flex-col justify-between"
-      style={{ height: '100svh', background: IS_ALUDE ? '#202020' : '#0a0a0a', padding: '48px 56px 44px' }}
+      style={{ height: '100svh', background: IS_SOCIO ? '#382C2A' : (IS_ALUDE ? '#202020' : '#0a0a0a'), padding: '48px 56px 44px' }}
     >
       <div className="noise-overlay" aria-hidden="true" />
 
@@ -2866,7 +2866,7 @@ function PropostaSlideshow() {
   return (
     <div
       className="relative overflow-hidden"
-      style={{ height: '100svh', background: DARK_SLIDES.includes(current) ? '#0a0a0a' : '#fff' }}
+      style={{ height: '100svh', background: (IS_SOCIO && current === 0) ? '#382C2A' : (DARK_SLIDES.includes(current) ? '#0a0a0a' : '#fff') }}
     >
 
       <div
