@@ -2940,8 +2940,8 @@ function PropostaSlideshow() {
         {current === 18 && IS_SOCIO && <SiteBrandExperience />}
         {current === 19 && IS_SOCIO && <TheOneAgent />}
         {current === 20 && IS_SOCIO && <Cronograma />}
-        {current === 21 && IS_SOCIO && <CenarioProjetoSocio cenario="Cenário 1" strategyPrice={9700} contentPrice={3000} duration="16 semanas" brandCount="4 marcas no ecossistema + marca pessoal" scope="Estratégia e posicionamento da Sócio Estratégico, com estratégia de canais e conteúdo. A identidade essencial abrange as 4 marcas do ecossistema; a marca pessoal do Max completa o projeto." />}
-        {current === 22 && IS_SOCIO && <CenarioProjetoSocio cenario="Cenário 2" strategyPrice={25000} contentPrice={12000} duration="20 semanas" brandCount="4 marcas no ecossistema + marca pessoal" scope="Projeto completo para o ecossistema: estratégia de marca, posicionamento e estratégia de canais e conteúdo para Sócio Estratégico, Sócio Talentos, Aporta Capital e Sócio IA." />}
+        {current === 21 && IS_SOCIO && <CenarioProjetoSocio cenario="Cenário 1" strategyPrice={9700} contentPrice={3000} duration="14 semanas" brandCount="4 marcas no ecossistema + marca pessoal" scope="Estratégia e posicionamento da Sócio Estratégico, com estratégia de canais e conteúdo. A identidade essencial abrange as 4 marcas do ecossistema; a marca pessoal do Max completa o projeto." />}
+        {current === 22 && IS_SOCIO && <CenarioProjetoSocio cenario="Cenário 2" strategyPrice={25000} contentPrice={12000} duration="18 semanas" brandCount="4 marcas no ecossistema + marca pessoal" scope="Projeto completo para o ecossistema: estratégia de marca, posicionamento e estratégia de canais e conteúdo para Sócio Estratégico, Sócio Talentos, Aporta Capital e Sócio IA." />}
         {current === 23 && IS_SOCIO && <AdvisoryBranding />}
         {current === 24 && IS_SOCIO && <AdvisoryConteudo />}
 
