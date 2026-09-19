@@ -1597,6 +1597,7 @@ function CenarioProjetoSocio({ cenario, strategyPrice, contentPrice, duration, s
   const discountLabel = total > 10000 ? '10%' : '5%';
   const totalDesconto = Math.round(total * (1 - discountPct));
   const metade = Math.round(total / 2);
+  const parcela3x = Math.round(total / 3);
 
   return (
     <section className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24">
@@ -1853,6 +1854,14 @@ function CenarioProjetoSocio({ cenario, strategyPrice, contentPrice, duration, s
                     <span className="font-medium">50/50:</span> {formatBRL(metade)} no início + {formatBRL(total - metade)} após 30 dias
                   </span>
                 </li>
+                {cenario === 'Cenário 2' && (
+                  <li className="flex items-start gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
+                    <span className="font-halyard font-light text-[#181412] text-[18px] leading-[1.5]">
+                      <span className="font-medium">3 parcelas:</span> {formatBRL(parcela3x)} no início + {formatBRL(parcela3x)} após 30 dias + {formatBRL(total - parcela3x * 2)} após 60 dias
+                    </span>
+                  </li>
+                )}
                 <li className="flex items-start gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
                   <span className="font-halyard font-light text-[#181412] text-[18px] leading-[1.5]">
@@ -1902,6 +1911,7 @@ function Calculadora({ clientName }) {
   const discountLabel = total > 10000 ? '10%' : '5%';
   const totalDesconto = Math.round(total * (1 - discountPct));
   const metade = Math.round(total / 2);
+  const parcela3x = Math.round(total / 3);
 
   return (
     <section className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24">
