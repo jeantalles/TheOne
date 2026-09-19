@@ -34,7 +34,7 @@ const SERVICES = IS_ALUDE
       { id: 'sitebrand', label: 'Site BrandExperience', price: 7000, prazo: '6 semanas' },
     ]
   : [
-      { id: 'estrategia', label: 'Estratégia de Marca', price: 9700, prazo: '6 semanas' },
+      { id: 'estrategia', label: 'Estratégia de Marca e Posicionamento', price: 9700, prazo: '6 semanas' },
       { id: 'estrategia_conteudo', label: 'Estratégia de Conteúdo e Canais', price: 3000, prazo: '2 semanas' },
       { id: 'entrevistas', label: 'Entrevistas com Clientes', price: 3000, prazo: '2 semanas' },
       { id: 'naming', label: 'Naming', price: 5000, prazo: '2 semanas' },
@@ -1554,8 +1554,8 @@ function Calculadora({ clientName }) {
           {/* Grupo myBranding */}
           <div>
             <div className="flex items-center gap-3 mb-3 px-1">
-              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">myBranding</span>
-              <div className="flex-1 h-px bg-black/10" />
+              <span className="font-halyard font-semibold text-[14px] tracking-[0.20em] uppercase text-[#FE6942]">myBranding</span>
+              <div className="flex-1 h-px bg-[#FE6942]/20" />
             </div>
             <div className="space-y-3">
               {SERVICES.filter(s => s.id.startsWith('mybranding')).map((service) => (
@@ -1610,8 +1610,8 @@ function Calculadora({ clientName }) {
           {/* Grupo Site BrandExperience */}
           <div>
             <div className="flex items-center gap-3 mb-3 px-1">
-              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">Site BrandExperience</span>
-              <div className="flex-1 h-px bg-black/10" />
+              <span className="font-halyard font-semibold text-[14px] tracking-[0.20em] uppercase text-[#FE6942]">Site BrandExperience</span>
+              <div className="flex-1 h-px bg-[#FE6942]/20" />
             </div>
             <div className="space-y-3">
               {SERVICES.filter(s => s.id === 'sitebrand').map((service) => (

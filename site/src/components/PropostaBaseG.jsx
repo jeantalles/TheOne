@@ -15,7 +15,7 @@ import { useProposalState } from '../hooks/useProposalState';
 gsap.registerPlugin(ScrollTrigger);
 
 const SERVICES = [
-  { id: 'estrategia', label: 'Posicionamento / Estratégia de Marca', price: 15000, prazo: '6 semanas' },
+  { id: 'estrategia', label: 'Estratégia de Marca e Posicionamento', price: 15000, prazo: '6 semanas' },
   { id: 'estrategia_conteudo', label: 'Estratégia de Conteúdo e Canais', price: 6000, prazo: '2 semanas' },
   { id: 'naming',     label: 'Naming',                 price: 8000, prazo: '2 semanas' },
   { id: 'identidade', label: 'Identidade de Marca Essencial',   price: 0, prazo: '4 semanas' },
@@ -1468,8 +1468,8 @@ function Calculadora({ clientName }) {
           {/* Grupo myBranding */}
           <div>
             <div className="flex items-center gap-3 mb-3 px-1">
-              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">myBranding</span>
-              <div className="flex-1 h-px bg-black/10" />
+              <span className="font-halyard font-semibold text-[14px] tracking-[0.20em] uppercase text-[#FE6942]">myBranding</span>
+              <div className="flex-1 h-px bg-[#FE6942]/20" />
             </div>
             <div className="space-y-3">
               {SERVICES.filter(s => s.id.startsWith('mybranding')).map((service) => (
@@ -1511,7 +1511,7 @@ function Calculadora({ clientName }) {
                       {service.prazo}
                     </span>
                     <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty[service.id] > 0 ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
-                      {(myBrandingQty.mybranding_marca > 0 || myBrandingQty.mybranding_conteudo > 0) ? formatBRL(myBrandingPrice * myBrandingQty) : formatBRL(myBrandingPrice)}
+                      {myBrandingQty[service.id] > 0 ? formatBRL(myBrandingPrice[service.id] * myBrandingQty[service.id]) : formatBRL(myBrandingPrice[service.id])}
                     </span>
                   </div>
                 </div>
@@ -1522,8 +1522,8 @@ function Calculadora({ clientName }) {
           {/* Grupo Site BrandExperience */}
           <div>
             <div className="flex items-center gap-3 mb-3 px-1">
-              <span className="font-halyard font-semibold text-[12px] tracking-[0.22em] uppercase text-[#181412]/40">Site BrandExperience</span>
-              <div className="flex-1 h-px bg-black/10" />
+              <span className="font-halyard font-semibold text-[14px] tracking-[0.20em] uppercase text-[#FE6942]">Site BrandExperience</span>
+              <div className="flex-1 h-px bg-[#FE6942]/20" />
             </div>
             <div className="space-y-3">
               {SERVICES.filter(s => s.id === 'sitebrand').map((service) => (
