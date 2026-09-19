@@ -1534,8 +1534,8 @@ function CenarioProjetoSocio({ cenario, strategyPrice, contentPrice, duration, s
     estrategia_conteudo: true,
     entrevistas: false,
     naming: false,
-    identidade: true,
-    identidade_completa: false,
+    identidade: false,
+    identidade_completa: true,
     sitebrand: false,
   });
 

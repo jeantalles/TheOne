@@ -24,7 +24,7 @@ const TOKEN_STYLES = {
   ORANGE: { color: '#FE6942', fontWeight: 400 },
   QUESTION: {
     color: '#FFFFFF',
-    fontFamily: '"PP Editorial New", serif',
+    fontFamily: '"Halyard Display", sans-serif',
     fontSize: 'clamp(1.7rem, 2.5vw, 2.6rem)',
     fontWeight: 400,
     lineHeight: '1.05',
