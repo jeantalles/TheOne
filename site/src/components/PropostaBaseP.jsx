@@ -18,7 +18,7 @@ gsap.registerPlugin(ScrollTrigger);
 const SERVICES = [
   { id: 'estrategia', label: 'Estratégia de Marca',   price: 7000, prazo: '5 semanas' },
   { id: 'entrevistas', label: 'Entrevistas com Clientes', price: 2000, prazo: '1 semana' },
-  { id: 'naming',     label: 'Naming',                 price: 2000, prazo: '2 semanas' },
+  { id: 'naming',     label: 'Naming',                 price: 3000, prazo: '2 semanas' },
   { id: 'identidade', label: 'Identidade de Marca Essencial',   price: 4000, prazo: '4 semanas' },
   { id: 'identidade_completa', label: 'Identidade de Marca Completa', price: 6000, prazo: '6 semanas' },
   { id: 'mybranding', label: 'myBranding',            price: 4000, prazo: '3 semanas' },
@@ -26,7 +26,7 @@ const SERVICES = [
 ];
 
 // 0: Capa | 1: NomeCliente | 2: Contexto A | 3: Contexto B | 4: Dores | 5: SobreTheOne | 6: Jean | 7: Zenic | 8: Thunders | 9: Camilla | 10: TheOne Foundation | 11: Casa da Marca | 12: Nossa Metodologia | 13: Estratégia | 14: myBranding | 15: Naming | 16: Identidade Essencial | 17: Identidade Completa | 18: SiteBrandExperience | 19: TheOne Agent | 20: Cronograma | 21: Calculadora | 22: Consultoria
-const SLIDE_TOTAL = 23;
+const SLIDE_TOTAL = 24;
 
 const DARK_SLIDES = [0, 1, 6, 7, 8, 9, 10, 12, 19];
 
@@ -1382,8 +1382,10 @@ function Calculadora({ clientName }) {
   });
   const [myBrandingQty, setMyBrandingQty] = useState(0);
 
+  const hasFoundation = selected.estrategia;
+  const myBrandingPrice = hasFoundation ? 6000 : 9000;
   const total = SERVICES.reduce((sum, s) => {
-    if (s.id === 'mybranding') return sum + (myBrandingQty * s.price);
+    if (s.id === 'mybranding') return sum + (myBrandingQty * myBrandingPrice);
     return selected[s.id] ? sum + s.price : sum;
   }, 0);
   const discountPct = total > 10000 ? 0.10 : 0.05;
@@ -1547,7 +1549,7 @@ function Calculadora({ clientName }) {
                       {service.prazo}
                     </span>
                     <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
-                      {myBrandingQty > 0 ? formatBRL(service.price * myBrandingQty) : formatBRL(service.price)}
+                      {myBrandingQty > 0 ? formatBRL(myBrandingPrice * myBrandingQty) : formatBRL(myBrandingPrice)}
                     </span>
                   </div>
                 </div>
@@ -1889,13 +1891,13 @@ function Cronograma() {
   );
 }
 
-// ── SLIDE 9: CONSULTORIA ──────────────────────────────────────────────────────
-function Consultoria() {
+// ── SLIDE: ADVISORY DE BRANDING ──────────────────────────────────────────────
+function AdvisoryBranding() {
   const sectionRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.cons-item', {
+      gsap.from('.adv-brand-item', {
         opacity: 0, y: 24, stagger: 0.09, duration: 0.8, ease: 'power3.out',
         scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
       });
@@ -1903,64 +1905,130 @@ function Consultoria() {
     return () => ctx.revert();
   }, []);
 
-  const plans = [
-    {
-      label: 'Essencial',
-      preco: '1.000',
-      bullets: ['2 encontros mensais', 'Suporte via WhatsApp'],
-      destaque: false,
-    },
-    {
-      label: 'Premium',
-      preco: '2.000',
-      bullets: ['4 encontros mensais', 'Suporte via WhatsApp'],
-      destaque: true,
-    },
-  ];
-
   return (
-    <section ref={sectionRef} className="bg-white px-6 md:px-12 lg:px-16 pt-16 md:pt-20 pb-24 flex flex-col justify-center min-h-[100svh]">
-      <div className="max-w-[900px] mx-auto w-full">
+    <section ref={sectionRef} className="relative overflow-hidden bg-[#F8F7F5] px-6 md:px-12 lg:px-16 py-14 md:py-16 lg:py-20 flex flex-col justify-center min-h-[100svh]">
+      <div className="absolute inset-x-0 top-0 h-px bg-[#FE6942]" />
+      <div className="max-w-[1400px] mx-auto w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_.92fr] gap-10 lg:gap-16 xl:gap-24 items-end">
+          <div className="max-w-[760px]">
+            <span className="adv-brand-item block font-halyard font-semibold text-[14px] md:text-[15px] tracking-[0.22em] uppercase text-[#FE6942] mb-6">
+              Acompanhamento estratégico
+            </span>
+            <h2 className="adv-brand-item font-editorial font-normal text-[#181412] text-[clamp(3.4rem,6.1vw,6.25rem)] leading-[.92] tracking-[-0.045em] mb-8">
+              Advisory de Branding
+            </h2>
+            <p className="adv-brand-item font-halyard font-light text-[#181412] text-[21px] md:text-[25px] leading-[1.42] max-w-[35ch]">
+              Suporte estratégico para colocar o posicionamento em prática, evoluir a percepção de mercado e manter a consistência em todos os canais.
+            </p>
+          </div>
 
-        <h2 className="cons-item font-halyard font-semibold text-[#181412] text-[clamp(2rem,3.6vw,3.2rem)] leading-[1.1] mb-4">
-          Consultoria de Acompanhamento Mensal
-        </h2>
-        <p className="cons-item font-halyard font-light text-[#181412] text-[20px] md:text-[22px] leading-[1.5] mb-12 max-w-[58ch]">
-          Suporte estratégico para colocar o posicionamento em prática, com encontros regulares e suporte direto no WhatsApp. Mínimo 3 meses.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {plans.map((plan) => (
-            <div
-              key={plan.label}
-              className={`cons-item rounded-2xl px-8 py-9 border-2 ${
-                plan.destaque
-                  ? 'border-[#FE6942] bg-[#FFF8F6]'
-                  : 'border-black/[0.08] bg-[#F8F8F8]'
-              }`}
-            >
-              <div className={`font-halyard text-[12px] tracking-[0.22em] uppercase font-semibold mb-5 ${plan.destaque ? 'text-[#FE6942]' : 'text-[#181412]/40'}`}>
-                {plan.label}
+          <div className="flex flex-col gap-6">
+            {/* Essencial */}
+            <div className="adv-brand-item bg-[#211F1E] text-white rounded-[28px] p-7 md:p-8 lg:p-9 shadow-[0_18px_48px_rgba(24,20,18,0.12)]">
+              <div className="flex items-start justify-between gap-6 pb-6 border-b border-white/15">
+                <div>
+                  <span className="block font-halyard font-semibold text-[13px] tracking-[0.18em] uppercase text-[#FE6942] mb-2">Essencial</span>
+                  <p className="font-halyard font-light text-[17px] leading-[1.4] text-white/65">Acompanhamento quinzenal (2 encontros/mês) + Suporte via WhatsApp.</p>
+                </div>
               </div>
-              <div className="font-halyard font-semibold text-[#FE6942] leading-[1] mb-6" style={{ fontSize: 'clamp(2.4rem, 4vw, 3.2rem)' }}>
-                R${plan.preco}<span className="text-[1.4rem] font-normal">/mês</span>
+              <div className="pt-6 flex items-end justify-between gap-5">
+                <span className="font-halyard font-medium text-[13px] tracking-[0.18em] uppercase text-white/45 pb-1">Investimento mensal</span>
+                <div className="font-halyard font-medium text-[#FE6942] text-[clamp(2.4rem,3.5vw,3.8rem)] leading-[.82] tracking-[-0.055em] whitespace-nowrap">
+                  R$ 2.000<span className="text-[1.1rem] md:text-[1.25rem] tracking-normal text-white/55 font-light"> /mês</span>
+                  <div className="block mt-1 font-halyard text-[12px] tracking-wide text-white/40 font-light text-right">*Mínimo 3 meses</div>
+                </div>
               </div>
-              <ul className="space-y-3">
-                {plan.bullets.map((b) => (
-                  <li key={b} className="flex items-center gap-3">
-                    <span className="w-2 h-2 rounded-full bg-[#FE6942] shrink-0" />
-                    <span className="font-halyard font-light text-[#181412] text-[18px] md:text-[20px] leading-[1.4]">{b}</span>
-                  </li>
-                ))}
-              </ul>
             </div>
-          ))}
-        </div>
 
+            {/* Premium */}
+            <div className="adv-brand-item bg-[#211F1E] text-white rounded-[28px] p-7 md:p-8 lg:p-9 shadow-[0_18px_48px_rgba(24,20,18,0.12)] border border-[#FE6942]/30">
+              <div className="flex items-start justify-between gap-6 pb-6 border-b border-white/15">
+                <div>
+                  <span className="block font-halyard font-semibold text-[13px] tracking-[0.18em] uppercase text-[#FE6942] mb-2">Premium</span>
+                  <p className="font-halyard font-light text-[17px] leading-[1.4] text-white/65">Acompanhamento semanal (4 encontros/mês) + Suporte via WhatsApp.</p>
+                </div>
+              </div>
+              <div className="pt-6 flex items-end justify-between gap-5">
+                <span className="font-halyard font-medium text-[13px] tracking-[0.18em] uppercase text-white/45 pb-1">Investimento mensal</span>
+                <div className="font-halyard font-medium text-[#FE6942] text-[clamp(2.4rem,3.5vw,3.8rem)] leading-[.82] tracking-[-0.055em] whitespace-nowrap">
+                  R$ 4.000<span className="text-[1.1rem] md:text-[1.25rem] tracking-normal text-white/55 font-light"> /mês</span>
+                  <div className="block mt-1 font-halyard text-[12px] tracking-wide text-white/40 font-light text-right">*Mínimo 3 meses</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
 }
+
+// ── SLIDE: ADVISORY DE CONTEÚDO ─────────────────────────────────────────────
+function AdvisoryConteudo() {
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.from('.adv-cont-item', {
+        opacity: 0, y: 24, stagger: 0.09, duration: 0.8, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 70%' },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="relative overflow-hidden bg-[#F8F7F5] px-6 md:px-12 lg:px-16 py-14 md:py-16 lg:py-20 flex flex-col justify-center min-h-[100svh]">
+      <div className="absolute inset-x-0 top-0 h-px bg-[#FE6942]" />
+      <div className="max-w-[1400px] mx-auto w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.08fr_.92fr] gap-10 lg:gap-16 xl:gap-24 items-end">
+          <div className="max-w-[760px]">
+            <span className="adv-cont-item block font-halyard font-semibold text-[14px] md:text-[15px] tracking-[0.22em] uppercase text-[#FE6942] mb-6">
+              Acompanhamento estratégico
+            </span>
+            <h2 className="adv-cont-item font-editorial font-normal text-[#181412] text-[clamp(3.4rem,6.1vw,6.25rem)] leading-[.92] tracking-[-0.045em] mb-8">
+              Advisory de Conteúdo &amp; Posicionamento
+            </h2>
+            <p className="adv-cont-item font-halyard font-light text-[#181412] text-[21px] md:text-[25px] leading-[1.42] max-w-[35ch]">
+              Um acompanhamento estratégico para fazer o planejamento de marca ganhar vida, com direcionamento da produção de conteúdo, revisão de pautas e orientação do tom de voz.
+            </p>
+          </div>
+
+          <div className="adv-cont-item bg-[#211F1E] text-white rounded-[28px] p-7 md:p-9 lg:p-10 shadow-[0_18px_48px_rgba(24,20,18,0.12)]">
+            <div className="flex items-start justify-between gap-6 pb-8 border-b border-white/15">
+              <div>
+                <span className="block font-halyard font-semibold text-[13px] tracking-[0.18em] uppercase text-[#FE6942] mb-3">Acompanhamento quinzenal</span>
+                <p className="font-halyard font-light text-[17px] md:text-[18px] leading-[1.4] text-white/65">Direção contínua para transformar estratégia em conteúdo consistente.</p>
+              </div>
+              <span className="shrink-0 flex items-center justify-center w-10 h-10 rounded-full border border-[#FE6942] text-[#FE6942] font-halyard text-[18px]">01</span>
+            </div>
+
+            <ul className="py-8 space-y-5">
+              {[
+                'Direcionamento do estrategista contratado',
+                '1 reunião a cada 15 dias para ideação e revisão',
+                'Acompanhamento direto e suporte via grupo de WhatsApp',
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
+                  <span className="font-halyard font-light text-[18px] md:text-[19px] leading-[1.42] text-white/90">{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="pt-7 border-t border-white/15 flex items-end justify-between gap-5">
+              <span className="font-halyard font-medium text-[13px] tracking-[0.18em] uppercase text-white/45 pb-1">Investimento mensal</span>
+              <div className="font-halyard font-medium text-[#FE6942] text-[clamp(2.8rem,4vw,4.4rem)] leading-[.82] tracking-[-0.055em] whitespace-nowrap">
+                R$ 4.000<span className="text-[1.1rem] md:text-[1.25rem] tracking-normal text-white/55 font-light"> /mês</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 
 // ── SLIDE 9: SOBRE A THEONE (Hero + Storytelling + seção "Existimos") ─────────
 function SobreTheOne({ scrollerRef }) {
@@ -2254,7 +2322,8 @@ function PropostaSlideshow() {
         {current === 19 && <TheOneAgent />}
         {current === 20 && <Cronograma />}
         {current === 21 && <Calculadora clientName={proposalState.clientName} />}
-        {current === 22 && <Consultoria />}
+        {current === 22 && <AdvisoryBranding />}
+        {current === 23 && <AdvisoryConteudo />}
       </div>
 
       <div
