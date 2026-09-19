@@ -1622,7 +1622,7 @@ function CenarioProjetoSocio({ cenario, strategyPrice, contentPrice, duration, s
           )}
         </div>
 
-        {/* Checklist de serviços padrão da Proposta M */}
+        {/* Checklist de serviços */}
         <div className="space-y-6 mb-10 md:mb-14">
 
           {/* Grupo TheOne Foundation */}
@@ -1785,22 +1785,86 @@ function CenarioProjetoSocio({ cenario, strategyPrice, contentPrice, duration, s
 
         </div>
 
-        {/* Totais: 50/50 e À Vista */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="bg-[#181412] rounded-2xl px-7 py-7 text-white">
-            <div className="font-halyard font-medium text-[12px] tracking-[.18em] uppercase text-white/50 mb-2">Total do projeto</div>
-            <div className="font-editorial text-[clamp(2.6rem,4vw,3.4rem)] leading-none">{formatBRL(total)}</div>
-            <div className="font-halyard font-light text-[15px] text-white/55 mt-3">
-              50/50: {formatBRL(metade)} no início + {formatBRL(total - metade)} após 30 dias
-            </div>
+        {/* Cards de entregáveis — aparecem abaixo dos checkboxes quando selecionados */}
+        {(services.some(s => !s.id.startsWith('mybranding') && selected[s.id]) || (myBrandingQty.mybranding_marca > 0 || myBrandingQty.mybranding_conteudo > 0)) && (
+          <div className="flex flex-col gap-5 mb-10 md:mb-14">
+            {selected.estrategia && <CardEstrategia />}
+            {selected.entrevistas && (
+              <div className="bg-[#F4F4F5] rounded-[28px] md:rounded-[32px] px-8 md:px-14 pt-12 md:pt-16 pb-10 md:pb-14">
+                <h3 className="font-halyard font-medium text-[#050505] text-[28px] md:text-[36px] leading-[1.08] mb-6">
+                  Entrevistas com Clientes
+                </h3>
+                <p className="font-halyard font-light text-[#181412] text-[17px] md:text-[18px] leading-[1.4] max-w-[380px]">
+                  Pesquisa em profundidade diretamente com os clientes da marca para mapear dores, desejos e diferenciais percebidos.
+                </p>
+              </div>
+            )}
+            {selected.naming && <CardNaming />}
+            {(myBrandingQty.mybranding_marca > 0 || myBrandingQty.mybranding_conteudo > 0) && <CardMyBranding />}
+            {selected.identidade && <CardIdentidade />}
+            {selected.identidade_completa && <CardIdentidadeCompleta />}
+            {selected.sitebrand && <CardSiteBrand />}
+            <CardTheOneAgent />
           </div>
-          <div className="bg-[#F8F8F8] rounded-2xl px-7 py-7 border border-black/[0.07]">
-            <div className="font-halyard font-medium text-[12px] tracking-[.18em] uppercase text-[#FE6942] mb-2">À vista · {discountLabel} de desconto</div>
-            <div className="font-editorial text-[#FE6942] text-[clamp(2.6rem,4vw,3.4rem)] leading-none">{formatBRL(totalDesconto)}</div>
-            <div className="font-halyard font-light text-[15px] text-[#181412]/55 mt-3">
-              Economia de {formatBRL(total - totalDesconto)} com pagamento à vista
+        )}
+
+        {/* Painel de total + pagamento — IDÊNTICO À PROPOSTA M */}
+        <div className="space-y-4">
+          <div className={`grid gap-4 ${total > 0 ? 'grid-cols-2' : 'grid-cols-1'}`}>
+            <div className="bg-[#F8F8F8] rounded-2xl px-7 py-7 border border-black/[0.07]">
+              <div className="font-halyard font-medium text-[12px] tracking-[0.18em] uppercase text-[#181412]/80 mb-2">Total do projeto</div>
+              <div className="font-halyard font-medium text-[#181412] text-[2.75rem] md:text-[3.25rem] leading-[1] mb-1 transition-all duration-300">
+                {total === 0 ? 'R$ 0' : formatBRL(total)}
+              </div>
+              {total === 0 && (
+                <div className="font-halyard font-light text-[#181412]/30 text-[14px]">Selecione os serviços acima</div>
+              )}
             </div>
+
+            {total > 0 && (
+              <div className="bg-[#F8F8F8] rounded-2xl px-7 py-7 border border-black/[0.07]">
+                <div className="font-halyard font-medium text-[12px] tracking-[0.18em] uppercase text-[#FE6942] mb-2">
+                  À vista com {discountLabel} de desconto
+                </div>
+                <div className="font-halyard font-medium text-[#FE6942] text-[2.75rem] md:text-[3.25rem] leading-[1] mb-1 transition-all duration-300">
+                  {formatBRL(totalDesconto)}
+                </div>
+                {total > 10000 && (
+                  <div className="font-halyard font-light text-[12px] text-[#181412]/40 mt-1">
+                    Desconto especial para projetos acima de R$ 10.000
+                  </div>
+                )}
+              </div>
+            )}
           </div>
+
+          {total > 0 && (
+            <div className="bg-[#F8F8F8] rounded-2xl px-7 py-6 border border-black/[0.07]">
+              <div className="font-halyard font-semibold text-[#181412] text-[13px] tracking-[0.14em] uppercase mb-4">
+                Condições de pagamento
+              </div>
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
+                  <span className="font-halyard font-light text-[#181412] text-[18px] leading-[1.5]">
+                    <span className="font-medium">50/50:</span> {formatBRL(metade)} no início + {formatBRL(total - metade)} após 30 dias
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
+                  <span className="font-halyard font-light text-[#181412] text-[18px] leading-[1.5]">
+                    <span className="font-medium">À vista:</span> {discountLabel} de desconto: {formatBRL(totalDesconto)}
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
+                  <span className="font-halyard font-light text-[#181412] text-[18px] leading-[1.5]">
+                    <span className="font-medium">Cartão:</span> em até 12x com taxa da operadora
+                  </span>
+                </li>
+              </ul>
+            </div>
+          )}
         </div>
 
       </div>
