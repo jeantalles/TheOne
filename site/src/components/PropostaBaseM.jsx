@@ -25,19 +25,23 @@ const ALUDE_PROPOSAL = {
 const SERVICES = IS_ALUDE
   ? [
       { id: 'estrategia', label: 'Estratégia de Marca e Posicionamento', price: 9700, prazo: '6 semanas' },
+      { id: 'estrategia_conteudo', label: 'Estratégia de Conteúdo e Canais', price: 3000, prazo: '2 semanas' },
       { id: 'entrevistas', label: 'Entrevistas com pessoas da operação e com clientes', price: 3000, prazo: '2 semanas' },
       { id: 'naming', label: 'Naming', price: 5000, prazo: '2 semanas' },
-      { id: 'mybranding', label: 'myBranding', price: 13000, prazo: '4 semanas' },
       { id: 'identidade_completa', label: 'Identidade Visual e Verbal', price: 8000, prazo: '6 semanas' },
+      { id: 'mybranding_marca', label: 'Estratégia de Marca Pessoal', price: 0, prazo: '4 semanas' },
+      { id: 'mybranding_conteudo', label: 'Estratégia de Conteúdo', price: 0, prazo: '2 semanas' },
       { id: 'sitebrand', label: 'Site BrandExperience', price: 7000, prazo: '6 semanas' },
     ]
   : [
       { id: 'estrategia', label: 'Estratégia de Marca', price: 9700, prazo: '6 semanas' },
+      { id: 'estrategia_conteudo', label: 'Estratégia de Conteúdo e Canais', price: 3000, prazo: '2 semanas' },
       { id: 'entrevistas', label: 'Entrevistas com Clientes', price: 3000, prazo: '2 semanas' },
       { id: 'naming', label: 'Naming', price: 5000, prazo: '2 semanas' },
       { id: 'identidade', label: 'Identidade de Marca Essencial', price: 6000, prazo: '4 semanas' },
       { id: 'identidade_completa', label: 'Identidade de Marca Completa', price: 8000, prazo: '6 semanas' },
-      { id: 'mybranding', label: 'myBranding', price: 6000, prazo: '4 semanas' },
+      { id: 'mybranding_marca', label: 'Estratégia de Marca Pessoal', price: 0, prazo: '4 semanas' },
+      { id: 'mybranding_conteudo', label: 'Estratégia de Conteúdo', price: 0, prazo: '2 semanas' },
       { id: 'sitebrand', label: 'Site BrandExperience', price: 7000, prazo: '6 semanas' },
     ];
 
@@ -1448,17 +1452,22 @@ function Calculadora({ clientName }) {
   const [selected, setSelected] = useState({
     estrategia: true,
     estrategia_conteudo: false,
+    estrategia_conteudo: false,
     entrevistas: IS_ALUDE,
     naming:     false,
     identidade: !IS_ALUDE,
     identidade_completa: IS_ALUDE,
     sitebrand: false,
   });
-  const [myBrandingQty, setMyBrandingQty] = useState(IS_ALUDE ? 2 : 0);
-  const myBrandingUnitPrice = IS_ALUDE ? 6500 : (myBrandingQty >= 2 ? 5000 : 6000);
-
+  const [myBrandingQty, setMyBrandingQty] = useState({ mybranding_marca: IS_ALUDE ? 2 : 0, mybranding_conteudo: 0 });
+  const hasFoundation = selected.estrategia;
+  const myBrandingPrice = {
+    mybranding_marca: IS_ALUDE ? 6500 : (hasFoundation ? 6000 : 9700),
+    mybranding_conteudo: IS_ALUDE ? 0 : 2000
+  };
+  
   const total = SERVICES.reduce((sum, s) => {
-    if (s.id.startsWith('mybranding')) return sum + (myBrandingQty * myBrandingUnitPrice);
+    if (s.id.startsWith('mybranding')) return sum + (myBrandingQty[s.id] * myBrandingPrice[s.id]);
     return selected[s.id] ? sum + s.price : sum;
   }, 0);
   const discountPct = IS_ALUDE ? 0.10 : (total > 10000 ? 0.10 : 0.05);
@@ -1590,7 +1599,7 @@ function Calculadora({ clientName }) {
                       </span>
                     )}
                     <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty[service.id] > 0 ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
-                      {(myBrandingQty.mybranding_marca > 0 || myBrandingQty.mybranding_conteudo > 0) ? formatBRL(myBrandingUnitPrice * myBrandingQty) : formatBRL(service.price)}
+                      {myBrandingQty[service.id] > 0 ? formatBRL(myBrandingPrice[service.id] * myBrandingQty[service.id]) : formatBRL(myBrandingPrice[service.id])}
                     </span>
                   </div>
                 </div>
