@@ -14,7 +14,7 @@ import { useProposalState } from '../hooks/useProposalState';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const IS_ALUDE = true;
+const IS_ALUDE = false;
 
 const EDIFICA_PROPOSAL = {
   clientName: 'Edifica',
@@ -62,11 +62,13 @@ const EDIFICA_PROPOSAL = {
 
 const SERVICES = [
   { id: 'estrategia', label: 'Estratégia de Marca e Posicionamento', price: 9000, prazo: '6 semanas' },
+  { id: 'estrategia_conteudo', label: 'Estratégia de Conteúdo e Canais', price: 3000, prazo: '2 semanas' },
   { id: 'entrevistas', label: 'Entrevistas com Clientes', price: 3000, prazo: '2 semanas' },
   { id: 'naming', label: 'Naming', price: 3000, prazo: '2 semanas' },
   { id: 'identidade', label: 'Identidade de Marca Essencial', price: 6000, prazo: '4 semanas' },
   { id: 'identidade_completa', label: 'Identidade de Marca Completa', price: 8000, prazo: '6 semanas' },
-  { id: 'mybranding', label: 'myBranding', price: 6000, prazo: '4 semanas' },
+  { id: 'mybranding_marca', label: 'Estratégia de Marca Pessoal', price: 6000, prazo: '4 semanas' },
+  { id: 'mybranding_conteudo', label: 'Estratégia de Conteúdo', price: 2000, prazo: '2 semanas' },
   { id: 'sitebrand', label: 'Site BrandExperience', price: 6000, prazo: '6 semanas' },
 ];
 
@@ -1278,11 +1280,15 @@ function CardEstrategia() {
           <p className="font-halyard font-light text-[#181412] text-[19px] md:text-[21px] leading-[1.45] max-w-[340px] mb-6">
             Um documento com mais de 80 slides com a fundação estratégica e caminho para sua marca se tornar TheOne
           </p>
-          <p className="font-halyard font-light text-[#181412] text-[17px] mb-3">Também inclui:</p>
-          <ul className="space-y-1.5">
-            <ArrowItem>Estratégia de Canais</ArrowItem>
-            <ArrowItem>{IS_ALUDE ? 'Estratégia de Conteúdo' : 'Estratégia de Produção de Conteúdo'}</ArrowItem>
-          </ul>
+          {IS_ALUDE && (
+            <>
+              <p className="font-halyard font-light text-[#181412] text-[17px] mb-3">Também inclui:</p>
+              <ul className="space-y-1.5">
+                <ArrowItem>Estratégia de Canais</ArrowItem>
+                <ArrowItem>Estratégia de Conteúdo</ArrowItem>
+              </ul>
+            </>
+          )}
         </div>
       </div>
       <div className="hidden md:flex shrink-0 self-end items-end justify-end pr-10 pb-8">
@@ -1465,17 +1471,17 @@ function CardTheOneAgent() {
 function Calculadora({ clientName }) {
   const [selected, setSelected] = useState({
     estrategia: true,
+    estrategia_conteudo: true,
     entrevistas: false,
     naming:     false,
     identidade: true,
     identidade_completa: false,
     sitebrand: false,
   });
-  const [myBrandingQty, setMyBrandingQty] = useState(1);
-  const myBrandingUnitPrice = 6000;
+  const [myBrandingQty, setMyBrandingQty] = useState({ mybranding_marca: 1, mybranding_conteudo: 1 });
 
   const total = SERVICES.reduce((sum, s) => {
-    if (s.id === 'mybranding') return sum + (myBrandingQty * myBrandingUnitPrice);
+    if (s.id.startsWith('mybranding')) return sum + (myBrandingQty[s.id] * s.price);
     return selected[s.id] ? sum + s.price : sum;
   }, 0);
   const discountPct = IS_ALUDE ? 0.10 : (total > 10000 ? 0.10 : 0.05);
@@ -1506,7 +1512,7 @@ function Calculadora({ clientName }) {
               <div className="flex-1 h-px bg-[#FE6942]/20" />
             </div>
             <div className="space-y-3">
-              {SERVICES.filter(s => s.id !== 'mybranding' && s.id !== 'sitebrand').map((service) => (
+              {SERVICES.filter(s => !s.id.startsWith('mybranding') && s.id !== 'sitebrand').map((service) => (
                 <div
                   key={service.id}
                   onClick={() => setSelected((prev) => {
@@ -1565,11 +1571,11 @@ function Calculadora({ clientName }) {
               <div className="flex-1 h-px bg-[#FE6942]/20" />
             </div>
             <div className="space-y-3">
-              {SERVICES.filter(s => s.id === 'mybranding').map((service) => (
+              {SERVICES.filter(s => s.id.startsWith('mybranding')).map((service) => (
                 <div
                   key={service.id}
                   className={`rounded-2xl px-7 py-6 border transition-all duration-200 flex items-center justify-between gap-4 ${
-                    myBrandingQty > 0
+                    myBrandingQty[service.id] > 0
                       ? 'border-[#FE6942] bg-[#FE6942]/[0.04]'
                       : 'border-black/[0.09] bg-[#F8F8F8] hover:border-black/20'
                   }`}
@@ -1578,35 +1584,35 @@ function Calculadora({ clientName }) {
                     {/* Contador de pessoas */}
                     <div className="flex items-center gap-0 bg-[#F0F0F0] border border-black/12 rounded-xl overflow-hidden">
                       <button
-                        onClick={(e) => { e.stopPropagation(); setMyBrandingQty(prev => Math.max(0, prev - 1)); }}
+                        onClick={(e) => { e.stopPropagation(); setMyBrandingQty(prev => ({ ...prev, [service.id]: Math.max(0, prev[service.id] - 1) })); }}
                         className="w-10 h-10 flex items-center justify-center font-halyard font-semibold text-[20px] text-[#181412] hover:bg-black/10 transition-colors select-none"
                         aria-label="Diminuir quantidade"
                       >
                         −
                       </button>
                       <span className="font-halyard font-bold text-[17px] w-8 text-center text-[#181412] tabular-nums">
-                        {myBrandingQty}
+                        {myBrandingQty[service.id]}
                       </span>
                       <button
-                        onClick={(e) => { e.stopPropagation(); setMyBrandingQty(prev => prev + 1); }}
+                        onClick={(e) => { e.stopPropagation(); setMyBrandingQty(prev => ({ ...prev, [service.id]: prev[service.id] + 1 })); }}
                         className="w-10 h-10 flex items-center justify-center font-halyard font-semibold text-[20px] text-[#181412] hover:bg-black/10 transition-colors select-none"
                         aria-label="Aumentar quantidade"
                       >
                         +
                       </button>
                     </div>
-                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#181412]' : 'text-[#181412]/50'}`}>
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty[service.id] > 0 ? 'text-[#181412]' : 'text-[#181412]/50'}`}>
                       {service.label}
                     </span>
                   </div>
                   <div className="flex items-center gap-8 shrink-0">
                     {!IS_ALUDE && (
-                      <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
+                      <span className={`font-halyard font-medium text-[16px] md:text-[17px] transition-colors duration-150 ${myBrandingQty[service.id] > 0 ? 'text-[#FE6942]' : 'text-[#181412]/30'}`}>
                         {service.prazo}
                       </span>
                     )}
-                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty > 0 ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
-                      {myBrandingQty > 0 ? formatBRL(myBrandingUnitPrice * myBrandingQty) : formatBRL(service.price)}
+                    <span className={`font-halyard font-medium text-[18px] md:text-[20px] transition-colors duration-150 ${myBrandingQty[service.id] > 0 ? 'text-[#181412]' : 'text-[#181412]/30'}`}>
+                      {myBrandingQty[service.id] > 0 ? formatBRL(service.price * myBrandingQty[service.id]) : formatBRL(service.price)}
                     </span>
                   </div>
                 </div>
@@ -1668,7 +1674,7 @@ function Calculadora({ clientName }) {
         </div>
 
         {/* Cards de entregáveis — aparecem abaixo dos checkboxes quando selecionados */}
-        {(SERVICES.some(s => s.id !== 'mybranding' && selected[s.id]) || myBrandingQty > 0) && (
+        {(SERVICES.some(s => !s.id.startsWith('mybranding') && selected[s.id]) || myBrandingQty.mybranding_marca > 0 || myBrandingQty.mybranding_conteudo > 0) && (
           <div className="flex flex-col gap-5 mb-10 md:mb-14">
             {selected.estrategia && <CardEstrategia />}
             {selected.entrevistas && (
@@ -1684,7 +1690,7 @@ function Calculadora({ clientName }) {
               </div>
             )}
             {selected.naming     && <CardNaming />}
-            {myBrandingQty > 0   && <CardMyBranding />}
+            {(myBrandingQty.mybranding_marca > 0 || myBrandingQty.mybranding_conteudo > 0) && <CardMyBranding />}
             {selected.identidade && <CardIdentidade />}
             {selected.identidade_completa && <CardIdentidadeCompleta />}
             {selected.sitebrand  && <CardSiteBrand />}
@@ -1747,6 +1753,14 @@ function Calculadora({ clientName }) {
                     {IS_ALUDE ? <><span className="font-medium">Prazo:</span> de 2 a 4 meses, de acordo com o escopo contratado.</> : <><span className="font-medium">Cartão:</span> em até 12x com taxa da operadora</>}
                   </span>
                 </li>
+                {!IS_ALUDE && (
+                  <li className="flex items-start gap-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
+                    <span className="font-halyard font-light text-[#181412] text-[18px] leading-[1.5]">
+                      <span className="font-medium">Prazo do projeto:</span> 12 semanas
+                    </span>
+                  </li>
+                )}
               </ul>
             </div>
           )}
@@ -2006,7 +2020,7 @@ function Cronograma() {
             </h2>
           </div>
           <p className="font-halyard font-light text-black text-[20px] md:text-[24px] leading-[1.45] max-w-[36ch] lg:justify-self-end lg:text-right">
-            {IS_ALUDE ? 'Prazo de 2 a 4 meses, de acordo com os serviços contratados e a cadência de validações.' : 'Prazo médio de 4 a 12 semanas, de acordo com os serviços contratados.'}
+            {IS_ALUDE ? 'Prazo de 2 a 4 meses, de acordo com os serviços contratados e a cadência de validações.' : 'Prazo do projeto: 12 semanas.'}
           </p>
         </div>
 
