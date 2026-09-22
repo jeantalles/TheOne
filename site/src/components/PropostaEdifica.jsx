@@ -14,7 +14,7 @@ import { useProposalState } from '../hooks/useProposalState';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const IS_ALUDE = false;
+const IS_ALUDE = true;
 
 const EDIFICA_PROPOSAL = {
   clientName: 'Edifica',
@@ -1280,15 +1280,6 @@ function CardEstrategia() {
           <p className="font-halyard font-light text-[#181412] text-[19px] md:text-[21px] leading-[1.45] max-w-[340px] mb-6">
             Um documento com mais de 80 slides com a fundação estratégica e caminho para sua marca se tornar TheOne
           </p>
-          {IS_ALUDE && (
-            <>
-              <p className="font-halyard font-light text-[#181412] text-[17px] mb-3">Também inclui:</p>
-              <ul className="space-y-1.5">
-                <ArrowItem>Estratégia de Canais</ArrowItem>
-                <ArrowItem>Estratégia de Conteúdo</ArrowItem>
-              </ul>
-            </>
-          )}
         </div>
       </div>
       <div className="hidden md:flex shrink-0 self-end items-end justify-end pr-10 pb-8">
@@ -1374,7 +1365,6 @@ function CardMyBranding() {
           <ul className="space-y-1.5">
             <ArrowItem>Posicionamento de marca pessoal</ArrowItem>
             <ArrowItem>Narrativa de origem e visão de mundo</ArrowItem>
-            {IS_ALUDE && <ArrowItem>Estratégia de Canais e Conteúdo</ArrowItem>}
             <ArrowItem>Guia de Marca Pessoal completo</ArrowItem>
           </ul>
         </div>
@@ -1750,17 +1740,9 @@ function Calculadora({ clientName }) {
                 <li className="flex items-start gap-3">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
                   <span className="font-halyard font-light text-[#181412] text-[18px] leading-[1.5]">
-                    {IS_ALUDE ? <><span className="font-medium">Prazo:</span> de 2 a 4 meses, de acordo com o escopo contratado.</> : <><span className="font-medium">Cartão:</span> em até 12x com taxa da operadora</>}
+                    <span className="font-medium">Prazo do projeto:</span> 12 semanas
                   </span>
                 </li>
-                {!IS_ALUDE && (
-                  <li className="flex items-start gap-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#FE6942] shrink-0 mt-2.5" />
-                    <span className="font-halyard font-light text-[#181412] text-[18px] leading-[1.5]">
-                      <span className="font-medium">Prazo do projeto:</span> 12 semanas
-                    </span>
-                  </li>
-                )}
               </ul>
             </div>
           )}
@@ -2020,7 +2002,7 @@ function Cronograma() {
             </h2>
           </div>
           <p className="font-halyard font-light text-black text-[20px] md:text-[24px] leading-[1.45] max-w-[36ch] lg:justify-self-end lg:text-right">
-            {IS_ALUDE ? 'Prazo de 2 a 4 meses, de acordo com os serviços contratados e a cadência de validações.' : 'Prazo do projeto: 12 semanas.'}
+            Prazo do projeto: 12 semanas.
           </p>
         </div>
 
