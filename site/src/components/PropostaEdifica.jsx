@@ -2097,8 +2097,11 @@ function Consultoria() {
 
             <div className="pt-7 border-t border-white/15 flex items-end justify-between gap-5">
               <span className="font-halyard font-medium text-[13px] tracking-[0.18em] uppercase text-white/45 pb-1">Investimento mensal</span>
-              <div className="font-halyard font-medium text-[#FE6942] text-[clamp(2.8rem,4vw,4.4rem)] leading-[.82] tracking-[-0.055em] whitespace-nowrap">
-                R$ 3.000<span className="text-[1.1rem] md:text-[1.25rem] tracking-normal text-white/55 font-light"> /mês</span>
+              <div className="text-right">
+                <div className="font-halyard font-medium text-[#FE6942] text-[clamp(2.8rem,4vw,4.4rem)] leading-[.82] tracking-[-0.055em] whitespace-nowrap">
+                  R$ 3.000<span className="text-[1.1rem] md:text-[1.25rem] tracking-normal text-white/55 font-light"> /mês</span>
+                </div>
+                <p className="font-halyard font-light text-[14px] md:text-[15px] text-white/70 mt-3">Contratação mínima de 3 meses</p>
               </div>
             </div>
           </div>
