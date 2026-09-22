@@ -69,7 +69,7 @@ const SERVICES = [
   { id: 'identidade_completa', label: 'Identidade de Marca Completa', price: 8000, prazo: '6 semanas' },
   { id: 'mybranding_marca', label: 'Estratégia de Marca Pessoal', price: 6000, prazo: '4 semanas' },
   { id: 'mybranding_conteudo', label: 'Estratégia de Conteúdo', price: 2000, prazo: '2 semanas' },
-  { id: 'sitebrand', label: 'Site BrandExperience', price: 6000, prazo: '6 semanas' },
+  { id: 'sitebrand', label: 'Site BrandExperience', price: 7000, prazo: '6 semanas' },
 ];
 
 // Alude: narrativa TheOne distribuída em telas individuais; proposta base preserva a sequência original.
