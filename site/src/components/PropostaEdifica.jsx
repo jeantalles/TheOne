@@ -2036,7 +2036,7 @@ function Consultoria() {
               Acompanhamento estratégico
             </span>
             <h2 className="cons-item font-editorial font-normal text-[#181412] text-[clamp(3.4rem,6.1vw,6.25rem)] leading-[.92] tracking-[-0.045em] mb-8">
-              Advisory de Conteúdo &amp; Posicionamento
+              Advisory de Conteúdo
             </h2>
             <p className="cons-item font-halyard font-light text-[#181412] text-[21px] md:text-[25px] leading-[1.42] max-w-[35ch]">
               Um acompanhamento estratégico para fazer o planejamento de marca ganhar vida, com direcionamento da produção de conteúdo, revisão de pautas e orientação do tom de voz.
