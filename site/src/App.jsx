@@ -34,6 +34,7 @@ const PropostaWokingThaiFinal = lazy(() => import('./components/PropostaWokingTh
 const PropostaPadraoP = lazy(() => import('./components/PropostaPadrao-P'));
 const PropostaKalidash = lazy(() => import('./components/PropostaKalidash'));
 const PropostaBaseP = lazy(() => import('./components/PropostaBaseP'));
+const PropostaHinfros = lazy(() => import('./components/PropostaHinfros'));
 const PropostaAnderson = lazy(() => import('./components/PropostaAnderson'));
 const PropostaBaseM = lazy(() => import('./components/PropostaBaseM'));
 const PropostaBaseG = lazy(() => import('./components/PropostaBaseG'));
@@ -82,6 +83,7 @@ export default function App() {
   const isPropostaPadraoP = ['/proposta-p', '/proposta-p/'].includes(pathname);
   const isPropostaKalidash = ['/kalidash', '/kalidash/'].includes(pathname);
   const isBaseP = ['/base-p', '/base-p/'].includes(pathname);
+  const isHinfros = ['/hinfros', '/hinfros/'].includes(pathname);
   const isAnderson = ['/anderson-neville', '/anderson-neville/'].includes(pathname);
   const isBaseM = ['/base-m', '/base-m/'].includes(pathname);
   const isSocioEstrategico = ['/socio-estrategico', '/socio-estrategico/'].includes(pathname);
@@ -359,6 +361,9 @@ export default function App() {
   }
   if (isPropostaKalidash) {
     return <Suspense fallback={null}><PropostaKalidash /></Suspense>;
+  }
+  if (isHinfros) {
+    return <Suspense fallback={null}><PropostaHinfros /></Suspense>;
   }
   if (isBaseP) {
     return <Suspense fallback={null}><PropostaBaseP /></Suspense>;

@@ -1373,8 +1373,8 @@ function CardTheOneAgent() {
 }
 
 // ── SLIDE 8: CALCULADORA ──────────────────────────────────────────────────────
-function Calculadora({ clientName }) {
-  const [selected, setSelected] = useState({
+function Calculadora({ clientName, initialScope }) {
+  const [selected, setSelected] = useState(initialScope?.selected ?? {
     estrategia: true,
     estrategia_conteudo: false,
     entrevistas: false,
@@ -1383,7 +1383,7 @@ function Calculadora({ clientName }) {
     identidade_completa: false,
     sitebrand:  false,
   });
-  const [myBrandingQty, setMyBrandingQty] = useState({ mybranding_marca: 0, mybranding_conteudo: 0 });
+  const [myBrandingQty, setMyBrandingQty] = useState(initialScope?.myBrandingQty ?? { mybranding_marca: 0, mybranding_conteudo: 0 });
 
   const hasFoundation = selected.estrategia;
   const myBrandingPrice = {
@@ -2026,7 +2026,7 @@ function AdvisoryConteudo() {
             <div className="pt-7 border-t border-white/15 flex items-end justify-between gap-5">
               <span className="font-halyard font-medium text-[13px] tracking-[0.18em] uppercase text-white/45 pb-1">Investimento mensal</span>
               <div className="font-halyard font-medium text-[#FE6942] text-[clamp(2.8rem,4vw,4.4rem)] leading-[.82] tracking-[-0.055em] whitespace-nowrap">
-                R$ 4.000<span className="text-[1.1rem] md:text-[1.25rem] tracking-normal text-white/55 font-light"> /mês</span>
+                R$ 2.500<span className="text-[1.1rem] md:text-[1.25rem] tracking-normal text-white/55 font-light"> /mês</span>
               </div>
             </div>
           </div>
@@ -2223,11 +2223,12 @@ function CaseSlide({ slug }) {
 }
 
 // ── SLIDESHOW ─────────────────────────────────────────────────────────────────
-function PropostaSlideshow() {
+function PropostaSlideshow({ initialState, initialScope }) {
   const [proposalState, setProposalState, generateLink] = useProposalState({
     clientName: '',
     cenarioAtual: '',
-    cenarioDesejado: ''
+    cenarioDesejado: '',
+    ...initialState
   });
   const [current, setCurrent] = useState(0);
   const [animDir, setAnimDir] = useState('next');
@@ -2328,7 +2329,7 @@ function PropostaSlideshow() {
         {current === 18 && <SiteBrandExperience />}
         {current === 19 && <TheOneAgent />}
         {current === 20 && <Cronograma />}
-        {current === 21 && <Calculadora clientName={proposalState.clientName} />}
+        {current === 21 && <Calculadora clientName={proposalState.clientName} initialScope={initialScope} />}
         {current === 22 && <AdvisoryBranding />}
         {current === 23 && <AdvisoryConteudo />}
       </div>
@@ -2400,7 +2401,7 @@ function PropostaSlideshow() {
 }
 
 // ── PÁGINA ────────────────────────────────────────────────────────────────────
-export default function PropostaBaseP() {
+export default function PropostaBaseP({ initialState, initialScope }) {
   useEffect(() => {
     const meta = document.createElement('meta');
     meta.name = 'robots';
@@ -2420,7 +2421,7 @@ export default function PropostaBaseP() {
   return (
     <div className="bg-[#0a0a0a] min-h-screen font-sans">
       <div className="noise-overlay" aria-hidden="true" />
-      <PropostaSlideshow />
+      <PropostaSlideshow initialState={initialState} initialScope={initialScope} />
     </div>
   );
 }
