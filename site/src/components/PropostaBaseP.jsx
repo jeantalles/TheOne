@@ -355,12 +355,9 @@ function EstrategiaDeMarca() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
-            <h2 className="est-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
+            <h2 className="est-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-10">
               Estratégia<br />de Marca
             </h2>
-            <div className="est-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              R$ 5.000
-            </div>
             <p className="est-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               Um sistema estratégico organizado por etapas: primeiro entendemos o terreno, depois definimos o posicionamento e, por fim, desenhamos como a sua marca se efetiva nos canais certos.
             </p>
@@ -525,12 +522,9 @@ function Naming() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
-            <h2 className="nam-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
+            <h2 className="nam-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-10">
               Naming
             </h2>
-            <div className="nam-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              R$ 2.000
-            </div>
             <p className="nam-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               Criamos o nome que sua marca merece: estratégico, memorável e protegível. Um nome que carrega posicionamento, gera desejo e abre portas antes do primeiro contato.
             </p>
@@ -611,12 +605,9 @@ function IdentidadeVisual() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
-            <h2 className="id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
+            <h2 className="id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-10">
               Identidade de Marca<br />Essencial
             </h2>
-            <div className="id-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              R$ 4.000
-            </div>
             <p className="id-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               Transformamos a estratégia em uma expressão visual única. Uma identidade que o mercado reconhece, o público deseja e você tem orgulho de mostrar em qualquer contexto.
             </p>
@@ -734,12 +725,9 @@ function IdentidadeVisualCompleta() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
-            <h2 className="id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
+            <h2 className="id-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-10">
               Identidade de Marca<br />Completa
             </h2>
-            <div className="id-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              R$ 6.000
-            </div>
             <p className="id-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               Transformamos a estratégia em uma expressão visual única. Uma identidade que o mercado reconhece, o público deseja e você tem orgulho de mostrar em qualquer contexto.
             </p>
@@ -866,12 +854,9 @@ function MyBranding() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
-            <h2 className="mb-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
+            <h2 className="mb-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-10">
               myBranding
             </h2>
-            <div className="mb-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              R$ 4.000
-            </div>
             <p className="mb-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               Você é seu maior ativo. O myBranding transforma quem você é em uma marca usando a metodologia BeOne para posicioná-lo como referência única no seu mercado.
             </p>
@@ -1035,12 +1020,9 @@ function SiteBrandExperience() {
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
           <div>
-            <h2 className="sbe-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-3">
+            <h2 className="sbe-item font-editorial font-normal text-[#181412] text-[clamp(2.8rem,5vw,5rem)] leading-[.96] tracking-tight mb-10">
               Site BrandExperience
             </h2>
-            <div className="sbe-item font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-[1] mb-10">
-              R$ 5.000
-            </div>
             <p className="sbe-item font-halyard font-light text-[#181412] text-[22px] md:text-[25px] leading-[1.45] max-w-[38ch]">
               Um site que é uma extensão do posicionamento da marca, e não um site institucional genérico. Desenvolvido em código com IA por brand designers que constroem uma experiência imersiva — fazendo seu cliente experienciar o universo da marca digitalmente e gerando impacto, conexão e memorização.
             </p>
