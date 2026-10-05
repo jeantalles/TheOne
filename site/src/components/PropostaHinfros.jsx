@@ -2,16 +2,20 @@ import PropostaBaseP from './PropostaBaseP';
 
 const INITIAL_STATE = {
   clientName: 'Hinfros',
-  cenarioAtual: `A Hinfros já tem experiência em infraestrutura para escritórios contábeis, mas a comunicação atual ainda não evidencia essa especialização nem o valor da entrega.
+  cenarioAtual: `A construção da marca ficou concentrada na comunicação institucional. Falta uma estratégia que defina o posicionamento da Hinfros e oriente como construir valor de marca, produzir conteúdo e se conectar com os contadores.
 
-Com o Contábil Pro e o Brasil que Conta, falta definir como empresa, produtos e movimento se apresentam ao público. Anúncios do Brasil que Conta já atraíram clientes que encontraram uma oferta diferente da expectativa.
+A experiência no segmento contábil e a qualidade da entrega ainda não aparecem com a mesma força no site e no Instagram. Quem ainda não é cliente não percebe o que torna a Hinfros especializada nem por que escolher suas soluções.
 
-Robinson e Lucas querem organizar essa estrutura antes de ampliar a divulgação. Hoje, o investimento na Revo e no tráfego pressiona o caixa, enquanto o formato do ecossistema ainda está em construção.`,
-  cenarioDesejado: `Profissionalizar os pequenos escritórios de contabilidade, ajudando o contador a se tornar empresário contábil, com tecnologia, visão de negócio, marca e automação.
+Com o Brasil que Conta e os novos produtos, falta organizar o papel de cada marca e a mensagem que une o ecossistema. O potencial de gerar comunidade e pertencimento entre os contadores ainda precisa ser desenvolvido em narrativa, promessa e comunicação.
 
-Fazer do Brasil que Conta a marca que atrai e reúne esses contadores, com selos de evolução que eles queiram conquistar. A Hinfros sustenta a entrega e a credibilidade do ecossistema, preservando espaço para atender outros mercados.
+Robinson e Lucas também têm experiência e competências que podem fortalecer essa construção, mas suas marcas pessoais ainda precisam de posicionamento e direcionamento de conteúdo para gerar autoridade e atrair clientes.`,
+  cenarioDesejado: `Construir um posicionamento que torne a Hinfros e suas soluções reconhecidas pelo valor que entregam aos escritórios contábeis. Definir o papel de cada marca para orientar as decisões de comunicação e sustentar o crescimento do ecossistema.
 
-Construir as marcas pessoais de Robinson e Lucas junto dessa proposta e definir como cada marca se comunica. Com essa direção, alinhar a execução com a Revo e atrair clientes para sustentar o crescimento do projeto.`
+Fazer do Brasil que Conta uma comunidade da qual os contadores queiram participar. Construir uma narrativa que valorize o contador como parceiro do crescimento das empresas e gere pertencimento em torno da evolução de contador para empresário contábil.
+
+Ser referência na profissionalização dos pequenos escritórios de contabilidade do país, reunindo tecnologia, desenvolvimento empresarial, marca e automação em uma proposta que o público entenda, valorize e queira comprar.
+
+Fortalecer as marcas pessoais de Robinson e Lucas e definir a estratégia de conteúdo e canais das marcas para ampliar a distribuição, gerar demanda e trazer mais clientes para as soluções do ecossistema.`
 };
 
 const INITIAL_SCOPE = {
