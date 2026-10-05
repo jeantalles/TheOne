@@ -7,7 +7,7 @@ import siteBrandExpImg from '../assets/products/site-brand-experience.jpeg';
 import CasePageTemplate from './cases/CasePageTemplate';
 import { caseStudies } from '../content/cases';
 import { AberturaTheOne, ContextoDeMercado, NarrativaTheOne, ExistimosTheOne } from './PropostaTheOneSlides';
-import Methodology from './5-Methodology';
+import MetodologiaProposta from './MetodologiaProposta';
 import NomeClienteSlide from './NomeClienteSlide';
 import ContextoEditavel from './ContextoEditavel';
 import { useProposalState } from '../hooks/useProposalState';
@@ -1764,25 +1764,8 @@ function CasaDaMarca() {
 }
 
 // ── SLIDE: NOSSA METODOLOGIA ───────────────────────────────────────────────────
-function NossaMetodologia({ scrollerRef }) {
-  const [scroller, setScroller] = useState(null);
-
-  // Mesma técnica usada em SobreTheOne: captura o DOM node do scroller da slide
-  // após o mount, para que o ScrollTrigger da pirâmide funcione dentro do
-  // container interno (overflow-y-auto) em vez do scroll da página.
-  useEffect(() => {
-    if (scrollerRef?.current) {
-      setScroller(scrollerRef.current);
-    }
-  }, [scrollerRef]);
-
-  useEffect(() => {
-    if (!scroller) return;
-    const id = setTimeout(() => ScrollTrigger.refresh(), 860);
-    return () => clearTimeout(id);
-  }, [scroller]);
-
-  return scroller ? <Methodology scroller={scroller} /> : null;
+function NossaMetodologia() {
+  return <MetodologiaProposta />;
 }
 
 // ── SLIDE 7: CRONOGRAMA ───────────────────────────────────────────────────────
@@ -2208,7 +2191,7 @@ function PropostaSlideshow({ initialState, initialScope }) {
         {current === 14  && <CaseSlide slug="camilla-toscano" />}
         {current === 15 && <TheOneFoundation />}
         {current === 16 && <CasaDaMarca />}
-        {current === 17 && <NossaMetodologia scrollerRef={slideScrollRef} />}
+        {current === 17 && <NossaMetodologia />}
         {current === 18 && <EstrategiaDeMarca />}
         {current === 19 && <MyBranding />}
         {current === 20 && <Naming />}
