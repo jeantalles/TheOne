@@ -11,6 +11,7 @@ import StorytellingSection from './3-Storytelling';
 import NomeClienteSlide from './NomeClienteSlide';
 import ContextoEditavel from './ContextoEditavel';
 import { useProposalState } from '../hooks/useProposalState';
+import { AberturaTheOne, NarrativaTheOne, ContextoDeMercado, ExistimosTheOne } from './PropostaTheOneSlides';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -76,12 +77,12 @@ const SERVICES = IS_ALUDE
       { id: 'sitebrand', label: 'Site BrandExperience', price: 7000, prazo: '6 semanas' },
     ];
 
-// Alude e Sócio: narrativa TheOne distribuída em telas individuais; proposta base preserva a sequência original.
-const SLIDE_TOTAL = IS_SOCIO ? 29 : (IS_ALUDE ? 26 : 23);
+// Narrativa TheOne distribuída em telas individuais nas propostas.
+const SLIDE_TOTAL = IS_SOCIO ? 29 : (IS_ALUDE ? 26 : 28);
 
 const DARK_SLIDES = IS_SOCIO
   ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 23]
-  : (IS_ALUDE ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 21] : [0, 1, 6, 7, 8, 9, 10, 18]);
+  : (IS_ALUDE ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 21] : [0, 1, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 23]);
 
 const formatBRL = (v) => `R$ ${v.toLocaleString('pt-BR')}`;
 
@@ -2581,35 +2582,6 @@ function AdvisoryConteudo() {
 }
 
 
-function ContextoDeMercado() {
-  return (
-    <section className="relative min-h-[100svh] overflow-hidden bg-[#352B27] px-6 md:px-12 lg:px-16 py-8 flex items-center justify-center">
-      <div className="absolute inset-0 opacity-70 pointer-events-none" style={{ background: 'radial-gradient(circle at 50% 0%, rgba(254,105,66,.12), transparent 52%)' }} />
-      <div className="relative max-w-5xl mx-auto text-center flex flex-col items-center gap-5 py-8">
-        <span className="text-[#FE6942] font-halyard tracking-widest uppercase text-[23px]">
-          01 ⏤ 04
-        </span>
-        <h2 className="font-editorial font-normal text-[clamp(2.2rem,4.35vw,3.8rem)] leading-[1.1] tracking-tight max-w-[920px]">
-          <span className="text-[#FE6942]">Você não pode se vender<br />da mesma forma</span>{' '}
-          <span className="text-white">que o restante do seu mercado.</span>
-        </h2>
-
-        <div className="font-halyard font-light text-[#C7C7C7] text-[clamp(1.1rem,1.65vw,1.45rem)] leading-[1.42] space-y-5 max-w-[44rem] mx-auto">
-          <p>
-            Ter um bom produto, rodar anúncio e produzir conteúdo não é mais um diferencial. O mercado está ficando cada vez mais competitivo e parecido.
-          </p>
-          <p>
-            <strong className="font-semibold text-white">A maioria das empresas se posiciona na mesma prateleira que seus concorrentes</strong>, com ofertas parecidas. Se a embalagem de todos na prateleira for igual, os clientes vão escolher pelo quê? <strong className="font-semibold text-white">Preço.</strong>
-          </p>
-          <p>
-            E o pior: você pode até ser foda no que faz, referência pra quem já te conhece, e <strong className="font-semibold text-white">mesmo assim continuar invisível pro resto do mercado.</strong>
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 // ── SLIDE 9: SOBRE A THEONE (Hero + Storytelling + seção "Existimos") ─────────
 function SobreTheOne({ scrollerRef, mode = 'all', storyPanelIndex = null }) {
   const aboutRef = useRef(null);
@@ -2905,25 +2877,30 @@ function PropostaSlideshow() {
         {current === (IS_ALUDE || IS_SOCIO ? 3 : 4) && <Dores />}
         {current === (IS_ALUDE || IS_SOCIO ? 4 : 5) && ((IS_ALUDE || IS_SOCIO)
           ? <SobreTheOne scrollerRef={slideScrollRef} mode="hero" />
-          : <SobreTheOne scrollerRef={slideScrollRef} />
+          : <AberturaTheOne scrollerRef={slideScrollRef} />
         )}
-        {current === 6  && !IS_ALUDE && !IS_SOCIO && <SobreJean />}
-        {current === 7  && !IS_ALUDE && !IS_SOCIO && <CaseSlide slug="zenic" />}
-        {current === 8  && !IS_ALUDE && !IS_SOCIO && <CaseSlide slug="thunders" />}
-        {current === 9  && !IS_ALUDE && !IS_SOCIO && <CaseSlide slug="camilla-toscano" />}
-        {current === 10 && !IS_ALUDE && !IS_SOCIO && <TheOneFoundation />}
-        {current === 11 && !IS_ALUDE && !IS_SOCIO && <CasaDaMarca />}
-        {current === 12 && !IS_ALUDE && !IS_SOCIO && <EstrategiaDeMarca />}
-        {current === 13 && !IS_ALUDE && !IS_SOCIO && <Naming />}
-        {current === 14 && !IS_ALUDE && !IS_SOCIO && <IdentidadeVisual />}
-        {current === 15 && !IS_ALUDE && !IS_SOCIO && <IdentidadeVisualCompleta />}
-        {current === 16 && !IS_ALUDE && !IS_SOCIO && <MyBranding />}
-        {current === 17 && !IS_ALUDE && !IS_SOCIO && <SiteBrandExperience />}
-        {current === 18 && !IS_ALUDE && !IS_SOCIO && <TheOneAgent />}
-        {current === 19 && !IS_ALUDE && !IS_SOCIO && <Cronograma />}
-        {current === 20 && !IS_ALUDE && !IS_SOCIO && <Calculadora clientName={proposalState.clientName} />}
-        {current === 21 && !IS_ALUDE && !IS_SOCIO && <AdvisoryBranding />}
-        {current === 22 && !IS_ALUDE && !IS_SOCIO && <AdvisoryConteudo />}
+        {current === 6  && !IS_ALUDE && !IS_SOCIO && <ContextoDeMercado />}
+        {current === 7  && !IS_ALUDE && !IS_SOCIO && <NarrativaTheOne panelIndex={0} />}
+        {current === 8  && !IS_ALUDE && !IS_SOCIO && <NarrativaTheOne panelIndex={1} />}
+        {current === 9  && !IS_ALUDE && !IS_SOCIO && <NarrativaTheOne panelIndex={2} />}
+        {current === 10 && !IS_ALUDE && !IS_SOCIO && <ExistimosTheOne />}
+        {current === 11  && !IS_ALUDE && !IS_SOCIO && <SobreJean />}
+        {current === 12  && !IS_ALUDE && !IS_SOCIO && <CaseSlide slug="zenic" />}
+        {current === 13  && !IS_ALUDE && !IS_SOCIO && <CaseSlide slug="thunders" />}
+        {current === 14  && !IS_ALUDE && !IS_SOCIO && <CaseSlide slug="camilla-toscano" />}
+        {current === 15 && !IS_ALUDE && !IS_SOCIO && <TheOneFoundation />}
+        {current === 16 && !IS_ALUDE && !IS_SOCIO && <CasaDaMarca />}
+        {current === 17 && !IS_ALUDE && !IS_SOCIO && <EstrategiaDeMarca />}
+        {current === 18 && !IS_ALUDE && !IS_SOCIO && <Naming />}
+        {current === 19 && !IS_ALUDE && !IS_SOCIO && <IdentidadeVisual />}
+        {current === 20 && !IS_ALUDE && !IS_SOCIO && <IdentidadeVisualCompleta />}
+        {current === 21 && !IS_ALUDE && !IS_SOCIO && <MyBranding />}
+        {current === 22 && !IS_ALUDE && !IS_SOCIO && <SiteBrandExperience />}
+        {current === 23 && !IS_ALUDE && !IS_SOCIO && <TheOneAgent />}
+        {current === 24 && !IS_ALUDE && !IS_SOCIO && <Cronograma />}
+        {current === 25 && !IS_ALUDE && !IS_SOCIO && <Calculadora clientName={proposalState.clientName} />}
+        {current === 26 && !IS_ALUDE && !IS_SOCIO && <AdvisoryBranding />}
+        {current === 27 && !IS_ALUDE && !IS_SOCIO && <AdvisoryConteudo />}
 
         {/* Narrative TheOne slides (Alude e Sócio) */}
         {current === 5  && (IS_ALUDE || IS_SOCIO) && <SobreTheOne scrollerRef={slideScrollRef} mode="market" />}

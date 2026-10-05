@@ -6,8 +6,7 @@ import myBrandingImg from '../assets/products/mybranding.jpeg';
 import siteBrandExpImg from '../assets/products/site-brand-experience.jpeg';
 import CasePageTemplate from './cases/CasePageTemplate';
 import { caseStudies } from '../content/cases';
-import HeroSection from './1-Hero';
-import StorytellingSection from './3-Storytelling';
+import { AberturaTheOne, ContextoDeMercado, NarrativaTheOne, ExistimosTheOne } from './PropostaTheOneSlides';
 import Methodology from './5-Methodology';
 import NomeClienteSlide from './NomeClienteSlide';
 import ContextoEditavel from './ContextoEditavel';
@@ -27,10 +26,10 @@ const SERVICES = [
   { id: 'sitebrand',  label: 'Site BrandExperience',  price: 5000, prazo: '6 semanas' },
 ];
 
-// 0: Capa | 1: NomeCliente | 2: Contexto A | 3: Contexto B | 4: Dores | 5: SobreTheOne | 6: Jean | 7: Zenic | 8: Thunders | 9: Camilla | 10: TheOne Foundation | 11: Casa da Marca | 12: Nossa Metodologia | 13: Estratégia | 14: myBranding | 15: Naming | 16: Identidade Essencial | 17: Identidade Completa | 18: SiteBrandExperience | 19: TheOne Agent | 20: Cronograma | 21: Calculadora | 22: Consultoria
-const SLIDE_TOTAL = 24;
+// 0-4: abertura e contexto | 5: animação | 6: mercado | 7-9: narrativa | 10: TheOne | 11-28: equipe, cases, metodologia, serviços e investimento
+const SLIDE_TOTAL = 29;
 
-const DARK_SLIDES = [0, 1, 6, 7, 8, 9, 10, 12, 19];
+const DARK_SLIDES = [0, 1, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 24];
 
 const formatBRL = (v) => `R$ ${v.toLocaleString('pt-BR')}`;
 
@@ -2037,104 +2036,6 @@ function AdvisoryConteudo() {
 }
 
 
-// ── SLIDE 9: SOBRE A THEONE (Hero + Storytelling + seção "Existimos") ─────────
-function SobreTheOne({ scrollerRef }) {
-  const aboutRef = useRef(null);
-  // Força re-render após mount para capturar o DOM node do scroller
-  const [scroller, setScroller] = useState(null);
-
-  // useEffect (não useLayoutEffect) é necessário aqui porque o ref do div pai
-  // (slideScrollRef) só fica disponível APÓS o commitLayoutEffects processar os
-  // pais — ou seja, depois que os useLayoutEffects dos filhos já rodaram.
-  // Com useEffect o DOM está completamente commitado e todos os refs estão set.
-  useEffect(() => {
-    if (scrollerRef?.current) {
-      setScroller(scrollerRef.current);
-    }
-  }, [scrollerRef]);
-
-  // Após o scroller estar disponível e a animação de entrada do slide terminar
-  // (~800ms), força o ScrollTrigger a recalcular todas as posições.
-  useEffect(() => {
-    if (!scroller) return;
-    const id = setTimeout(() => ScrollTrigger.refresh(), 860);
-    return () => clearTimeout(id);
-  }, [scroller]);
-
-  useEffect(() => {
-    if (!scroller || !aboutRef.current) return;
-
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.theone-about-left > *',
-        { opacity: 0, x: -30, filter: 'blur(8px)' },
-        { opacity: 1, x: 0, filter: 'blur(0px)', duration: 1, stagger: 0.14,
-          scrollTrigger: { trigger: aboutRef.current, start: 'top 75%', scroller } }
-      );
-      gsap.fromTo('.theone-about-right',
-        { opacity: 0, x: 40, scale: 0.96 },
-        { opacity: 1, x: 0, scale: 1, duration: 1.2, delay: 0.2, ease: 'power4.out',
-          scrollTrigger: { trigger: aboutRef.current, start: 'top 75%', scroller } }
-      );
-    }, aboutRef);
-    return () => ctx.revert();
-  }, [scroller]);
-
-  const bullets = [
-    { title: '+8 Anos', text: 'Construindo marcas que lideram, com especialistas formados nas maiores operações de marketing e comunicação do Brasil.' },
-    { title: 'Projetos Personalizados', text: 'Nenhum negócio com ambição cabe numa solução industrializada.' },
-    { title: 'Projetos Selecionados', text: 'Não atuamos com centenas, nem dezenas de clientes. Selecionamos empresas que têm visão de crescimento e propósito de gerar transformação.' },
-  ];
-
-  return (
-    <div>
-      {/* Hero e Storytelling só montam após scroller estar disponível —
-          evita dupla inicialização e flicker de reset de animações GSAP */}
-      {scroller && <HeroSection disableNavEvents showTopLogo scroller={scroller} />}
-      {scroller && <StorytellingSection persona="empresario" scroller={scroller} />}
-
-      {/* Seção "Existimos para construir marcas TheOne" */}
-      <section ref={aboutRef} className="bg-[#212121] text-white min-h-[100svh] px-6 md:px-12 lg:px-16 py-12 md:py-16 flex flex-col justify-center">
-        <div className="max-w-[1400px] w-full mx-auto flex flex-col gap-10 md:gap-12">
-
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_460px] gap-10 lg:gap-16 items-start">
-            <div className="theone-about-left flex flex-col gap-7">
-              <h2 className="font-editorial font-normal text-white text-[clamp(2.2rem,3.8vw,3.8rem)] leading-[1.06] tracking-tight">
-                Existimos para construir marcas TheOne,{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FED1C5] to-[#FF5224]">a escolha número um.</span>
-              </h2>
-              <p className="font-halyard font-light text-[#C7C7C7] text-[20px] md:text-[22px] leading-[1.45] max-w-[680px]">
-                Vimos o que acontece quando marketing vira linha de produção e nos recusamos a ser mais um desse modelo.
-              </p>
-              <p className="font-halyard font-light text-[#C7C7C7] text-[20px] md:text-[22px] leading-[1.45] max-w-[680px]">
-                Estruturamos como você se posiciona nos principais canais para se tornar a opção inevitável no seu mercado. Seremos seus aliados na efetivação da estratégia para consolidar o seu negócio como o número um.
-              </p>
-              <p className="font-halyard font-light text-white text-[20px] md:text-[22px] leading-[1.45] max-w-[680px]">
-                Não entregamos um PDF e sumimos. Nosso trabalho é orientado para construir uma fundação sólida de estratégia de marca com foco em expansão e geração de receita.
-              </p>
-            </div>
-            <div className="theone-about-right hidden lg:block">
-              <div className="relative rounded-[24px] overflow-hidden border border-[#5B5B5B]" style={{ height: 'clamp(320px, 40vh, 520px)' }}>
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(254,105,66,0.12)_0%,transparent_60%)] z-10" />
-                <img src="/theone-hand.jpg" alt="TheOne" className="w-full h-full object-cover opacity-90" />
-              </div>
-            </div>
-          </div>
-
-          <ul className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-            {bullets.map(item => (
-              <li key={item.title}>
-                <strong className="block font-halyard font-medium text-[#FE6942] text-[1.5rem] md:text-[1.75rem] leading-none mb-4">{item.title}</strong>
-                <span className="block font-halyard font-light text-[#A8A8A8] text-[18px] md:text-[19px] leading-[1.5]">{item.text}</span>
-              </li>
-            ))}
-          </ul>
-
-        </div>
-      </section>
-    </div>
-  );
-}
-
 // ── SLIDE 10: SOBRE O JEAN ────────────────────────────────────────────────────
 const CLIENT_LOGOS = [
   { src: '/images/founders-logos/o-boticario.png', alt: 'O Boticario' },
@@ -2313,25 +2214,30 @@ function PropostaSlideshow({ initialState, initialScope }) {
           />
         )}
         {current === 4  && <Dores />}
-        {current === 5  && <SobreTheOne scrollerRef={slideScrollRef} />}
-        {current === 6  && <SobreJean />}
-        {current === 7  && <CaseSlide slug="zenic" />}
-        {current === 8  && <CaseSlide slug="thunders" />}
-        {current === 9  && <CaseSlide slug="camilla-toscano" />}
-        {current === 10 && <TheOneFoundation />}
-        {current === 11 && <CasaDaMarca />}
-        {current === 12 && <NossaMetodologia scrollerRef={slideScrollRef} />}
-        {current === 13 && <EstrategiaDeMarca />}
-        {current === 14 && <MyBranding />}
-        {current === 15 && <Naming />}
-        {current === 16 && <IdentidadeVisual />}
-        {current === 17 && <IdentidadeVisualCompleta />}
-        {current === 18 && <SiteBrandExperience />}
-        {current === 19 && <TheOneAgent />}
-        {current === 20 && <Cronograma />}
-        {current === 21 && <Calculadora clientName={proposalState.clientName} initialScope={initialScope} />}
-        {current === 22 && <AdvisoryBranding />}
-        {current === 23 && <AdvisoryConteudo />}
+        {current === 5  && <AberturaTheOne scrollerRef={slideScrollRef} />}
+        {current === 6  && <ContextoDeMercado />}
+        {current === 7  && <NarrativaTheOne panelIndex={0} />}
+        {current === 8  && <NarrativaTheOne panelIndex={1} />}
+        {current === 9  && <NarrativaTheOne panelIndex={2} />}
+        {current === 10 && <ExistimosTheOne />}
+        {current === 11  && <SobreJean />}
+        {current === 12  && <CaseSlide slug="zenic" />}
+        {current === 13  && <CaseSlide slug="thunders" />}
+        {current === 14  && <CaseSlide slug="camilla-toscano" />}
+        {current === 15 && <TheOneFoundation />}
+        {current === 16 && <CasaDaMarca />}
+        {current === 17 && <NossaMetodologia scrollerRef={slideScrollRef} />}
+        {current === 18 && <EstrategiaDeMarca />}
+        {current === 19 && <MyBranding />}
+        {current === 20 && <Naming />}
+        {current === 21 && <IdentidadeVisual />}
+        {current === 22 && <IdentidadeVisualCompleta />}
+        {current === 23 && <SiteBrandExperience />}
+        {current === 24 && <TheOneAgent />}
+        {current === 25 && <Cronograma />}
+        {current === 26 && <Calculadora clientName={proposalState.clientName} initialScope={initialScope} />}
+        {current === 27 && <AdvisoryBranding />}
+        {current === 28 && <AdvisoryConteudo />}
       </div>
 
       <div
