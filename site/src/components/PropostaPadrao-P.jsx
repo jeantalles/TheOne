@@ -30,7 +30,7 @@ function Capa() {
   return (
     <section
       className="relative overflow-hidden flex flex-col justify-between"
-      style={{ height: '100svh', background: '#0a0a0a', padding: '48px 56px 44px' }}
+      style={{ height: '100svh', background: '#372D2A', padding: '48px 56px 44px' }}
     >
       <div className="noise-overlay" aria-hidden="true" />
 
@@ -1906,7 +1906,7 @@ function PropostaSlideshow() {
   return (
     <div
       className="relative overflow-hidden"
-      style={{ height: '100svh', background: ([0, 2, 3, 4, 5, 6, 7, 14].includes(current)) ? '#0a0a0a' : '#fff' }}
+      style={{ height: '100svh', background: current === 0 ? '#372D2A' : (([0, 2, 3, 4, 5, 6, 7, 14].includes(current)) ? '#0a0a0a' : '#fff') }}
     >
 
       <div
@@ -1941,7 +1941,7 @@ function PropostaSlideshow() {
         className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none z-10 transition-opacity duration-300"
         style={{
           opacity: hasMoreBelow ? 1 : 0,
-          background: `linear-gradient(to top, ${([0, 2, 3, 4, 5, 6, 7, 15].includes(current)) ? 'rgba(10,10,10,0.95)' : 'rgba(255,255,255,0.95)'} 0%, transparent 100%)`,
+          background: `linear-gradient(to top, ${current === 0 ? 'rgba(55,45,42,0.95)' : ([0, 2, 3, 4, 5, 6, 7, 15].includes(current)) ? 'rgba(10,10,10,0.95)' : 'rgba(255,255,255,0.95)'} 0%, transparent 100%)`,
         }}
         aria-hidden="true"
       />

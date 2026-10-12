@@ -10,11 +10,13 @@ import HeroSection from './1-Hero';
 import StorytellingSection from './3-Storytelling';
 import NomeClienteSlide from './NomeClienteSlide';
 import ContextoEditavel from './ContextoEditavel';
+import { IdentidadeSBS, MateriaisSBS, CalculadoraSBS, AdvisorySBS } from './PropostaSBSContent';
 import { useProposalState } from '../hooks/useProposalState';
 import { AberturaTheOne, NarrativaTheOne, ContextoDeMercado, ExistimosTheOne } from './PropostaTheOneSlides';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const IS_SBS = typeof window !== 'undefined' && /^\/sbs\/?$/.test(window.location.pathname);
 const IS_ALUDE = typeof window !== 'undefined' && /^\/alude\/?$/.test(window.location.pathname);
 const IS_SOCIO = typeof window !== 'undefined' && /^\/socio-estrategico\/?$/.test(window.location.pathname);
 
@@ -78,9 +80,9 @@ const SERVICES = IS_ALUDE
     ];
 
 // Narrativa TheOne distribuída em telas individuais nas propostas.
-const SLIDE_TOTAL = IS_SOCIO ? 29 : (IS_ALUDE ? 26 : 28);
+const SLIDE_TOTAL = IS_SBS ? 22 : IS_SOCIO ? 29 : (IS_ALUDE ? 26 : 28);
 
-const DARK_SLIDES = IS_SOCIO
+const DARK_SLIDES = IS_SBS ? [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 18] : IS_SOCIO
   ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 23]
   : (IS_ALUDE ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 21] : [0, 1, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 23]);
 
@@ -93,7 +95,7 @@ function Capa() {
   return (
     <section
       className="relative overflow-hidden flex flex-col justify-between"
-      style={{ height: '100svh', background: IS_SOCIO ? '#382C2A' : (IS_ALUDE ? '#202020' : '#0a0a0a'), padding: '48px 56px 44px' }}
+      style={{ height: '100svh', background: IS_ALUDE ? '#202020' : '#372D2A', padding: '48px 56px 44px' }}
     >
       <div className="noise-overlay" aria-hidden="true" />
 
@@ -1103,7 +1105,7 @@ function SiteBrandExperience() {
       <div className="max-w-[1400px] mx-auto">
 
         <div className="sbe-item mb-6">
-          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">Produto · Site BrandExperience</span>
+          <span className="font-halyard text-[15px] tracking-[0.22em] uppercase text-[#FE6942] font-semibold">{IS_SBS ? 'Fase 2 · Site BrandExperience' : 'Produto · Site BrandExperience'}</span>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-10 lg:gap-16 items-start mb-10 md:mb-12">
@@ -2359,7 +2361,18 @@ const CRONOGRAMA_STEPS = [
   { etapa: '06', nome: 'Acompanhamento', descricao: 'Suporte contínuo para garantir a implementação da estratégia e evolução da marca' },
 ];
 
+const SBS_CRONOGRAMA_STEPS = [
+  { etapa: '01', nome: 'Imersão', descricao: 'Diagnóstico completo do negócio, mercado e público' },
+  { etapa: '02', nome: 'Pesquisa', descricao: 'Análise de concorrência e oportunidades de posicionamento' },
+  { etapa: '03', nome: 'Estratégia', descricao: 'Posicionamento e narrativa da marca' },
+  { etapa: '04', nome: 'Identidade', descricao: 'Identidade verbal, otimização da identidade visual e novo brandbook' },
+  { etapa: '05', nome: 'Criação', descricao: 'Desenvolvimento dos entregáveis do projeto' },
+  { etapa: '06', nome: 'Entrega', descricao: 'Apresentação final, arquivos e orientação para implementação' },
+  { etapa: '07', nome: 'Acompanhamento', descricao: 'Suporte contínuo para garantir a implementação da estratégia e evolução da marca' },
+];
+
 function Cronograma() {
+  const steps = IS_SBS ? SBS_CRONOGRAMA_STEPS : CRONOGRAMA_STEPS;
   const sectionRef = useRef(null);
   const lineRef = useRef(null);
 
@@ -2403,36 +2416,60 @@ function Cronograma() {
             </h2>
           </div>
           <p className="font-halyard font-light text-black text-[20px] md:text-[24px] leading-[1.45] max-w-[36ch] lg:justify-self-end lg:text-right">
-            {IS_ALUDE ? 'Prazo de 2 a 4 meses, de acordo com os serviços contratados e a cadência de validações.' : (IS_SOCIO ? 'Prazo de 16 a 20 semanas, de acordo com o cenário escolhido.' : 'Prazo médio de 4 a 12 semanas, de acordo com os serviços contratados.')}
+            {IS_SBS ? '45 dias de Foundation + 20 dias de desdobramentos. Acompanhamento após o projeto.' : IS_ALUDE ? 'Prazo de 2 a 4 meses, de acordo com os serviços contratados e a cadência de validações.' : (IS_SOCIO ? 'Prazo de 16 a 20 semanas, de acordo com o cenário escolhido.' : 'Prazo médio de 4 a 12 semanas, de acordo com os serviços contratados.')}
           </p>
         </div>
 
-        <div className="hidden md:block relative">
+        {IS_SBS && (
+          <div className="hidden lg:grid grid-cols-7 gap-5 mb-8 font-halyard text-[#FE6942]">
+            <div className="col-span-4 border-b border-[#FE6942]/25 pb-4">
+              <span className="block text-[13px] uppercase tracking-[.15em] mb-2">Fase 1 · 45 dias</span>
+              <span className="text-[18px] font-medium">TheOne Foundation</span>
+            </div>
+            <div className="col-span-2 border-b border-[#FE6942]/25 pb-4">
+              <span className="block text-[13px] uppercase tracking-[.15em] mb-2">Fase 2 · 20 dias</span>
+              <span className="text-[18px] font-medium">Desdobramentos</span>
+            </div>
+            <div className="col-span-1 border-b border-[#FE6942]/25 pb-4">
+              <span className="block text-[13px] uppercase tracking-[.15em] mb-2">Fase 3 · Pós-projeto</span>
+              <span className="text-[15px] xl:text-[18px] font-medium">Acompanhamento</span>
+            </div>
+          </div>
+        )}
+
+        <div className={IS_SBS ? "hidden lg:block relative" : "hidden md:block relative"}>
           <div className="absolute top-[36px] left-0 right-0 h-px bg-black/10" />
           <div ref={lineRef} className="absolute top-[36px] left-0 right-0 h-px bg-[#FE6942] origin-left" />
-          <div className="grid" style={{ gridTemplateColumns: `repeat(${CRONOGRAMA_STEPS.length}, 1fr)` }}>
-            {CRONOGRAMA_STEPS.map((step, i) => (
-              <div key={i} className="crono-p-step flex flex-col items-center text-center px-4">
+          <div className="grid" style={{ gridTemplateColumns: `repeat(${steps.length}, 1fr)` }}>
+            {steps.map((step, i) => (
+              <div key={i} className={`crono-p-step flex flex-col items-center text-center ${IS_SBS ? "px-2" : "px-4"}`}>
                 <div className="w-[72px] h-[72px] rounded-full border-2 border-[#FE6942] bg-white flex items-center justify-center mb-6 relative z-10">
                   <span className="font-halyard font-medium text-[#FE6942] text-[1.55rem]">{step.etapa}</span>
                 </div>
-                <span className="font-halyard font-medium text-[#181412] text-[19px] lg:text-[20px] mb-2">{step.nome}</span>
-                <p className="font-halyard font-light text-black text-[16px] lg:text-[17px] leading-[1.45]">{step.descricao}</p>
+                <span className={`font-halyard font-medium text-[#181412] ${IS_SBS ? "text-[15px] xl:text-[18px]" : "text-[19px] lg:text-[20px]"} mb-2`}>{step.nome}</span>
+                <p className={`font-halyard font-light text-black ${IS_SBS ? "text-[14px] xl:text-[16px]" : "text-[16px] lg:text-[17px]"} leading-[1.45]`}>{step.descricao}</p>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="md:hidden relative pl-10">
+        <div className={IS_SBS ? "lg:hidden relative pl-10" : "md:hidden relative pl-10"}>
           <div className="absolute left-[18px] top-0 bottom-0 w-px bg-black/10" />
           <div className="space-y-10">
-            {CRONOGRAMA_STEPS.map((step, i) => (
-              <div key={i} className="crono-p-step relative">
-                <div className="absolute -left-[28px] top-0 w-9 h-9 rounded-full border-2 border-[#FE6942] bg-white flex items-center justify-center">
+            {steps.map((step, i) => (
+              <div key={i}>
+                {IS_SBS && [0, 4, 6].includes(i) && (
+                  <span className="block font-halyard text-[#FE6942] text-[13px] uppercase tracking-[.12em] mb-4">
+                    {i === 0 ? 'Fase 1 · TheOne Foundation · 45 dias' : i === 4 ? 'Fase 2 · Desdobramentos · 20 dias' : 'Fase 3 · Acompanhamento · Pós-projeto'}
+                  </span>
+                )}
+                <div className="crono-p-step relative">
+                <div style={IS_SBS ? { left: -40 } : undefined} className="absolute -left-[28px] top-0 w-9 h-9 rounded-full border-2 border-[#FE6942] bg-white flex items-center justify-center">
                   <span className="font-halyard font-medium text-[#FE6942] text-[1rem]">{step.etapa}</span>
                 </div>
                 <span className="font-halyard font-medium text-[#181412] text-[21px] block mb-1">{step.nome}</span>
                 <p className="font-halyard font-light text-black text-[18px] leading-[1.5]">{step.descricao}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -2788,7 +2825,7 @@ function CaseSlide({ slug }) {
 // ── SLIDESHOW ─────────────────────────────────────────────────────────────────
 function PropostaSlideshow() {
   const [proposalState, setProposalState, generateLink] = useProposalState({
-    clientName: IS_ALUDE ? ALUDE_PROPOSAL.clientName : (IS_SOCIO ? SOCIO_PROPOSAL.clientName : ''),
+    clientName: IS_SBS ? 'SBS' : IS_ALUDE ? ALUDE_PROPOSAL.clientName : (IS_SOCIO ? SOCIO_PROPOSAL.clientName : ''),
     cenarioAtual: IS_ALUDE ? ALUDE_PROPOSAL.cenarioAtual : (IS_SOCIO ? SOCIO_PROPOSAL.cenarioAtual : ''),
     cenarioDesejado: IS_ALUDE ? ALUDE_PROPOSAL.cenarioDesejado : (IS_SOCIO ? SOCIO_PROPOSAL.cenarioDesejado : ''),
   });
@@ -2838,7 +2875,7 @@ function PropostaSlideshow() {
   return (
     <div
       className="relative overflow-hidden"
-      style={{ height: '100svh', background: (IS_SOCIO && current === 0) ? '#382C2A' : (DARK_SLIDES.includes(current) ? '#0a0a0a' : '#fff') }}
+      style={{ height: '100svh', background: current === 0 ? (IS_ALUDE ? '#202020' : '#372D2A') : (DARK_SLIDES.includes(current) ? '#0a0a0a' : '#fff') }}
     >
 
       <div
@@ -2848,6 +2885,30 @@ function PropostaSlideshow() {
         onScroll={checkScroll}
         className={`absolute inset-0 overflow-y-auto ${DARK_SLIDES.includes(current) ? 'pb-0' : 'pb-20 md:pb-16'} ${animDir === 'next' ? 'slide-from-right' : 'slide-from-left'}`}
       >
+        {IS_SBS ? <>
+          {current === 0 && <Capa />}
+          {current === 1 && <NomeClienteSlide clientName={proposalState.clientName} setClientName={v => setProposalState({ clientName: v })} onGenerateLink={generateLink} />}
+          {current === 2 && <AberturaTheOne scrollerRef={slideScrollRef} />}
+          {current === 3 && <ContextoDeMercado />}
+          {current === 4 && <NarrativaTheOne panelIndex={0} />}
+          {current === 5 && <NarrativaTheOne panelIndex={1} />}
+          {current === 6 && <NarrativaTheOne panelIndex={2} />}
+          {current === 7 && <ExistimosTheOne />}
+          {current === 8 && <SobreJean />}
+          {current === 9 && <CaseSlide slug="zenic" />}
+          {current === 10 && <CaseSlide slug="thunders" />}
+          {current === 11 && <CaseSlide slug="camilla-toscano" />}
+          {current === 12 && <TheOneFoundation />}
+          {current === 13 && <CasaDaMarca />}
+          {current === 14 && <EstrategiaDeMarca />}
+          {current === 15 && <IdentidadeSBS />}
+          {current === 16 && <SiteBrandExperience />}
+          {current === 17 && <MateriaisSBS />}
+          {current === 18 && <TheOneAgent />}
+          {current === 19 && <Cronograma />}
+          {current === 20 && <CalculadoraSBS />}
+          {current === 21 && <AdvisorySBS />}
+        </> : <>
         {current === 0  && <Capa />}
         {current === 1 && !IS_ALUDE && !IS_SOCIO && (
           <NomeClienteSlide 
@@ -2941,13 +3002,14 @@ function PropostaSlideshow() {
         {current === 26 && IS_SOCIO && <CenarioProjetoSocio cenario="Cenário 2" strategyPrice={25000} contentPrice={12000} duration="18 semanas" brandCount="4 marcas no ecossistema + marca pessoal" scope="Projeto completo para o ecossistema: estratégia de marca, posicionamento e estratégia de canais e conteúdo para Sócio Estratégico, Sócio Talentos, Aporta Capital e Sócio IA." />}
         {current === 27 && IS_SOCIO && <AdvisoryBranding />}
         {current === 28 && IS_SOCIO && <AdvisoryConteudo />}
+        </>}
       </div>
 
       <div
         className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none z-10 transition-opacity duration-300"
         style={{
           opacity: hasMoreBelow ? 1 : 0,
-          background: `linear-gradient(to top, ${(!IS_ALUDE && !IS_SOCIO && current === 5) ? 'rgba(128,128,128,0.15)' : (DARK_SLIDES.includes(current) ? 'rgba(10,10,10,0.95)' : 'rgba(255,255,255,0.95)')} 0%, transparent 100%)`,
+          background: `linear-gradient(to top, ${(!IS_ALUDE && !IS_SOCIO && current === 5) ? 'rgba(128,128,128,0.15)' : (current === 0 ? (IS_ALUDE ? 'rgba(32,32,32,0.95)' : 'rgba(55,45,42,0.95)') : (DARK_SLIDES.includes(current) ? 'rgba(10,10,10,0.95)' : 'rgba(255,255,255,0.95)'))} 0%, transparent 100%)`,
         }}
         aria-hidden="true"
       />

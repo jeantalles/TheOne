@@ -85,6 +85,7 @@ export default function App() {
   const isBaseP = ['/base-p', '/base-p/'].includes(pathname);
   const isHinfros = ['/hinfros', '/hinfros/'].includes(pathname);
   const isAnderson = ['/anderson-neville', '/anderson-neville/'].includes(pathname);
+  const isSBS = ['/sbs', '/sbs/'].includes(pathname);
   const isBaseM = ['/base-m', '/base-m/'].includes(pathname);
   const isSocioEstrategico = ['/socio-estrategico', '/socio-estrategico/'].includes(pathname);
   const isAlude = ['/alude', '/alude/'].includes(pathname);
@@ -371,7 +372,7 @@ export default function App() {
   if (isAnderson) {
     return <Suspense fallback={null}><PropostaAnderson /></Suspense>;
   }
-  if (isBaseM || isAlude || isSocioEstrategico) {
+  if (isSBS || isBaseM || isAlude || isSocioEstrategico) {
     return <Suspense fallback={null}><PropostaBaseM /></Suspense>;
   }
   if (isBaseG) {
