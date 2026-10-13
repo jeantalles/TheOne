@@ -143,7 +143,7 @@ export function CalculadoraSBS() {
         <ul className="list-disc pl-5 border-t border-white/15 mt-6 pt-5 font-halyard font-light text-white/75 text-[17px] leading-[1.45] space-y-3">
           <li>Pagamento à vista, com {SBS_COMPLETE_DISCOUNT * 100}% de desconto sobre as fases 1 e 2 completas.</li>
           <li>Economia de {money(completeTotal - completeCash)}.</li>
-          <li>Acompanhamento mensal: {money(3000)}/mês, cobrado separadamente deste total.</li>
+          <li>Acompanhamento por 3 meses: {money(3000)}/mês, cobrado separadamente deste total.</li>
         </ul>
       </div>
     </div>
@@ -155,7 +155,7 @@ export function AdvisorySBS() {
     <Heading eyebrow="Fase 3 · Acompanhamento" title="Advisory de Branding">Acompanhamento e direcionamento para aplicar o posicionamento e manter a consistência da comunicação após a entrega do projeto.</Heading>
     <div className="grid md:grid-cols-2 gap-5">
       <div className={panel}><h3 className="font-halyard font-medium text-[#181412] text-[24px] mb-5">Direcionamento pós-projeto</h3><ul className="font-halyard font-light text-[#181412]/75 text-[19px] space-y-4 leading-[1.5]"><li>Reuniões quinzenais de acompanhamento.</li><li>Suporte via WhatsApp.</li><li>Revisão da aplicação da estratégia e da identidade.</li><li>Orientação para a SBS e seus parceiros de comunicação.</li><li>Direcionamento de ajustes na implementação da marca.</li></ul></div>
-      <div className="rounded-[28px] p-8 bg-[#211F1E] text-white flex flex-col justify-center"><span className="font-halyard uppercase tracking-[.18em] text-[13px] text-white/50 mb-5">Investimento mensal</span><p className="font-halyard text-[#FE6942] text-[48px] leading-none">R$ 3.000<span className="text-[19px] text-white/60">/mês</span></p><p className="font-halyard font-light text-white/65 text-[17px] leading-[1.5] mt-6">Mensalidade cobrada separadamente do investimento das fases 1 e 2. Reuniões quinzenais e suporte via WhatsApp. Duração do acompanhamento a definir em contrato.</p></div>
+      <div className="rounded-[28px] p-8 bg-[#211F1E] text-white flex flex-col justify-center"><span className="font-halyard uppercase tracking-[.18em] text-[13px] text-white/50 mb-5">Investimento mensal</span><p className="font-halyard text-[#FE6942] text-[48px] leading-none">R$ 3.000<span className="text-[19px] text-white/60">/mês</span></p><p className="font-halyard font-light text-white/65 text-[17px] leading-[1.5] mt-6">Mensalidade cobrada separadamente do investimento das fases 1 e 2. Reuniões quinzenais e suporte via WhatsApp. Acompanhamento por 3 meses.</p></div>
     </div>
   </Frame>;
 }

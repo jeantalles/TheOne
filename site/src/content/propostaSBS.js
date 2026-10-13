@@ -11,7 +11,7 @@ export const SBS_SERVICES = [
   { id: 'conteudo', phase: 'foundation', label: 'Estratégia de Conteúdo e Canais', description: 'Direcionamento dos canais, temas e formatos de conteúdo para colocar o posicionamento em prática.', price: 5000, selected: false },
   { id: 'site', phase: 'desdobramentos', label: 'Site BrandExperience', description: 'Site institucional com narrativa, design e desenvolvimento alinhados à marca.', price: 8000, selected: false },
   { id: 'materiais', phase: 'desdobramentos', label: 'Materiais e Pontos de Contato', description: 'Desdobramento da identidade nos materiais institucionais, digitais e físicos previstos no escopo.', price: 11500, selected: false },
-  { id: 'advisory', phase: 'acompanhamento', label: 'Advisory de Branding', description: 'Acompanhamento e direcionamento estratégico da implementação após a conclusão do projeto, com reuniões quinzenais e suporte via WhatsApp.', price: 3000, monthly: true, selected: false },
+  { id: 'advisory', phase: 'acompanhamento', label: 'Advisory de Branding', description: 'Acompanhamento por 3 meses e direcionamento estratégico da implementação após a conclusão do projeto, com reuniões quinzenais e suporte via WhatsApp.', price: 3000, monthly: true, selected: false },
 ];
 
 export const SBS_MATERIALS = [
