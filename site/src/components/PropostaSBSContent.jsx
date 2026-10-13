@@ -128,7 +128,7 @@ export function CalculadoraSBS() {
         <div className="border-t border-black/10 mt-6 pt-5">
           <p className="font-halyard font-medium text-[#181412] text-[18px] mb-3">Formas de pagamento</p>
           <ul className="list-disc pl-5 font-halyard font-light text-[#181412]/70 text-[17px] leading-[1.45] space-y-3">
-            <li>{total > 30000 ? <>3x no PIX de {(total / 3).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}.</> : 'À vista no PIX.'}</li>
+            <li>{total > 30000 ? <>3x no PIX de {(total / 3).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}.</> : <>2x no PIX: 50% para iniciar e 50% após 30 dias — {money(total / 2)} por parcela.</>}</li>
             <li>Até 12x no cartão, com juros da máquina.</li>
           </ul>
         </div>
