@@ -82,7 +82,7 @@ const SERVICES = IS_ALUDE
 // Narrativa TheOne distribuída em telas individuais nas propostas.
 const SLIDE_TOTAL = IS_SBS ? 23 : IS_SOCIO ? 29 : (IS_ALUDE ? 26 : 28);
 
-const DARK_SLIDES = IS_SBS ? [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 18] : IS_SOCIO
+const DARK_SLIDES = IS_SBS ? [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 19] : IS_SOCIO
   ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 23]
   : (IS_ALUDE ? [0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 21] : [0, 1, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 23]);
 
@@ -2904,9 +2904,9 @@ function PropostaSlideshow() {
           {current === 15 && <IdentidadeSBS />}
           {current === 16 && <SiteBrandExperience />}
           {current === 17 && <MateriaisSBS />}
-          {current === 18 && <TheOneAgent />}
-          {current === 19 && <Cronograma />}
-          {current === 20 && <MyBranding />}
+          {current === 18 && <MyBranding />}
+          {current === 19 && <TheOneAgent />}
+          {current === 20 && <Cronograma />}
           {current === 21 && <CalculadoraSBS />}
           {current === 22 && <AdvisorySBS />}
         </> : <>
