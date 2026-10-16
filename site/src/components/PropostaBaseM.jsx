@@ -2823,17 +2823,45 @@ function CaseSlide({ slug }) {
 }
 
 // ── SLIDESHOW ─────────────────────────────────────────────────────────────────
+function readSbsSlide() {
+  if (!IS_SBS || typeof window === 'undefined') return 0;
+  const value = new URLSearchParams(window.location.hash.slice(1)).get('slide');
+  if (!value || !/^\d+$/.test(value)) return 0;
+  const slide = Number(value);
+  return Number.isSafeInteger(slide) && slide >= 1 && slide <= SLIDE_TOTAL ? slide - 1 : 0;
+}
+
 function PropostaSlideshow() {
   const [proposalState, setProposalState, generateLink] = useProposalState({
     clientName: IS_SBS ? 'SBS' : IS_ALUDE ? ALUDE_PROPOSAL.clientName : (IS_SOCIO ? SOCIO_PROPOSAL.clientName : ''),
     cenarioAtual: IS_ALUDE ? ALUDE_PROPOSAL.cenarioAtual : (IS_SOCIO ? SOCIO_PROPOSAL.cenarioAtual : ''),
     cenarioDesejado: IS_ALUDE ? ALUDE_PROPOSAL.cenarioDesejado : (IS_SOCIO ? SOCIO_PROPOSAL.cenarioDesejado : ''),
   });
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(readSbsSlide);
   const [animDir, setAnimDir] = useState('next');
   const [hasMoreBelow, setHasMoreBelow] = useState(false);
   const slideScrollRef = useRef(null);
   const isTransitioning = useRef(false);
+
+  useEffect(() => {
+    if (!IS_SBS) return;
+    const url = new URL(window.location.href);
+    const hash = new URLSearchParams(url.hash.slice(1));
+    hash.set('slide', String(current + 1));
+    url.hash = hash.toString();
+    window.history.replaceState(window.history.state, '', url);
+  }, [current]);
+
+  useEffect(() => {
+    if (!IS_SBS) return;
+    const restoreSlide = () => setCurrent(readSbsSlide());
+    window.addEventListener('hashchange', restoreSlide);
+    window.addEventListener('popstate', restoreSlide);
+    return () => {
+      window.removeEventListener('hashchange', restoreSlide);
+      window.removeEventListener('popstate', restoreSlide);
+    };
+  }, []);
 
   const checkScroll = useCallback(() => {
     const el = slideScrollRef.current;
